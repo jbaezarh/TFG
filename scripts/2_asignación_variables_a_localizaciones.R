@@ -334,6 +334,8 @@ save(dataset,file = paste0("salidas_intermedias/dataset_completo",Sys.Date(),".R
 # No existe 2020-11 
 # No existe 2021-12 
 # No existe 2022-03 
+# No existe 2022-12 
+
 
 
 # Falta Enero 2003
@@ -394,6 +396,8 @@ save(dataset,file = paste0("salidas_intermedias/dataset_completo",Sys.Date(),".R
 #   unnest(c(data,NDVI_point))
 
 
+
+
 # datos3 = datos |> 
 #   select(-NDVI) |> 
 #   group_by(YEAR, MM) |>  # Agrupar por mes y año
@@ -411,7 +415,7 @@ save(dataset,file = paste0("salidas_intermedias/dataset_completo",Sys.Date(),".R
 #   mutate(extract_result = purrr::map2(NDVI, geometry, ~terra::extract(.x, .y))) 
 #  
 
-
+# 
 # read_NDVI = function(MM,YYYY) {
 #   MM = str_pad(as.character(MM),2,"left",pad = "0")
 #   YY = substr(as.character(YYYY),3,4)
@@ -424,7 +428,7 @@ save(dataset,file = paste0("salidas_intermedias/dataset_completo",Sys.Date(),".R
 #   }else {
 #     ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod_",YY,MM,"01_h17v05_medmndvi_COG.tif")
 #   }
-#   
+# 
 #   if (file.exists(ruta)) {
 #     NDVI = rast(ruta)
 #   } else
