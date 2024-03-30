@@ -1,0 +1,8 @@
+# Ignoramos la carpeta data_raw ya que es demasiado pesada
+data_raw/
+
+# Ignoramos el archivo uso_suelo_reclasificado.RData, por ser demasiado pesado y ademas probablemente inutil
+/data_cleaning/uso_suelo_reclasificado.RData
+
+# Idem con el archivo suelo_forestal_and.RData
+/data_cleaning/suelo_forestal_and.RData
