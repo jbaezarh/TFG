@@ -6,4 +6,9 @@ data_raw/
 
 # Idem con el archivo suelo_forestal_and.RData
 /data_cleaning/suelo_forestal_and.RData
+
+
+# Ignoramos el archivo locales de R
+.Rhistory
 .Rproj.user
+
