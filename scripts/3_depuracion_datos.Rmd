@@ -1,14 +1,16 @@
 ---
-title: "Preprocesamiento"
+title: "Depuración datos"
 author: "Juan Baeza Ruiz-Henestrosa"
 date: "`r Sys.Date()`"
-output: pdf_document
+output: html_document
 editor_options: 
   chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_knit$set(root.dir = "..") # Para que haga knitr desde el directorio del proyecto
 
 # Librerías:
 library(tidyverse)
@@ -18,7 +20,10 @@ library(mapSpain)
 library(magrittr)
 ```
 
-Cargamos el archivo de datos:
+## Lectura de los datos
+
+Cargamos el archivo de datos que hemos creado anteriormente con `1_generacion_muestra.R` para generar los puntos alteatorios en fechas aleatorias y con `2_asignacion_variables_a_localizaciones.R` para asociar a cada punto el valor correspondiente de cada variable:
+
 ```{r}
 load("salidas_intermedias/dataset_completo2024-03-27.RData")
 
@@ -59,16 +64,19 @@ Variables:
 https://desktop.arcgis.com/es/arcmap/latest/tools/spatial-analyst-toolbox/how-aspect-works.htm
     
     - curvatura: Curvatura de la superfie ()
+https://desktop.arcgis.com/es/arcmap/latest/manage-data/raster-and-images/curvature-function.htm
+
+    - dist_carretera: Distancia a la carretera más cercana (m).
     
-    - dist_carretera:
+    - dist_poblacion: Distancia a la población más cercana (m).
     
-    - dist_poblacion:
+    - dist_electr: Distancia a la línea electrica más cercana (m).
     
-    - dist_electr: 
+    - dist_ferocarril: Distancia a la vía de ferrocarril más cercana (m).
     
-    - dist_ferocarril  
-    - dist_camino 
-    - dist_sendero 
+    - dist_camino: Distancia al camino o a la vía pecuaria más cercana (m). 
+    
+    - dist_sendero: Distancia a la vía verde, al carril bici o al sendero más cercano (m). 
     
     - enp: Espacio Natural Protegido. Su valor es 1 si la observación se encuentra dentro de un espacio natural protegido o 0 en caso contrario.
     
@@ -87,10 +95,11 @@ https://desktop.arcgis.com/es/arcmap/latest/tools/spatial-analyst-toolbox/how-as
     - geometry: Geometría de la simple feature. En este caso, coordenadas del punto. 
     
 
+## Codificación variables categóricas
+
 ```{r}
 summary(datos)
 ```
-
 
 Indicamos las variables que son factores:
 
@@ -112,14 +121,16 @@ datos = datos |>
 ```
 
 
-# Valores perdidos
+## Valores perdidos
 
 ```{r}
 summary(datos)
 ```
 
-Los valores perdidos de pendiente, orientación y curvatura se encuentran todos en los límites de Andalucía, como se muestra en el siguiente gráfico. Esto nos indica que la causa de que estos valores no estén disponibles es precisamente la discrepancia entre los 
-distintos sistemas de referencia o entre los distintos polígonos utilizados para delimitar el territorio 
+Encontramos valores perdidos encuentran en las variables topográficas (pendiente, orientación y curvatura), en `población`, en `uso_suelo` y en `NDVI`.
+### Variables topográficas:
+
+Los valores perdidos de pendiente, orientación y curvatura se encuentran todos en los límites de Andalucía, como se muestra en el siguiente gráfico. Esto nos indica que la causa de que estos valores no estén disponibles es precisamente la discrepancia entre los distintos sistemas de referencia o entre los distintos polígonos utilizados para delimitar el territorio 
 
 ```{r}
 Andalucia <- esp_get_ccaa(ccaa = "Andalucía")
@@ -148,9 +159,10 @@ datos = datos |>
 summary(datos)
 ```
 
-Los demás valores perdidos se encuentran en `población`, `uso_suelo` y `NDVI`.
+
     
-    - En el caso de la población, es debido a que el dato de población para esos municipios concretos en esos años concretos no estaba disponible en la base de datos del INE. 
+### Población:    
+En el caso de la población, es debido a que el dato de población para esos municipios concretos en esos años concretos no estaba disponible en la base de datos del INE. 
     
 ```{r}
 datos |> 
@@ -161,21 +173,22 @@ datos |>
 ```
     
 
-    Ejemplo : 
+Ejemplo : 
 ```{r}
 pob = read_csv2("D:/usuario/Documents/Universidad/5º/TFG - organizado/data_raw/antropologicas/Población/poblacion_municipios.txt")[,c(1:5)]
 
 pob |> filter(CODIGO_INE3 == "18077")
 ```
 
-    Se opta en un primer momento por eliminar dichas observaciones.
+Se opta en un primer momento por eliminar dichas observaciones.
 
 ```{r}
 datos %<>% filter(!is.na(poblacion))
 ```
     
-    
-    - Uso de Suelo. Se trata de observaciones que se encuentran también en los límites de Andalucía, en este caso en la costa. Esto nos puede indicar que la causa de que este valor no esté disponible es la misma que anteriormente con las variables topográficas. Dado que el Sistema de Referencia de Coordenadas no se ha modificado, probablemente sea debido a pequeñas discrepancias entre los polígonos utilizados. Ante esto y teniendo en cuenta que son solo 3 observaciones, las eliminamos directamente.
+### Uso de suelo
+
+Se trata de observaciones que se encuentran también en los límites de Andalucía, en este caso en la costa. Esto nos puede indicar que la causa de que este valor no esté disponible es la misma que anteriormente con las variables topográficas. Dado que el Sistema de Referencia de Coordenadas no se ha modificado, probablemente sea debido a pequeñas discrepancias entre los polígonos utilizados. Ante esto y teniendo en cuenta que son solo 3 observaciones, las eliminamos directamente.
     
 ```{r}
 plot(st_geometry(andalucia_proj),reset=F)
@@ -185,7 +198,9 @@ datos = datos |>
   filter(!is.na(uso_suelo))
 ```
 
-    - El caso de los valores perdidos en NDVI es particular, ya que se debe a que no están disponibles los datos del NDVI de esos meses.
+### NDVI
+
+El caso de los valores perdidos en NDVI es particular, ya que se debe a que no están disponibles los datos del NDVI de esos meses.
     
 ```{r}
 NDVI_mes = datos |> 
@@ -206,16 +221,16 @@ NDVI_mes |>
   
 ```
 
-La cuestión principal es qué hacer con los años 2000 y 2001, porque los demás está claro que se van a imputar, pues son meses aislados. Las opciones son:
+La cuestión principal es qué hacer con los años 2000 y 2001, ya que los demás, al ser meses aislados, es razoble imputarlos. Las opciones son:
 
     1. Eliminar las observaciones de los años 2000 y 2001 ya que no está disponible el NDVI para esos años. Es una opción razonable pues se nos queda una franja temporal de 20 años que para ser un estudio introductorio puede ser razonable. A partir de pruebas rápidas hechas con los datos elimninando estos años se optiene un rendimiento razonable
     
-```{r}
-datos |> 
-  st_drop_geometry() |> 
-  filter(year(date) %in% 2000:2001) |> 
-  count()
-```
+    ```{r}
+    datos |> 
+      st_drop_geometry() |> 
+      filter(year(date) %in% 2000:2001) |> 
+      count()
+    ```
     
     Se perderían 1468 observaciones (aunque podrían generarse más observaciones en los demás años si fuese necesario).
     
@@ -224,8 +239,7 @@ datos |>
     La opción de obtener el NDVI a partir de otras fuentes la he explorado, pero no la considero viable porque al obtener el índice a partir de otro satélite se obtienen valores que tienen un sesgo, imagino que debido a la sensibilidad del sensor de cada satélite. En la carpeta de data_raw en vegetación, se encuentran los valores medios mensuales del NDVI facilitados por el NOAA (National Oceanic and Atmospheric Administration), pero se puede comprobar que son valores significativamente más bajos que los del satélite MODIS. Además, las mediciones están tomadas en días diferentes. Es decir, los datos no son comparables y descarto la opción de usarlo.
     
 
-En este caso, se opta por la primera opción y se reduce el marco temporal del estudio a los años 2000 a 2001. 
-
+En este caso, se opta por la primera opción y se reduce el marco temporal del estudio a los años 2002 a 2022. 
 ```{r}
 datos %<>% filter(!year(date) %in% 2000:2001)
 ```
@@ -287,7 +301,7 @@ ind_modificados = is.na(datos$NDVI) & (paste(year(datos$date),str_pad(as.charact
 datos[ind_modificados,]$NDVI = missing_NDVI$NDVI
 ```
 
-Las observaciones para las que el NDVI no está disponible aunque si existe el archivo raster con la información para ese mes son debidas a que discrepancias entre los límites de los polígonos. Como en casos anteriores, se eliminan ya que son solo 16:
+Las observaciones para las que el NDVI no está disponible aunque si existe el archivo raster con la información para ese mes son debidas a discrepancias entre los límites de los polígonos. Como en casos anteriores, se eliminan ya que son solo 16:
 
 ```{r}
 datos |> st_drop_geometry() |> filter(is.na(NDVI)) |> count() # 16
