@@ -1,0 +1,82 @@
+---
+output:
+  pdf_document:
+    keep_tex: yes
+    number_sections: yes
+    citation_package: natbib  # comentado usa: pandoc-citeproc
+    template: latex/templateMemoriaTFE.tex
+    pandoc_args: ["--metadata-file=cabecera_capitulos.yaml"]
+  html_document: default
+#bibliography: bib/library.bib # descomentar si: editor visual RStudio  
+---
+
+<!-- escribir 2 para capítulo 3 -->
+<!-- \setcounter{chapter}{2} -->
+<!-- \pagenumbering{arabic} -->
+
+`r xfun::file_string('cabecera_capitulos.tex')`
+
+```{r include=FALSE}
+source("cabecera_chunk_inicio.R")
+```
+
+# Capítulo 1: Introducción
+
+## Introducción
+
+Posible estructura de la introducción obtenida de "Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian"
+
+1. Importancia de los bosques y de su monitorización para una adecuada gestión
+2. Papel de los incendios forestales en el ecosistema.Influencia del humano. Consecuencias de los incendios para las personas
+3. Efectos del cambio climático y factor humano
+4. Dificultad de la predicción de incendios forestales y necesidad de la misma
+5. Uso de AI y ML para abordar el problema
+<!-- 6. Estado del arte del campo de estudio -->
+7. Enfoque del trabajo presente
+
+
+Spain could be considered as a key area for wildfire modeling since it is, by far, the most fire-affected territory within the European Union -> Alguna característica relevante de Andalucía ¿Biodiversidad?
+
+INFOCA
+
+
+## Objetivos
+
+El objetivo de esta investigación será construir modelos que permitan predecir el riesgo de incendio forestal en la Comunidad Autónoma de Andalucía.
+
+Subobjetivos: 
+
+1. Construir un conjunto de datos que permita la realización de análisis y la construcción de modelos de Machine Learning para la predicción del riesgo de incendio forestal en Andalucía a partir de un estudio previo del problema. 
+
+2. Modelizar el riesgo de de incendio forestal usando distintos algoritmos de ML y comparar sus resultados
+
+3. Analizar potenciales casos de interés.
+
+## Hipótesis
+
+"Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian"
+
+Tabla 6
+
+## Revisión bibliográfica
+"Spain on fire: A novel wildfire risk assessment model based on image satellite processing and atmospheric information, Helena Liz-López , Javier Huertas-Tato a , Jorge Pérez-Aracil, Carlos Casanova-Mateo, Julia Sanz-Justo, David Camacho"
+
+"A review of machine learning applications in wildfire science and management Piyush Jain, Sean C.P. Coogan, Sriram Ganapathi Subramanian, Mark Crowley, Steve Taylor, and Mike D. Flannigan"
+
+"Los incendios forestales en Andalucía: investigación exploratoria y modelos explicativos" Oliver Gutiérrez-Hernández (1*), José María Senciales-González (2), Luis V. García (1)
+
+## Análisis del problema
+<!-- Se puede incluir directamente en la introducción -->
+
+<!-- Área de de estudio -->
+El área de estudio (Figura 1) abarca el conjunto de la comunidad autónoma de Andalucía (España), la región más meridional de la península Ibérica, un territorio de 87.268 km2, donde el 50,8 % de la superficie está ocupada por usos y cubiertas forestales.
+
+-> MAPA
+
+<!-- Franja temporal del estudio -->
+2002-2022 Razones:
+  - Disponibilidad datos
+  - Cambios en los regímenes de incendios
+  
+  
+<!-- ¿Qué es un incendio forestal? -->

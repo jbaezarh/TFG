@@ -1,0 +1,43 @@
+---
+output:
+  pdf_document:
+    keep_tex: yes
+    number_sections: yes
+    citation_package: natbib  # comentado usa: pandoc-citeproc
+    template: latex/templateMemoriaTFE.tex
+    pandoc_args: ["--metadata-file=cabecera_capitulos.yaml"]
+  html_document: default
+#bibliography: bib/library.bib # descomentar si: editor visual RStudio  
+---
+
+<!-- escribir 2 para capítulo 3 -->
+<!-- \setcounter{chapter}{2} --> 
+<!-- \pagenumbering{arabic} -->
+
+`r xfun::file_string('cabecera_capitulos.tex')`
+
+```{r include=FALSE}
+source("cabecera_chunk_inicio.R")
+```
+
+
+# Capítulo 3: Cuerpo
+
+<!-- Aquí es donde se empieza a poner interesante la cosa, se trata de aplicar las técnicas ya mencionadas a los datos. -->
+
+## Obtención y organización de los datos
+
+## Depuración y preprocesamiento
+
+## Análisis exploratorio
+
+## Estudio de las variables
+
+## Modelización
+
+### Modelo 1
+### Modelo 2
+
+## Comparación
+
+

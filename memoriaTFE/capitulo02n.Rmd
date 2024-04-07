@@ -1,0 +1,82 @@
+---
+output:
+  pdf_document:
+    keep_tex: yes
+    number_sections: yes
+    citation_package: natbib  # comentado usa: pandoc-citeproc
+    template: latex/templateMemoriaTFE.tex
+    pandoc_args: ["--metadata-file=cabecera_capitulos.yaml"]
+  html_document: default
+#bibliography: bib/library.bib # descomentar si: editor visual RStudio  
+---
+
+<!-- escribir 2 para capítulo 3 -->
+<!-- \setcounter{chapter}{2} --> 
+<!-- \pagenumbering{arabic} -->
+
+`r xfun::file_string('cabecera_capitulos.tex')`
+
+```{r include=FALSE}
+source("cabecera_chunk_inicio.R")
+```
+
+
+# Título del Capítulo
+
+# Capítulo 2: Preliminares
+
+<!-- Definir de forma breve y concisa todas las técnicas que serán utilizadas. -->
+
+## Información georreferenciada 
+
+<!-- El objetivo de esta sección es que alguien que puede no estar habituado al manejo de datos espaciales pueda entender, aunque no necesariamente en detalle, las técnicas que se han utilizado hasta poder obtener un data.frame que poder utilizar para realizar todo el análisis. -->
+
+Usar como modelo la introducción de: https://r.geocompx.org/intro
+
+Todos los datos usados en este trabajo son datos georreferenciados, por lo que es fundamental introducir, aunque sea de forma muy general, cuáles son los tipos de datos más utilizados para trabajar con este tipo de información, cuáles son sus características y cuáles son las herramientas disponibles para trabajar con ellos.
+
+Vector data 
+
+Raster data
+
+CRS -> UTM30N
+
+REPRODUCTIBILIDAD -> R
+ sf (tidyverse philosofy) and terra (raster sucessor) packages
+ 
+
+
+## Análisis exploratorio de los datos
+
+
+## Preprocesamiento de los datos
+
+## Herramientas
+
+Lenguaje R [...], entorno de trabajo RStudio [...]. Paquetes de R [...] repositorio CRAN [...].
+
+"Paquetes" utilizados:
+ - tidyverse:
+ 
+    • ggplot2, para la visualizaciónn.
+    • dplyr, para la manipulaciónn.
+    • tidyr, para la ordenación.?
+    • readr, para la importación.
+    • purrr, para la programación funcional
+
+
+- tidymodels
+
+- sf
+
+- terra
+
+- nasapower: obtenicón de información climática satelital
+
+- mapSpain: 
+
+
+
+
+## Fuentes de los datos
+
