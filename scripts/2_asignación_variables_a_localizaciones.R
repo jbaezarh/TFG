@@ -23,7 +23,7 @@ andalucia_proj <- st_transform(Andalucia,crs_reference)
 # Cargamos la muestra de puntos 
 load("salidas_intermedias/sample_2024-03-27.RData")
 
-# Eliminamos las observaciones que no tienen fecha
+# Eliminamos las observaciones que no tienen fecha porque no podemos usarlas
 sample <- na.omit(sample)
 
 # # Comprobación gráfica

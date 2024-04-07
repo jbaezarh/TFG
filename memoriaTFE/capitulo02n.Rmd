@@ -21,8 +21,6 @@ source("cabecera_chunk_inicio.R")
 ```
 
 
-# Título del Capítulo
-
 # Capítulo 2: Preliminares
 
 <!-- Definir de forma breve y concisa todas las técnicas que serán utilizadas. -->
@@ -31,7 +29,7 @@ source("cabecera_chunk_inicio.R")
 
 <!-- El objetivo de esta sección es que alguien que puede no estar habituado al manejo de datos espaciales pueda entender, aunque no necesariamente en detalle, las técnicas que se han utilizado hasta poder obtener un data.frame que poder utilizar para realizar todo el análisis. -->
 
-Usar como modelo la introducción de: https://r.geocompx.org/intro
+<!-- Usar como modelo la introducción de: https://r.geocompx.org/intro -->
 
 Todos los datos usados en este trabajo son datos georreferenciados, por lo que es fundamental introducir, aunque sea de forma muy general, cuáles son los tipos de datos más utilizados para trabajar con este tipo de información, cuáles son sus características y cuáles son las herramientas disponibles para trabajar con ellos.
 
@@ -44,12 +42,23 @@ CRS -> UTM30N
 REPRODUCTIBILIDAD -> R
  sf (tidyverse philosofy) and terra (raster sucessor) packages
  
+## Ingeniería de características
+Codificación variables categóricas
+ - dummy variables
+ 
+<!-- Escalado y normalización -->
+
+Depuración datos
+  - Imputaciones
+  - Eliminación
+  
 
 
 ## Análisis exploratorio de los datos
 
 
-## Preprocesamiento de los datos
+## Modelos 
+
 
 ## Herramientas
 
@@ -76,7 +85,5 @@ Lenguaje R [...], entorno de trabajo RStudio [...]. Paquetes de R [...] reposito
 - mapSpain: 
 
 
-
-
 ## Fuentes de los datos
-
+<!-- Puedo añadir una tabla como la que tengo y listo -->

@@ -36,6 +36,15 @@
 \urlstyle{same}  % don't use monospace font for urls
 %
 \usepackage[usenames,dvipsnames]{xcolor}  %new PLLC
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 \IfFileExists{parskip.sty}{%
 \usepackage{parskip}
 }{% else
@@ -589,9 +598,9 @@ Subobjetivos:
 \def\labelenumi{\arabic{enumi}.}
 \item
   Construir un conjunto de datos que permita la realización de análisis
-  y la construcción de modelos de Machine Learning para la predicción
-  del riesgo de incendio forestal en Andalucía a partir de un estudio
-  previo del problema.
+  y la posterior construcción de modelos de Machine Learning para la
+  predicción del riesgo de incendio forestal en Andalucía a partir de un
+  estudio previo del problema.
 \item
   Modelizar el riesgo de de incendio forestal usando distintos
   algoritmos de ML y comparar sus resultados
@@ -607,7 +616,14 @@ Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil
 Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh,
 Jamshid Einali and Jinhu Bian''
 
-Tabla 6
+\begin{figure}
+\centering
+\includegraphics{D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png}
+\caption{Spatial Prediction of Wildfire Susceptibility Using Field
+Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh,
+Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin
+Naboureh, Jamshid Einali and Jinhu Bian.}
+\end{figure}
 
 \hypertarget{revisiuxf3n-bibliogruxe1fica}{%
 \section{Revisión bibliográfica}\label{revisiuxf3n-bibliogruxe1fica}}

@@ -46,7 +46,7 @@ El objetivo de esta investigación será construir modelos que permitan predecir
 
 Subobjetivos: 
 
-1. Construir un conjunto de datos que permita la realización de análisis y la construcción de modelos de Machine Learning para la predicción del riesgo de incendio forestal en Andalucía a partir de un estudio previo del problema. 
+1. Construir un conjunto de datos que permita la realización de análisis y la posterior construcción de modelos de Machine Learning para la predicción del riesgo de incendio forestal en Andalucía a partir de un estudio previo del problema. 
 
 2. Modelizar el riesgo de de incendio forestal usando distintos algoritmos de ML y comparar sus resultados
 
@@ -56,7 +56,7 @@ Subobjetivos:
 
 "Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian"
 
-Tabla 6
+![Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian.](D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png)
 
 ## Revisión bibliográfica
 "Spain on fire: A novel wildfire risk assessment model based on image satellite processing and atmospheric information, Helena Liz-López , Javier Huertas-Tato a , Jorge Pérez-Aracil, Carlos Casanova-Mateo, Julia Sanz-Justo, David Camacho"
