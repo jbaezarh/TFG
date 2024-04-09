@@ -1,0 +1,154 @@
+---
+title: "Análisis Exploratorio"
+author: "Juan Baeza Ruiz-Henestrosa"
+date: "`r Sys.Date()`"
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(skimr)
+library(sf)
+library(corrplot)
+```
+
+
+Cargamos el archivos de datos depurados:
+
+```{r}
+load("salidas_intermedias/datos_depurados2024-03-30.RData")
+```
+
+```{r}
+datos <- datos |> 
+  mutate(uso_suelo = uso_suelo |> 
+           as.character() |> 
+           str_sub(2) |> 
+           as.factor()) |> 
+  st_drop_geometry()
+```
+
+
+### Resumen
+
+```{r}
+datos |> skim()
+```
+
+Se tienen variables numéricas y categóricas. Las variables numéricas presentan cada una distinta variabilidad, lo que sugiere que probablemente sea conveniente trabajar con los datos tipificados.
+
+## Variables numéricas
+
+18 variables numéricas
+
+```{r}
+datos_numeric = datos |> select(is.numeric)
+
+# datos_numeric$fire = as.numeric(datos$fire)
+```
+
+
+### Correlaciones:
+
+```{r}
+R = cor(datos_numeric)
+```
+
+
+```{r}
+corrplot(R,method = "ellipse",type = "upper")
+
+summary(R-diag(diag(R)))
+```
+
+Las variables más correlacionadas son T2M con RH2M (negativamente, -0.79), T2M con GWETTOP (negativamente, -0.77) y GWETTOP con R2HM (positivamente, 0.78). Tiene sentido que la humedad del aire a dos esté correlacionada positivamente con la humedad del suelo y que ambas estén negativamente correlacionadas con la temperatura del aire.
+
+
+```{r}
+cor(datos_numeric,as.numeric(datos$fire))
+```
+
+### Gráfico de coordenadas paralelas
+```{r}
+library(GGally)
+
+datos_numeric |> 
+  ggparcoord(alphaLines=0.1) +
+  xlab('') + ylab('') + scale_x_discrete(labels=colnames(datos_numeric)) +
+  ggtitle("Tipificación a normal estándar (por defecto)") +
+  theme(plot.title = element_text(size = 9),
+        axis.text.x = element_text(angle = 90))
+```
+
+### Matriz de dispersion
+```{r}
+datos_numeric |>  
+  mutate(fire = datos$fire) |> 
+  ggpairs(aes(color=fire))
+```
+
+
+### Box-plot
+
+Se hace primero el boxplot con todas las variables:
+
+```{r}
+boxplot(datos_numeric)
+```
+
+
+### PCA
+
+```{r}
+pca <- princomp(datos_numeric,cor=T)
+
+summary(pca)
+```
+
+Se necesitan 11 componentes principales para explicar al menos el 80% de la variabilidad de los datos (tipificados).
+
+### Cluster
+
+Se aplica un algoritmo de clustering basado en k-medias adaptado para grandes conjuntos de datos.
+
+```{r}
+library(cluster)
+clara<- clara(datos_numeric,2)
+table(clara$clustering)
+
+# Si los datos no están normalizados, el método no es capaz de separar los datos
+```
+
+Vemos que la partición obtenida con los datos a penas consigue separarlos. Se debe a que algunas variables tienen mucha más variabilidad que otras y k-medias no funciona bien cuando las variables tienen varianzas parecidas. 
+
+Probamos a normalizarlos antes de aplicar el algoritmo.
+
+```{r}
+# Probamos tipificando los datos:
+clara = datos_numeric |> 
+  scale() |> 
+  clara(k=2)
+
+table(clara$clustering)
+# Ahora el algoritmo consigue separar mejor los datos
+
+t = table(clara$clustering,datos$fire)
+t = rbind(t[2,],t[1,])
+rownames(t) <- paste0("cluster_",c(1,2))
+colnames(t) <- c("No fire","Fire")
+t
+# addmargins(t)
+
+prop.table(t,2)*100
+
+sum(diag(t))/nrow(datos) # Proporción de observaciones "correctamente separada"
+```
+Vemos que obtenemos la partición generada con los datos normalizado si está aportando información con respecto a la variable respuesta. El 80% de las observaciones en las que ha habido un incendio se encuentran en el cluster 2, mientras que el 63% de las observaciones en las que no ha habido incendios se encuentran en el cluster 1.
+
+

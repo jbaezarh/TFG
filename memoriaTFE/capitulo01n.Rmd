@@ -26,13 +26,63 @@ source("cabecera_chunk_inicio.R")
 
 Posible estructura de la introducción obtenida de "Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian"
 
-1. Importancia de los bosques y de su monitorización para una adecuada gestión
-2. Papel de los incendios forestales en el ecosistema.Influencia del humano. Consecuencias de los incendios para las personas
-3. Efectos del cambio climático y factor humano
-4. Dificultad de la predicción de incendios forestales y necesidad de la misma
-5. Uso de AI y ML para abordar el problema
+<!-- 1. Importancia de los bosques y de su monitorización para una adecuada gestión. -->
+Superficie forestal en Andalucía.
+Principales usos de los bosques
+Biodiversidad
+Andalucía es la segunda comunidad de España con más terreno forestal, con 4.325.378 ha de suelo forestal que suponen el 49.37% de su superficie.
+
+(https://www.miteco.gob.es/es/biodiversidad/temas/inventarios-nacionales/inventario-forestal-nacional/superficie_por_uso.html)
+
+
+<!-- 2. Papel de los incendios forestales en el ecosistema.Influencia del humano. Consecuencias de los incendios para las personas. -->
+En 2022, 15.786,64 hectarias fueron afectadas por el fuego en Andalucía, practicamente el doble de la media anual de los 10 años anteriores,  8873,68 hectarias [Memoria Plan INFOCA 2022].
+
+Riesgo para la biodiversidad vegetal y animal. 
+Daño a la infraestructura y riesgo para la vida de las personas.
+Costes incendios forestales [Barómetro de las catastrofes Naturales en España 2022]
+
+
+En el Plan Estratégico Estatal del Patrimonio Natural y de la Biodiversidad a 2030 [Cita] "identifica las principales presiones y amenazas, entre las cuales destaca el aumento de la superficie forestal afectada por incendios forestales en 2022".
+
+Incendios forestales (>1ha) vs conatos (<=1ha).
+
+Incendios forestales: ocurren en monte (parte incendio).
+
+Las causas de los incendios de pueden agregar en dos grupos: causas naturales o causas antropogénicas.
+Las últimas se dividen en accidentes, neglicencias o intencionados. [... Explicación breve cada una]. En 2022, solo el 2.23% de los incendios fueron debidos a causas naturales, mientras que un 35.01% fue debido a negligencias, un 40.91% fue intencionado y un 6.47% fue debido a causas accidentales. 
+
+Estas cifras muestran la importancia del factor humano en el estudio de los incendios forestales. En [Human-caused wildfire risk rating for prevention planning in Spain,Jesús Martínez, Cristina Vega-Garcia, Emilio Chuvieco,2008] se ha estudiado el factor humano en la causa de incendios forestales en España, detectando las variables más significativas en los modelos de predicción construidos (alcanzando una tasa de acierto del 76% en los datos test).
+
+
+
+<!-- 3. Efectos del cambio climático y factor humano -->
+
+
+<!-- 4. Dificultad de la predicción de incendios forestales y necesidad de la misma -->
+
+
+<!-- 5. Uso de AI y ML para abordar el problema. GIS. -->
+
+
 <!-- 6. Estado del arte del campo de estudio -->
-7. Enfoque del trabajo presente
+
+
+<!-- 7. Enfoque del trabajo presente -->
+
+En el presente trabajo se pretende estudiar el riesgo de que los distintos puntos del territorio Andaluz se vean afectados por un incendio forestal en un momento concreto a través de [26] variables explicativas (antropogénicas, hidrográficas, topográficas, meteorológicas y vegetación). A diferencia de la mayoría de estudios similares realizados, se aborda el problema desde una perspectiva dinámica. Esto significa que no se pretende obtener un valor estacionario o estático del riesgo de incendio forestal en cada punto, si no que se busca estimar el riesgo de que una zona concreta se vea afectada por un incendio forestal en un momento concreto. Para ello, se consideran los valores de las variables correspondiente al momento concreto de la observación (usando la información más desagregada temporal y especialmente de la que se ha podido disponer). 
+
+Si bien las variables topográficas, hidrográfica y las ligadas a la infraestructura se han considerado constantes en los 20 años del periodo en estudio (por considerarse estructurales), las variables ligadas a las condiciones climáticas, al número de habitantes del municipio y al estado de la vegetación se consideran relativas al momento concreto de cada observación. 
+
+Población: variaciones en las tendencias demográficas tienen un impacto importante sobre los regímenes de incendios que se producen [Añadir fuente]
+
+Variables climáticas y del estado de la vegetación: Variables con una gran variabilidad temporal que tienen un impacto directo en la aparición y propagación de los incendios forestales.
+
+Este enfoque hace posible que se tengan en cuenta las variaciones que se producen en las variables a lo largo del tiempo (cambios en el número de habitantes, en las condiciones climáticas y en el estado de la vegetación), haciendo así posible añadir una nueva dimensión al estudio.
+
+
+
+
 
 
 Spain could be considered as a key area for wildfire modeling since it is, by far, the most fire-affected territory within the European Union -> Alguna característica relevante de Andalucía ¿Biodiversidad?
@@ -65,11 +115,12 @@ Subobjetivos:
 
 "Los incendios forestales en Andalucía: investigación exploratoria y modelos explicativos" Oliver Gutiérrez-Hernández (1*), José María Senciales-González (2), Luis V. García (1)
 
+
 ## Análisis del problema
 <!-- Se puede incluir directamente en la introducción -->
 
 <!-- Área de de estudio -->
-El área de estudio (Figura 1) abarca el conjunto de la comunidad autónoma de Andalucía (España), la región más meridional de la península Ibérica, un territorio de 87.268 km2, donde el 50,8 % de la superficie está ocupada por usos y cubiertas forestales.
+El área de estudio abarca el conjunto de la comunidad autónoma de Andalucía (España), la región más meridional de la península Ibérica, un territorio de 87.268 km2, donde el 50,8 % de la superficie está ocupada por usos y cubiertas forestales.
 
 -> MAPA
 
@@ -80,3 +131,4 @@ El área de estudio (Figura 1) abarca el conjunto de la comunidad autónoma de A
   
   
 <!-- ¿Qué es un incendio forestal? -->
+
