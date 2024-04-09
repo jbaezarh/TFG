@@ -16,26 +16,20 @@ library(tidyverse)
 library(skimr)
 library(sf)
 library(corrplot)
+library(GGally) # Coordenadas paralelas
+library(ggpubr)
+
 ```
 
 
 Cargamos el archivos de datos depurados:
 
 ```{r}
-load("salidas_intermedias/datos_depurados2024-03-30.RData")
-```
-
-```{r}
-datos <- datos |> 
-  mutate(uso_suelo = uso_suelo |> 
-           as.character() |> 
-           str_sub(2) |> 
-           as.factor()) |> 
-  st_drop_geometry()
+load("salidas_intermedias/datos_depurados2024-04-09.RData")
 ```
 
 
-### Resumen
+### Resumen estadístico
 
 ```{r}
 datos |> skim()
@@ -48,7 +42,7 @@ Se tienen variables numéricas y categóricas. Las variables numéricas presenta
 18 variables numéricas
 
 ```{r}
-datos_numeric = datos |> select(is.numeric)
+datos_numeric = datos |> select(where(is.numeric))
 
 # datos_numeric$fire = as.numeric(datos$fire)
 ```
@@ -58,32 +52,70 @@ datos_numeric = datos |> select(is.numeric)
 
 ```{r}
 R = cor(datos_numeric)
-```
 
-
-```{r}
 corrplot(R,method = "ellipse",type = "upper")
 
 summary(R-diag(diag(R)))
 ```
 
-Las variables más correlacionadas son T2M con RH2M (negativamente, -0.79), T2M con GWETTOP (negativamente, -0.77) y GWETTOP con R2HM (positivamente, 0.78). Tiene sentido que la humedad del aire a dos esté correlacionada positivamente con la humedad del suelo y que ambas estén negativamente correlacionadas con la temperatura del aire.
+Las variables más correlacionadas son T2M con RH2M (negativamente, -0.79), T2M con GWETTOP (negativamente, -0.77) y GWETTOP con R2HM (positivamente, 0.78). Tiene sentido que la humedad del aire a dos esté correlacionada positivamente con la humedad del suelo y que ambas estén -egativamente correlacionadas con la temperatura del aire.
 
 
+<!-- Esto puede no tener sentido siendo estrictos -->
 ```{r}
 cor(datos_numeric,as.numeric(datos$fire))
 ```
+Las variables más correladas con la variable respuesta son T2M, GWETTOP, RH2M.
+
 
 ### Gráfico de coordenadas paralelas
 ```{r}
-library(GGally)
-
-datos_numeric |> 
-  ggparcoord(alphaLines=0.1) +
+datos |> 
+  select(fire,where(is.numeric)) |> 
+  ggparcoord(columns=2:19,alphaLines=0.1,groupColumn = "fire") +
   xlab('') + ylab('') + scale_x_discrete(labels=colnames(datos_numeric)) +
   ggtitle("Tipificación a normal estándar (por defecto)") +
   theme(plot.title = element_text(size = 9),
         axis.text.x = element_text(angle = 90))
+```
+
+
+Considerando las variables tipificadas, se observa que aquellas con más variabilidad son PRECTOTCORR, población, dist_poblacion y dist_camino. Todas estas variables tienen un sesgo positivo, lo cual es razonable pues todas ellas son variables que solo toman valores positivos.
+
+Se puede que la variable PRECTOTCORR presenta valores atípicamente altos, que se dan en observaciones en las que no se ha observado incendio. 
+
+```{r}
+datos |> 
+  ggplot(aes(x=fire,y=PRECTOTCORR)) +
+  geom_boxplot()
+```
+
+```{r}
+by(datos$PRECTOTCORR,datos$fire,summary)
+```
+
+Acumular 59.90mm de lluvia en un día es un valor posible, probablemente atípico en esta región pero no hay motivo para considerar que es un valor erróneo. Es coherente que las observaciones en las que se han registrado mayores niveles de precipitación sean observaciones negativas.
+
+En el gráfico también observamos que hay valores atípicamente altos de la variable población.
+Se puede observar que los valores más altos de elevacion, de dist_carretera y de dist_electr se corresponden con observaciones negativas.
+
+```{r}
+g0 = datos |> 
+  ggplot(aes(x=fire)) 
+
+g1 = g0 +
+  geom_boxplot(aes(y=elevacion))
+
+g2 = g0 +
+  geom_boxplot(aes(y=dist_carretera))
+
+
+g3 = g0 +
+  geom_boxplot(aes(y=dist_electr))
+
+
+ggarrange(g1,g2,g3)
+
 ```
 
 ### Matriz de dispersion
@@ -103,8 +135,45 @@ boxplot(datos_numeric)
 ```
 
 
-### PCA
+```{r}
+boxplots <- map(names(datos_numeric), ~ ggplot(datos, aes(x = fire, y = .data[[.x]])) +
+                geom_boxplot() +
+                labs(title = paste("Boxplot de", .x, "en función de fire")))
+```
 
+
+## Variables categóricas
+
+Las variables date, cod_municipio y municipio son "identificadoras". Las variables explicativas categóricas son WD10M, orientacion, enp y uso_suelo. 
+
+
+```{r}
+datos_categ <- datos |> select(WD10M,orientacion,enp,uso_suelo) 
+```
+
+### Histogramas
+
+```{r}
+histogramas <- map(names(datos_categ), ~ ggplot(datos, aes(x = .data[[.x]], fill = fire)) +
+                    geom_bar(position = "dodge", alpha = 0.8) +
+                    labs(title = .x)+theme(axis.text.x = element_text(size=7)))
+
+ggarrange(plotlist = histogramas, ncol = 2, nrow = ceiling(length(histogramas)/2))
+
+```
+
+WD10M: viento de sur - oeste - norte -> más observaciones positivas
+
+orientación: orientacion este - sur - suroeste -> Más observaciones positivas
+
+enp: no hay diferencias observables
+
+uso_suelo: no se pueden sacar conclusiones pues las diferencias se deben al procedimiento de obtención de los datos
+
+
+## PCA
+
+### Solo variables numericas
 ```{r}
 pca <- princomp(datos_numeric,cor=T)
 
@@ -113,8 +182,21 @@ summary(pca)
 
 Se necesitan 11 componentes principales para explicar al menos el 80% de la variabilidad de los datos (tipificados).
 
-### Cluster
+### Todas las variables
+```{r}
+# Usamos model.matrix para trnasformar los factores usando variables dummies:
+M = model.matrix(fire~.-1,data=datos |> select(-c(date,municipio,cod_municipio)))
 
+pca <- princomp(M,cor=T)
+
+summary(pca)
+```
+
+Se necesitan 30 componentes principales para explicar el 80% de la varianza de los datos.
+
+## Cluster
+
+### Variables numéricas
 Se aplica un algoritmo de clustering basado en k-medias adaptado para grandes conjuntos de datos.
 
 ```{r}
@@ -149,6 +231,30 @@ prop.table(t,2)*100
 
 sum(diag(t))/nrow(datos) # Proporción de observaciones "correctamente separada"
 ```
-Vemos que obtenemos la partición generada con los datos normalizado si está aportando información con respecto a la variable respuesta. El 80% de las observaciones en las que ha habido un incendio se encuentran en el cluster 2, mientras que el 63% de las observaciones en las que no ha habido incendios se encuentran en el cluster 1.
+Vemos que obtenemos la partición generada con los datos normalizado si está aportando información con respecto a la variable respuesta. El 84% de las observaciones en las que ha habido un incendio se encuentran en el cluster 2, mientras que el 50% de las observaciones en las que no ha habido incendios se encuentran en el cluster 1.
 
+
+### Todas las variables
+
+```{r}
+# Probamos tipificando los datos:
+clara = M |> 
+  scale() |> 
+  clara(k=2)
+
+table(clara$clustering)
+# Ahora el algoritmo consigue separar mejor los datos
+
+t = table(clara$clustering,datos$fire)
+rownames(t) <- paste0("cluster_",c(1,2))
+colnames(t) <- c("No fire","Fire")
+t
+# addmargins(t)
+
+prop.table(t,2)*100
+
+sum(diag(t))/nrow(datos) # Proporción de observaciones "correctamente separada"
+```
+
+No parece aportar nada en el análisis.
 

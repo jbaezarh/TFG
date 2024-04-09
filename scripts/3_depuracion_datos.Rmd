@@ -54,7 +54,6 @@ Variables:
     
     - PRECTOTCORR: Precipitation Corrected.  The bias corrected average of total precipitation at the surface of the earth in water mass (includes water content in snow) (mm/day).
 
-    
     - elevacion: Elevación sobre el nivel del mar (m).
     
     - pendiente: Pendiente del terreno (º).
@@ -120,6 +119,14 @@ datos = datos |>
                            labels = c("Plano","N","NE","E","SE","S","SW","W","NW","N")))
 ```
 
+De forma similar, se codifica la dirección del viento.
+
+```{r}
+datos = datos |> 
+  mutate(WD10M = cut(WD10M,
+                           breaks = c(0,22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5,360),
+                           labels = c("N","NE","E","SE","S","SW","W","NW","N")))
+```
 
 ## Valores perdidos
 
@@ -197,6 +204,17 @@ datos |> filter(is.na(uso_suelo)) |> st_geometry() |> plot(pch=16,col="red",add=
 datos = datos |>  
   filter(!is.na(uso_suelo))
 ```
+
+El uso de suelo se clasifica en 3 niveles de mayor a menor nivel de desagregación. En el nivel 1 solo hay 5 categorías, en el nivel 2 hay 15 categorías y en el nivel 3 hay 45 categorías. Trabajaremos con el nivel de desagregación 2.
+
+```{r}
+datos <- datos |> 
+  mutate(uso_suelo = uso_suelo |> 
+           as.character() |> 
+           str_sub(0,2) |> 
+           as.factor()) 
+```
+
 
 ### NDVI
 
@@ -315,11 +333,18 @@ datos %<>% filter(!is.na(NDVI))
 El NDVI en teoría toma valores entre -1 y 1, pero en todas los archivos disponibles en la REDIAM solo toma valores entre 0 y 1. Esto solo puede deberse al hecho de que está rescalado, aunque no aparece explícitamente mencionado en ningún sitio.
 
 
+```{r}
+datos <- datos |> 
+  st_drop_geometry()
+```
+
+
+
 Guardamos el conjunto de datos depurado:
 ```{r}
 # save(datos, file = paste0("salidas_intermedias/datos_depurados",Sys.Date(),".RData"))
 
-# "salidas_intermedias/datos_depurados2024-03-30.RData"
+# "salidas_intermedias/datos_depurados2024-04-09.RData"
 ```
 
 
