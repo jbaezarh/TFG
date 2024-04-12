@@ -35,9 +35,85 @@ Todos los datos usados en este trabajo son datos georreferenciados, por lo que e
 
 Vector data 
 
+The geographic vector data model is based on points located within a coordinate reference system (CRS). Points can represent self-standing features (e.g., the location of a bus stop) or they can be linked together to form more complex geometries such as lines and polygons.
+
+The sf package provides classes for geographic vector data and a consistent command-line interface to important low level libraries for geocomputation:
+
+GDAL, for reading, writing and manipulating a wide range of geographic data formats, covered in Chapter 8
+PROJ, a powerful library for coordinate system transformations, which underlies the content covered in Chapter 7 and 7
+GEOS, a planar geometry engine for operations such as calculating buffers and centroids on data with a projected CRS, covered in Chapter 5
+S2, a spherical geometry engine written in C++ developed by Google, via the s2 package, covered in Section 2.2.9 below and in Chapter 7
+
+Simple features is an open standard developed and endorsed by the Open Geospatial Consortium (OGC), a not-for-profit organization whose activities we will revisit in a later chapter (in Section 8.2). Simple features is a hierarchical data model that represents a wide range of geometry types:the most commons are points, lines, polygons and their respective ‘multi’ versions (which group together features of the same type into a single feature). 
+
+sf objects are easy to subset: the code below shows how to return an object containing only the first two rows and the first three columns of the world object. The output shows two major differences compared with a regular data.frame: the inclusion of additional geographic metadata (Geometry type, Dimension, Bounding box and coordinate reference system information), and the presence of a ‘geometry column’, here named geom.
+
+A more specific question from an R perspective is “why use the sf package”? There are many reasons (linked to the advantages of the simple features model):
+Fast reading and writing of data
+Enhanced plotting performance
+sf objects can be treated as data frames in most operations
+sf function names are relatively consistent and intuitive (all begin with st_)
+sf functions can be combined with the |> operator and works well with the tidyverse collection of R packages.
+
+
+Geometries are the basic building blocks of simple features. Simple features in R can take on one of the 18 geometry types supported by the sf package. In this chapter we will focus on the seven most commonly used types: POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, MULTIPOLYGON and GEOMETRYCOLLECTION
+
+Simple features consist of two main parts: geometries and non-geographic attributes
+
+[graficos/02-sfdiagram.png]
+
+Non-geographic attributes represent the name of the feature or other attributes such as measured values, groups, and other things. (Basically a data.frame / tibble).
+
+Objects of class sf represent such data by combining the attributes (data.frame) with the simple feature geometry column (sfc). They are created with st_sf().
+
+2.2.6 Simple feature geometries (sfg)
+The sfg class represents the different simple feature geometry types in R: point, linestring, polygon (and their ‘multi’ equivalents, such as multipoints) or geometry collection.
+
+2.2.7 Simple feature columns (sfc)
+One sfg object contains only a single simple feature geometry. A simple feature geometry column (sfc) is a list of sfg objects, which is additionally able to contain information about the coordinate reference system in use
+
+
+
 Raster data
 
+2.3 Raster data
+The spatial raster data model represents the world with the continuous grid of cells (often also called pixels; Figure 2.13:A). This data model often refers to so-called regular grids, in which each cell has the same, constant size – and we will focus on the regular grids in this book only. However, several other types of grids exist, including rotated, sheared, rectilinear, and curvilinear grids
+
+The raster data model usually consists of a raster header and a matrix (with rows and columns) representing equally spaced cells (often also called pixels; Figure 2.13:A).15 The raster header defines the coordinate reference system, the extent and the origin. The origin (or starting point) is frequently the coordinate of the lower left corner of the matrix (the terra package, however, uses the upper left corner, by default (Figure 2.13:B)). The header defines the extent via the number of columns, the number of rows and the cell size resolution.
+
+The resolution can be calculated as follows:
+
+$ resolution = \frac{x_{max}-x_{min}}{ncol},\frac{y_{max}-y_{min}}{nrow} $
+
+
+This matrix representation avoids storing explicitly the coordinates for the four corner points (in fact it only stores one coordinate, namely the origin) of each cell corner as would be the case for rectangular vector polygons. This and map algebra (Section 4.3.2) makes raster processing much more efficient and faster than vector data processing.
+
+Paquete de R usado para trabajar con datos raster: terra
+terra focuses on the most common raster data model (regular grids)
+ terra usually handles one or multilayered rasters
+
+Alternativa más potente y con mejor integración con sf y el entorno tidyverse: stars
+
 CRS -> UTM30N
+
+2.4 Coordinate Reference Systems
+Vector and raster spatial data types share concepts intrinsic to spatial data. Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies). CRSs are either geographic or projected
+
+2.4.1 Geographic coordinate reference systems
+Geographic coordinate reference systems identify any location on the Earth’s surface using two values — longitude and latitude (Figure 2.17, left panel). Longitude is location in the East-West direction in angular distance from the Prime Meridian plane. Latitude is angular distance North or South of the equatorial plane. Distances in geographic CRSs are therefore not measured in meters. 
+
+The surface of the Earth in geographic coordinate reference systems is represented by a spherical or ellipsoidal surface
+
+2.4.2 Projected coordinate reference systems
+All projected CRSs are based on a geographic CRS, described in the previous section, and rely on map projections to convert the three-dimensional surface of the Earth into Easting and Northing (x and y) values in a projected CRS. Projected CRSs are based on Cartesian coordinates on an implicitly flat surface (Figure 2.17, right panel). They have an origin, x and y axes, and a linear unit of measurement such as meters.
+
+2.4.2 Projected coordinate reference systems
+All projected CRSs are based on a geographic CRS, described in the previous section, and rely on map projections to convert the three-dimensional surface of the Earth into Easting and Northing (x and y) values in a projected CRS. Projected CRSs are based on Cartesian coordinates on an implicitly flat surface (Figure 2.17, right panel). They have an origin, x and y axes, and a linear unit of measurement such as meters.
+
+This transition cannot be done without adding some deformations. Therefore, some properties of the Earth’s surface are distorted in this process, such as area, direction, distance, and shape. A projected coordinate reference system can preserve only one or two of those properties. Projections are often named based on a property they preserve: equal-area preserves area, azimuthal preserve direction, equidistant preserve distance, and conformal preserve local shape
+
+[La que yo uso en el trabajo es...]
+Proyected data...
 
 REPRODUCTIBILIDAD -> R
  sf (tidyverse philosofy) and terra (raster sucessor) packages
@@ -85,5 +161,3 @@ Lenguaje R [...], entorno de trabajo RStudio [...]. Paquetes de R [...] reposito
 - mapSpain: 
 
 
-## Fuentes de los datos
-<!-- Puedo añadir una tabla como la que tengo y listo -->

@@ -3,6 +3,8 @@ title: "Modelos"
 author: "Juan Baeza Ruiz-Henestrosa"
 date: "`r Sys.Date()`"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}

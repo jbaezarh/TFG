@@ -20,10 +20,8 @@ output:
 source("cabecera_chunk_inicio.R")
 ```
 
-# Capítulo 3: Construcción de la base de datos
 
-## Fuentes de datos
+# Título del Capítulo
 
-## Organización de los datos
+## Primera sección
 
-## Depuración de los datos

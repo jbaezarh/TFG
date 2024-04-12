@@ -347,4 +347,12 @@ Guardamos el conjunto de datos depurado:
 # "salidas_intermedias/datos_depurados2024-04-09.RData"
 ```
 
+```{r}
+# install.packages("feather")
+library(feather)
+
+# load("salidas_intermedias/datos_depurados2024-04-09.RData")
+# write_feather(datos, "salidas_intermedias/datos_depurados2024-04-09.feather")
+
+```
 
