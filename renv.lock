@@ -1209,6 +1209,24 @@
       ],
       "Hash": "0a78b5b22bfffcd1768e7177ba1a474b"
     },
+    "glmnet": {
+      "Package": "glmnet",
+      "Version": "4.1-8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Matrix",
+        "R",
+        "Rcpp",
+        "RcppEigen",
+        "foreach",
+        "methods",
+        "shape",
+        "survival",
+        "utils"
+      ],
+      "Hash": "eb6fc70e561aae41d5911a6726188f71"
+    },
     "globals": {
       "Package": "globals",
       "Version": "0.16.3",
@@ -3044,6 +3062,22 @@
         "rlang"
       ],
       "Hash": "c03fa420630029418f7e6da3667aac4a"
+    },
+    "vip": {
+      "Package": "vip",
+      "Version": "0.4.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "foreach",
+        "ggplot2",
+        "stats",
+        "tibble",
+        "utils",
+        "yardstick"
+      ],
+      "Hash": "4bfee1f7181f71d552a4b63485f8fc25"
     },
     "viridisLite": {
       "Package": "viridisLite",

@@ -21,37 +21,62 @@ library(tidymodels)
 load("salidas_intermedias/datos_depurados2024-04-09.RData")
 ```
 
+## Función medidas de rendimiento
+```{r}
+# Será la función que usemos para medir el rendimiento del modelo
+
+get_metrics <- function(pred) {
+  list(
+    res = tibble(
+      roc_auc = pred |> roc_auc(truth = fire, .pred_0) |> pull(.estimate),
+      accuracy = pred |> accuracy(truth = fire, .pred_class) |> pull(.estimate),
+      recall = pred |> sensitivity(truth = fire, .pred_class) |> pull(.estimate),
+      specificity = pred |> spec(truth = fire, .pred_class) |> pull(.estimate)),
+    conf_mat = pred |> conf_mat(truth = fire, .pred_class))
+}
+
+```
+
+
 ## 1. Logistic regression
 ```{r}
-x = datos
-# 1º Creamos una partición entre conjunto test y entrenamiento
+# 1º Se crea una partición entrenamiento / validación / test en orden cronológico, para evitar el sesgo look-ahead.
+
 set.seed(123)
-splits      <- initial_split(x, strata = fire)
 
-hotel_other <- training(splits)
-hotel_test  <- testing(splits)
+splits = initial_validation_time_split(datos, 
+                                       prop=c(0.6,0.2))
 
-# Para hacerlo por la fecha
-splits <- make_splits(
-  x = list(analysis = which(year(datos$date)<2021),
-           assessment = which(year(datos$date)>=2021)),
-  data=datos
-)
+training <- training(splits)
+val_set <- validation_set(splits)
+test  <- testing(splits)
 
-hotel_other <- training(splits)
-hotel_test  <- testing(splits)
+# # Para hacerlo por fecha
+# splits <- make_splits(
+#   x = list(analysis = which(year(datos$date)<2021),
+#            assessment = which(year(datos$date)>=2021)),
+#   data=datos
+# )
+# 
+# training_val <- training(splits)
+# test  <- testing(splits)
+# 
 #
 # length(splits$out_id)/length(splits$in_id)
 # [1] 0.1149578
-
-
+# 
 # 1.a. Partición train- validation
-set.seed(234)
-val_set <- validation_split(hotel_other, 
-                            strata = fire, 
-                            prop = 0.80)
+# set.seed(234)
+# val <- make_splits(
+#   x = list(analysis = which(year(datos$date)<2018),
+#            assessment = which(year(datos$date)>=2018)),
+#   data=datos
+# )
+# 
+# val_set <- validation_time_split(training_val, 
+#                                  prop = 0.80)
 
-val_set
+
 
 #2º definimos el modelo
 lr_mod <- 
@@ -63,7 +88,7 @@ holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter",
               "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
 
 lr_recipe <- 
-  recipe(fire ~ ., data = hotel_other) %>% 
+  recipe(fire ~ ., data = training) %>% 
   step_date(date,features = c("dow", "month")) %>% 
   step_holiday(date, holidays = holidays) %>% 
   step_rm(date,cod_municipio,municipio) %>% 
@@ -71,34 +96,14 @@ lr_recipe <-
   step_zv(all_predictors()) %>% 
   step_normalize(all_predictors())
 
-# nc_recipe <- recipe(pos_relativa ~.,data=entnc) %>%
-# step_impute_knn(stop_mean,timestop_mean) %>%
-# step_novel(driverId,constructorId) %>%
-# step_dummy(all_nominal()) %>%
-# step_zv(all_predictors()) %>%
-# step_center(all_predictors()) %>%
-# step_scale(all_predictors()) %>%
-# step_corr(all_predictors()) %>%
-# step_lincomb(all_predictors())
-
-
-# lr_recipe <- 
-#   recipe(fire ~ ., data = entnc) %>% 
-#   step_date(date) %>%  
-#   step_rm(date,cod_municipio,municipio) %>%
-#   step_dummy(all_nominal_predictors()) %>% 
-#   step_zv(all_predictors()) %>% 
-#   step_normalize(all_predictors())
-  
 # 4º Creamos el workflow
 lr_workflow <- 
   workflow() %>% 
   add_model(lr_mod) %>% 
   add_recipe(lr_recipe)
 
-# 5º Estimamos el modelo.
-
-# create the grid of tuning
+# 5º Ajustamos el modelo.
+# Create the grid of tuning
 lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
 
 lr_res <- 
@@ -106,73 +111,52 @@ lr_res <-
   tune_grid(val_set,
             grid = lr_reg_grid,
             control = control_grid(save_pred = TRUE),
-            metrics = metric_set(roc_auc))
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
 
 
+# Se muestra la tasa de acierto en función del parámetro de penalización
 lr_plot <- 
   lr_res %>% 
   collect_metrics() %>% 
-  ggplot(aes(x = penalty, y = mean)) + 
+  # filter(.metric == "accuracy") %>%
+  ggplot(aes(x = penalty, y = mean,col=.metric)) + 
   geom_point() + 
   geom_line() + 
-  ylab("Area under the ROC Curve") +
+  ylab("Medidas de rendimiento") +
   scale_x_log10(labels = scales::label_number())
 
 lr_plot
 
 top_models <-
   lr_res %>% 
-  show_best(metric = "roc_auc", n = 15) %>% 
+  show_best(metric = "accuracy", n = 15) %>% 
   arrange(penalty) 
 top_models
 
 
-# Dado que tienen el mismo rendimiento, elegimos el que tiene un mayor valor de penalización
-
+# Se elige el que tiene una precisión más elevada
 lr_best <- 
   lr_res %>% 
-  collect_metrics() %>% 
-  arrange(penalty) %>% 
-  slice(15)
+  select_best(metric="accuracy")
 
 lr_best
 
+# 6º Se evalúa el modelo:
+#   Curva ROC
 lr_auc <- 
   lr_res %>% 
   collect_predictions(parameters = lr_best) %>% 
   roc_curve(fire, .pred_0) %>% 
   mutate(model = "Logistic Regression")
 
-###########
+autoplot(lr_auc)
 
-# the last model
-last_lr_mod <- logistic_reg(penalty = 0.00281,mixture = 0) |> 
-  set_engine("glmnet")
-  
-# the last workflow
-last_lr_workflow <- 
-  lr_workflow %>% 
-  update_model(last_lr_mod)
+#   Medidas de rendimiento
+lr_metrics <- lr_res |> 
+  collect_predictions(parameters = lr_best) |> 
+  get_metrics()
 
-# the last fit
-set.seed(345)
-last_lr_fit <- 
-  last_lr_workflow %>% 
-  last_fit(splits)
-
-last_lr_fit
-
-last_lr_fit %>% 
-  collect_metrics()
-
-res_lr = last_lr_fit |> collect_predictions()
-
-res_lr %>% roc_auc(truth = fire, .pred_0)
-res_lr %>% accuracy(truth = fire, .pred_class)
-res_lr %>% conf_mat(truth = fire, .pred_class)
-res_lr %>% sensitivity(truth = fire, .pred_class)
-res_lr %>% spec(truth = fire, .pred_class)
-
+lr_metrics
 ```
 
 
@@ -195,7 +179,7 @@ rf_mod <-
 
 # 2º Construir la receta con el preprocesamiento
 rf_recipe <- 
-  recipe(fire ~ ., data = hotel_other) %>% 
+  recipe(fire ~ ., data = training) %>% 
   step_date(date,features = c("dow", "month")) %>% 
   step_holiday(date) %>% 
   step_rm(date, cod_municipio, municipio) 
@@ -208,9 +192,7 @@ rf_workflow <-
   add_recipe(rf_recipe)
 
 # 4º Train and tune
-
 rf_mod
-
 extract_parameter_set_dials(rf_mod)
 
 set.seed(345)
@@ -219,7 +201,7 @@ rf_res <-
   tune_grid(val_set,
             grid = 25,
             control = control_grid(save_pred = TRUE),
-            metrics = metric_set(roc_auc))
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
 
 # Resultados del tuning
 rf_res %>% 
@@ -426,15 +408,38 @@ res_sv %>% spec(truth = fire, .pred_class)
 
 ```
 
+
+# Comparación
+
+### Logistic Regression
 ```{r}
-get_metrics <- function(fitted_model) {
-  pred = fitted_model |> collect_predictions()
+# the last model
+last_lr_mod <- logistic_reg(penalty = 0.00281,mixture = 0) |> 
+  set_engine("glmnet")
   
-  pred %>% roc_auc(truth = fire, .pred_0)
-  pred %>% accuracy(truth = fire, .pred_class)
-  pred %>% conf_mat(truth = fire, .pred_class)
-  pred %>% sensitivity(truth = fire, .pred_class)
-  pred %>% spec(truth = fire, .pred_class)
-}
+# the last workflow
+last_lr_workflow <- 
+  lr_workflow %>% 
+  update_model(last_lr_mod)
+
+# the last fit
+set.seed(345)
+last_lr_fit <- 
+  last_lr_workflow %>% 
+  last_fit(splits)
+
+last_lr_fit
+
+last_lr_fit %>% 
+  collect_metrics()
+
+res_lr = last_lr_fit |> collect_predictions()
+
+res_lr %>% roc_auc(truth = fire, .pred_0)
+res_lr %>% accuracy(truth = fire, .pred_class)
+res_lr %>% conf_mat(truth = fire, .pred_class)
+res_lr %>% sensitivity(truth = fire, .pred_class)
+res_lr %>% spec(truth = fire, .pred_class)
+
 ```
 
