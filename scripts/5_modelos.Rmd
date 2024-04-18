@@ -16,3 +16,425 @@ library(tidyverse)
 library(tidymodels)
 ```
 
+## Load data
+```{r}
+load("salidas_intermedias/datos_depurados2024-04-09.RData")
+```
+
+## 1. Logistic regression
+```{r}
+x = datos
+# 1º Creamos una partición entre conjunto test y entrenamiento
+set.seed(123)
+splits      <- initial_split(x, strata = fire)
+
+hotel_other <- training(splits)
+hotel_test  <- testing(splits)
+
+# Para hacerlo por la fecha
+splits <- make_splits(
+  x = list(analysis = which(year(datos$date)<2021),
+           assessment = which(year(datos$date)>=2021)),
+  data=datos
+)
+
+hotel_other <- training(splits)
+hotel_test  <- testing(splits)
+#
+# length(splits$out_id)/length(splits$in_id)
+# [1] 0.1149578
+
+
+# 1.a. Partición train- validation
+set.seed(234)
+val_set <- validation_split(hotel_other, 
+                            strata = fire, 
+                            prop = 0.80)
+
+val_set
+
+#2º definimos el modelo
+lr_mod <- 
+  logistic_reg(penalty = tune(), mixture = 0) %>% 
+  set_engine("glmnet")
+
+# 3º Creamos la receta
+holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter", 
+              "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
+
+lr_recipe <- 
+  recipe(fire ~ ., data = hotel_other) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# nc_recipe <- recipe(pos_relativa ~.,data=entnc) %>%
+# step_impute_knn(stop_mean,timestop_mean) %>%
+# step_novel(driverId,constructorId) %>%
+# step_dummy(all_nominal()) %>%
+# step_zv(all_predictors()) %>%
+# step_center(all_predictors()) %>%
+# step_scale(all_predictors()) %>%
+# step_corr(all_predictors()) %>%
+# step_lincomb(all_predictors())
+
+
+# lr_recipe <- 
+#   recipe(fire ~ ., data = entnc) %>% 
+#   step_date(date) %>%  
+#   step_rm(date,cod_municipio,municipio) %>%
+#   step_dummy(all_nominal_predictors()) %>% 
+#   step_zv(all_predictors()) %>% 
+#   step_normalize(all_predictors())
+  
+# 4º Creamos el workflow
+lr_workflow <- 
+  workflow() %>% 
+  add_model(lr_mod) %>% 
+  add_recipe(lr_recipe)
+
+# 5º Estimamos el modelo.
+
+# create the grid of tuning
+lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
+
+lr_res <- 
+  lr_workflow %>% 
+  tune_grid(val_set,
+            grid = lr_reg_grid,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(roc_auc))
+
+
+lr_plot <- 
+  lr_res %>% 
+  collect_metrics() %>% 
+  ggplot(aes(x = penalty, y = mean)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("Area under the ROC Curve") +
+  scale_x_log10(labels = scales::label_number())
+
+lr_plot
+
+top_models <-
+  lr_res %>% 
+  show_best(metric = "roc_auc", n = 15) %>% 
+  arrange(penalty) 
+top_models
+
+
+# Dado que tienen el mismo rendimiento, elegimos el que tiene un mayor valor de penalización
+
+lr_best <- 
+  lr_res %>% 
+  collect_metrics() %>% 
+  arrange(penalty) %>% 
+  slice(15)
+
+lr_best
+
+lr_auc <- 
+  lr_res %>% 
+  collect_predictions(parameters = lr_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+###########
+
+# the last model
+last_lr_mod <- logistic_reg(penalty = 0.00281,mixture = 0) |> 
+  set_engine("glmnet")
+  
+# the last workflow
+last_lr_workflow <- 
+  lr_workflow %>% 
+  update_model(last_lr_mod)
+
+# the last fit
+set.seed(345)
+last_lr_fit <- 
+  last_lr_workflow %>% 
+  last_fit(splits)
+
+last_lr_fit
+
+last_lr_fit %>% 
+  collect_metrics()
+
+res_lr = last_lr_fit |> collect_predictions()
+
+res_lr %>% roc_auc(truth = fire, .pred_0)
+res_lr %>% accuracy(truth = fire, .pred_class)
+res_lr %>% conf_mat(truth = fire, .pred_class)
+res_lr %>% sensitivity(truth = fire, .pred_class)
+res_lr %>% spec(truth = fire, .pred_class)
+
+```
+
+
+
+
+## 2. Random Forest
+
+```{r}
+# Detectar el número de núcleos para trabajar en paralelo
+cores <- parallel::detectCores()
+cores
+
+# Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo
+
+# 1º Construir el modelo
+rf_mod <- 
+  rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+rf_recipe <- 
+  recipe(fire ~ ., data = hotel_other) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  step_holiday(date) %>% 
+  step_rm(date, cod_municipio, municipio) 
+# No normalizamos
+
+# 3º Ensamblar todo con workflow
+rf_workflow <- 
+  workflow() %>% 
+  add_model(rf_mod) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+
+rf_mod
+
+extract_parameter_set_dials(rf_mod)
+
+set.seed(345)
+rf_res <- 
+  rf_workflow %>% 
+  tune_grid(val_set,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(roc_auc))
+
+# Resultados del tuning
+rf_res %>% 
+  show_best(metric = "roc_auc")
+
+
+autoplot(rf_res)
+
+# Mejor modelo
+rf_best <- 
+  rf_res %>% 
+  select_best
+
+rf_best
+
+# Predicciones
+rf_res %>% 
+  collect_predictions() 
+
+rf_auc <- 
+  rf_res %>% 
+  collect_predictions(parameters = rf_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Random Forest")
+
+autoplot(rf_auc)
+
+##########################
+# Test
+# the last model
+last_rf_mod <- 
+  rand_forest(mtry = 3, min_n = 3, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+  
+# the last workflow
+last_rf_workflow <- 
+  rf_workflow %>% 
+  update_model(last_rf_mod)
+
+# the last fit
+
+set.seed(345)
+last_rf_fit <- 
+  last_rf_workflow %>% 
+  last_fit(splits)
+
+last_rf_fit
+
+last_rf_fit %>% 
+  collect_metrics()
+
+res_rf = last_rf_fit |> collect_predictions()
+
+res_rf %>% roc_auc(truth = fire, .pred_0)
+res_rf %>% accuracy(truth = fire, .pred_class)
+res_rf %>% conf_mat(truth = fire, .pred_class)
+res_rf %>% sensitivity(truth = fire, .pred_class)
+res_rf %>% spec(truth = fire, .pred_class)
+
+# Comparación
+bind_rows(rf_auc, lr_auc) %>% 
+  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model)) + 
+  geom_path(lwd = 1.5, alpha = 0.8) +
+  geom_abline(lty = 3) + 
+  coord_equal() + 
+  scale_color_viridis_d(option = "plasma", end = .6)
+
+
+```
+
+El modelo final
+```{r}
+# the last model
+last_rf_mod <- 
+  rand_forest(mtry = 8, min_n = 7, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores, importance = "impurity") %>% 
+  set_mode("classification")
+
+# the last workflow
+last_rf_workflow <- 
+  rf_workflow %>% 
+  update_model(last_rf_mod)
+
+# the last fit
+set.seed(345)
+last_rf_fit <- 
+  last_rf_workflow %>% 
+  last_fit(splits)
+
+last_rf_fit
+
+last_rf_fit %>% 
+  collect_metrics()
+
+library(vip)
+last_rf_fit %>% 
+  extract_fit_parsnip() %>% 
+  vip(num_features = 20)
+
+last_rf_fit %>% 
+  collect_predictions() %>% 
+  roc_curve(fire, .pred_0) %>% 
+  autoplot()
+
+rf_coef = last_rf_fit %>% 
+  extract_fit_engine() |> 
+  tidy()
+  
+
+str(rf_parnship)
+```
+
+## 3. Neuronal Networks
+
+## 4. SVM
+```{r}
+# 1º Construir el modelo
+sv_mod <- 
+  svm_linear(cost = tune(), margin = tune()) %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+sv_recipe <- 
+  recipe(fire ~ ., data = hotel_other) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  step_rm(date, cod_municipio, municipio) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Ensamblar todo con workflow
+sv_workflow <- 
+  workflow() %>% 
+  add_model(sv_mod) %>% 
+  add_recipe(sv_recipe)
+
+# 4º Train and tune
+set.seed(345)
+sv_res <- 
+  sv_workflow %>% 
+  tune_grid(val_set,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(roc_auc))
+
+# Resultados del tuning
+sv_res %>% 
+  show_best(metric = "roc_auc")
+
+autoplot(sv_res)
+
+# Mejor modelo
+sv_best <- 
+  sv_res %>% 
+  select_best()
+
+sv_best
+
+# Predicciones
+sv_res %>% 
+  collect_predictions() 
+
+sv_auc <- 
+  sv_res %>% 
+  collect_predictions(parameters = sv_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Support Vector Machine")
+
+autoplot(sv_auc)
+
+##########################
+# Test
+# the last model
+last_sv_mod <-  
+  rand_forest(cost = 3, margin = 3) %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+  
+# the last workflow
+last_sv_workflow <- 
+  sv_workflow %>% 
+  update_model(last_sv_mod)
+
+# the last fit
+set.seed(345)
+last_sv_fit <- 
+  last_sv_workflow %>% 
+  last_fit(splits)
+
+last_sv_fit
+
+last_sv_fit %>% 
+  collect_metrics()
+
+res_sv = last_sv_fit |> collect_predictions()
+
+res_sv %>% roc_auc(truth = fire, .pred_0)
+res_sv %>% accuracy(truth = fire, .pred_class)
+res_sv %>% conf_mat(truth = fire, .pred_class)
+res_sv %>% sensitivity(truth = fire, .pred_class)
+res_sv %>% spec(truth = fire, .pred_class)
+
+```
+
+```{r}
+get_metrics <- function(fitted_model) {
+  pred = fitted_model |> collect_predictions()
+  
+  pred %>% roc_auc(truth = fire, .pred_0)
+  pred %>% accuracy(truth = fire, .pred_class)
+  pred %>% conf_mat(truth = fire, .pred_class)
+  pred %>% sensitivity(truth = fire, .pred_class)
+  pred %>% spec(truth = fire, .pred_class)
+}
+```
+

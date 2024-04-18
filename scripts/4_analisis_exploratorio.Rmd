@@ -139,6 +139,8 @@ boxplot(datos_numeric)
 boxplots <- map(names(datos_numeric), ~ ggplot(datos, aes(x = fire, y = .data[[.x]])) +
                 geom_boxplot() +
                 labs(title = paste("Boxplot de", .x, "en función de fire")))
+
+boxplots
 ```
 
 
@@ -212,6 +214,7 @@ Vemos que la partición obtenida con los datos a penas consigue separarlos. Se d
 Probamos a normalizarlos antes de aplicar el algoritmo.
 
 ```{r}
+set.seed(12345)
 # Probamos tipificando los datos:
 clara = datos_numeric |> 
   scale() |> 
