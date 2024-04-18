@@ -169,7 +169,7 @@ lr_metrics
 cores <- parallel::detectCores()
 cores
 
-# Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo
+# Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo de forma que la computación sea más eficiente
 
 # 1º Construir el modelo
 rf_mod <- 
@@ -183,7 +183,7 @@ rf_recipe <-
   step_date(date,features = c("dow", "month")) %>% 
   step_holiday(date) %>% 
   step_rm(date, cod_municipio, municipio) 
-# No normalizamos
+# No normalizamos en este caso pues no es necesario
 
 # 3º Ensamblar todo con workflow
 rf_workflow <- 
@@ -229,91 +229,8 @@ rf_auc <-
 
 autoplot(rf_auc)
 
-##########################
-# Test
-# the last model
-last_rf_mod <- 
-  rand_forest(mtry = 3, min_n = 3, trees = 1000) %>% 
-  set_engine("ranger", num.threads = cores) %>% 
-  set_mode("classification")
-  
-# the last workflow
-last_rf_workflow <- 
-  rf_workflow %>% 
-  update_model(last_rf_mod)
-
-# the last fit
-
-set.seed(345)
-last_rf_fit <- 
-  last_rf_workflow %>% 
-  last_fit(splits)
-
-last_rf_fit
-
-last_rf_fit %>% 
-  collect_metrics()
-
-res_rf = last_rf_fit |> collect_predictions()
-
-res_rf %>% roc_auc(truth = fire, .pred_0)
-res_rf %>% accuracy(truth = fire, .pred_class)
-res_rf %>% conf_mat(truth = fire, .pred_class)
-res_rf %>% sensitivity(truth = fire, .pred_class)
-res_rf %>% spec(truth = fire, .pred_class)
-
-# Comparación
-bind_rows(rf_auc, lr_auc) %>% 
-  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model)) + 
-  geom_path(lwd = 1.5, alpha = 0.8) +
-  geom_abline(lty = 3) + 
-  coord_equal() + 
-  scale_color_viridis_d(option = "plasma", end = .6)
-
-
 ```
 
-El modelo final
-```{r}
-# the last model
-last_rf_mod <- 
-  rand_forest(mtry = 8, min_n = 7, trees = 1000) %>% 
-  set_engine("ranger", num.threads = cores, importance = "impurity") %>% 
-  set_mode("classification")
-
-# the last workflow
-last_rf_workflow <- 
-  rf_workflow %>% 
-  update_model(last_rf_mod)
-
-# the last fit
-set.seed(345)
-last_rf_fit <- 
-  last_rf_workflow %>% 
-  last_fit(splits)
-
-last_rf_fit
-
-last_rf_fit %>% 
-  collect_metrics()
-
-library(vip)
-last_rf_fit %>% 
-  extract_fit_parsnip() %>% 
-  vip(num_features = 20)
-
-last_rf_fit %>% 
-  collect_predictions() %>% 
-  roc_curve(fire, .pred_0) %>% 
-  autoplot()
-
-rf_coef = last_rf_fit %>% 
-  extract_fit_engine() |> 
-  tidy()
-  
-
-str(rf_parnship)
-```
 
 ## 3. Neuronal Networks
 
@@ -441,5 +358,89 @@ res_lr %>% conf_mat(truth = fire, .pred_class)
 res_lr %>% sensitivity(truth = fire, .pred_class)
 res_lr %>% spec(truth = fire, .pred_class)
 
+```
+
+### RF
+```{r}
+# Test
+# the last model
+last_rf_mod <- 
+  rand_forest(mtry = 3, min_n = 3, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+  
+# the last workflow
+last_rf_workflow <- 
+  rf_workflow %>% 
+  update_model(last_rf_mod)
+
+# the last fit
+
+set.seed(345)
+last_rf_fit <- 
+  last_rf_workflow %>% 
+  last_fit(splits)
+
+last_rf_fit
+
+last_rf_fit %>% 
+  collect_metrics()
+
+res_rf = last_rf_fit |> collect_predictions()
+
+res_rf %>% roc_auc(truth = fire, .pred_0)
+res_rf %>% accuracy(truth = fire, .pred_class)
+res_rf %>% conf_mat(truth = fire, .pred_class)
+res_rf %>% sensitivity(truth = fire, .pred_class)
+res_rf %>% spec(truth = fire, .pred_class)
+
+# Comparación
+bind_rows(rf_auc, lr_auc) %>% 
+  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model)) + 
+  geom_path(lwd = 1.5, alpha = 0.8) +
+  geom_abline(lty = 3) + 
+  coord_equal() + 
+  scale_color_viridis_d(option = "plasma", end = .6)
+
+
+####
+# the last model
+last_rf_mod <- 
+  rand_forest(mtry = 8, min_n = 7, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores, importance = "impurity") %>% 
+  set_mode("classification")
+
+# the last workflow
+last_rf_workflow <- 
+  rf_workflow %>% 
+  update_model(last_rf_mod)
+
+# the last fit
+set.seed(345)
+last_rf_fit <- 
+  last_rf_workflow %>% 
+  last_fit(splits)
+
+last_rf_fit
+
+last_rf_fit %>% 
+  collect_metrics()
+
+library(vip)
+last_rf_fit %>% 
+  extract_fit_parsnip() %>% 
+  vip(num_features = 20)
+
+last_rf_fit %>% 
+  collect_predictions() %>% 
+  roc_curve(fire, .pred_0) %>% 
+  autoplot()
+
+rf_coef = last_rf_fit %>% 
+  extract_fit_engine() |> 
+  tidy()
+  
+
+str(rf_parnship)
 ```
 
