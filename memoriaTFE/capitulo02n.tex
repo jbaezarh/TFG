@@ -728,12 +728,69 @@ Codificación variables categóricas - dummy variables
 
 Depuración datos - Imputaciones - Eliminación
 
-\hypertarget{anuxe1lisis-exploratorio-de-los-datos}{%
-\section{Análisis exploratorio de los
-datos}\label{anuxe1lisis-exploratorio-de-los-datos}}
+\hypertarget{anuxe1lisis-exploratorio-de-datos}{%
+\section{Análisis exploratorio de
+datos}\label{anuxe1lisis-exploratorio-de-datos}}
+
+El análisis exploratorio de datos (EDA, por sus siglas en inglés), es
+una parte fundamental de todo proyecto de Machine Learning y en general
+de cualquier proyecto en el que se deba trabajar con datos de cualquier
+procedencia para extraer de ellos conclusiones. Antes del procesamiento
+de los datos es siempre necesario explorar, entender y evaluar la
+calidad de estos, pues como indica la expresión inglesa \emph{garbage
+in, garbage out}, si trabajamos con datos pobres, no podemos esperar
+obtener buenos resultados con ellos.
+
+El EDA hace referencia al conjunto de técnicas estadísticas con las que
+se pretende explorar, describir y resumir la naturaleza de los datos,
+comprender las relaciones existentes entre las distintas variables
+presentes, identificar posibles errores o revelar posibles valores
+atípicos, todo esto con el objetivo de maximizar nuestra compresión
+sobre el conjunto de datos.
+
+\hypertarget{depuraciuxf3n-de-los-datos}{%
+\subsection{Depuración de los datos}\label{depuraciuxf3n-de-los-datos}}
+
+La depuración de los datos o \emph{data cleaning} es el proceso de
+detectar y corregir o eliminar datos incorrectos, corruptos, con formato
+incorrecto, duplicados o incompletos dentro de un conjunto de datos.
+Puede considerarse una fase dentro del EDA (como se sugiere en R4DS,
+Wickman) o una fase previa a este.
+
+Puede entenderse que el \emph{data cleaning} es el proceso de pasar de
+\emph{raw data} o datos en bruto a datos técnicamente correctos y
+finalmente a datos consistentes.
+
+Entendemos por datos técnicamente correcto cuando cada valor pertenece a
+una variable y está almacenado en el tipo que que le corresponde en base
+al conocimiento del dominio del problema. Para ello se debe reajustar el
+tipo de cada variable al que le corresponda en base al conocimiento que
+se tenga sobre esta, codificando los valores en las clases adecuadas si
+fuese necesario.
+
+Decimos que un conjunto de datos es consistente cuando es técnicamente
+correcto y adecuado para el análisis estadístico. Se trata, por tanto,
+de datos que han eliminado, corregido o imputado los valores faltantes,
+los valores especiales, los valores atípicos y los errores.
 
 \hypertarget{modelos}{%
 \section{Modelos}\label{modelos}}
+
+\hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
+\subsection{Regresión logística (con
+penalización)}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
+
+\hypertarget{support-vector-machine}{%
+\subsection{Support Vector Machine}\label{support-vector-machine}}
+
+\hypertarget{random-forest}{%
+\subsection{Random Forest}\label{random-forest}}
+
+\hypertarget{redes-neuronales}{%
+\subsection{Redes Neuronales}\label{redes-neuronales}}
+
+\hypertarget{evaluaciuxf3n-modelos}{%
+\section{Evaluación modelos}\label{evaluaciuxf3n-modelos}}
 
 \hypertarget{herramientas}{%
 \section{Herramientas}\label{herramientas}}

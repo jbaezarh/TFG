@@ -28,6 +28,8 @@ source("cabecera_chunk_inicio.R")
 ## Obtención y organización de los datos
 
 ## Depuración y preprocesamiento
+<!-- Depuración -->
+En este caso, se ha realizado una fase previa de depuración del conjunto de datos con el objetivo de tener un conjunto de datos correcto técnicamente. Para ello, lo primero ha sido detectar, comprender y eliminar o imputar los valores faltantes, así como reajustar los tipos de las variables, codificando para ello las que así lo requiriesen en base al conocimiento previo del dominio del problema. Posteriormente, se ha un estudiado la consistencia de los datos, mediante la identificación de valores atípicos durante el análisis descriptivo del conjunto de datos.
 
 ## Análisis exploratorio
 

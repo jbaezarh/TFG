@@ -95,23 +95,55 @@ A lo largo de este trabajo se utilizará ampliamente el Sistema de coordenadas p
 
 
 
- 
-## Ingeniería de características
-Codificación variables categóricas
- - dummy variables
- 
-<!-- Escalado y normalización -->
+## Análisis exploratorio de datos
 
-Depuración datos
-  - Imputaciones
-  - Eliminación
-  
+<!-- https://datos.gob.es/es/documentacion/guia-practica-de-introduccion-al-analisis-exploratorio-de-datos -->
+<!-- https://r4ds.hadley.nz/eda#introduction -->
+
+El análisis exploratorio de datos (EDA, por sus siglas en inglés), es una parte fundamental de todo proyecto de Machine Learning y en general de cualquier proyecto en el que se deba trabajar con datos de cualquier procedencia para extraer de ellos conclusiones. Antes del procesamiento de los datos es siempre necesario explorar, entender y evaluar la calidad de estos, pues como indica la expresión inglesa *garbage in, garbage out*, si trabajamos con datos pobres, no podemos esperar obtener buenos resultados con ellos.
 
 
-## Análisis exploratorio de los datos
+El EDA hace referencia al conjunto de técnicas estadísticas con las que se pretende explorar, describir y resumir la naturaleza de los datos, comprender las relaciones existentes entre las distintas variables presentes, identificar posibles errores o revelar posibles valores atípicos, todo esto con el objetivo de maximizar nuestra compresión sobre el conjunto de datos.
+
+### Depuración de los datos
+<!-- DEBATE INTERNO SOBRE SI METERLO DENTRO DEL EDA -->
+<!-- Citar bien -->
+
+<!-- https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf -->
+<!-- https://r4ds.hadley.nz/eda#introduction -->
+
+La depuración de los datos o *data cleaning* es el proceso de detectar y corregir o eliminar datos incorrectos, corruptos, con formato incorrecto, duplicados o incompletos dentro de un conjunto de datos. Puede considerarse una fase dentro del EDA (como se sugiere en R4DS, Wickman) o una fase previa a este. 
+
+Puede entenderse que el *data cleaning* es el proceso de pasar de *raw data* o datos en bruto a datos  técnicamente correctos y finalmente a datos consistentes. 
+
+<!-- El grafiquito de la página 6 de file:///D:/usuario/Documents/Universidad/5%C2%BA/EP/TEMAS/TEMA_4_DataCleaning/uRos2017_data-cleaning-workshop.pdf puede quedar flama -->
+
+Entendemos por datos técnicamente correcto cuando cada valor pertenece a una variable y está almacenado en el tipo que que le corresponde en base al conocimiento del dominio del problema. Para ello se debe reajustar el tipo de cada variable al que le corresponda en base al conocimiento que se tenga sobre esta, codificando los valores en las clases adecuadas si fuese necesario.
+
+Decimos que un conjunto de datos es consistente cuando es técnicamente correcto y adecuado para el análisis estadístico. Se trata, por tanto, de datos que han eliminado, corregido o imputado los valores faltantes, los valores especiales, los valores atípicos y los errores.
+
+<!-- Imputación: Hot Deck Imputation -->
+
+<!-- Escalado y normalización:
++ : Evita que unas variables tengan más peso que otras a la hora de entrenar algunos modelos.
+- : Se pierde la interpretabilidad de las variables ya que los datos dejan de estar en las unidades originales- -->
+
+<!-- Ingeniería de características -->
+<!-- Codificación variables categóricas: Dummy variables -->
 
 
 ## Modelos 
+
+### Regresión logística (con penalización)
+
+### Support Vector Machine
+
+### Random Forest
+
+
+### Redes Neuronales
+
+## Evaluación modelos
 
 
 ## Herramientas

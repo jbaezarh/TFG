@@ -18,7 +18,6 @@ library(sf)
 library(corrplot)
 library(GGally) # Coordenadas paralelas
 library(ggpubr)
-
 ```
 
 

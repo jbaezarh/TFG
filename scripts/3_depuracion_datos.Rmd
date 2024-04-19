@@ -135,6 +135,7 @@ summary(datos)
 ```
 
 Encontramos valores perdidos encuentran en las variables topográficas (pendiente, orientación y curvatura), en `población`, en `uso_suelo` y en `NDVI`.
+
 ### Variables topográficas:
 
 Los valores perdidos de pendiente, orientación y curvatura se encuentran todos en los límites de Andalucía, como se muestra en el siguiente gráfico. Esto nos indica que la causa de que estos valores no estén disponibles es precisamente la discrepancia entre los distintos sistemas de referencia o entre los distintos polígonos utilizados para delimitar el territorio 
