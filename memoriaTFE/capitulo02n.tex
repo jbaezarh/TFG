@@ -720,14 +720,6 @@ coordenadas proyectadas UTM30N (es habitual especificar el hemisferio
 para evitar confusión en los valores del eje Y, ya que miden distancia
 al ecuador, de ahí la N de hemisferio norte).
 
-\hypertarget{ingenieruxeda-de-caracteruxedsticas}{%
-\section{Ingeniería de
-características}\label{ingenieruxeda-de-caracteruxedsticas}}
-
-Codificación variables categóricas - dummy variables
-
-Depuración datos - Imputaciones - Eliminación
-
 \hypertarget{anuxe1lisis-exploratorio-de-datos}{%
 \section{Análisis exploratorio de
 datos}\label{anuxe1lisis-exploratorio-de-datos}}
@@ -789,8 +781,70 @@ penalización)}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
 \hypertarget{redes-neuronales}{%
 \subsection{Redes Neuronales}\label{redes-neuronales}}
 
+\hypertarget{validaciuxf3n-del-ajuste}{%
+\subsection{Validación del ajuste}\label{validaciuxf3n-del-ajuste}}
+
+Partición entrenamiento/ validación / test
+
 \hypertarget{evaluaciuxf3n-modelos}{%
 \section{Evaluación modelos}\label{evaluaciuxf3n-modelos}}
+
+Una vez construido un modelo predictivo es necesario conocer el
+rendimiento de este sobre nuevos datos, con el objetivo de estimar su
+capacidad de generalización. Esto es fundamental de cara a determinar si
+el modelo es adecuado para el propósito previsto o si necesita ajustes o
+mejoras. Además, la evaluación del rendimiento permite comparar entre
+diferentes modelos y seleccionar el que mejor se adapte a las
+necesidades específicas del problema en cuestión. Para ello, se recurre
+a distintas métricas, en función de las características propias de cada
+problema.
+
+\hypertarget{clasificaciuxf3n-binaria}{%
+\subsection{Clasificación binaria}\label{clasificaciuxf3n-binaria}}
+
+En el presente trabajo el problema que se aborda es un problema de
+clasificación binaria, pues tenemos solo dos clases que son la clase
+positiva y la clase negativa. A la hora de clasificar una nueva
+instancia pueden darse 4 situaciones:
+
+\begin{itemize}
+\item
+  Que se clasifique como positiva siendo realmente positiva, en cuyo
+  caso se dirá que forma parte de las \emph{True Positives (TP)}
+\item
+  Que se clasifique como negativa siendo realmente negativa, en cuyo
+  caso se dirá que forma parte de las \emph{True Negatives (TN)}
+\item
+  Que se clasifique como positiva siendo realmente negativa, en cuyo
+  caso se dirá que forma parte de las \emph{False Positives (FP)}
+\item
+  Que se clasifique como negativa siendo realmente positiva, en cuyo
+  caso se dirá que forma parte de las \emph{False Negatives (FN)}
+\end{itemize}
+
+Se definen las siguientes métricas de rendimiento de un modelo de
+clasificación binaria:
+
+\textbf{Tasa de acierto o exactitud}. Mide la proporción de casos que
+han sido correctamente clasificados.
+\[Exactitud = \frac{TP + TN}{TP + FP + TN + FN}\]
+
+\textbf{Precisión}. Mide la proporción de casos clasificados como
+positivos que realmente lo son. \[ Precisión = \frac{TP}{TP + FP}\]
+
+\textbf{Especificidad}. Mide la proporción de casos negativos que han
+sido correctamente clasificados por el modelo.
+\[ Especificidad = \frac{TN}{TN + FP}\]
+
+\textbf{Sensibilidad o recall}. Mide la proporción de casos positivos
+que han sido correctamente clasificados por el modelo.
+\[ Recall = \frac{TP}{TP + FN}\]
+
+\textbf{AUC-ROC}. Mide el área bajo la curva ROC (\emph{Receiver
+Operating Characteristic} o Característica Operativa del Receptor en
+castellano). Esta curva es una representación gráfica del rendimiento de
+un modelo de clasificación binaria para todos los umbrales de
+clasificación.
 
 \hypertarget{herramientas}{%
 \section{Herramientas}\label{herramientas}}

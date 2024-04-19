@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.31)  19 APR 2024 21:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.31)  19 APR 2024 23:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1071,26 +1071,34 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 71
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \. on input line 729.
-LaTeX Info: Redefining \% on input line 729.
-LaTeX Info: Redefining \. on input line 729.
-LaTeX Info: Redefining \% on input line 729.
+LaTeX Info: Redefining \. on input line 735.
+LaTeX Info: Redefining \% on input line 735.
+LaTeX Info: Redefining \. on input line 735.
+LaTeX Info: Redefining \% on input line 735.
 [5{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-LaTeX Info: Redefining \. on input line 801.
-LaTeX Info: Redefining \% on input line 801.
-LaTeX Info: Redefining \. on input line 801.
-LaTeX Info: Redefining \% on input line 801.
+LaTeX Info: Redefining \. on input line 790.
+LaTeX Info: Redefining \% on input line 790.
+LaTeX Info: Redefining \. on input line 790.
+LaTeX Info: Redefining \% on input line 790.
 [6]
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 804.
+LaTeX Info: Redefining \. on input line 833.
+LaTeX Info: Redefining \% on input line 833.
+LaTeX Info: Redefining \. on input line 833.
+LaTeX Info: Redefining \% on input line 833.
+[7]
+
+LaTeX Warning: Command \' invalid in math mode on input line 833.
+
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 858.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 No file capitulo02n.bbl.
-LaTeX Info: Redefining \. on input line 830.
-LaTeX Info: Redefining \% on input line 830.
-LaTeX Info: Redefining \. on input line 830.
-LaTeX Info: Redefining \% on input line 830.
-[7] (./capitulo02n.aux
+LaTeX Info: Redefining \. on input line 884.
+LaTeX Info: Redefining \% on input line 884.
+LaTeX Info: Redefining \. on input line 884.
+LaTeX Info: Redefining \% on input line 884.
+[8] (./capitulo02n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
@@ -1099,21 +1107,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
  ***********
 Package rerunfilecheck Info: File `capitulo02n.out' has not changed.
-(rerunfilecheck)             Checksum: DA85271523A031BECAA1772FB66D407A;3170.
+(rerunfilecheck)             Checksum: EB03883A2BDB52A49D64C77EEE5EE803;3307.
  ) 
 Here is how much of TeX's memory you used:
- 30708 strings out of 476046
- 586658 string characters out of 5790010
+ 30713 strings out of 476046
+ 586736 string characters out of 5790010
  1938496 words of memory out of 5000000
- 52190 multiletter control sequences out of 15000+600000
+ 52192 multiletter control sequences out of 15000+600000
  609025 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,13n,93p,548b,464s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,13n,93p,548b,478s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on capitulo02n.pdf (7 pages, 211631 bytes).
+Output written on capitulo02n.pdf (8 pages, 222091 bytes).
 PDF statistics:
- 229 PDF objects out of 1000 (max. 8388607)
- 195 compressed objects within 2 object streams
- 45 named destinations out of 1000 (max. 500000)
- 157 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 240 PDF objects out of 1000 (max. 8388607)
+ 204 compressed objects within 3 object streams
+ 48 named destinations out of 1000 (max. 500000)
+ 165 words of extra memory for PDF output out of 10000 (max. 10000000)
 

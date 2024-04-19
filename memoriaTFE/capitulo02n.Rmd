@@ -8,6 +8,8 @@ output:
     pandoc_args: ["--metadata-file=cabecera_capitulos.yaml"]
   html_document: default
 #bibliography: bib/library.bib # descomentar si: editor visual RStudio  
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- escribir 2 para capítulo 3 -->
@@ -143,7 +145,80 @@ Decimos que un conjunto de datos es consistente cuando es técnicamente correcto
 
 ### Redes Neuronales
 
+### Validación del ajuste
+Partición entrenamiento/ validación / test
+
 ## Evaluación modelos
+
+Una vez construido un modelo predictivo es necesario conocer el rendimiento de este sobre nuevos datos, con el objetivo de estimar su capacidad de generalización. Esto es fundamental de cara a determinar si el modelo es adecuado para el propósito previsto o si necesita ajustes o mejoras. Además, la evaluación del rendimiento permite comparar entre diferentes modelos y seleccionar el que mejor se adapte a las necesidades específicas del problema en cuestión. Para ello, se recurre a distintas métricas, en función de las características propias de cada problema.
+
+
+### Clasificación binaria
+En el presente trabajo el problema que se aborda es un problema de clasificación binaria, pues tenemos solo dos clases que son la clase positiva y la clase negativa. A la hora de clasificar una nueva instancia pueden darse 4 situaciones:
+
+- Que se clasifique como positiva siendo realmente positiva, en cuyo caso se dirá que forma parte de las *True Positives (TP)*
+
+- Que se clasifique como negativa siendo realmente negativa, en cuyo caso se dirá que forma parte de las *True Negatives (TN)*
+
+- Que se clasifique como positiva siendo realmente negativa, en cuyo caso se dirá que forma parte de las *False Positives (FP)*
+
+- Que se clasifique como negativa siendo realmente positiva, en cuyo caso se dirá que forma parte de las *False Negatives (FN)*
+
+Se definen las siguientes métricas de rendimiento de un modelo de clasificación binaria:
+
+<!-- Hay que ver cómo poner ahí la definición bien: bookdown -->
+
+**Tasa de acierto o exactitud**.
+Mide la proporción de casos que han sido correctamente clasificados.
+$$Exactitud = \frac{TP + TN}{TP + FP + TN + FN}$$
+
+**Precisión**.
+Mide la proporción de casos clasificados como positivos que realmente lo son.
+$$ Precisión = \frac{TP}{TP + FP}$$
+
+**Especificidad**.
+Mide la proporción de casos negativos que han sido correctamente clasificados por el modelo.
+$$ Especificidad = \frac{TN}{TN + FP}$$
+
+**Sensibilidad o recall**.
+Mide la proporción de casos positivos que han sido correctamente clasificados por el modelo.
+$$ Recall = \frac{TP}{TP + FN}$$
+
+
+**AUC-ROC**.
+Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Característica Operativa del Receptor en castellano). Esta curva es una representación gráfica del rendimiento de un modelo de clasificación binaria para todos los umbrales de clasificación.
+
+<!-- Curva ROC -->
+
+
+<!-- Con bookdown -->
+
+<!-- ```{definition, label, name="Tasa de acierto o exactitud"} -->
+
+<!-- $$Exactitud = \frac{TP + TN}{TP + FP + TN + FN}$$ -->
+<!-- ``` -->
+
+
+<!-- ```{def, name = "Precisión"} -->
+
+<!-- $$ Precisión = \frac{TP}{TP + FP}$$ -->
+<!-- ``` -->
+
+
+<!-- ```{definition, name = "Especificidad"} -->
+<!-- $$ Especificidad = \frac{TN}{TN + FP}$$ -->
+<!-- ``` -->
+
+
+<!-- ```{definition, name = "Sensibilidad"} -->
+<!-- $$ Recall = \frac{TP}{TP + FN}$$ -->
+<!-- ``` -->
+
+
+<!-- ```{definition, name = "AUC-ROC"} -->
+
+<!-- ``` -->
+
 
 
 ## Herramientas
