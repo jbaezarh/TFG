@@ -20,103 +20,81 @@ output:
 source("cabecera_chunk_inicio.R")
 ```
 
+# Preliminares
 
-# Capítulo 2: Preliminares
 
 <!-- Definir de forma breve y concisa todas las técnicas que serán utilizadas. -->
 
-## Información georreferenciada 
+## Datos georreferenciados
 
 <!-- El objetivo de esta sección es que alguien que puede no estar habituado al manejo de datos espaciales pueda entender, aunque no necesariamente en detalle, las técnicas que se han utilizado hasta poder obtener un data.frame que poder utilizar para realizar todo el análisis. -->
 
 <!-- Usar como modelo la introducción de: https://r.geocompx.org/intro -->
 
-Todos los datos usados en este trabajo son datos georreferenciados, por lo que es fundamental introducir, aunque sea de forma muy general, cuáles son los tipos de datos más utilizados para trabajar con este tipo de información, cuáles son sus características y cuáles son las herramientas disponibles para trabajar con ellos.
 
-Vector data 
-
-The geographic vector data model is based on points located within a coordinate reference system (CRS). Points can represent self-standing features (e.g., the location of a bus stop) or they can be linked together to form more complex geometries such as lines and polygons.
-
-The sf package provides classes for geographic vector data and a consistent command-line interface to important low level libraries for geocomputation:
-
-GDAL, for reading, writing and manipulating a wide range of geographic data formats, covered in Chapter 8
-PROJ, a powerful library for coordinate system transformations, which underlies the content covered in Chapter 7 and 7
-GEOS, a planar geometry engine for operations such as calculating buffers and centroids on data with a projected CRS, covered in Chapter 5
-S2, a spherical geometry engine written in C++ developed by Google, via the s2 package, covered in Section 2.2.9 below and in Chapter 7
-
-Simple features is an open standard developed and endorsed by the Open Geospatial Consortium (OGC), a not-for-profit organization whose activities we will revisit in a later chapter (in Section 8.2). Simple features is a hierarchical data model that represents a wide range of geometry types:the most commons are points, lines, polygons and their respective ‘multi’ versions (which group together features of the same type into a single feature). 
-
-sf objects are easy to subset: the code below shows how to return an object containing only the first two rows and the first three columns of the world object. The output shows two major differences compared with a regular data.frame: the inclusion of additional geographic metadata (Geometry type, Dimension, Bounding box and coordinate reference system information), and the presence of a ‘geometry column’, here named geom.
-
-A more specific question from an R perspective is “why use the sf package”? There are many reasons (linked to the advantages of the simple features model):
-Fast reading and writing of data
-Enhanced plotting performance
-sf objects can be treated as data frames in most operations
-sf function names are relatively consistent and intuitive (all begin with st_)
-sf functions can be combined with the |> operator and works well with the tidyverse collection of R packages.
+Todos los datos empleados en este trabajo son georreferenciados, lo que significa que están asociados a ubicaciones geográficas específicas. Por ello, resulta esencial introducir, aunque sea de forma general, los tipos de datos más utilizados para trabajar con esta información, sus características y las herramientas disponibles para manipularlos. Se tratarán los datos vectoriales y los datos rasters, al ser los tipos de datos fundamentales en este contexto, con características bien diferenciadas entre ellos.
 
 
-Geometries are the basic building blocks of simple features. Simple features in R can take on one of the 18 geometry types supported by the sf package. In this chapter we will focus on the seven most commonly used types: POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, MULTIPOLYGON and GEOMETRYCOLLECTION
+### Datos Vectoriales
 
-Simple features consist of two main parts: geometries and non-geographic attributes
+El modelo de datos vectoriales geográficos se basa en puntos ubicados dentro de un sistema de referencia de coordenadas (CRS, por sus siglas en inglés). Estos puntos pueden representar características independientes o pueden estar conectados para formar geometrías más complejas como líneas y polígonos.
 
-[graficos/02-sfdiagram.png]
+#### Simple features
 
-Non-geographic attributes represent the name of the feature or other attributes such as measured values, groups, and other things. (Basically a data.frame / tibble).
+Las "Simple features" son un estándar abierto ampliamente usado para la representación de datos vectoriales, desarrollado y respaldado por el Open Geospatial Consortium (OGC, por sus siglas en inglés), una organización sin ánimo de lucro dedicada a la creación de estándares abiertos e interoperables a nivel global dentro del marco de los sistemas geográficos de información (GIS, por sus siglas en ingés) y de la World Wide Web.
 
-Objects of class sf represent such data by combining the attributes (data.frame) with the simple feature geometry column (sfc). They are created with st_sf().
+El paquete sf proporciona clases para datos vectoriales geográficos y una interfaz de línea de comandos consistente para importantes bibliotecas de bajo nivel para geoprocesamiento (GDAL, PROJ, GEOS, S2,...).
 
-2.2.6 Simple feature geometries (sfg)
-The sfg class represents the different simple feature geometry types in R: point, linestring, polygon (and their ‘multi’ equivalents, such as multipoints) or geometry collection.
+Los objetos sf son fáciles de manipular ya que son dataframes o tibbles con dos características fundamentales En primer lugar, contienen metadatos geográficos adicionales: tipo de geometríca, dimensión, "Bounding Box" (límites o extensión geográfica)  e información sobre el Sistema de referencia de coordenadas. Y además, presentan una columna de geometrías que tiene el nombre de "geom". Algunas ventajas del uso del modelo de "simple features" en R son que en la mayoría de operaciones los objeto sf se pueden tratar como data frames, los nombres de las funciones son consistentes (todos empiezan por st_), las funciones se pueden combinar con el operador tubería y además funcionan bien con el ecosistema de paquetes tidyverse.
 
-2.2.7 Simple feature columns (sfc)
-One sfg object contains only a single simple feature geometry. A simple feature geometry column (sfc) is a list of sfg objects, which is additionally able to contain information about the coordinate reference system in use
+El paquete sf de R soporta 18 tipos de geometrías para las simple features, de las cuales las más utilizadas son: POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, MULTIPOLYGON and GEOMETRYCOLLECTION.
+
+
+### Datos Raster
+
+El modelo de datos raster representa el espacio con una cuadrícula de celdas (también llamadas píxeles), que generalmente es regular, es decir, con todas las celdas de igual tamaño. Aunque no se tratarán en el presente trabajo, cabe mencionar que existen otros modelos de raster más complejos en los que se usan cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas) y que pueden manipularse con el paquete de R (stars)[https://cran.r-project.org/web/packages/stars/index.html]. A cada una de estas celdas se le asocia uno (rasters de una sola capa) o varios (rasters multicapa).
+
+Los datos en formato raster constan de una cabecera y una matriz cuyos elementos representan celdas equipespaciadas. En la cabecera del raster se definen el Sistema de referencia de coordenadas, la extensión (o límites espaciales del área cubierta por el ráster), la resolución y el origen. El origen son las coordenadas de uno de los píxeles del ráster, que sirve de referencia para los demás, siendo generalmente utilizado el de la esquina inferior izquierda (aunque el paquete TERRA usado en este trabajo usa por defecto el de la esquina superior izquierda). La resolución se calcula como:
+
+$$ resolution = \frac{x_{max}-x_{min}}{ncol},\frac{y_{max}-y_{min}}{nrow} $$
+
+La representación en forma de matriz evita tener que almacenar explícitamente las coordenadas de cada una de las cuatro esquinas de cada píxel, debiendo almacenar solamente las coordenadas de un punto (el origen). Esto, unido a las operaciones del álgebra de mapas hacen que el procesamiento de datos raster sea mucho más eficiente que el de datos vectoriales.
+
+Se usará el paquete TERRA para tratar los datos en formato ráster. Este paquete permite tratar el modelo de rásters regulares con una o varias capas a través de la clase de objetos `SpatRaster`. Sin embargo, existen otras alternativas, como el paquete (stars)[https://cran.r-project.org/web/packages/stars/index.html], que además de ser más potente, permite trabajar con rásters no regulares y ofrece una mejor integración con el paquete sf y el entorno tidyverse.
 
 
 
-Raster data
+### Sistemas de Referencia de Coordenadas
 
-2.3 Raster data
-The spatial raster data model represents the world with the continuous grid of cells (often also called pixels; Figure 2.13:A). This data model often refers to so-called regular grids, in which each cell has the same, constant size – and we will focus on the regular grids in this book only. However, several other types of grids exist, including rotated, sheared, rectilinear, and curvilinear grids
+<!-- https://mgimond.github.io/Spatial/chp09_0.html -->
+<!-- https://r.geocompx.org/spatial-operations#map-algebra -->
 
-The raster data model usually consists of a raster header and a matrix (with rows and columns) representing equally spaced cells (often also called pixels; Figure 2.13:A).15 The raster header defines the coordinate reference system, the extent and the origin. The origin (or starting point) is frequently the coordinate of the lower left corner of the matrix (the terra package, however, uses the upper left corner, by default (Figure 2.13:B)). The header defines the extent via the number of columns, the number of rows and the cell size resolution.
+Intrínseco a cualquier modelo de datos espaciales está el concepto de Sistema de referencia de coordenadas (CRS), que establece cómo la geometría de los datos se relaciona con la superficie terrestre. Es decir, es el nexo de unión entre el modelo de datos y la realidad, por lo que juega un papel fundamental. Los CRS pueden ser de dos tipos: geográficos o proyectados.
 
-The resolution can be calculated as follows:
+#### Sistemas de Coordenadas Geográficas
 
-$ resolution = \frac{x_{max}-x_{min}}{ncol},\frac{y_{max}-y_{min}}{nrow} $
+Los sistemas de coordenadas geográficas (GCS por sus siglas en inglés) identifican cada punto de la superficie terrestre utilizando la longitud y la latitud. La longitud es la distancia angular al Meridiano de Greenwich medida en la dirección Este-Oeste. La longitud es la distancia angular al Ecuador medida en la dirección Sur-Norte.
+
+Cualquier sistema de coordenadas geográficas se compone de tres elementos: el elipsoide, el geoide y el datum. El primero es el elipsoide (o esfera) utilizado para representar de forma simplificada la superficie terrestre, sobre el que se supone que se encuentran los datos y el que permitirá realizar mediciones. El segundo, el geoide, es el modelo matemático que representa la verdadera forma de la Tierra, que no es suave sino que presenta ondulaciones debidas a las fluctuaciones del campo gravitatorio a lo largo de la superficie terrestre, que además cambian a una amplia escala temporal. Y el tercero, el datum, indica cómo se alinean el elipsoide y el geoide, es decir, cómo el modelo matemático se ajusta a la realidad. Este puede ser local o geocéntrico, en función de si el elipsoide se ajusta al geoide en un punto concreto de la superficie terrestre o de si el el centro del elipsoide el que se alinea con el centro de la Tierra. Ejemplos de datums geocéntricos usados en este trabajo son:
+
+- European Terrestrial Reference System 1989 (ETRS89), usado ampliamente en la Europa Occidental.
+- World Geodetic System 1984 (WGS84), usado a nivel global.
 
 
-This matrix representation avoids storing explicitly the coordinates for the four corner points (in fact it only stores one coordinate, namely the origin) of each cell corner as would be the case for rectangular vector polygons. This and map algebra (Section 4.3.2) makes raster processing much more efficient and faster than vector data processing.
+#### Sistemas de Coordenadas Proyectadas
 
-Paquete de R usado para trabajar con datos raster: terra
-terra focuses on the most common raster data model (regular grids)
- terra usually handles one or multilayered rasters
+Un Sistema de Coordenadas Proyectadas (PCS por sus siglas en inglés) es un sistema de referencia que permite identificar localizaciones terrestres y realizar mediciones en una superficie plana, es decir, en un mapa. Estos sistemas de coordenadas se basan en las coordenadas cartesianas, por lo que tienen un origen, un eje X y un eje Y y usan una unidad lineal de medida (en este trabajo, metro). Pasar de una superficie elíptica (GCR) a una superficie plana (PCS) requiere de transformaciones matemáticas apropiadas y siempre induce deformaciones en los datos.
 
-Alternativa más potente y con mejor integración con sf y el entorno tidyverse: stars
+Al proyectar la superficie terrestre en una superficie plana siempre se modifican algunas propiedades de los objetos, como el área, la dirección, la distancia o la forma. Un PCS solo puede conservar alguna de estas propiedades, por lo que es habitual clasificar los PCS en función de la propiedad que mantienen: las proyecciones de igual área preservan el área, las azimutales preservan la dirección, las equidistantes preservan la distancia y las conformales preservan la forma local.
+La mayoría de las proyecciones también se pueden clasificar en planas, cilíndricas o cónicas en función de cómo se realiza la proyección.
 
-CRS -> UTM30N
+Un caso particular y ampliamente usado de PCS cilíndrico son los Universe Transverse Mercator (UTM), en el los que se proyecta el elipsoide sobre un cilindro tangente a este por las líneas de longitud (los meridianos). De esta forma, se divide el globo en 60 zonas de 6º de longitud, para cada una de las cuales existe un PCS UTM correspondiente que está asociado al meridiano central. Se trata de proyecciones conformales, por lo que preservan ángulos y formas en pequeñas regiones, pero distorsionan distancias y áreas. 
 
-2.4 Coordinate Reference Systems
-Vector and raster spatial data types share concepts intrinsic to spatial data. Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies). CRSs are either geographic or projected
+A lo largo de este trabajo se utilizará ampliamente el Sistema de coordenadas proyectadas UTM30N (es habitual especificar el hemisferio para evitar confusión en los valores del eje Y, ya que miden distancia al ecuador, de ahí la N de hemisferio norte).  
 
-2.4.1 Geographic coordinate reference systems
-Geographic coordinate reference systems identify any location on the Earth’s surface using two values — longitude and latitude (Figure 2.17, left panel). Longitude is location in the East-West direction in angular distance from the Prime Meridian plane. Latitude is angular distance North or South of the equatorial plane. Distances in geographic CRSs are therefore not measured in meters. 
 
-The surface of the Earth in geographic coordinate reference systems is represented by a spherical or ellipsoidal surface
 
-2.4.2 Projected coordinate reference systems
-All projected CRSs are based on a geographic CRS, described in the previous section, and rely on map projections to convert the three-dimensional surface of the Earth into Easting and Northing (x and y) values in a projected CRS. Projected CRSs are based on Cartesian coordinates on an implicitly flat surface (Figure 2.17, right panel). They have an origin, x and y axes, and a linear unit of measurement such as meters.
 
-2.4.2 Projected coordinate reference systems
-All projected CRSs are based on a geographic CRS, described in the previous section, and rely on map projections to convert the three-dimensional surface of the Earth into Easting and Northing (x and y) values in a projected CRS. Projected CRSs are based on Cartesian coordinates on an implicitly flat surface (Figure 2.17, right panel). They have an origin, x and y axes, and a linear unit of measurement such as meters.
-
-This transition cannot be done without adding some deformations. Therefore, some properties of the Earth’s surface are distorted in this process, such as area, direction, distance, and shape. A projected coordinate reference system can preserve only one or two of those properties. Projections are often named based on a property they preserve: equal-area preserves area, azimuthal preserve direction, equidistant preserve distance, and conformal preserve local shape
-
-[La que yo uso en el trabajo es...]
-Proyected data...
-
-REPRODUCTIBILIDAD -> R
- sf (tidyverse philosofy) and terra (raster sucessor) packages
  
 ## Ingeniería de características
 Codificación variables categóricas

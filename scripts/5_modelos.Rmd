@@ -21,7 +21,7 @@ library(tidymodels)
 load("salidas_intermedias/datos_depurados2024-04-09.RData")
 ```
 
-## Función medidas de rendimiento
+## Función de medidas de rendimiento
 ```{r}
 # Será la función que usemos para medir el rendimiento del modelo
 
@@ -84,13 +84,13 @@ lr_mod <-
   set_engine("glmnet")
 
 # 3º Creamos la receta
-holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter", 
-              "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
+# holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter", 
+#               "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
 
 lr_recipe <- 
   recipe(fire ~ ., data = training) %>% 
   step_date(date,features = c("dow", "month")) %>% 
-  step_holiday(date, holidays = holidays) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
   step_rm(date,cod_municipio,municipio) %>% 
   step_dummy(all_nominal_predictors()) %>% 
   step_zv(all_predictors()) %>% 
@@ -114,7 +114,7 @@ lr_res <-
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
 
-# Se muestra la tasa de acierto en función del parámetro de penalización
+# Se muestran las medidas de rendimiento en función del parámetro de penalización
 lr_plot <- 
   lr_res %>% 
   collect_metrics() %>% 
@@ -125,13 +125,18 @@ lr_plot <-
   ylab("Medidas de rendimiento") +
   scale_x_log10(labels = scales::label_number())
 
-lr_plot
+
+lr_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+# Se observa que las variaciones en cada una de las medidas son pequeñas, y que aumentar la especificidad supone disminuir la sensitividad y viceversa. Como solución de compromiso se opta por aumentar la tasa de acierto
 
 top_models <-
   lr_res %>% 
   show_best(metric = "accuracy", n = 15) %>% 
   arrange(penalty) 
-top_models
+
 
 
 # Se elige el que tiene una precisión más elevada
@@ -140,6 +145,7 @@ lr_best <-
   select_best(metric="accuracy")
 
 lr_best
+
 
 # 6º Se evalúa el modelo:
 #   Curva ROC
@@ -181,7 +187,7 @@ rf_mod <-
 rf_recipe <- 
   recipe(fire ~ ., data = training) %>% 
   step_date(date,features = c("dow", "month")) %>% 
-  step_holiday(date) %>% 
+  # step_holiday(date) %>% 
   step_rm(date, cod_municipio, municipio) 
 # No normalizamos en este caso pues no es necesario
 
@@ -204,23 +210,82 @@ rf_res <-
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
 # Resultados del tuning
-rf_res %>% 
-  show_best(metric = "roc_auc")
+
+rf_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+# Se observa mayor variabilidad que en el caso de la regresión logística con penalización
+
+## La siguiente función muestra de forma gráfica las distintas medidas de rendimiento
+## para cada combinación de valores de parámetros utilizando interpolación bilineal
+
+library(akima)
+library(magrittr)
+library(ggpubr)
 
 
-autoplot(rf_res)
+tuning_plot = function(mod_res) {
+  datos_metrics = mod_res %>% 
+    collect_metrics()
+  
+  # min = min(datos_metrics$mean)
+  # max = max(datos_metrics$mean)
+  
+  plots = list()
+  
+  for (metric in unique(datos_metrics$.metric)) {
+    
+    datos = datos_metrics %>% 
+      filter(.metric==metric) 
+    
+    # Interpolar los datos faltantes
+    datos_interp <- interp(datos[[1]], datos[[2]], datos$mean)
+    
+    # Crear un nuevo dataframe con los datos interpolados
+    datos_interp_df <- data.frame(
+      expand.grid(x = datos_interp$x, y = datos_interp$y), z = as.vector(datos_interp$z))
+    
+    # Crear el gráfico de mapa de calor con interpolación
+    p = ggplot(datos_interp_df, aes(x = x, y = y, fill = z)) +
+      geom_tile() +
+      # scale_fill_viridis_c(option = "turbo", limits = c(min,max), name = NULL)+
+      scale_fill_viridis_c(option = "turbo", name = NULL)+
+      labs(title = metric,
+           x = colnames(datos)[1],
+           y = colnames(datos)[2],
+           fill = metric)
+    
+    plots[[metric]] = p
+    
+  }
+  
+  # ggarrange(plotlist = plots,
+  #           legend = "right",
+  #           common.legend = T)
+  
+  ggarrange(plotlist = plots)
+  
+  
+}
+
+tuning_plot(rf_res)
+
+# Se observa que al disminuir mtry y aumentar min_n aumenta la tasa de acierto. Sin embargo, los valores más elevados de recall se encuentran para valores pequeños de min_n, al contrario de lo que ocurre con la especificidad. Sin embargo, dado que la variación en la especificidad es de casi un 20% mientras que la de la sensitividad es de tan solo un 7% se opta por maximizar la tasa de acierto como solución de compromiso.
+
+# En comparación con el modelo de regresión logística este nos permite conseguir niveles de sensitividad más elevados (superiores al 90%) 
 
 # Mejor modelo
 rf_best <- 
   rf_res %>% 
-  select_best
+  select_best(metric = "accuracy")
 
 rf_best
 
-# Predicciones
-rf_res %>% 
-  collect_predictions() 
+# mtry = 1 --> BOOSTING DECISION TREES??
 
+
+# Curva ROC
 rf_auc <- 
   rf_res %>% 
   collect_predictions(parameters = rf_best) %>% 
@@ -229,22 +294,34 @@ rf_auc <-
 
 autoplot(rf_auc)
 
+#   Medidas de rendimiento:
+
+rf_metrics <- rf_res |> 
+  collect_predictions(parameters = rf_best) |> 
+  get_metrics()
+
+rf_metrics
+lr_metrics
 ```
 
 
 ## 3. Neuronal Networks
+```{r}
+```
+
+
 
 ## 4. SVM
 ```{r}
 # 1º Construir el modelo
-sv_mod <- 
+svm_mod <- 
   svm_linear(cost = tune(), margin = tune()) %>% 
   set_engine("kernlab") %>% 
   set_mode("classification")
 
 # 2º Construir la receta con el preprocesamiento
-sv_recipe <- 
-  recipe(fire ~ ., data = hotel_other) %>% 
+svm_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
   step_date(date,features = c("dow", "month")) %>% 
   step_rm(date, cod_municipio, municipio) %>%
   step_dummy(all_nominal_predictors()) %>% 
@@ -252,86 +329,94 @@ sv_recipe <-
   step_normalize(all_predictors())
 
 # 3º Ensamblar todo con workflow
-sv_workflow <- 
+svm_workflow <- 
   workflow() %>% 
-  add_model(sv_mod) %>% 
-  add_recipe(sv_recipe)
+  add_model(svm_mod) %>% 
+  add_recipe(svm_recipe)
 
 # 4º Train and tune
 set.seed(345)
-sv_res <- 
-  sv_workflow %>% 
+svm_res <- 
+  svm_workflow %>% 
   tune_grid(val_set,
             grid = 25,
             control = control_grid(save_pred = TRUE),
-            metrics = metric_set(roc_auc))
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
 
 # Resultados del tuning
-sv_res %>% 
-  show_best(metric = "roc_auc")
+svm_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
 
-autoplot(sv_res)
+tuning_plot(svm_res)
+
+# Se observa que hay muy poca variabilidad en los resultados de cada combinación de parámetros, menos de un 2.5% para cada medida de rendimiento. Ante este resultado, de nuevo, se opta por maximizar la tasa de acierto
+
 
 # Mejor modelo
-sv_best <- 
-  sv_res %>% 
-  select_best()
+svm_best <- 
+  svm_res %>% 
+  select_best(metric="accuracy")
 
-sv_best
+svm_best
 
-# Predicciones
-sv_res %>% 
-  collect_predictions() 
-
-sv_auc <- 
-  sv_res %>% 
-  collect_predictions(parameters = sv_best) %>% 
+# Curva ROC
+svm_auc <- 
+  svm_res %>% 
+  collect_predictions(parameters = svm_best) %>% 
   roc_curve(fire, .pred_0) %>% 
   mutate(model = "Support Vector Machine")
 
-autoplot(sv_auc)
-
-##########################
-# Test
-# the last model
-last_sv_mod <-  
-  rand_forest(cost = 3, margin = 3) %>% 
-  set_engine("kernlab") %>% 
-  set_mode("classification")
-  
-# the last workflow
-last_sv_workflow <- 
-  sv_workflow %>% 
-  update_model(last_sv_mod)
-
-# the last fit
-set.seed(345)
-last_sv_fit <- 
-  last_sv_workflow %>% 
-  last_fit(splits)
-
-last_sv_fit
-
-last_sv_fit %>% 
-  collect_metrics()
-
-res_sv = last_sv_fit |> collect_predictions()
-
-res_sv %>% roc_auc(truth = fire, .pred_0)
-res_sv %>% accuracy(truth = fire, .pred_class)
-res_sv %>% conf_mat(truth = fire, .pred_class)
-res_sv %>% sensitivity(truth = fire, .pred_class)
-res_sv %>% spec(truth = fire, .pred_class)
-
+autoplot(svm_auc)
 ```
 
 
 # Comparación
 
+```{r}
+results = rbind(
+  lr = lr_res %>% 
+    collect_predictions(parameters = lr_best) %>% 
+    get_metrics() %>% 
+    .$res %>%
+    as.data.frame(),
+  rf = rf_res %>% 
+    collect_predictions(parameters = rf_best) %>%
+    get_metrics() %>% 
+    .$res %>%
+    as.data.frame(),
+  svm = svm_res %>% 
+    collect_predictions(parameters = svm_best) %>%
+    get_metrics() %>% 
+    .$res %>%
+    as.data.frame()
+)
+
+library(knitr)
+
+kable(results,digits=3)
+```
+
+```{r}
+bind_rows(rf_auc, lr_auc,svm_auc) %>% 
+  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model)) + 
+  geom_path(lwd = 1, alpha = 0.7) +
+  geom_abline(lty = 3) + 
+  coord_equal() + 
+  scale_color_viridis_d(option = "turbo", end = .6)
+```
+
+# Test
+
+Se unen los conjuntos training y validation para entrenar el modelo final
+
 ### Logistic Regression
 ```{r}
 # the last model
-last_lr_mod <- logistic_reg(penalty = 0.00281,mixture = 0) |> 
+lr_best # penalty = 0.0621
+last_lr_mod <- logistic_reg(penalty = lr_best$penalty, mixture = 0) |> 
   set_engine("glmnet")
   
 # the last workflow
@@ -343,30 +428,27 @@ last_lr_workflow <-
 set.seed(345)
 last_lr_fit <- 
   last_lr_workflow %>% 
-  last_fit(splits)
+  last_fit(splits,
+           add_validation_set = T)
 
 last_lr_fit
 
 last_lr_fit %>% 
   collect_metrics()
 
-res_lr = last_lr_fit |> collect_predictions()
-
-res_lr %>% roc_auc(truth = fire, .pred_0)
-res_lr %>% accuracy(truth = fire, .pred_class)
-res_lr %>% conf_mat(truth = fire, .pred_class)
-res_lr %>% sensitivity(truth = fire, .pred_class)
-res_lr %>% spec(truth = fire, .pred_class)
-
+last_lr_fit %>% 
+  collect_predictions() %>% 
+  get_metrics()
 ```
 
 ### RF
 ```{r}
-# Test
 # the last model
+rf_best # mtry = 1 --> BOOSTING?
+
 last_rf_mod <- 
-  rand_forest(mtry = 3, min_n = 3, trees = 1000) %>% 
-  set_engine("ranger", num.threads = cores) %>% 
+  rand_forest(mtry = rf_best$mtry, min_n = rf_best$min_n, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores,importance="impurity") %>% 
   set_mode("classification")
   
 # the last workflow
@@ -379,52 +461,18 @@ last_rf_workflow <-
 set.seed(345)
 last_rf_fit <- 
   last_rf_workflow %>% 
-  last_fit(splits)
+  last_fit(splits,
+           add_validation_set = T)
 
 last_rf_fit
 
 last_rf_fit %>% 
   collect_metrics()
 
-res_rf = last_rf_fit |> collect_predictions()
-
-res_rf %>% roc_auc(truth = fire, .pred_0)
-res_rf %>% accuracy(truth = fire, .pred_class)
-res_rf %>% conf_mat(truth = fire, .pred_class)
-res_rf %>% sensitivity(truth = fire, .pred_class)
-res_rf %>% spec(truth = fire, .pred_class)
-
-# Comparación
-bind_rows(rf_auc, lr_auc) %>% 
-  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model)) + 
-  geom_path(lwd = 1.5, alpha = 0.8) +
-  geom_abline(lty = 3) + 
-  coord_equal() + 
-  scale_color_viridis_d(option = "plasma", end = .6)
-
-
-####
-# the last model
-last_rf_mod <- 
-  rand_forest(mtry = 8, min_n = 7, trees = 1000) %>% 
-  set_engine("ranger", num.threads = cores, importance = "impurity") %>% 
-  set_mode("classification")
-
-# the last workflow
-last_rf_workflow <- 
-  rf_workflow %>% 
-  update_model(last_rf_mod)
-
-# the last fit
-set.seed(345)
-last_rf_fit <- 
-  last_rf_workflow %>% 
-  last_fit(splits)
-
-last_rf_fit
-
 last_rf_fit %>% 
-  collect_metrics()
+  collect_predictions() %>% 
+  get_metrics()
+
 
 library(vip)
 last_rf_fit %>% 
@@ -436,11 +484,41 @@ last_rf_fit %>%
   roc_curve(fire, .pred_0) %>% 
   autoplot()
 
-rf_coef = last_rf_fit %>% 
-  extract_fit_engine() |> 
-  tidy()
-  
+```
 
-str(rf_parnship)
+### SVM
+```{r}
+# the last model
+svm_best
+last_svm_mod <-  
+  svm_linear(cost = svm_best$cost, margin = svm_best$margin) %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+  
+# the last workflow
+last_svm_workflow <- 
+  svm_workflow %>% 
+  update_model(last_svm_mod)
+
+# the last fit
+set.seed(345)
+last_svm_fit <- 
+  last_svm_workflow %>% 
+  last_fit(splits,
+           add_validation_set = T)
+
+last_svm_fit %>% 
+  collect_metrics()
+
+last_svm_fit %>% 
+  collect_predictions() %>% 
+  get_metrics()
+```
+
+
+
+
+```{r}
+# save(lr_res,rf_res,svm_res,file = "salidas_intermedias/trained_models_19_04_2024.RData")
 ```
 
