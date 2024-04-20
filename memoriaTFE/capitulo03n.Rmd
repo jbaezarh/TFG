@@ -27,7 +27,7 @@ El primer paso a la hora de construir cualquier modelo de predicción es dispone
 Se ha querido adoptar un enfoque dinámico, es decir, el objetivo no es construir un modelo estacionario que nos indique si una determinada zona se verá afectada por un incendio forestal a lo largo de un amplio periodo temporal, si no que se pretende ser capaz de predecir si un determinado punto del territorio andaluz se verá afectado por un incendio forestal en un momento concreto, en base a las covariables correspondientes a ese lugar en ese momento. Es decir, se considera no solo la dimensión espacial de los datos si no también la temporal, al mayor nivel de desagregación disponible.  Este es un enfoque mucho menos explorado, debido fundamentalmente a dos factores: 
 
 1. La dificultad de disponer de información fiable y de calidad desagregada espacio-temporalmente
-2. La dificultad de trabajar con datos de estas características de cara al análisis y principalmente a la modelización ya que son datos correlados en el tiempo y en el espacio.
+2. La dificultad de trabajar con datos de estas características de cara al análisis y principalmente a la modelización, ya que son datos correlados en el tiempo y en el espacio.
 
 Queda claro, por tanto, que se trata de un problema complejo que requiere de simplificaciones para poder ser abordado, más aun dadas las limitaciones en los recursos computacionales disponibles y la enorme cantidad de de datos que se están considerando y que requieren de un procesamiento sumamente costoso desde un punto de vista computacional.
 
@@ -66,9 +66,9 @@ Una vez limitada la extensión territorial del estudio el siguiente paso era aco
 
 <!-- Ignición, propagación, extinción temprana -->
 
-Los incendios forestales son un proceso sumamente complejo, en el que actúan numerosos factores de muy distinta índole (...). Además, dentro de un incendio forestal se pueden distinguir distintas fases que presentan características muy diversas y sobre las que actúan distintos agentes: ignición, propagación y extinción. Dada la información sobre incendios forestales disponible, se está obligado a adoptar un enfoque global, pues no se dispone de los puntos de ignición u origen de los incendios forestales. El enfoque será, por tanto, intentar predecir si una determinada localización se verá afectada por un incendio forestal (da más de 100ha) en un momento concreto.
+Los incendios forestales son un proceso sumamente complejo, en el que actúan numerosos factores de muy distinta índole (...). Además, dentro de un incendio forestal se pueden distinguir distintas fases que presentan características muy diversas y sobre las que actúan distintos agentes: ignición, propagación y extinción. Dada la información sobre incendios forestales disponible, se está obligado a adoptar un enfoque global, pues no se dispone de los puntos de ignición u origen de los incendios forestales. El enfoque será, por tanto, intentar predecir si una determinada localización se verá afectada por un incendio forestal (de más de 100 ha) en un momento concreto.
 
-Además, es importante tener en cuenta que existen factores estructurales que tienen una influencia directa sobre los regímenes de incendios forestales como son las tendencias de uso y explotación de los bosques, la presencia de interfaz urbano forestal, los tipos y técnicas de agricultura que se llevan a cabo, la presencia e intensidad del pastoreo, los cambios en los usos de suelo e incluso conductas sociales y tendencias demográficas diversas. Se trata de variables que cambian a lo largo de periodos relativamente largos de tiempo y que muy difícilmente pueden ser incluidos en los modelos, dada la falta de datos sobre ellas así como su carácter transversal. Por ello, se ha considerado conveniente no extender en exceso el periodo de estudio, reconocida la imposibilidad de incluir en el modelo todas las variables que tienen un impacto relevante en la aparición de incendios y que son cambiantes en el tiempo.
+Además, es importante tener en cuenta que existen factores estructurales que tienen una influencia directa sobre los regímenes de incendios forestales como son las tendencias de uso y explotación de los bosques, la presencia de interfaz urbano forestal, los tipos y técnicas de agricultura que se llevan a cabo, la presencia e intensidad del pastoreo, los cambios en los usos de suelo e incluso conductas sociales y tendencias demográficas diversas. Se trata de variables que cambian a lo largo de periodos relativamente largos de tiempo y que muy difícilmente pueden ser incluidos en los modelos, dada la falta de datos sobre ellas, así como su carácter transversal. Por ello, se ha considerado conveniente no extender en exceso el periodo de estudio, reconocida la imposibilidad de incluir en el modelo todas las variables que tienen un impacto relevante en la aparición de incendios y que son cambiantes en el tiempo.
 <!-- Documental que vi con Rafa! -->
 
 Todo ello hace necesario que el conjunto de datos utilizado contenga información sobre todas las dimensiones (o al menos las principales) que influyen en cualquiera de las fases de un incendio forestal. Es decir, se deben incluir la dimensión antropogénica, la demográfica, la hidrográficas, la topográfica, la meteorológica y la vegetación. Es importante recalcar que siempre se hace referencia a datos geoespaciales pues debe ser la información relativa al lugar (y al momento) del incendio, con la dificultad posterior que esto supondrá. 
@@ -80,12 +80,17 @@ En base a todo lo mencionado y a la disponibilidad de información de calidad de
 
 ## Fuentes de datos
 
-Como se ha comentado en la sección anterior, los datos sobre los incendios forestales se han obtenido de los perímetros de incendios forestales mayores de 100 Ha en Andalucía entre 1975 y 2020 disponibles la REDIAM. De cada incendio registrado se 
+Como se ha comentado en la sección anterior, los datos sobre los incendios forestales se han obtenido de los perímetros de incendios forestales mayores de 100 ha en Andalucía entre 1975 y 2020 disponibles la REDIAM. De cada incendio registrado se 
 dispone de su fecha de inicio, del área recorrida por el fuego y del municipio en el que originó, así como de otras variables que dependen del año de la campaña y que no son relevantes de cara a nuestro estudio.
 
-Tomando como base estudios similares (...) y partiendo de las 6 categorías ya mencionadas se han recopilado 20 conjuntos de datos de distinto tipo que se usarán para construir variables predictoras para los modelos. Estos se recogen en la Tabla \ref{tab:fuentes}, donde también se indica la fuente de la que han sido obtenidos, el tipo de datos (indicando la resolución en el caso de los datos ráster) y la frecuencia de las observaciones (o resolución temporal) en el caso de las variables temporales. 
+Tomando como base estudios similares (...) y partiendo de las 6 categorías ya mencionadas se han recopilado 23 conjuntos de datos de distinto tipo que se usarán para explicar y predecir los incendios forestales en Andalucía. Estos conjuntos se recogen en la Tabla \ref{tab:fuentes}, donde también se indica la fuente de la que ha sido obtenido cada uno de ellos, el tipo de datos que contiene (indicando su resolución en el caso de los datos ráster) y la frecuencia de las observaciones (o resolución temporal) en el caso de las variables temporales. 
 
-Cabe destacar la heterogeneidad de los datos recopilados. Aunque no aparece explicitamente indicado los datos espaciales están en distin
+Es relevante la heterogeneidad de los datos recopilados, pues se dispone tanto de datos tabulares como de datos espaciales y dentro de estos últimos de datos vectoriales y datos ráster, con distintas resoluciones, distintas frecuencias y distintos sistemas de referencia de coordenadas. Esto hará que el procesamiento de estos datos hasta obtener datos adecuados para el análisis estadístico sea costoso y que deban utilizarse técnicas específicas de geocumputación.
+
+Cabe también mencionar que se ha optado por el uso de datos meteorológicos basados en modelos y en observaciones satelitares, en lugar del uso de datos provenientes de estaciones meteorológicas. Si bien la información de estaciones meteorológica puede ser más precisa, la dificultad de disponer de datos consistentes y continuos en el tiempo a lo largo del periodo de estudio de las variables meteorológicas seleccionadas ha hecho que este enfoque no sea viable. En esta dirección se ha explorado la API de la AEMET y algunos paquetes de R como `climate`, sin llegar a resultados satisfactorios. Por otro lado, el paquete `nasapower` permite la descarga de una gran cantidad de variables meteorológicas con frecuencia diaria y con una resolución de aproximadamente $0.5 \times 0.625$ grados de latitud y longitud (unos 50km). Si bien es cierto que no es lo ideal, es la única opción que se ha considerado viable y de cara a la construcción de unos primeros modelos aproximativos podría ser suficiente. Si quisiese extenderse el estudio, sería conveniente profundizar en la búsqueda de alternativas que permitan obtener información meteorológica de una mayor calidad. 
+
+<!-- https://github.com/bczernecki/climate -->
+<!-- https://power.larc.nasa.gov/ -->
 
 <!-- Variables meteorológicas, mencionar paquete. Satos satelitares. Alternativa, datos de estaciones meteorológicas (+ calidad). API aemet -->
 
@@ -111,12 +116,12 @@ Vegetación                      & NDVI                                         
                                 & Caminos / Vías Pecuarias                                       & DERA       & Shapefile          & -          \\ \hline
 Demográficas                    & Población del municipio                                        & IECA\tnote{c}       & csv                & Anual      \\ \hline
 Hidrográficas                   & Principales Ríos                                               & MAGRAMA\tnote{d}    & Shapefile          & -          \\ \hline
-\multirow{6}{*}{Meteorológicas} & Precipitación (mm/day)                                         & NASA POWER\tnote{e} & df / raster (0.5º) & Diaria     \\
-                                & Temperatura a 2m sobre la superficie (º)                       & NASA POWER & df / raster (0.5º) & Diaria     \\
-                                & Humedad del suelo (\%)                                         & NASA POWER & df / raster (0.5º) & Diaria     \\
-                                & Dirección del viento a 10 metros sobre la superficie terrestre(º) & NASA POWER & df / raster (0.5º) & Diaria     \\
-                                & Humedad relativa a 2m sobre la superficie (\%)                 & NASA POWER & df / raster (0.5º) & Diaria     \\
-                                & Cantidad de precipitaciones (mm/day)                           & NASA POWER & df / raster (0.5º) & Diaria     \\ \hline
+\multirow{6}{*}{Meteorológicas} & Precipitación (mm/day)                                         & NASA POWER\tnote{e} & df (0.5º x 0.625º) & Diaria     \\
+                                & Temperatura a 2m sobre la superficie (º)                       & NASA POWER & df (0.5º x 0.625º) & Diaria     \\
+                                & Humedad del suelo (\%)                                         & NASA POWER & df (0.5º x 0.625º) & Diaria     \\
+                                & Dirección del viento a 10 metros sobre la superficie terrestre(º) & NASA POWER & df (0.5º x 0.625º) & Diaria     \\
+                                & Humedad relativa a 2m sobre la superficie (\%)                 & NASA POWER & df (0.5º x 0.625º) & Diaria     \\
+                                & Cantidad de precipitaciones (mm/day)                           & NASA POWER & dfdf (0.5º x 0.625º) & Diaria     \\ \hline
 \footnotesize Fuente: Elaboración propia
 \end{tabular}}
 \begin{tablenotes}
@@ -147,58 +152,66 @@ Hidrográficas                   & Principales Ríos                            
 <!-- https://power.larc.nasa.gov/#resources -->
 
 
-## Selección de variables
-Tras una extensa revisión de estudios similares (...), se ha optado por usar un conjunto de [22] 
+## Procesamiento de los datos
 
-Siguiendo el ejemplo de otros trabajos similares (...) se ha optado por usar un conjunto de [22] variables predictoras que pueden clasificarse en las siguientes 5 categorías:
+Una vez se dispone de todos los conjuntos de datos que se usarán en el estudio, el siguiente paso será combinarlos de manera adecuada y transformarlos a un formato apto para el análisis estadístico y la construcción de modelos predictivos, es decir, a un data frame. Dado que el objetivo que se persigue es predecir si, dada unas condiciones meteorológicas concretas en un momento dado, un punto del territorio andaluz se verá afectado o no por un incendio forestal, será necesario disponer de una cantidad suficiente de muestras negativas y positivas distribuidas espacial y temporalmente que tengan asociadas las variables explicativas correspondientes. 
 
-1. Topográficas
-Altitud
-Orientación
-Pendiente
-Curvatura
+Intuitivamente, las muestras positivas serán aquellas observaciones (puntos definidos en el tiempo y en el espacio) dentro del marco espacio-temporal del estudio en las que se ha detectado un incendio forestal en el día de la observación. Es decir, son observaciones dentro de los polígonos de incendios el día que estos se han producido. Por tanto, las muestras negativas serán observaciones dentro del marco espacio-temporal definido en las que no se ha detectado un incendio forestal.
 
-2. Vegetación.
-NDVI
-
-3. Antropogénicas 
-Distancia a población
-Uso de suelo
-Distancia a carreteras 
-Distancia a Ferrocarril
-Distancia a Línea eléctrica
-Distancia a Espacio protegido
-Distancia a Sendero / Vía Verde / Carril Bici
-Distancia a Camino / Vía Pecuaria
-
-4º Demográficas
-Población (Nº habitantes del municipio)
-
-4. Hidrográficas 
-Precipitación (mm/day)
-Distancia a ríos
-
-5. Meteorológicas 
-Temperatura a 2m sobre la superficie (º)
-Humedad del suelo (%)
-Dirección del viento a 10 metros sobre la superficie terrestre 
-Humedad relativa a 2m sobre la superficie (%)
-Cantidad de precipitaciones (mm/day)
-Radiación solar incidente al medio día (MJ/m^2/day)
+A continuación se detalla el proceso seguido para generar el conjunto de datos depurado sobre el que desarrollar el estudio a partir de los distintos conjuntos de datos en bruto:
 
 
-Fecha
-Municipio y código municipio
+1. Generación de una muestra balanceada de casos positivos y negativos.
+
+2. Asignación a cada observación los valores correspondientes a ese día y a esa localización concreta de todas las variables predictoras.
+
+3. Depuración de la muestra generada, elimininando valores perdidos y ajustando adecuadamente los tipos de las variables.
 
 
-## Fuentes de datos
+
+
+## Depuración de los datos
 Para la información sobre incendios forestales en Andalucía se ha empleado la  cartografía generada por la Red de Información Ambiental de Andalucía (REDIAM) sobre áreas recorridas por los incendios forestales en Andalucía entre 1975 y 2022.
 Se acota la el periodo de estudio, cambios estructurales en los regímenes de incendios y disponibilidad de la información
 
 
 
-## Organización de los datos
-No disponibilidad puntos de ignición. Ri
 
-## Depuración de los datos
+<!-- 1. Topográficas -->
+<!-- Altitud -->
+<!-- Orientación -->
+<!-- Pendiente -->
+<!-- Curvatura -->
+
+<!-- 2. Vegetación. -->
+<!-- NDVI -->
+
+<!-- 3. Antropogénicas  -->
+<!-- Distancia a población -->
+<!-- Uso de suelo -->
+<!-- Distancia a carreteras  -->
+<!-- Distancia a Ferrocarril -->
+<!-- Distancia a Línea eléctrica -->
+<!-- Distancia a Espacio protegido -->
+<!-- Distancia a Sendero / Vía Verde / Carril Bici -->
+<!-- Distancia a Camino / Vía Pecuaria -->
+
+<!-- 4º Demográficas -->
+<!-- Población (Nº habitantes del municipio) -->
+
+<!-- 4. Hidrográficas  -->
+<!-- Precipitación (mm/day) -->
+<!-- Distancia a ríos -->
+
+<!-- 5. Meteorológicas  -->
+<!-- Temperatura a 2m sobre la superficie (º) -->
+<!-- Humedad del suelo (%) -->
+<!-- Dirección del viento a 10 metros sobre la superficie terrestre  -->
+<!-- Humedad relativa a 2m sobre la superficie (%) -->
+<!-- Cantidad de precipitaciones (mm/day) -->
+<!-- Radiación solar incidente al medio día (MJ/m^2/day) -->
+
+
+<!-- Fecha -->
+<!-- Municipio y código municipio -->
 
