@@ -223,14 +223,17 @@ Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Caracter�
 
 ## Herramientas
 
-Lenguaje R [...], entorno de trabajo RStudio [...]. Paquetes de R [...] repositorio CRAN [...].
+<!-- https://www.r-project.org/ -->
+Toda la parte práctica del presente trabajo se ha llevado a cabo empleado el lenguaje de programación R a través del entorno de desarrollo integrado (IDE) que ofrece RStudio. R es un lenguaje y entorno de programación de código abierto desarrollado dentro del proyecto GNU y orientado a la computación estadística. R puede extender sus funcionalidades fácilmente a través de la gran cantidad de paquetes disponibles dentro del repositorio de paquetes de CRAN (The Comprehensive R Archive Network), siendo este uno de sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores con las que cuenta este lenguaje.
 
-"Paquetes" utilizados:
+
+Los paquetes que se han utilizado han sido:
+
  - tidyverse:
  
-    • ggplot2, para la visualizaciónn.
-    • dplyr, para la manipulaciónn.
-    • tidyr, para la ordenación.?
+    • ggplot2, para la visualización.
+    • dplyr, para la manipulación.
+    • tidyr, para la ordenación.
     • readr, para la importación.
     • purrr, para la programación funcional
 
@@ -241,8 +244,9 @@ Lenguaje R [...], entorno de trabajo RStudio [...]. Paquetes de R [...] reposito
 
 - terra
 
-- nasapower: obtenicón de información climática satelital
+- nasapower: obtención de información climática satelital
 
 - mapSpain: 
 
 
+... (podemos seguir hasta el infinito)
