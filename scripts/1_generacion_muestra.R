@@ -21,8 +21,9 @@ andalucia_proj <- st_transform(Andalucia,crs_reference)
 
 # area_monte es el área donde se generarán las muestras negativas.
 # Dado que no hay un mapa que indique claramente cuales son las zonas que se consideran "monte en Andalucía"
-# Y dado que que los polígonos de incendios también cubren zonas agrícolas y urbanas (aunque menores en númer
+# Y dado que que los polígonos de incendios también cubren zonas agrícolas y urbanas (aunque menores en número
 # que las zonas forestales), voy a considerar monte toda Andalucía, sin distinción. 
+
 area_monte <- andalucia_proj
 
 

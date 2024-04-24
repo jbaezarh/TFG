@@ -156,12 +156,15 @@ Hidrográficas                   & Principales Ríos                            
 
 Una vez se dispone de todos los conjuntos de datos que se usarán en el estudio, el siguiente paso será combinarlos de manera adecuada y transformarlos a un formato apto para el análisis estadístico y la construcción de modelos predictivos, es decir, a un data frame. Dado que el objetivo que se persigue es predecir si, dada unas condiciones meteorológicas concretas en un momento dado, un punto del territorio andaluz se verá afectado o no por un incendio forestal, será necesario disponer de una cantidad suficiente de muestras negativas y positivas distribuidas espacial y temporalmente que tengan asociadas las variables explicativas correspondientes. 
 
-Intuitivamente, las muestras positivas serán aquellas observaciones (puntos definidos en el tiempo y en el espacio) dentro del marco espacio-temporal del estudio en las que se ha detectado un incendio forestal en el día de la observación. Es decir, son observaciones dentro de los polígonos de incendios el día que estos se han producido. Por tanto, las muestras negativas serán observaciones dentro del marco espacio-temporal definido en las que no se ha detectado un incendio forestal.
+Intuitivamente, las muestras positivas serán aquellas observaciones (puntos definidos en el tiempo y en el espacio) dentro del marco espacio-temporal del estudio en las que se ha detectado un incendio forestal en el día de la observación. Es decir, son observaciones dentro de los polígonos de incendios el día que estos se han producido. Por tanto, las muestras negativas serán observaciones dentro del marco espacio-temporal definido en las que no se ha detectado un incendio forestal. Es imporante tener en cuenta que dado que solo se dispone de los incendios con una extensión mayor a 100 ha, la muestra cuenta con un importante sesgo, ya que los casos positivos están infrarepresentados. Por ello, no podremos hacer inferencia a todos los incendios forestales, si no solo a los de una extensión superior a 100ha.  
 
 A continuación se detalla el proceso seguido para generar el conjunto de datos depurado sobre el que desarrollar el estudio a partir de los distintos conjuntos de datos en bruto:
 
 
 1. Generación de una muestra balanceada de casos positivos y negativos.
+1129 polígonos de incendios mayores de 100ha entre 2002 y 2022, 39 de ellos no tienen fecha, por lo que se descartan
+4 observaciones en 2007, ninguna tiene fecha, se descartan
+
 
 2. Asignación a cada observación los valores correspondientes a ese día y a esa localización concreta de todas las variables predictoras.
 
@@ -214,4 +217,6 @@ Se acota la el periodo de estudio, cambios estructurales en los regímenes de in
 
 <!-- Fecha -->
 <!-- Municipio y código municipio -->
+
+
 
