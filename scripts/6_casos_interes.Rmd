@@ -25,6 +25,24 @@ load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
 
 ```
 
+
+Para poder estudiar casos concretos de interés, sin tener que hacer frente a todas las complicaciones derivadas del trabajar con datos raster, un enfoque puede ser el siguiente:
+1. Estudiar un incendio concreto un día y ver como evoluciona el riesgo de incendio en los días cercanos, en el área de interés (un área que contenga al incendio que se quiere estudiar).
+
+2. Generar puntos aleatoriamente en el área de interés (o formando una cuadrícula) en cada uno de los días cercanos al incendio. 
+
+3. Asociar a cada punto sus variables correspondientes siguiendo el procedimiento usado para generar la muestra.
+
+4. Usar el modelo para clasificar cada punto (o predecir la probabilidad de incendio).
+
+5. Mostrar los gráficos de cada día con el polígono del incendio y compararlos para estudiar la capacidad de discretización del modelo.
+
+6. En función del rendimiento del modelo se puede probar a extender el área de estudio y usar instantes de tiempo más alejados entre sí (p.e. semanas), pues es razonable que en días próximos y localizaciones cercanas los riesgos no varíen en exceso.
+
+Si se obtienen resultados razonables, puede probarse a añadir variaciones en las variables climáticas (p.e. temperatura) para ver sus efectos.
+
+
+
 ```{r}
 set.seed(123)
 

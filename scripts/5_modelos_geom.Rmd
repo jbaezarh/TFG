@@ -21,6 +21,8 @@ library(ggplot2)
 ## Load data
 ```{r}
 load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
+# load("salidas_intermedias/datos_depurados_geom_2024-04-26.RData")
+
 ```
 
 ## Función de medidas de rendimiento
@@ -100,9 +102,9 @@ lr_mod <-
 
 lr_recipe <- 
   recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow", "month")) %>% 
+  step_date(date,features = c("dow","month")) %>% 
   # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% 
+  step_rm(date,cod_municipio,municipio,poblacion) %>% 
   step_dummy(all_nominal_predictors()) %>% 
   step_zv(all_predictors()) %>% 
   step_normalize(all_predictors())
@@ -190,7 +192,7 @@ lr_mod <-
 
 lr_recipe <- 
   recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow", "month")) %>% 
+  step_date(date,features = c("month")) %>% 
   # step_holiday(date, holidays = holidays) %>% 
   step_rm(date,cod_municipio,municipio) %>% 
   step_dummy(all_nominal_predictors()) %>% 
@@ -208,6 +210,7 @@ lr_res <-
   lr_workflow %>% 
   fit(training)
 
+lr_res %>% extract_fit_engine() %>% summary()
 
 pred = cbind(predict(lr_res,new_data = validation(splits),type="prob"),
              predict(lr_res,new_data = validation(splits),type="class"),
@@ -265,6 +268,62 @@ lr_workflow %>%
 lr_best %>% extract_fit_parsnip()
 ```
 
+
+
+```{r}
+lr_mod <- 
+  logistic_reg(penalty = NULL, mixture = NULL) %>% 
+  set_engine("glm")
+
+# 3º Creamos la receta
+# holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter", 
+#               "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
+
+lr_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_pca(all_numeric_predictors(),num_comp = 15) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 4º Creamos el workflow
+lr_workflow <- 
+  workflow() %>% 
+  add_model(lr_mod) %>% 
+  add_recipe(lr_recipe)
+
+# 5º Ajustamos el modelo.
+lr_res <- 
+  lr_workflow %>% 
+  fit(training)
+
+lr_res %>% extract_fit_engine() %>% summary()
+
+pred = cbind(predict(lr_res,new_data = validation(splits),type="prob"),
+             predict(lr_res,new_data = validation(splits),type="class"),
+             fire = validation(splits)$fire)
+pred
+
+# 6º Se evalúa el modelo:
+#   Curva ROC
+lr_auc <- pred %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lr_auc)
+
+
+#   Medidas de rendimiento
+lr_metrics <- pred |> 
+  get_metrics()
+
+lr_metrics
+
+
+```
 
 ## 2. Random Forest
 

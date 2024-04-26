@@ -204,10 +204,35 @@ dataset$enp= terra::extract(enp_rast,dataset)[,2]
 rm(enp,enp1,enp2,enp_sf,enp_rast)
 
 ### Población: ----
+
+# Asigno población y densidad de población:
+
 poblacion <- read_csv2("data_raw/antropologicas/Población/poblacion_municipios.txt",
                        locale=locale(decimal_mark = ","),
                        col_select = 1:5,col_types = "ccifn") |> 
   mutate(Valor=as.integer(round(Valor))) # Por algún motivo aparecen decimales
+
+# https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/28867?CodOper=b3_151&codConsulta=28867
+area_municipios <- read_csv2("data_raw/antropologicas/Población/extension_municipal.txt",
+                             locale=locale(decimal_mark = ","),
+                             col_select = 1:6, col_types = "fffffn")
+# Andalucia: 87592.742053km2
+
+area_municipios <- area_municipios %>% 
+  filter(!is.na(CODIGO_INE3)) %>% 
+  select(CODIGO_INE3,Valor) %>% 
+  rename("Area" = "Valor")
+
+
+# Se calcula la densidad de población
+dens_poblacion <- poblacion %>% 
+  select(-Medida) %>% 
+  rename("Poblacion" = "Valor",
+         "Municipio" = "Lugar de residencia") %>% 
+  left_join(area_municipios,
+            join_by("CODIGO_INE3")) %>% 
+  mutate(dens_poblacion = Poblacion/Area) %>% 
+  select(-Area)
 
 municipios <- esp_get_munic(epsg = 4258,region = "Andalucía")
 # plot(st_geometry(municipios))
@@ -219,7 +244,7 @@ municipios <- municipios |>
 
 num_mun = st_intersects(dataset,municipios) 
 
-# Las eliminamos:
+# Eliminamos las observaciones que no están en ningún municipio:
 if (any(sapply(num_mun,function(x) length(x) == 0))) {
   cat("Eliminamos las observaciones:\n",which(sapply(num_mun,function(x) length(x) == 0)))
   dataset = dataset[-which(sapply(num_mun,function(x) length(x) == 0)),]
@@ -228,10 +253,10 @@ if (any(sapply(num_mun,function(x) length(x) == 0))) {
 dataset$cod_municipio <- municipios[unlist(st_intersects(dataset,municipios)),]$LAU_CODE
 
 dataset <- dataset |> 
-  left_join(select(poblacion,c(-Medida)),
+  left_join(dens_poblacion,
             join_by(cod_municipio==CODIGO_INE3,YEAR==Anual)) |> 
-  rename("poblacion" = Valor,
-         "municipio" = `Lugar de residencia`)
+  rename("municipio" = "Municipio",
+         "poblacion" = "Poblacion")
   
 
 ### Uso Suelo: ----
@@ -304,6 +329,11 @@ for (YEAR in 2000:2022) {
   } 
 }
 
+
+
+
+
+# Guardado ----------------------------------------------------------------
 
 save(dataset,file = paste0("salidas_intermedias/dataset_completo",Sys.Date(),".RData"))
 

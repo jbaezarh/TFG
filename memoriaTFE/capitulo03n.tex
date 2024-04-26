@@ -834,7 +834,11 @@ forestal en el día de la observación. Es decir, son observaciones dentro
 de los polígonos de incendios el día que estos se han producido. Por
 tanto, las muestras negativas serán observaciones dentro del marco
 espacio-temporal definido en las que no se ha detectado un incendio
-forestal.
+forestal. Es imporante tener en cuenta que dado que solo se dispone de
+los incendios con una extensión mayor a 100 ha, la muestra cuenta con un
+importante sesgo, ya que los casos positivos están infrarepresentados.
+Por ello, no podremos hacer inferencia a todos los incendios forestales,
+si no solo a los de una extensión superior a 100ha.
 
 A continuación se detalla el proceso seguido para generar el conjunto de
 datos depurado sobre el que desarrollar el estudio a partir de los
@@ -842,25 +846,105 @@ distintos conjuntos de datos en bruto:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   Generación de una muestra balanceada de casos positivos y negativos.
-\item
-  Asignación a cada observación los valores correspondientes a ese día y
-  a esa localización concreta de todas las variables predictoras.
-\item
-  Depuración de la muestra generada, elimininando valores perdidos y
-  ajustando adecuadamente los tipos de las variables.
 \end{enumerate}
 
-\hypertarget{depuraciuxf3n-de-los-datos}{%
-\section{Depuración de los datos}\label{depuraciuxf3n-de-los-datos}}
+Para poder construir cualquier modelo de clasificación binaria se
+necesita disponer de una muestra que cuente con un número suficiente de
+casos positivos y negativo. Además, es aconsejable trabajar con
+conjuntos de datos balanceados para evitar sesgos en los modelos de
+clasificación {[}ARTICULO{]}.
 
-Para la información sobre incendios forestales en Andalucía se ha
-empleado la cartografía generada por la Red de Información Ambiental de
-Andalucía (REDIAM) sobre áreas recorridas por los incendios forestales
-en Andalucía entre 1975 y 2022. Se acota la el periodo de estudio,
-cambios estructurales en los regímenes de incendios y disponibilidad de
-la información
+Como ya se ha comentado, se considerarán observaciones positivas
+aquellas que se hayan visto afectadas por un incendio forestal en el día
+y lugar de la observación. En cambio, serán observaciones negativas
+aquellas que no se hayan visto afectadas por un incendio forestal en el
+día y lugar de la observación. Estas observaciones deberán generarse a
+partir de los polígonos de incendios disponibles. Para ello, se usará un
+enfoque similar al utilizado en
+{[}\url{https://www.researchgate.net/publication/228527438_Learning_to_predict_forest_fires_with_different_data_mining_techniques}{]},
+con una diferencia fundamental. En {[}cita al paper{]} usan los puntos
+de ignición como muestras positivas y su objetivo es predecir los puntos
+de origen de los incendios forestales. En cambio, en el presente trabajo
+no se disponen de los puntos de ignición de los incendios, por lo que el
+enfoque adoptado es ligeramente diferente; el objetivo es predecir las
+zonas que pueden verse afectadas por un incendio forestal (superior a
+100ha) bajo unas circunstancias concretas. De esta forma, los casos
+positivos serán puntos aletorios tomados dentro de los polígonos de
+incendio en los días que estos ocurrieron. Los casos negativos se
+generarán igual que en {[}cita paper{]}: se toman fechas aleatorias
+dentro del periodo de estudio y a cada una de ellas se le asocia una
+localización aleatoria dentro del área de estudio satisfaciendo que
+deben estar a al menos 15km de de cualquier incendio detectado en un
+margen de ± 3 días. Esta forma de tomar los casos negativos asegura que
+estén lo suficientemente alejados de los incendios forestales para
+representar condiciones no influidas por estos, dando prioridad así a
+las áreas con una menor prioridad de ocurrencia de incendio en un
+período definido. Las ubicaciones de los ejemplos positivos y negativos
+de ocurrencia de incendios estaban vinculadas espacial y temporalmente a
+los datos descriptivos.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Asignación a cada observación los valores correspondientes a ese día y
+  a esa localización concreta de todas las variables predictoras a
+  partir de los conjuntos de datos que se han recopilado (recogidos en
+  la Tabla \ref{tab:fuentes}). Para ello se ha hecho uso de las
+  funciones disponibles en los paquetes \texttt{terra} y \texttt{sf}.
+\item
+  Depuración de la muestra generada, se eliminan los valores perdidos y
+  se ajustan adecuadamente los tipos de las variables. Las variable
+  \texttt{WD10M} se codifica mediante los 4 puntos cardinales y sus
+  bisectrices, generando así 8 clases. En el caso de la variable
+  \texttt{orientacion} se procede de manera idéntica pero se incluye
+  también la clase ``plano'', si la pendiente del punto es 0.
+\end{enumerate}
+
+El resultado es un conjunto de datos con 20998 observaciones de las
+variables que se muestran en la Tabla \ref{tab:variables}.
+
+\begin{table}[]
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llll}
+\hline
+Categoría         & Nombre           & Descripción                                                                            & Tipo       \\ \hline
+Topográficas      & elevacion        & Elevación sobre el nivel del mar (m)                                                   & numérica   \\
+                  & orientacion      & Orientación de la pendiente descendiente                                               & categórica \\
+                  & pendiente        & Pendiente del terreno (º)                                                              & numérica   \\
+                  & curvatura        & Curvatura de la superfie                                                               & numérica   \\
+Vegetación        & NDVI             & Índice de vegetación de diferencia normalizada                                         & numérica   \\
+Antropogénicas    & uso\_suelo       & Clasificación del uso del suelo                                                        & categórica \\
+                  & dist\_carretera  & Distancia a la carretera más cercana (m)                                               & numérica   \\
+                  & dist\_ferocarril & Distancia a la vía de ferrocarril más cercana (m)                                      & numérica   \\
+                  & dist\_electr     & Distancia a la línea electrica más cercana (m)                                         & numérica   \\
+                  & enp              & Espacio Natural Protegido                                                              & categórica \\
+                  & dist\_sendero    & Distancia a la vía verde, al carril bici o al sendero más cercano (m)                  & numérica   \\
+                  & dist\_camino     & Distancia al camino o a la vía pecuaria más cercano (m)                                & numérica   \\
+Demográficas      & poblacion        & Número de habitantes del municipio                                                     & numérica   \\
+Hidrográficas     & dist\_rios       & Distancia al río más próximo (m)                                                       & numérica   \\
+Meteorológicas &
+  PRECTRORCORR &
+  \begin{tabular}[c]{@{}l@{}}Promedio corregido del total de precipitaciones en la superficie \\ de la tierra en masa de agua (incluye el contenido de agua en la nieve) (mm/día)\end{tabular} &
+  numérica \\
+                  & T2M              & Temperatura promedio del aire a 2 metros sobre la superficie de la tierra (ºC)         & numérica   \\
+                  & GWETTOP          & Porcentaje de humedad del suelo                                                        & numérica   \\
+                  & WD10M            & Promedio de la dirección del viento a 10 metros sobre la superficie de la tierra       & categórica \\
+                  & WS10M            & Promedio de la velocidad del viento a 10 metros sobre la superficie de la tierra (m/s) & numérica   \\
+                  & RH2M             & Humedad relativa a 2 metros sobre la superficie de la tierra                           & numérica   \\ \hline
+Variable Objetivo & fire             & Incendio forestal                                                                      & categórica \\ \hline
+Identificadoras   & date             & Fecha de la observación                                                                & fecha      \\
+                  & municipio        & Nombre del municipio                                                                   & texto      \\
+                  & cod\_municipio   & Código del municipio                                                                   & texto      \\
+                  & geometry         & Geometría de los puntos                                                                & sfc       
+\end{tabular}%
+}
+\caption{Conjunto de datos depurados}
+\label{tab:variables}
+\end{table}
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 

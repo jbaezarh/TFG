@@ -161,62 +161,67 @@ Intuitivamente, las muestras positivas serán aquellas observaciones (puntos def
 A continuación se detalla el proceso seguido para generar el conjunto de datos depurado sobre el que desarrollar el estudio a partir de los distintos conjuntos de datos en bruto:
 
 
-1. Generación de una muestra balanceada de casos positivos y negativos.
-1129 polígonos de incendios mayores de 100ha entre 2002 y 2022, 39 de ellos no tienen fecha, por lo que se descartan
-4 observaciones en 2007, ninguna tiene fecha, se descartan
+1. Generación de una muestra balanceada de casos positivos y negativos. 
+
+Para poder construir cualquier modelo de clasificación binaria se necesita disponer de una muestra que cuente con un número suficiente de casos positivos y negativo. Además, es aconsejable trabajar con conjuntos de datos balanceados para evitar sesgos en los modelos de clasificación [ARTICULO]. 
+
+<!-- https://www.sciencedirect.com/science/article/pii/S0020025519310497?casa_token=eXDfcsLbu74AAAAA:ssch2tiFYNuQMyVjZe1YTzfXOORo77Gv9bX190Qz8jpf58TpasAUW4s7u-H6rqObiavZUSw3Dg4#sec0015 -->
+
+<!-- Tengo una duda: Entiendo que por lo general, el hecho de trabajar con conjuntos de datos balanceados facilita mucho las cosas, pues evita sesgos. Entiendo que esto también podría corregirse usando ponderaciones en la función a optimizar, dandole más peso a la clase infraestimada. Además el uso de otras medidas para evaluar el rendimiento de los modelos (sensitividad, especificidad) puede ayudarnos también en este sentido. En mi caso, la muestra no es representativa de la población, por lo que todas las propiedades de la media y otros estimadores se pierden. Entonces, mi duda es, es preferible trabajar con muestras balanceadas aunque esto suponga una pérdida de representación de la población en la muestra.  -->
 
 
-2. Asignación a cada observación los valores correspondientes a ese día y a esa localización concreta de todas las variables predictoras.
-
-3. Depuración de la muestra generada, elimininando valores perdidos y ajustando adecuadamente los tipos de las variables.
+Como ya se ha comentado, se considerarán observaciones positivas aquellas que se hayan visto afectadas por un incendio forestal en el día y lugar de la observación. En cambio, serán observaciones negativas aquellas que no se hayan visto afectadas por un incendio forestal en el día y lugar de la observación. Estas observaciones deberán generarse a partir de los polígonos de incendios disponibles. Para ello, se usará un enfoque similar al utilizado en [https://www.researchgate.net/publication/228527438_Learning_to_predict_forest_fires_with_different_data_mining_techniques], con una diferencia fundamental. En [cita al paper] usan los puntos de ignición como muestras positivas y su objetivo es predecir los puntos de origen de los incendios forestales. En cambio, en el presente trabajo no se disponen de los puntos de ignición de los incendios, por lo que el enfoque adoptado es ligeramente diferente; el objetivo es predecir las zonas que pueden verse afectadas por un incendio forestal (superior a 100ha) bajo unas circunstancias concretas. De esta forma, los casos positivos serán puntos aletorios tomados dentro de los polígonos de incendio en los días que estos ocurrieron. Los casos negativos se generarán igual que en [cita paper]: se toman fechas aleatorias dentro del periodo de estudio y a cada una de ellas se le asocia una localización aleatoria dentro del área de estudio satisfaciendo que deben estar a al menos 15km de de cualquier incendio detectado en un margen de ± 3 días. Esta forma de tomar los casos negativos asegura que estén lo suficientemente alejados de los incendios forestales para representar condiciones no influidas por estos, dando prioridad así a las áreas con una menor prioridad de ocurrencia de incendio en un período definido. Las ubicaciones de los ejemplos positivos y negativos de ocurrencia de incendios estaban vinculadas espacial y temporalmente a los datos descriptivos.
 
 
+<!-- 1129 polígonos de incendios mayores de 100ha entre 2002 y 2022, 39 de ellos no tienen fecha, por lo que se descartan -> 1090 polígonos -->
 
-
-## Depuración de los datos
-Para la información sobre incendios forestales en Andalucía se ha empleado la  cartografía generada por la Red de Información Ambiental de Andalucía (REDIAM) sobre áreas recorridas por los incendios forestales en Andalucía entre 1975 y 2022.
-Se acota la el periodo de estudio, cambios estructurales en los regímenes de incendios y disponibilidad de la información
-
-
-
-
-<!-- 1. Topográficas -->
-<!-- Altitud -->
-<!-- Orientación -->
-<!-- Pendiente -->
-<!-- Curvatura -->
-
-<!-- 2. Vegetación. -->
-<!-- NDVI -->
-
-<!-- 3. Antropogénicas  -->
-<!-- Distancia a población -->
-<!-- Uso de suelo -->
-<!-- Distancia a carreteras  -->
-<!-- Distancia a Ferrocarril -->
-<!-- Distancia a Línea eléctrica -->
-<!-- Distancia a Espacio protegido -->
-<!-- Distancia a Sendero / Vía Verde / Carril Bici -->
-<!-- Distancia a Camino / Vía Pecuaria -->
-
-<!-- 4º Demográficas -->
-<!-- Población (Nº habitantes del municipio) -->
-
-<!-- 4. Hidrográficas  -->
-<!-- Precipitación (mm/day) -->
-<!-- Distancia a ríos -->
-
-<!-- 5. Meteorológicas  -->
-<!-- Temperatura a 2m sobre la superficie (º) -->
-<!-- Humedad del suelo (%) -->
-<!-- Dirección del viento a 10 metros sobre la superficie terrestre  -->
-<!-- Humedad relativa a 2m sobre la superficie (%) -->
-<!-- Cantidad de precipitaciones (mm/day) -->
-<!-- Radiación solar incidente al medio día (MJ/m^2/day) -->
-
-
-<!-- Fecha -->
-<!-- Municipio y código municipio -->
+<!-- solo 4 observaciones en 2007, ninguna tiene fecha, se descartan, no hay observaciones en 2007  -->
 
 
 
+2. Asignación a cada observación los valores correspondientes a ese día y a esa localización concreta de todas las variables predictoras a partir de los conjuntos de datos que se han recopilado (recogidos en la Tabla \ref{tab:fuentes}). Para ello se ha hecho uso de las funciones disponibles en los paquetes `terra` y `sf`.
+
+
+
+3. Depuración de la muestra generada, se eliminan los valores perdidos y se ajustan adecuadamente los tipos de las variables. Las variable `WD10M` se codifica mediante los 4 puntos cardinales y sus bisectrices, generando así 8 clases. En el caso de la variable `orientacion` se procede de manera idéntica pero se incluye también la clase "plano", si la pendiente del punto es 0.
+
+El resultado es un conjunto de datos con 20998 observaciones de las variables que se muestran en la Tabla \ref{tab:variables}. 
+
+\begin{table}[]
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llll}
+\hline
+Categoría         & Nombre           & Descripción                                                                            & Tipo       \\ \hline
+Topográficas      & elevacion        & Elevación sobre el nivel del mar (m)                                                   & numérica   \\
+                  & orientacion      & Orientación de la pendiente descendiente                                               & categórica \\
+                  & pendiente        & Pendiente del terreno (º)                                                              & numérica   \\
+                  & curvatura        & Curvatura de la superfie                                                               & numérica   \\
+Vegetación        & NDVI             & Índice de vegetación de diferencia normalizada                                         & numérica   \\
+Antropogénicas    & uso\_suelo       & Clasificación del uso del suelo                                                        & categórica \\
+                  & dist\_carretera  & Distancia a la carretera más cercana (m)                                               & numérica   \\
+                  & dist\_ferocarril & Distancia a la vía de ferrocarril más cercana (m)                                      & numérica   \\
+                  & dist\_electr     & Distancia a la línea electrica más cercana (m)                                         & numérica   \\
+                  & enp              & Espacio Natural Protegido                                                              & categórica \\
+                  & dist\_sendero    & Distancia a la vía verde, al carril bici o al sendero más cercano (m)                  & numérica   \\
+                  & dist\_camino     & Distancia al camino o a la vía pecuaria más cercano (m)                                & numérica   \\
+Demográficas      & poblacion        & Número de habitantes del municipio                                                     & numérica   \\
+Hidrográficas     & dist\_rios       & Distancia al río más próximo (m)                                                       & numérica   \\
+Meteorológicas &
+  PRECTRORCORR &
+  \begin{tabular}[c]{@{}l@{}}Promedio corregido del total de precipitaciones en la superficie \\ de la tierra en masa de agua (incluye el contenido de agua en la nieve) (mm/día)\end{tabular} &
+  numérica \\
+                  & T2M              & Temperatura promedio del aire a 2 metros sobre la superficie de la tierra (ºC)         & numérica   \\
+                  & GWETTOP          & Porcentaje de humedad del suelo                                                        & numérica   \\
+                  & WD10M            & Promedio de la dirección del viento a 10 metros sobre la superficie de la tierra       & categórica \\
+                  & WS10M            & Promedio de la velocidad del viento a 10 metros sobre la superficie de la tierra (m/s) & numérica   \\
+                  & RH2M             & Humedad relativa a 2 metros sobre la superficie de la tierra                           & numérica   \\ \hline
+Variable Objetivo & fire             & Incendio forestal                                                                      & categórica \\ \hline
+Identificadoras   & date             & Fecha de la observación                                                                & fecha      \\
+                  & municipio        & Nombre del municipio                                                                   & texto      \\
+                  & cod\_municipio   & Código del municipio                                                                   & texto      \\
+                  & geometry         & Geometría de los puntos                                                                & sfc       
+\end{tabular}%
+}
+\caption{Conjunto de datos depurados}
+\label{tab:variables}
+\end{table}

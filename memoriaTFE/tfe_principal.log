@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.31)  31 MAR 2024 14:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.24)  24 APR 2024 19:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -284,7 +284,7 @@ Package xcolor Warning: Package option `usenames' is obsolete and ignored on inp
 
 Package xcolor Info: Driver file: pdftex.def on input line 274.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
@@ -297,10 +297,26 @@ Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+)
+\Gin@req@height=\dimen162
+\Gin@req@width=\dimen163
+) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
+Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legacy)
+Package grffile Info: This package is an empty stub for compatibility on input line 40.
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2024/03/29 v24.3 The Babel package
+Package: babel 2024/04/20 v24.4 The Babel package
 \babel@savecnt=\count290
-\U@D=\dimen162
+\U@D=\dimen164
 \l@unhyphenated=\language6
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
@@ -351,8 +367,8 @@ Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count295
 \calc@Bcount=\count296
-\calc@Adimen=\dimen163
-\calc@Bdimen=\dimen164
+\calc@Adimen=\dimen165
+\calc@Bdimen=\dimen166
 \calc@Askip=\skip65
 \calc@Bskip=\skip66
 LaTeX Info: Redefining \setlength on input line 80.
@@ -361,21 +377,8 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Cskip=\skip67
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
-\ESO@tempdima=\dimen165
-\ESO@tempdimb=\dimen166
-) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
-(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
-(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
-) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
-File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
-)
-Package graphics Info: Driver file: pdftex.def on input line 107.
-)
-\Gin@req@height=\dimen167
-\Gin@req@width=\dimen168
+\ESO@tempdima=\dimen167
+\ESO@tempdimb=\dimen168
 )
 \AM@pagewidth=\dimen169
 \AM@pageheight=\dimen170
@@ -940,24 +943,24 @@ LaTeX Info: Redefining \% on input line 9.
 )
 \openout1 = `tfe_principal.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 504.
-LaTeX Font Info:    ... okay on input line 504.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 513.
+LaTeX Font Info:    ... okay on input line 513.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -992,7 +995,7 @@ LaTeX Font Info:    ... okay on input line 504.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 504.
+Package hyperref Info: Link coloring OFF on input line 513.
 (./tfe_principal.out) (./tfe_principal.out)
 \@outlinefile=\write4
 \openout4 = `tfe_principal.out'.
@@ -1003,8 +1006,8 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Info: Redefining \. on input line 504.
-LaTeX Info: Redefining \% on input line 504.
+LaTeX Info: Redefining \. on input line 513.
+LaTeX Info: Redefining \% on input line 513.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: longtable package is loaded.
@@ -1013,38 +1016,38 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-<logo.png, id=83, 301.125pt x 262.9825pt>
+<logo.png, id=212, 301.125pt x 262.9825pt>
 File: logo.png Graphic file (type png)
 <use logo.png>
-Package pdftex.def Info: logo.png  used on input line 523.
-(pdftex.def)             Requested size: 227.63055pt x 227.63321pt.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 563.
+Package pdftex.def Info: logo.png  used on input line 532.
+(pdftex.def)             Requested size: 227.63055pt x 198.79735pt.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 572.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 563.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 572.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 563.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 572.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 563.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 572.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 563.
+(Font)              <12> on input line 572.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 563.
+(Font)              <8> on input line 572.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 563.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 563.
+(Font)              <6> on input line 572.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 572.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 563.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 572.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
@@ -1055,15 +1058,15 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ] (./tfe_principal.toc
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-)
+[1
+
+])
 \tf@toc=\write5
 \openout5 = `tfe_principal.toc'.
 
-[1
+[2] [3
 
-] [2
-
-] [3] [4
+] [4
 
 ] [5] [6
 
@@ -1093,45 +1096,152 @@ LaTeX Info: Redefining \% on input line 1.
 ]
 Cap\'{\i }tulo 1.
 
+Overfull \hbox (95.43811pt too wide) in paragraph at lines 700--701
+[]\T1/lmr/m/n/12 ([]$https : / / www . miteco . gob . es / es / biodiversidad / temas / inventarios-[]nacionales / inventario-[]forestal-[]nacional /
+ []
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.709 ...tulo}\label{tuxedtulo-del-capuxedtulo-1}}
-                                                   [1
+l.733 
+       [1
 
 ]
+LaTeX Info: Redefining \. on input line 796.
+LaTeX Info: Redefining \% on input line 796.
+LaTeX Info: Redefining \. on input line 796.
+LaTeX Info: Redefining \% on input line 796.
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.709 ...tulo}\label{tuxedtulo-del-capuxedtulo-1}}
-                                                   [2
-
-]
+l.796 \end{enumerate}
+                      [2]
+<D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png, id=346, 368.1253pt x 415.5525pt>
+File: D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png Graphic file (type png)
+<use D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png>
+Package pdftex.def Info: D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png  used on input line 808.
+(pdftex.def)             Requested size: 368.14125pt x 415.5705pt.
+LaTeX Info: Redefining \. on input line 823.
+LaTeX Info: Redefining \% on input line 823.
+LaTeX Info: Redefining \. on input line 823.
+LaTeX Info: Redefining \% on input line 823.
+[3 <d:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png>]
+LaTeX Info: Redefining \. on input line 873.
+LaTeX Info: Redefining \% on input line 873.
+LaTeX Info: Redefining \. on input line 873.
+LaTeX Info: Redefining \% on input line 873.
+[4]
 Cap\'{\i }tulo 2.
-[3] [4
+[5
 
 ]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 964.
+(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Info: Redefining \. on input line 990.
+LaTeX Info: Redefining \% on input line 990.
+LaTeX Info: Redefining \. on input line 990.
+LaTeX Info: Redefining \% on input line 990.
+[6{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1044.
+(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Info: Redefining \. on input line 1067.
+LaTeX Info: Redefining \% on input line 1067.
+LaTeX Info: Redefining \. on input line 1067.
+LaTeX Info: Redefining \% on input line 1067.
+[7{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+LaTeX Info: Redefining \. on input line 1122.
+LaTeX Info: Redefining \% on input line 1122.
+LaTeX Info: Redefining \. on input line 1122.
+LaTeX Info: Redefining \% on input line 1122.
+[8]
+LaTeX Info: Redefining \. on input line 1165.
+LaTeX Info: Redefining \% on input line 1165.
+LaTeX Info: Redefining \. on input line 1165.
+LaTeX Info: Redefining \% on input line 1165.
+[9]
+
+LaTeX Warning: Command \' invalid in math mode on input line 1165.
+
+LaTeX Info: Redefining \. on input line 1248.
+LaTeX Info: Redefining \% on input line 1248.
+LaTeX Info: Redefining \. on input line 1248.
+LaTeX Info: Redefining \% on input line 1248.
+[10]
 Cap\'{\i }tulo 3.
-[5] [6
+[11
+
+]
+LaTeX Info: Redefining \. on input line 1374.
+LaTeX Info: Redefining \% on input line 1374.
+LaTeX Info: Redefining \. on input line 1374.
+LaTeX Info: Redefining \% on input line 1374.
+[12]
+LaTeX Info: Redefining \. on input line 1428.
+LaTeX Info: Redefining \% on input line 1428.
+LaTeX Info: Redefining \. on input line 1428.
+LaTeX Info: Redefining \% on input line 1428.
+[13]
+Overfull \hbox (290.79599pt too wide) in paragraph at lines 1482--1520
+[] 
+ []
+
+LaTeX Info: Redefining \. on input line 1535.
+LaTeX Info: Redefining \% on input line 1535.
+LaTeX Info: Redefining \. on input line 1535.
+LaTeX Info: Redefining \% on input line 1535.
+[14]
+LaTeX Info: Redefining \. on input line 1565.
+LaTeX Info: Redefining \% on input line 1565.
+LaTeX Info: Redefining \. on input line 1565.
+LaTeX Info: Redefining \% on input line 1565.
+[15]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1616.
+
+LaTeX Info: Redefining \. on input line 1655.
+LaTeX Info: Redefining \% on input line 1655.
+LaTeX Info: Redefining \. on input line 1655.
+LaTeX Info: Redefining \% on input line 1655.
+[16]
+LaTeX Info: Redefining \. on input line 1684.
+LaTeX Info: Redefining \% on input line 1684.
+LaTeX Info: Redefining \. on input line 1684.
+LaTeX Info: Redefining \% on input line 1684.
+[17] [18
 
 ]
 Cap\'{\i }tulo 4.
-[7] [8
+[19] [20
 
 ]
 Ap\'{e}ndice A.
-[9] [10
+[21] [22
 
 ]
 Ap\'{e}ndice B.
-[11] [12
+[23] [24
 
-] (./tfe_principal.bbl
+]
+
+Package flexbib Warning: Citation `Techopedia' undefined on input line 1815.
+
+(./tfe_principal.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 15--19
 []$\T1/lmr/m/n/12 https : / / github . com / rstudio / rmarkdown$[]. R pac-ka-ge ver-sion 2.26,
  []
 
-) [13
+)
+
+Package flexbib Warning: There were undefined citations.
+
+[25
 
 ] (./tfe_principal.aux
 LaTeX Info: Redefining \. on input line 9.
@@ -1142,21 +1252,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
  ***********
 Package rerunfilecheck Info: File `tfe_principal.out' has not changed.
-(rerunfilecheck)             Checksum: 4FFC2C80CF50DD3A3808C4A0CC0E1822;2602.
+(rerunfilecheck)             Checksum: 7E6CF2F2A369430DC1DDF4AB99B480A3;8152.
  ) 
 Here is how much of TeX's memory you used:
- 30671 strings out of 476046
- 585195 string characters out of 5790010
- 1937496 words of memory out of 5000000
- 52137 multiletter control sequences out of 15000+600000
- 608673 words of font info for 66 fonts, out of 8000000 for 9000
+ 30970 strings out of 476046
+ 591757 string characters out of 5790010
+ 1948496 words of memory out of 5000000
+ 52330 multiletter control sequences out of 15000+600000
+ 621375 words of font info for 72 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,11n,93p,1597b,535s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb>
-Output written on tfe_principal.pdf (25 pages, 186231 bytes).
+ 84i,18n,93p,1597b,731s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on tfe_principal.pdf (37 pages, 455860 bytes).
 PDF statistics:
- 292 PDF objects out of 1000 (max. 8388607)
- 249 compressed objects within 3 object streams
- 67 named destinations out of 1000 (max. 500000)
- 170 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 633 PDF objects out of 1000 (max. 8388607)
+ 557 compressed objects within 6 object streams
+ 154 named destinations out of 1000 (max. 500000)
+ 431 words of extra memory for PDF output out of 10000 (max. 10000000)
 
