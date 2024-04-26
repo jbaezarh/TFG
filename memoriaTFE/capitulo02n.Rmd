@@ -130,8 +130,11 @@ Decimos que un conjunto de datos es consistente cuando es técnicamente correcto
 + : Evita que unas variables tengan más peso que otras a la hora de entrenar algunos modelos.
 - : Se pierde la interpretabilidad de las variables ya que los datos dejan de estar en las unidades originales- -->
 
-<!-- Ingeniería de características -->
+<!-- ## Ingeniería de características -->
 <!-- Codificación variables categóricas: Dummy variables -->
+
+<!-- ## Selección de variables -->
+
 
 
 ## Modelos 
@@ -145,7 +148,7 @@ Decimos que un conjunto de datos es consistente cuando es técnicamente correcto
 
 ### Redes Neuronales
 
-### Validación del ajuste
+## Validación del ajuste
 Partición entrenamiento/ validación / test
 
 ## Evaluación modelos
