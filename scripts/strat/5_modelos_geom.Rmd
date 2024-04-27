@@ -16,6 +16,10 @@ library(tidyverse)
 library(tidymodels)
 library(sf)
 library(ggplot2)
+library(akima) # interp
+library(magrittr)
+library(ggpubr)
+
 ```
 
 ## Load data
@@ -26,9 +30,10 @@ load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
 
 ```
 
-## Función de medidas de rendimiento
+## Funciones 
+
 ```{r}
-# Será la función que usemos para medir el rendimiento del modelo
+# Función para obtener las medidas de rendimiento de los modelos a partir de un objeto predict 
 
 get_metrics <- function(pred) {
   list(
@@ -40,12 +45,59 @@ get_metrics <- function(pred) {
     conf_mat = pred |> conf_mat(truth = fire, .pred_class))
 }
 
+
+# Función para mostrar graficamente los resultados del tuning de un modelo con dos parámetros
+
+tuning_plot = function(mod_res) {
+  datos_metrics = mod_res %>% 
+    collect_metrics()
+  
+  # min = min(datos_metrics$mean)
+  # max = max(datos_metrics$mean)
+  
+  plots = list()
+  
+  for (metric in unique(datos_metrics$.metric)) {
+    
+    datos = datos_metrics %>% 
+      filter(.metric==metric) 
+    
+    # Interpolar los datos faltantes
+    datos_interp <- interp(datos[[1]], datos[[2]], datos$mean)
+    
+    # Crear un nuevo dataframe con los datos interpolados
+    datos_interp_df <- data.frame(
+      expand.grid(x = datos_interp$x, y = datos_interp$y), z = as.vector(datos_interp$z))
+    
+    # Crear el gráfico de mapa de calor con interpolación
+    p = ggplot(datos_interp_df, aes(x = x, y = y, fill = z)) +
+      geom_tile() +
+      # scale_fill_viridis_c(option = "turbo", limits = c(min,max), name = NULL)+
+      scale_fill_viridis_c(option = "turbo", name = NULL)+
+      labs(title = metric,
+           x = colnames(datos)[1],
+           y = colnames(datos)[2],
+           fill = metric)
+    
+    plots[[metric]] = p
+    
+  }
+  
+  # ggarrange(plotlist = plots,
+  #           legend = "right",
+  #           common.legend = T)
+  
+  ggarrange(plotlist = plots)
+  
+  
+}
+
 ```
 
 
-## 0. Partición temporal entrenamiento / validación / test
+## Partición temporal entrenamiento / validación / test
 
-Se crea una partición entrenamiento / validación / test en orden cronológico, para evitar el sesgo look-ahead.
+Se crea una partición temporal en entrenamiento / validación / test, para evitar el sesgo look-ahead.
 
 ```{r}
 set.seed(123)
@@ -85,40 +137,50 @@ test  <- testing(splits) %>% st_drop_geometry()
 ```
 
 
-## 1. Logistic regression with penalty
+## Modelos
+
+### 1. Logistic regression with penalty
+
 <!-- https://glmnet.stanford.edu/articles/glmnet.html -->
 <!-- mixture = 0 : lasso regression -->
 <!-- mixture = 1 : ridge regression -->
 <!-- penalty: parámetro de regularización -->
 
 ```{r}
-#2º definimos el modelo
+# 1º Definimos el modelo:
+
 lr_mod <- 
-  logistic_reg(penalty = tune(), mixture = 0) %>% 
+  logistic_reg(penalty = tune(), mixture = tune()) %>% 
   set_engine("glmnet")
 
-# 3º Creamos la receta
-# holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter", 
-#               "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
+
+# 2º Creamos la receta
 
 lr_recipe <- 
   recipe(fire ~ ., data = training) %>% 
   step_date(date,features = c("dow","month")) %>% 
   # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio,poblacion) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) # Se normalizan todos los predictores
 
-# 4º Creamos el workflow
+
+# 3º Creamos el workflow
+
 lr_workflow <- 
   workflow() %>% 
   add_model(lr_mod) %>% 
   add_recipe(lr_recipe)
 
-# 5º Ajustamos el modelo.
-# Create the grid of tuning
-lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
+
+# 4º Creamos el grid para los parámetros
+
+lr_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 30),
+                           mixture = c(0,1))
+
+
+# 5º Ajustamos el modelo
 
 lr_res <- 
   lr_workflow %>% 
@@ -127,41 +189,42 @@ lr_res <-
             control = control_grid(save_pred = TRUE),
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
+# 6º Evaluación de modelos
 
 # Se muestran las medidas de rendimiento en función del parámetro de penalización
 lr_plot <- 
   lr_res %>% 
   collect_metrics() %>% 
   # filter(.metric == "accuracy") %>%
-  ggplot(aes(x = penalty, y = mean,col=.metric)) + 
+  ggplot(aes(x = penalty, y = mean,col=.metric,linetype=as.factor(mixture))) + 
   geom_point() + 
   geom_line() + 
   ylab("Medidas de rendimiento") +
   scale_x_log10(labels = scales::label_number())
-
 lr_plot
 
 lr_res |> 
   collect_metrics() |> 
   group_by(.metric)|> 
   summarise(max = max(mean),min=min(mean))
-# Se observa que las variaciones en cada una de las medidas son pequeñas, y que aumentar la especificidad supone disminuir la sensitividad y viceversa. Como solución de compromiso se opta por aumentar la tasa de acierto
 
-top_models <-
-  lr_res %>% 
-  show_best(metric = "accuracy", n = 15) %>% 
-  arrange(penalty) 
+lr_res %>% 
+  show_best(metric = "accuracy", n = 15)
 
+lr_res %>% tuning_plot()
 
+# 7º Selección del mejor modelo
 
-# Se elige el que tiene una precisión más elevada
 lr_best <- 
   lr_res %>% 
   select_best(metric="accuracy")
 
+lr_best
 
-# 6º Se evalúa el modelo:
-#   Curva ROC
+
+# 8º Se evalúa el modelo:
+
+# Curva ROC
 lr_auc <- 
   lr_res %>% 
   collect_predictions(parameters = lr_best) %>% 
@@ -177,23 +240,75 @@ lr_metrics <- lr_res |>
   get_metrics()
 
 lr_metrics
+
 ```
 
 
 ## 1. Logistic regression 
 ```{r}
-#2º definimos el modelo
-lr_mod <- 
+# 1º definimos el modelo
+lrs_mod <- 
+  logistic_reg(penalty = NULL, mixture = NULL) %>% 
+  set_engine("glm")
+
+# 2º Creamos la receta
+
+lrs_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  # step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Creamos el workflow
+lrs_workflow <- 
+  workflow() %>% 
+  add_model(lrs_mod) %>% 
+  add_recipe(lrs_recipe)
+
+# 4º Ajustamos el modelo.
+lrs_res <- 
+  lrs_workflow %>% 
+  fit(training)
+
+# 5º 
+lrs_res %>% extract_fit_engine() %>% summary()
+
+lrs_pred = cbind(predict(lrs_res,new_data = validation(splits),type="prob"),
+             predict(lrs_res,new_data = validation(splits),type="class"),
+             fire = validation(splits)$fire)
+
+# 6º Se evalúa el modelo:
+#   Curva ROC
+lrs_auc <- lrs_pred %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lrs_auc)
+
+
+#   Medidas de rendimiento
+lrs_metrics <- pred |> 
+  get_metrics()
+
+lrs_metrics
+```
+
+### Logistic regression + PCA
+
+```{r}
+lr_pca_mod <- 
   logistic_reg(penalty = NULL, mixture = NULL) %>% 
   set_engine("glm")
 
 # 3º Creamos la receta
-# holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter", 
-#               "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
 
-lr_recipe <- 
+lr_pca_recipe <- 
   recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("month")) %>% 
+  step_pca(all_numeric_predictors(),num_comp = 14) %>% 
+  step_date(date,features = c("dow","month")) %>% 
   # step_holiday(date, holidays = holidays) %>% 
   step_rm(date,cod_municipio,municipio) %>% 
   step_dummy(all_nominal_predictors()) %>% 
@@ -201,40 +316,42 @@ lr_recipe <-
   step_normalize(all_predictors())
 
 # 4º Creamos el workflow
-lr_workflow <- 
+lr_pca_workflow <- 
   workflow() %>% 
-  add_model(lr_mod) %>% 
-  add_recipe(lr_recipe)
+  add_model(lr_pca_mod) %>% 
+  add_recipe(lr_pca_recipe)
 
 # 5º Ajustamos el modelo.
-lr_res <- 
-  lr_workflow %>% 
+lr_pca_res <- 
+  lr_pca_workflow %>% 
   fit(training)
 
-lr_res %>% extract_fit_engine() %>% summary()
+lr_pca_res %>% extract_fit_engine() %>% summary()
 
-pred = cbind(predict(lr_res,new_data = validation(splits),type="prob"),
-             predict(lr_res,new_data = validation(splits),type="class"),
+pred = cbind(predict(lr_pca_res,new_data = validation(splits),type="prob"),
+             predict(lr_pca_res,new_data = validation(splits),type="class"),
              fire = validation(splits)$fire)
-pred
 
 # 6º Se evalúa el modelo:
 #   Curva ROC
-lr_auc <- pred %>% 
+lr_pca_auc <- pred %>% 
   roc_curve(fire, .pred_0) %>% 
   mutate(model = "Logistic Regression")
 
-autoplot(lr_auc)
+autoplot(lr_pca_auc)
 
 
 #   Medidas de rendimiento
-lr_metrics <- pred |> 
+lr_pca_metrics <- pred |> 
   get_metrics()
 
-lr_metrics
+lr_pca_metrics
+
 ```
 
-Análisis gráfico de los "residuos" / errores:
+No aporta ninguna mejora
+
+#### Análisis gráfico de los "residuos" / errores:
 
 ```{r}
 ## No tengo claro como medir los residuos en un modelo de clasificación:
@@ -250,81 +367,26 @@ ggplot(lr_residuals,aes(col=residual)) +
   labs(col = "Error")
 ```
 
-
+#### Interpretación coeficientes
 
 ```{r}
+# Cómo obtengo los p_valores de los contrastes individuales?
 
 lr_workflow %>% 
   finalize_workflow(lr_best) %>%
-  fit(training) %>%
-  extract_fit_parsnip() %>%
+  fit(training) %>% 
+  extract_fit_parsnip() %>% 
   tidy()
 
 lr_workflow %>% 
   finalize_workflow(lr_best) %>%
   fit(training) %>%
-  extract_fit_engine() %>%
+  extract_fit_engine() %>% 
   tidy()
 
-lr_best %>% extract_fit_parsnip()
 ```
 
 
-
-```{r}
-lr_mod <- 
-  logistic_reg(penalty = NULL, mixture = NULL) %>% 
-  set_engine("glm")
-
-# 3º Creamos la receta
-# holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter", 
-#               "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
-
-lr_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  step_pca(all_numeric_predictors(),num_comp = 15) %>% 
-  step_date(date,features = c("dow","month")) %>% 
-  # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
-
-# 4º Creamos el workflow
-lr_workflow <- 
-  workflow() %>% 
-  add_model(lr_mod) %>% 
-  add_recipe(lr_recipe)
-
-# 5º Ajustamos el modelo.
-lr_res <- 
-  lr_workflow %>% 
-  fit(training)
-
-lr_res %>% extract_fit_engine() %>% summary()
-
-pred = cbind(predict(lr_res,new_data = validation(splits),type="prob"),
-             predict(lr_res,new_data = validation(splits),type="class"),
-             fire = validation(splits)$fire)
-pred
-
-# 6º Se evalúa el modelo:
-#   Curva ROC
-lr_auc <- pred %>% 
-  roc_curve(fire, .pred_0) %>% 
-  mutate(model = "Logistic Regression")
-
-autoplot(lr_auc)
-
-
-#   Medidas de rendimiento
-lr_metrics <- pred |> 
-  get_metrics()
-
-lr_metrics
-
-
-```
 
 ## 2. Random Forest
 
@@ -375,57 +437,8 @@ rf_res |>
   summarise(max = max(mean),min=min(mean))
 # Se observa mayor variabilidad que en el caso de la regresión logística con penalización
 
-## La siguiente función muestra de forma gráfica las distintas medidas de rendimiento
-## para cada combinación de valores de parámetros utilizando interpolación bilineal
-
-library(akima)
-library(magrittr)
-library(ggpubr)
 
 
-tuning_plot = function(mod_res) {
-  datos_metrics = mod_res %>% 
-    collect_metrics()
-  
-  # min = min(datos_metrics$mean)
-  # max = max(datos_metrics$mean)
-  
-  plots = list()
-  
-  for (metric in unique(datos_metrics$.metric)) {
-    
-    datos = datos_metrics %>% 
-      filter(.metric==metric) 
-    
-    # Interpolar los datos faltantes
-    datos_interp <- interp(datos[[1]], datos[[2]], datos$mean)
-    
-    # Crear un nuevo dataframe con los datos interpolados
-    datos_interp_df <- data.frame(
-      expand.grid(x = datos_interp$x, y = datos_interp$y), z = as.vector(datos_interp$z))
-    
-    # Crear el gráfico de mapa de calor con interpolación
-    p = ggplot(datos_interp_df, aes(x = x, y = y, fill = z)) +
-      geom_tile() +
-      # scale_fill_viridis_c(option = "turbo", limits = c(min,max), name = NULL)+
-      scale_fill_viridis_c(option = "turbo", name = NULL)+
-      labs(title = metric,
-           x = colnames(datos)[1],
-           y = colnames(datos)[2],
-           fill = metric)
-    
-    plots[[metric]] = p
-    
-  }
-  
-  # ggarrange(plotlist = plots,
-  #           legend = "right",
-  #           common.legend = T)
-  
-  ggarrange(plotlist = plots)
-  
-  
-}
 
 tuning_plot(rf_res)
 
@@ -460,6 +473,8 @@ rf_metrics <- rf_res |>
 
 rf_metrics
 lr_metrics
+
+# save(rf_res,file = "salidas_intermedias/trained_models/trained_models_strat_24_04_27.RData")
 ```
 
 

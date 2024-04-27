@@ -515,27 +515,27 @@ sum(diag(t))/nrow(datos) # Proporción de observaciones "correctamente separada"
 Al normalizar previamente los datos, sí se consigue una partición más balanceada de la muestra. Sin embargo, esta no parece aportar ningún tipo de información sobre la variable objetivo.
 
 
-### Todas las variables
+<!-- ### Todas las variables -->
 
-```{r}
-# Probamos tipificando los datos:
-clara = M |> 
-  scale() |> 
-  clara(k=2)
+<!-- ```{r} -->
+<!-- # Probamos tipificando los datos: -->
+<!-- clara = M |>  -->
+<!--   scale() |>  -->
+<!--   clara(k=2) -->
 
-table(clara$clustering)
-# Ahora el algoritmo consigue separar mejor los datos
+<!-- table(clara$clustering) -->
+<!-- # Ahora el algoritmo consigue separar mejor los datos -->
 
-t = table(clara$clustering,datos$fire)
-rownames(t) <- paste0("cluster_",c(1,2))
-colnames(t) <- c("No fire","Fire")
-t
-# addmargins(t)
+<!-- t = table(clara$clustering,datos$fire) -->
+<!-- rownames(t) <- paste0("cluster_",c(1,2)) -->
+<!-- colnames(t) <- c("No fire","Fire") -->
+<!-- t -->
+<!-- # addmargins(t) -->
 
-prop.table(t,2)*100
+<!-- prop.table(t,2)*100 -->
 
-sum(diag(t))/nrow(datos) # Proporción de observaciones "correctamente separada"
-```
+<!-- sum(diag(t))/nrow(datos) # Proporción de observaciones "correctamente separada" -->
+<!-- ``` -->
 
-No parece aportar nada en el análisis.
+<!-- No parece aportar nada en el análisis. -->
 
