@@ -21,11 +21,10 @@ library(ggpubr)
 ```
 
 
-Cargamos el archivos de datos depurados:
+Cargamos el archivos de datos depurados y obtenido a partir de un "muestreo estratificado" por mes :
 
 ```{r}
-# load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
-load("salidas_intermedias/datos_depurados_geom_2024-04-26.RData")
+load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
 ```
 
 
@@ -35,11 +34,15 @@ load("salidas_intermedias/datos_depurados_geom_2024-04-26.RData")
 datos %>%  st_drop_geometry %>% skim()
 ```
 
-Se tienen variables numéricas y categóricas. Las variables numéricas presentan cada una distinta variabilidad, lo que sugiere que probablemente sea conveniente trabajar con los datos tipificados.
+Se tienen variables numéricas, categóricas, así como fechas y cadenas de caracteres. 
 
+Las variables `cod_municipio` y `municipio` son "identificadoras", por lo que no se utilizarán en los modelo que se construyan.
+La variable `date` contiene la fecha de cada registro y la variable `geometry` las coordenadas del punto.
 
 
 ## Variable objetivo:
+
+En primer lugar se estudiará gráficamente la distribución temporal y espacial de la variable objetivo.
 
 ### Distribución temporal
 #### Mes
@@ -50,10 +53,11 @@ datos %>%
   count(month(date,label=T),fire) %>% 
   rename("mes" = "month(date, label = T)") %>% 
   ggplot(aes(x = mes,y = n,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) 
+  geom_col(position="dodge",alpha=0.8) +
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
-Se observa que los casos positivos se concentran entre junio y septiembre (estación de incendios) mientras que los casos negativos están uniformemente distribuidos entre los distintos meses del año.
+Se observa que las observaciones se concentran entorno a los meses de verano y que en cada mes hay una cantidad similar de observaciones positivas y negativas. Esto se debe al procedimiento de muestreo que se ha utilizado para generar la muestra, ya que se ha estratificado por mes, de forma que la proporción de observaciones en cada mes fuese igual en ambas clases. Esto se ha hecho así con el fin de evitar introducir sesgos en la muestra para que los modelos entrenados usándola permitan efectivamente ser útiles en la predicción de incendios forestales.
 
 
 
@@ -68,7 +72,8 @@ datos %>%
   geom_col(position="dodge",alpha=0.8) +
   scale_x_continuous(breaks=2002:2022) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  geom_smooth(se=F)
+  geom_smooth(se=F,aes(color=fire)) +
+  scale_color_manual(values=c("darkred","darkblue"))
 
 # En 2007 no se han generado observaciones positivas
 # Causa: En el shapefile que contiene los incendios producidos en 2007 solo hay 4 observaciones y ninguna tenía la fecha, por lo que estas no han podido utilizarse
@@ -129,6 +134,8 @@ ggplot(data = prov) +
   ggtitle("Distribución espacial de T2M")
 ```
 
+Las temperaturas más elevadas se encuentran en el interior.
+
 ```{r}
 datos %>% 
   st_drop_geometry() %>% 
@@ -136,8 +143,14 @@ datos %>%
   summarize(AVG_T2M = mean(T2M),
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_T2M,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8)
+  geom_col(position="dodge",alpha=0.8) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
+
+En prácticamente todos los meses, la media de temperaturas en las observaciones positivas es mayor que en las observaciones negativas. Las temperaturas son más altas en los meses de verano, como cabía esperar.
+
+
+
 
 ### RH2M
 ```{r}
@@ -149,6 +162,8 @@ ggplot(data = prov) +
   ggtitle("Distribución espacial de RH2M")
 ```
 
+La humedad del aire es mayor en las de costa. Las zonas más secas se encuentran en las zonas de interior del norte de Andalucía.
+
 ```{r}
 datos %>% 
   st_drop_geometry() %>% 
@@ -156,8 +171,11 @@ datos %>%
   summarize(AVG_RH2M = mean(RH2M),
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_RH2M,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8)
+  geom_col(position="dodge",alpha=0.8) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
+
+En prácticamente todos los meses, la humedad del aire media entre las observaciones positivas es menor que en las observaciones negativas. La humedad del aire disminuye significativamente en verano.
 
 ### GWETTOP
 
@@ -170,6 +188,9 @@ ggplot(data = prov) +
   ggtitle("Distribución espacial de GWETTOP")
 ```
 
+Las zonas con mayor humedad superficial de suelo son las que se encuentran en la costa mediterránea. Las zonas con un suelo más seco son las que se encuentran al norte de la cuenca el Guadalquivir, destacando la provincia de Huelva (hay que tener en cuenta que también es una zona en la que hay muchos incendios, la mayoría de los cuales se produce en verano, por lo que hay una gran concentración de observaciones durante el periodo estival, lo que explica el hecho de que se observen tantas observaciones con valores tan bajos de la humedad superficia de suelo).
+
+
 ```{r}
 datos %>% 
   st_drop_geometry() %>% 
@@ -179,6 +200,8 @@ datos %>%
   ggplot(aes(x=Mes,y=AVG_GWETTOP,fill=fire)) +
   geom_col(position="dodge",alpha=0.8)
 ```
+
+En general, la humedad superficial de suelo media entre los casos positivos es inferior que entre los casos negativos. Esto es especialmente evidendente entre los meses de primavera y otoño. En los meses de invierno esto no está tan claro, incluso parece revertirse la tendencia.
 
 ### WS10M
 ```{r}
@@ -190,6 +213,9 @@ ggplot(data = prov) +
   ggtitle("Distribución espacial de WS10M")
 ```
 
+Los valores más elevados de la velocidad del viento a 10m de altura se dan en las zonas costeras.
+
+
 ```{r}
 datos %>% 
   st_drop_geometry() %>% 
@@ -199,6 +225,8 @@ datos %>%
   ggplot(aes(x=Mes,y=AVG_WS10M,fill=fire)) +
   geom_col(position="dodge",alpha=0.8)
 ```
+
+En todos los meses, los valores medios de la velocidad del viento a 10m sobre la superficie son significativamente mayores en las observaciones positivas.
 
 ### WD10M
 ```{r}
@@ -233,11 +261,14 @@ tibble(mes = datos_mode_WD10M[datos_mode_WD10M$fire==1,1],
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=PRECTOTCORR),size = 1.2, alpha = 1) +
+  geom_sf(data = datos, aes(color=PRECTOTCORR,size=PRECTOTCORR), alpha = 1) +
   scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none") +
   # scale_color_gradient(low="blue", high="red")+
   ggtitle("Distribución espacial de PRECTOTCORR")
 ```
+
+En la gran mayoría de las observaciones no se han observado precipitaciones. Se observan algunos valores positivos de precipitaciones distribuidos por el territorio Andaluz, alcanzándose los máximos en observaciones localizadas ne las coordilleras béticas.
 
 ```{r}
 datos %>% 
@@ -249,12 +280,14 @@ datos %>%
   geom_col(position="dodge",alpha=0.8)
 ```
 
+Se observa una clara diferencia en la media mensual de precipitaciones en ambas clases en todos los meses, siendo mucho mayores entre las observaciones negativas. En los meses de verano esto sigue siendo cierto, si bien las diferencias se suavizan significativamente, ya que en ambos clases las precipitaciones son reducidas.
+
 
  <!-- IDEA PARA PODER EVALUAR MEJOR EL RENDIMIENTO REAL DEL MODELO: ESTRATIFICAR POR MESES -->
-Ya que el objetivo no es que el modelo sea capaz de clasificar muy bien los datos del dataset, si no su utilidad práctica de cara predecir incendios forestales.
-EL objetivo es que la muestra permita detectar los patrones que causan los incendios forestales, por lo que el objetivo al generar las muestras negativas es evitar en la mayor medida posible los sesgos debidos al proceso de selección de la muestra. Se busca que el modelo sea capaz de discriminar las observaciones en riesgo de incendio forestal, no los sesgos introducidos en el proceso de generación de la muestra.
+<!-- Ya que el objetivo no es que el modelo sea capaz de clasificar muy bien los datos del dataset, si no su utilidad práctica de cara predecir incendios forestales. -->
+<!-- EL objetivo es que la muestra permita detectar los patrones que causan los incendios forestales, por lo que el objetivo al generar las muestras negativas es evitar en la mayor medida posible los sesgos debidos al proceso de selección de la muestra. Se busca que el modelo sea capaz de discriminar las observaciones en riesgo de incendio forestal, no los sesgos introducidos en el proceso de generación de la muestra. -->
 
-<!-- Al generar los ejemplos negativos, mi objetivo es intentar evitar los sesgos que se puedan producir en el proceso de selecciom, con el objetivo de que la diferencia entre ejemplos positivos y negativos sea realmente debida a las carácterísticas de los incendios y no a sesgos introducidos en el proceso de muestreo. -->
+<!-- Al generar los ejemplos negativos, mi objetivo es intentar evitar los sesgos que se puedan producir en el proceso de seleccion, con el objetivo de que la diferencia entre ejemplos positivos y negativos sea realmente debida a las carácterísticas de los incendios y no a sesgos introducidos en el proceso de muestreo. -->
 
 ### NDVI
 ```{r}
@@ -266,6 +299,8 @@ ggplot(data = prov) +
   ggtitle("Distribución espacial de NDVI")
 ```
 
+Los valores más elevados del NDVI se encuentran en el norte de la comunidad (Sierra Morena y Sierra de Aracena) y en la zona sur-centro. Los valores son especialmente elevados en la Sierra de Grazalema y en las marismas del Guadalquivir y especialmente bajos en el este de la comunidad (Almería).
+
 ```{r}
 datos %>% 
   st_drop_geometry() %>% 
@@ -273,20 +308,25 @@ datos %>%
   summarize(AVG_NDVI = mean(NDVI),
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_NDVI,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8)
+  geom_col(position="dodge",alpha=0.8) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
+El valor del NDVI disminuye en los meses de verano y alcanza su máximo en los meses de invierno. No se observa claramente una relación entre el NDVI y la clase de la observación en la muestra.
 
 ### poblacion
 
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=poblacion),size = 1.2, alpha = 0.6) +
+  geom_sf(data = datos, aes(color=poblacion,size = poblacion), alpha = 0.6) +
   scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none") +
   # scale_color_gradient(low="blue", high="red")+
   ggtitle("Distribución espacial de poblacion")
 ```
+
+En la gran mayoría del territorio se observan niveles de población inferiores a 20.000 habitantes. Destacan las capitales de provincia por tener valores significativamente más elevados.
 
 ```{r}
 # Este en realidad no sirve para nada, pero es curioso
@@ -305,20 +345,20 @@ datos %>%
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=dens_poblacion),size = 1.2, alpha = 0.6) +
+  geom_sf(data = datos, aes(color=dens_poblacion, size= dens_poblacion), alpha = 0.6) +
   scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none") +
   # scale_color_gradient(low="blue", high="red")+
   ggtitle("Distribución espacial de dens_poblacion")
 ```
 
-
+Comentario similar a la población. Mayor densidad de población en las zonas de costa y en las capitales de provincia.
 
 
 
 ## Variables numéricas
 
-
-18 variables numéricas
+En los datos hay 18 variables numéricas.
 
 ```{r}
 datos_numeric = datos |> select(where(is.numeric)) %>% st_drop_geometry()
@@ -329,6 +369,8 @@ datos_numeric = datos |> select(where(is.numeric)) %>% st_drop_geometry()
 
 ### Correlaciones:
 
+Se estudian primero las correlaciones entre las variables.
+
 ```{r}
 R = cor(datos_numeric)
 
@@ -337,17 +379,12 @@ corrplot(R,method = "ellipse",type = "upper")
 summary(R-diag(diag(R)))
 ```
 
-Las variables más correlacionadas son T2M con RH2M (negativamente, -0.79), T2M con GWETTOP (negativamente, -0.77) y GWETTOP con R2HM (positivamente, 0.78). Tiene sentido que la humedad del aire a dos esté correlacionada positivamente con la humedad del suelo y que ambas estén -egativamente correlacionadas con la temperatura del aire.
+Las variables más correlacionadas en la muestra son T2M con RH2M (negativamente, -0.71), T2M con GWETTOP (negativamente, -0.69) y GWETTOP con R2HM (positivamente, 0.68). Tiene sentido que la humedad del aire a dos metros esté correlacionada positivamente con la humedad del suelo y que ambas estén -egativamente correlacionadas con la temperatura del aire. También están correladas la población con la densidad de población (positivamente,0.63).
 
-
-<!-- Esto puede no tener sentido siendo estrictos -->
-```{r}
-cor(datos_numeric,as.numeric(datos$fire))
-```
-Las variables más correladas con la variable respuesta son T2M, GWETTOP, RH2M.
 
 
 ### Gráfico de coordenadas paralelas
+
 ```{r}
 datos |> 
   select(fire,where(is.numeric)) |> 
@@ -359,69 +396,41 @@ datos |>
 ```
 
 
-Considerando las variables tipificadas, se observa que aquellas con más variabilidad son PRECTOTCORR, población, dist_poblacion y dist_camino. Todas estas variables tienen un sesgo positivo, lo cual es razonable pues todas ellas son variables que solo toman valores positivos.
+Considerando las variables tipificadas, se observa que aquellas con más variabilidad son PRECTOTCORR, población y dens_poblacion. Todas estas variables tienen un sesgo positivo, lo cual es razonable pues todas ellas son variables que solo toman valores positivos.
 
-Se puede que la variable PRECTOTCORR presenta valores atípicamente altos, que se dan en observaciones en las que no se ha observado incendio. 
+
+### Box-plots
 
 ```{r}
-datos |> 
-  ggplot(aes(x=fire,y=PRECTOTCORR)) +
-  geom_boxplot()
+boxplots <- map(names(datos_numeric), ~ ggplot(datos, aes(x = fire, y = .data[[.x]],fill=fire)) +
+                  geom_boxplot() +
+                  guides(fill="none") +
+                  labs(title = paste(.x, "~ fire")))
+
+ggarrange(plotlist = boxplots,ncol=6,nrow=3)
+# do.call(ggarrange,c(boxplots,ncol = 3,nrow=6))
 ```
+
+Cabe destacar por un lado la diferencia de escala entre las variables y por otro la gran cantidad de valores atípicos presentes en los datos. Es importante destacar que los valores atípicos no son erróneos, son inherentes a la naturaleza de los datos. Por ejemplo, veamos el caso de PRECTOTCORR.
+
+Se puede que esta variable presenta valores atípicamente altos, que se dan en observaciones en las que no se ha observado incendio. 
 
 ```{r}
 by(datos$PRECTOTCORR,datos$fire,summary)
 ```
 
-Acumular 59.90mm de lluvia en un día es un valor posible, probablemente atípico en esta región pero no hay motivo para considerar que es un valor erróneo. Es coherente que las observaciones en las que se han registrado mayores niveles de precipitación sean observaciones negativas.
-
-En el gráfico también observamos que hay valores atípicamente altos de la variable población.
-Se puede observar que los valores más altos de elevacion, de dist_carretera y de dist_electr se corresponden con observaciones negativas.
-
-```{r}
-g0 = datos |> 
-  ggplot(aes(x=fire)) 
-
-g1 = g0 +
-  geom_boxplot(aes(y=elevacion))
-
-g2 = g0 +
-  geom_boxplot(aes(y=dist_carretera))
+Acumular 46.06mm de lluvia en un día es un valor posible, probablemente atípico en esta región pero no hay motivo para considerar que es un valor erróneo. Es coherente que las observaciones en las que se han registrado mayores niveles de precipitación sean observaciones negativas.
 
 
-g3 = g0 +
-  geom_boxplot(aes(y=dist_electr))
+<!-- ### Matriz de dispersion -->
+<!-- ```{r} -->
+<!-- # Inviable dada la cantidad de datos -->
+<!-- datos_numeric |>   -->
+<!--   mutate(fire = datos$fire) |>  -->
+<!--   ggpairs(aes(color=fire)) -->
+<!-- ``` -->
 
 
-ggarrange(g1,g2,g3)
-
-```
-
-### Matriz de dispersion
-```{r}
-datos_numeric |>  
-  mutate(fire = datos$fire) |> 
-  ggpairs(aes(color=fire))
-```
-
-
-### Box-plot
-
-Se hace primero el boxplot con todas las variables:
-
-```{r}
-boxplot(datos_numeric)
-```
-
-
-```{r}
-boxplots <- map(names(datos_numeric), ~ ggplot(datos, aes(x = fire, y = .data[[.x]])) +
-                geom_boxplot() +
-                labs(title = paste(.x, "~ fire")))
-
-ggarrange(plotlist = boxplots,ncol=4,nrow=5)
-# do.call(ggarrange,c(boxplots,ncol = 3,nrow=6))
-```
 
 
 ## Variables categóricas
@@ -444,15 +453,13 @@ ggarrange(plotlist = histogramas, ncol = 2, nrow = ceiling(length(histogramas)/2
 
 ```
 
-WD10M: viento de sur - oeste - norte -> más observaciones positivas
+En el caso de la variable `WD10M` cabe comentar la escasez de observaciones con dirección norte. En el gráfico no está clara la relación de esta variable con la variable objetivo.
 
-orientación: orientacion este - sur - suroeste -> Más observaciones positivas
+En el caso de la variable `orientacion` la relación tampoco está clara, aunque parece que en las observaciones orientadas al sur (SE,S,SW) es más común observar incendios.
 
-enp: no hay diferencias observables
+La variable `enp` no parece mostrar diferencias en ambas clases.
 
-uso_suelo: no se pueden sacar conclusiones pues las diferencias se deben al procedimiento de obtención de los datos
-
-
+En el caso de la variable `uso_suelo`, sí que se observan diferencias significativas en ambas clases, que sin duda también son debidas al proceso de muestreo seguido.
 
 
 ## PCA
@@ -464,19 +471,7 @@ pca <- princomp(datos_numeric,cor=T)
 summary(pca)
 ```
 
-Se necesitan 11 componentes principales para explicar al menos el 80% de la variabilidad de los datos (tipificados).
-
-### Todas las variables
-```{r}
-# Usamos model.matrix para trnasformar los factores usando variables dummies:
-M = model.matrix(fire~.-1,data=datos |> select(-c(date,municipio,cod_municipio)))
-
-pca <- princomp(M,cor=T)
-
-summary(pca)
-```
-
-Se necesitan 30 componentes principales para explicar el 80% de la varianza de los datos.
+Se necesitan al menos 11 componentes principales para explicar el 80% de la variabilidad de las 18 variables numéricas de la muestra (tipificadas) y al menos 14 para explicar el 90%. Esto refleja, la complejidad del conjunto de datos.
 
 ## Cluster
 
@@ -491,7 +486,7 @@ table(clara$clustering)
 # Si los datos no están normalizados, el método no es capaz de separar los datos
 ```
 
-Vemos que la partición obtenida con los datos a penas consigue separarlos. Se debe a que algunas variables tienen mucha más variabilidad que otras y k-medias no funciona bien cuando las variables tienen varianzas parecidas. 
+Vemos que la partición obtenida con los datos a penas consigue separarlos. Se debe a que algunas variables tienen mucha más variabilidad que otras y el algoritmo de k-medias no funciona bien cuando las variables tienen varianzas muy diferentes. 
 
 Probamos a normalizarlos antes de aplicar el algoritmo.
 
@@ -516,7 +511,8 @@ prop.table(t,2)*100
 
 sum(diag(t))/nrow(datos) # Proporción de observaciones "correctamente separada"
 ```
-Vemos que obtenemos la partición generada con los datos normalizado si está aportando información con respecto a la variable respuesta. El 84% de las observaciones en las que ha habido un incendio se encuentran en el cluster 2, mientras que el 50% de las observaciones en las que no ha habido incendios se encuentran en el cluster 1.
+
+Al normalizar previamente los datos, sí se consigue una partición más balanceada de la muestra. Sin embargo, esta no parece aportar ningún tipo de información sobre la variable objetivo.
 
 
 ### Todas las variables

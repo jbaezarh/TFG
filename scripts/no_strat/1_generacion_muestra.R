@@ -1,19 +1,22 @@
-# Cargamos las librerías
-library(terra)
-library(sf)
-library(mapSpain)
-library(tidyverse)
-library(climate)
-library(lubridate)
 
+# Librerías ---------------------------------------------------------------
+# Se cargan las librerías que se usarán
 
-# CRS de referencia
+library(terra) # Raster data
+library(sf) # Vector data
+library(mapSpain) # Polígonos de las regiones de España
+library(tidyverse) # Manipulación de datos
+
+# CRS de referencia -------------------------------------------------------
+# Será el CRS que se use en todo el proyecto
+
 pend <- rast("data_raw/topograficas/pendiente.tif")
 crs_reference = crs(pend)
 rm(pend)
 
 
-# Poligono de Andalucia
+# Polígono de Andalucía ---------------------------------------------------
+
 Andalucia <- esp_get_ccaa(ccaa = "Andalucía")
 andalucia_proj <- st_transform(Andalucia,crs_reference)
 
@@ -27,53 +30,29 @@ andalucia_proj <- st_transform(Andalucia,crs_reference)
 area_monte <- andalucia_proj
 
 
-# Generación de la muestra, estratificando por mes de forma que a nivel global haya la misma cantidad de observaciones en
-# cada mes (sumando todos los años):
+# Generación de la muestra ------------------------------------------------
 
-# 1089 incencios correctamente registrados entre 2002 y 2022
+# total 1174: 41 NA's y 1 erróneo (fecha) -> 1132 incencios correctamente registrados
+
+#     Tamaño muestral -----------------------------------------------------
 
 n_in=10 # Número de puntos a muestrear dentro de cada poligono
-n_out=1089*10 # Número de muestras negativas
+n_out=1132*10 # Número de muestras negativas
 
 set.seed(12345) # Fijamos una semilla
 
+#     Generación aleatoria de fechas para las muestras negativas ----------
+# Fechas aleatorias para generar la muestra negativa
 
-# Se generan fechas aleatorias para las muestras negativas entre 2002 y 2022 siguiendo la misma
-# distribución de probabilidad mensual que en los incendios observados:
-
-incendios = NULL
-
-for (year in 2002:2022) {
-  incendios = rbind(incendios, 
-                    st_read(paste0("./data_raw/incendios_2000-2022/incendios_",year,".shp")) %>% 
-                      select("FECHA_INIC" = matches("(?i)^FECHA_INIC$|^fecha_inic.$"))) 
-}
+dates <- sample(seq(as.Date('2000/01/01'), as.Date('2022/12/31'), by="day"), n_out,replace = T)
 
 
-incendios_mes = incendios %>% 
-  mutate(FECHA_INIC = ymd(FECHA_INIC),.keep="unused") %>% 
-  filter(!is.na(FECHA_INIC)) %>% 
-  filter(year(FECHA_INIC)<=2022,year(FECHA_INIC)>=2002) %>% 
-  st_drop_geometry() %>% 
-  mutate(MES = month(month(FECHA_INIC))) %>% 
-  count(MES) 
-
-
-possible_dates = tibble (date = seq(as.Date('2002/01/01'), as.Date('2022/12/31'), by="day")) %>% 
-  mutate(MES = month(date)) %>% 
-  left_join(incendios_mes,
-            join_by(MES)) 
-
-dates = sample(possible_dates$date, n_out,replace = T,prob = possible_dates$n)
-
-rm(incendios, possible_dates)
-
-# Se genera la muestra de observaciones:
+#     Selección de localizaciones aleatorias ------------------------------
 
 points_in = NULL
 points_out = NULL
 
-for (year in 2002:2022) {
+for (year in 2000:2022) {
   
   cat("YEAR ", year," : -------------------------------------\n")
   cat("  Generando muestras positivas...\n")
@@ -144,19 +123,22 @@ for (year in 2002:2022) {
 
 
 
+sample <- rbind(points_in,points_out) # Muestra generada
 
-sample <- rbind(points_in,points_out)
-
+# Comprobación ------------------------------------------------------------
 
 summary(sample) # Hay una fecha de un incendio errónea
 max(sample$date,na.rm=T) # "2033-08-15"
-
 sum(sample$date==max(sample$date,na.rm=T),na.rm=T) # Aparece 3 veces, es un incendio que tiene mal la fecha
 # Para evitar errores vamos a eliminar las 3 ocurrencias de esta fecha:
 
-sample <- sample[-which(sample$date==max(sample$date,na.rm=T)),]
+# Corrección --------------------------------------------------------------
+# Se eliminan las observaciones con fecha de incendio errónea que se han detectado
 
+sample <- sample[-which(sample$date==max(sample$date,na.rm=T)),]
 summary(sample)
+
+# Almacenamiento de resultados --------------------------------------------
 
 save(sample,file=paste0("salidas_intermedias/sample_",Sys.Date(),".RData"))
 

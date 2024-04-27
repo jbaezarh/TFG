@@ -1,0 +1,380 @@
+---
+title: "Depuración datos"
+author: "Juan Baeza Ruiz-Henestrosa"
+date: "`r Sys.Date()`"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_knit$set(root.dir = "..") # Para que haga knitr desde el directorio del proyecto
+
+# Librerías:
+library(tidyverse) # Manipulación de datos 
+library(sf) # Vector data
+library(terra) # Raster data
+library(mapSpain) # Polígonos de regiones de España
+library(magrittr) # Operador %<>% 
+```
+
+## Lectura de los datos
+
+Cargamos el archivo de datos que hemos creado anteriormente con `1_generacion_muestra_strat.R` para generar los puntos aleatorios en fechas aleatorias y con `2_asignacion_variables_a_localizaciones.R` para asociar a cada punto el valor correspondiente de cada variable:
+
+```{r}
+# load("salidas_intermedias/dataset_completo2024-03-27.RData")
+load("salidas_intermedias/dataset_strat_completo2024-04-26.RData")
+str(dataset)
+```
+
+Se trata de un objeto de clase `sf` y `data.frame` con 21746 observaciones y 30 variables.
+
+Se eliminan las variables `YEAR`, `MM` y `DD`, pues solo fueron útiles para la creación del dataframe, ya que su información está contenida en la fecha (`date`).
+
+```{r}
+datos = dataset |> 
+  select(-c(YEAR,MM,DD))
+```
+
+## Variables:
+
+Variables:
+
+    - fire: Variable respuesta con dos clases. Indica si en esa observación hay un incendio (1) o no (0).
+        
+    - date: Fecha de la observación
+    
+    - T2M: Temperatura a 2 metros. La temperatura promedio del aire a 2 metros sobre la superficie de la tierra (ºC).
+
+    - GWETTOP: Humedad superficial del suelo. El porcentaje de humedad del suelo, donde un valor de 0 indica un suelo completamente libre de agua y un valor de 1 indica un suelo completamente saturado; donde la superficie es la capa desde la superficie hasta 5 cm por debajo del suelo.
+  
+    - RH2M: Humedad relativa a 2 metros. La relación entre la presión parcial real del vapor de agua y la presión parcial de saturación, expresada en porcentaje
+
+    - WD10M: Dirección del viento a 10 metros. El promedio de la dirección del viento a 10 metros sobre la superficie de la tierra.
+
+    - WS10M: Velocidad del viento a 10 metros. El promedio de la velocidad del viento a 10 metros sobre la superficie de la tierra (m/s).
+
+    - PRECTOTCORR: Precipitación corregida. El promedio corregido del total de precipitaciones en la superficie de la tierra en masa de agua (incluye el contenido de agua en la nieve) (mm/día).
+
+    - elevacion: Elevación sobre el nivel del mar (m).
+    
+    - pendiente: Pendiente del terreno (º).
+    
+    - orientacion: Orientación de la pendiente descendiente medida en sentido de las agujas del reloj (º). Las áreas planas que no tienen dirección de pendiente descendente tienen un valor de -1.
+<!-- https://desktop.arcgis.com/es/arcmap/latest/tools/spatial-analyst-toolbox/how-aspect-works.htm -->
+    
+    - curvatura: Curvatura de la superfie.
+<!-- https://desktop.arcgis.com/es/arcmap/latest/manage-data/raster-and-images/curvature-function.htm -->
+
+    - dist_carretera: Distancia a la carretera más cercana (m).
+    
+    - dist_poblacion: Distancia a la población más cercana (m).
+    
+    - dist_electr: Distancia a la línea electrica más cercana (m).
+    
+    - dist_ferocarril: Distancia a la vía de ferrocarril más cercana (m).
+    
+    - dist_camino: Distancia al camino o a la vía pecuaria más cercana (m). 
+    
+    - dist_sendero: Distancia a la vía verde, al carril bici o al sendero más cercano (m). 
+    
+    - enp: Espacio Natural Protegido. Su valor es 1 si la observación se encuentra dentro de un espacio natural protegido o 0 en caso contrario.
+    
+    - cod_municipio: Código del municipio en el que está la observación.
+
+    - municipio: Nombre del municipio en en el que está la observación.
+    
+    - poblacion: Número de habitantes del municipio en el que se encuentra la observación en ese año.
+    
+    - dens_poblacion:
+    
+    - uso_suelo: Clasificación del uso del suelo.
+    
+    - dist_rios: Distancia al río más próximo (m).
+    
+    - NDVI: Índice de vegetación de diferencia normalizada.
+    
+    - geometry: Geometría de la simple feature. En este caso, coordenadas del punto. 
+    
+
+Resumen numérico de las variables:
+
+```{r}
+summary(datos)
+```
+
+## Codificación variables categóricas
+
+Indicamos las variables que son factores:
+
+```{r}
+datos <- datos |> 
+  mutate(fire = as.factor(fire),
+         enp = as.factor(enp),
+         uso_suelo = as.factor(uso_suelo))
+```
+
+
+Es habitual trabajar con la orientación recodificada indicando cada uno de los 8 puntos cardinales o si no hay pendiente descendente.
+
+```{r}
+datos = datos |> 
+  mutate(orientacion = cut(orientacion,
+                           breaks = c(-Inf,-1,22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5,360),
+                           labels = c("Plano","N","NE","E","SE","S","SW","W","NW","N")))
+```
+
+De forma similar, se codifica la dirección del viento.
+
+```{r}
+datos = datos |> 
+  mutate(WD10M = cut(WD10M,
+                           breaks = c(0,22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5,360),
+                           labels = c("N","NE","E","SE","S","SW","W","NW","N")))
+```
+
+El uso de suelo se clasifica en 3 niveles de mayor a menor nivel de desagregación. En el nivel 1 solo hay 5 categorías, en el nivel 2 hay 15 categorías y en el nivel 3 hay 45 categorías. Trabajaremos con el nivel de desagregación 2.
+
+```{r}
+datos <- datos |> 
+  mutate(uso_suelo = uso_suelo |> 
+           as.character() |> 
+           str_sub(0,2) |> 
+           as.factor()) 
+```
+
+## Valores perdidos
+
+```{r}
+summary(datos)
+```
+
+Se detectan valores perdidos en las variables topográficas (pendiente, orientación y curvatura), en `población`, en `uso_suelo` y en `NDVI`.
+
+### Variables topográficas:
+
+Los valores perdidos de pendiente, orientación y curvatura se encuentran todos en los límites de Andalucía, como se muestra en el siguiente gráfico. Esto nos indica que la causa de que estos valores no estén disponibles es precisamente la discrepancia entre los distintos sistemas de referencia o entre los distintos polígonos utilizados para delimitar el territorio 
+
+```{r}
+Andalucia <- esp_get_ccaa(ccaa = "Andalucía")
+andalucia_proj <- st_transform(Andalucia,st_crs(dataset))
+
+
+plot(st_geometry(andalucia_proj),reset=F)
+datos |> 
+  filter(is.na(pendiente)| is.na(orientacion) | is.na(curvatura)) |> 
+  st_geometry() |> 
+  plot(pch=16,col="red",add=T)
+
+datos |> 
+  st_drop_geometry() |> 
+  filter(is.na(pendiente)| is.na(orientacion) | is.na(curvatura)) |> 
+  count() #53 observaciones NA
+
+```
+
+Al ser un número reducido de observaciones (53), puede ser razonable simplemente eliminarlas.
+
+```{r}
+datos = datos |> 
+  filter(!(is.na(pendiente)| is.na(orientacion) | is.na(curvatura)))
+```
+
+
+    
+### Población:    
+En el caso de la población, la presencia de valores faltantes es debido a que el dato de población para algunos municipios en algunos años no está disponible en la base de datos del INE. 
+    
+```{r}
+datos |> 
+  st_drop_geometry() |> 
+  filter(is.na(poblacion)) |> 
+  mutate(Año = year(date)) |> 
+  select(Año,municipio,cod_municipio)
+
+datos |> 
+  st_drop_geometry() |> 
+  filter(is.na(poblacion)) |> 
+  count()
+
+```
+    
+
+Ejemplo : 
+```{r}
+pob = read_csv2("D:/usuario/Documents/Universidad/5º/TFG - organizado/data_raw/antropologicas/Población/poblacion_municipios.txt")[,c(1:5)]
+
+pob |> filter(CODIGO_INE3 == "18077")
+```
+
+Al tratarse de un número reducido de registros (85), se opta por eliminarlos.
+
+```{r}
+datos %<>% filter(!is.na(poblacion))
+```
+    
+    
+### Uso de suelo
+```{r}
+plot(st_geometry(andalucia_proj),reset=F)
+dataset |> filter(is.na(uso_suelo)) |> st_geometry() |> plot(pch=16,col="red",add=T)
+```
+
+Se trata de observaciones que se encuentran también en los límites de Andalucía, en este caso en la costa. Esto nos puede indicar que la causa de que este valor no esté disponible es la misma que anteriormente con las variables topográficas. Dado que el Sistema de Referencia de Coordenadas no se ha modificado, probablemente sea debido a pequeñas discrepancias entre los polígonos utilizados. Estas observaciones ya se han eliminado en las etapas anteriores, por lo que no es necesario hacer nada.
+    
+```{r}
+datos = datos |>  
+  filter(!is.na(uso_suelo))
+```
+
+
+
+### NDVI
+
+El caso de los valores perdidos en NDVI es particular, ya que en la mayoría de los casos se deben a que no están disponibles los datos del NDVI de esos meses.
+    
+```{r}
+summary(dataset$NDVI)
+summary(datos$NDVI)
+plot(st_geometry(andalucia_proj),reset=F)
+dataset |> filter(is.na(NDVI)) |> st_geometry() |> plot(pch=16,col="red",add=T)
+```
+    
+Se observan 85 valores perdidos de la variable NDVI, 9 de los cuales han sido eliminados en etapas anteriores de la depuración del conjunto de datos, por lo que quedan 76 valores perdidos de esta variable. Si bien podrían simplemente eliminarse, al ser un número reducido de observaciones, optaremos por imputar las que sean debidas a que no se dispone del archivo de datos para ese mes concreto.
+En la distribución espacial de los valores faltantes de esta variable se observa que se distribuyen por todo el territorio, si bien parece haber acumulación en algunas zonas de la costa
+
+```{r}
+NDVI_mes = datos |> 
+  st_drop_geometry() |> 
+  mutate(mes = month(date),
+         año = year(date)) |> 
+  group_by(año,mes) |> 
+  summarise(NDVI_mes = mean(na.omit(NDVI))) |> 
+  ungroup() |> 
+  mutate(date = dmy(paste(01,mes,año,sep="/")))
+  
+
+NDVI_mes |> 
+  ggplot(aes(x=date,y=NDVI_mes)) +
+  geom_line()+
+  scale_x_date(date_breaks = "6 month",date_labels = "%y%b")+
+  theme(axis.text.x = element_text(angle = 90))
+
+# 2008 tiene un NDVI especialmente bajo, puede deberse a numerosos factores:
+#   - Que efectivamente sea un año especialmente seco
+#   - Las características de la muestra seleccionada ese año
+#   - Errores de medición
+#   - ...
+
+```
+
+
+Se imputan las observaciones faltantes de los demás meses, tomando utilizando una técnica similar a la imputación Hot Deck. Para cada mes para el que no esté disponible el NDVI, se le asigna el valor correspondiente al mismo mes del año anterior si está disponible y si no el del año posterior.
+
+```{r}
+# La siguiente función lee el archivo con el NDVI corresponfiente a un mes y a un año dados (si está disponible)
+
+read_NDVI = function(MM,YYYY) {
+  MM = str_pad(as.character(MM),2,"left",pad = "0")
+  YY = substr(as.character(YYYY),3,4)
+  if (as.numeric(YY)<=06) {
+    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/TERMOD_",YY,MM,"01_h17v05_medmndvi.tif")
+  } else if (as.numeric(YY)<=11) {
+    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIF/TERMOD_",YY,MM,"01_h17v05_medmndvi.tif")
+  } else if (as.numeric(YY)<=21){
+    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/termod_",YY,MM,"01_h17v05_medmndvi.tif")
+  }else {
+    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod_",YY,MM,"01_h17v05_medmndvi_COG.tif")
+  }
+
+  if (file.exists(ruta)) {
+    NDVI = rast(ruta)
+  } else
+    NDVI = NA
+  return(NDVI)
+}
+
+# Los meses para los cuales no está disponible el archivo de NDVI:
+year_month_missing_NDVI = c(
+"2003-01",
+"2003-04",
+"2017-02",
+"2018-11",
+"2020-11",
+"2021-12",
+"2022-03",
+"2022-12")
+
+# Para cada observación para la que no está disponible el NDVI (porque la información de ese mes no está disponible), se obtiene el correspondiente al mismo mes del año anterior, si este está disponible, si no, el del año posterior:
+
+missing_NDVI = datos |> 
+  filter(is.na(NDVI)) |> 
+  mutate(year = year(date),month = month(date)) |> 
+  group_by(year,month) |> 
+  filter(paste(year,str_pad(as.character(month),2,"left",pad = "0"),sep="-") %in%   year_month_missing_NDVI) |>  # Se filtra porque también hay observaciones que tienen NA en el NDVI no porque no exista el archivo, si no lo mismo que en ocasiones anteriores, porques discrepancias entre los límites de los polígonos
+  nest() |>    
+  mutate(NDVI_rast = map2(month,year-1,read_NDVI), # Se lee primero el del año anterior
+         NDVI_rast = ifelse(is.na(unlist(NDVI_rast)),map2(month,year+1,read_NDVI),NDVI_rast), # Si no está disponible, se toma el del año posterior
+         NDVI_nuevo = map2(NDVI_rast,data,~terra::extract(.x,.y)[,2])) |> 
+  select(-NDVI_rast) |> 
+  unnest(c(data,NDVI_nuevo)) |> 
+  mutate(NDVI = NDVI_nuevo,.keep="unused")
+
+ind_modificados = is.na(datos$NDVI) & (paste(year(datos$date),str_pad(as.character(month(datos$date)),2,"left",pad = "0"),sep="-") %in% year_month_missing_NDVI) # Los elementos que han sido modificados
+
+# Se asignan los valores imputados del NDVI:
+datos[ind_modificados,]$NDVI = missing_NDVI$NDVI
+```
+
+Existen, sin embargo, observaciones para las que el NDVI sigue faltante aunque sí que existe el archivo con los datos para ese mes. 
+
+```{r}
+datos |> st_drop_geometry() |> filter(is.na(NDVI)) |> count() # 13
+
+plot(st_geometry(andalucia_proj),reset=F)
+datos |> filter(is.na(NDVI)) |> st_geometry() |> plot(pch=16,col="red",add=T)
+```
+
+Las causas pueden ser muchas (si están en las fronteras cabe esperar que sea debido a discrepancias entre los límites pero en caso contrario puede ser debido a que simplemente en ese píxel no hubiese información). Como en casos anteriores, se eliminan ya que son solo 13.
+
+```{r}
+
+datos %<>% filter(!is.na(NDVI))
+  
+```
+
+**COMENTARIO**: 
+
+El NDVI en teoría toma valores entre -1 y 1, pero en todas los archivos disponibles en la REDIAM solo toma valores entre 0 y 1. Esto solo puede deberse al hecho de que está rescalado, aunque no aparece explícitamente mencionado en ningún sitio.
+
+
+```{r}
+# Descomentar si quisiese eliminarse la geometría de los datos:
+
+# datos <- datos |> 
+  # st_drop_geometry()
+```
+
+
+
+Se guarda el conjunto de datos depurado:
+```{r}
+# save(datos, file = paste0("salidas_intermedias/datos_strat_depurados_geom_",Sys.Date(),".RData"))
+
+# "salidas_intermedias/datos_depurados2024-04-09.RData"
+# datos_depurados_geom_2024_04_26.RData contiene dens_poblacion en lugar de población
+# salidas_intermedias/datos_strat_depurados_geom_2024_04_27.RData está obtenido mediante un muestreo estratificado
+```
+
+```{r}
+# install.packages("feather")
+library(feather)
+
+# load("salidas_intermedias/datos_depurados2024-04-09.RData")
+# write_feather(datos, "salidas_intermedias/datos_depurados2024-04-09.feather")
+
+```
+

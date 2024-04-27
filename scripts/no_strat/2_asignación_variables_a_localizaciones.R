@@ -21,7 +21,8 @@ andalucia_proj <- st_transform(Andalucia,crs_reference)
 
 
 # Cargamos la muestra de puntos 
-load("salidas_intermedias/sample_2024-03-27.RData")
+# load("salidas_intermedias/sample_2024-03-27.RData")
+load("salidas_intermedias/sample_strat_2024-04-26.RData")
 
 # Eliminamos las observaciones que no tienen fecha porque no podemos usarlas
 sample <- na.omit(sample)
@@ -334,8 +335,8 @@ for (YEAR in 2000:2022) {
 
 
 # Guardado ----------------------------------------------------------------
-
-save(dataset,file = paste0("salidas_intermedias/dataset_completo",Sys.Date(),".RData"))
+# save(dataset,file = paste0("salidas_intermedias/dataset_completo",Sys.Date(),".RData"))
+save(dataset,file = paste0("salidas_intermedias/dataset__strat_completo",Sys.Date(),".RData"))
 
 # Los archivos de enero a septiembre 2001 están defectuosos
 # Los valores obtenidos en los años 2000 y 2001 son mucho más bajos que los de los otros años

@@ -1,19 +1,24 @@
-# Cargamos las librerías
-library(terra)
-library(sf)
-library(mapSpain)
-library(tidyverse)
-library(climate)
-library(lubridate)
+
+# Librerías ---------------------------------------------------------------
+# Se cargan las librerías que se 
+
+library(terra) # Raster data
+library(sf) # Vector data
+library(mapSpain) # Polígonos de las regiones de España
+library(tidyverse) # Manipulación de datos
 
 
-# CRS de referencia
+
+# CRS de referencia -------------------------------------------------------
+# Será el CRS que se use en todo el proyecto
+
 pend <- rast("data_raw/topograficas/pendiente.tif")
 crs_reference = crs(pend)
 rm(pend)
 
 
-# Poligono de Andalucia
+
+# Polígono de Andalucía ---------------------------------------------------
 Andalucia <- esp_get_ccaa(ccaa = "Andalucía")
 andalucia_proj <- st_transform(Andalucia,crs_reference)
 
@@ -27,22 +32,64 @@ andalucia_proj <- st_transform(Andalucia,crs_reference)
 area_monte <- andalucia_proj
 
 
-# Generación de la muestra:
+# Generación de la muestra ------------------------------------------------
 
-# total 1174: 41 NA's y 1 erróneo (fecha) -> 1132 incencios correctamente registrados
+# Generación de la muestra, estratificando por mes de forma que a nivel global haya la misma cantidad de observaciones en
+# cada mes (sumando todos los años):
+
+# 1089 incencios correctamente registrados entre 2002 y 2022
+
+
+#     Tamaño muestral -----------------------------------------------------
 
 n_in=10 # Número de puntos a muestrear dentro de cada poligono
-n_out=1132*10 # Número de muestras negativas
+n_out=1089*10 # Número de muestras negativas
+
+
+
+#     Generación aleatoria de fechas para las muestras negativas ----------
+
+# Se generan fechas aleatorias para las muestras negativas entre 2002 y 2022 siguiendo la misma
+# distribución de probabilidad mensual que en los incendios observados:
 
 set.seed(12345) # Fijamos una semilla
+incendios = NULL
 
-# Fechas aleatorias para generar la muestra negativa
-dates <- sample(seq(as.Date('2000/01/01'), as.Date('2022/12/31'), by="day"), n_out,replace = T)
+for (year in 2002:2022) {
+  incendios = rbind(incendios, 
+                    st_read(paste0("./data_raw/incendios_2000-2022/incendios_",year,".shp")) %>% 
+                      select("FECHA_INIC" = matches("(?i)^FECHA_INIC$|^fecha_inic.$"))) 
+}
+
+
+incendios_mes = incendios %>% 
+  mutate(FECHA_INIC = ymd(FECHA_INIC),.keep="unused") %>% 
+  filter(!is.na(FECHA_INIC)) %>% 
+  filter(year(FECHA_INIC)<=2022,year(FECHA_INIC)>=2002) %>% 
+  st_drop_geometry() %>% 
+  mutate(MES = month(month(FECHA_INIC))) %>% 
+  count(MES) 
+
+
+possible_dates = tibble (date = seq(as.Date('2002/01/01'), as.Date('2022/12/31'), by="day")) %>% 
+  mutate(MES = month(date)) %>% 
+  left_join(incendios_mes,
+            join_by(MES)) 
+
+dates = sample(possible_dates$date, n_out,replace = T,prob = possible_dates$n) # Estas serán las fechas de las muestras negativas
+
+rm(incendios, possible_dates) # Se borran para liberar memoria
+
+
+
+#     Selección de localizaciones aleatorias ------------------------------
+
+# Se genera la muestra de observaciones:
 
 points_in = NULL
 points_out = NULL
 
-for (year in 2000:2022) {
+for (year in 2002:2022) {
   
   cat("YEAR ", year," : -------------------------------------\n")
   cat("  Generando muestras positivas...\n")
@@ -112,36 +159,28 @@ for (year in 2000:2022) {
 }
 
 
+sample <- rbind(points_in,points_out) # Muestra generada
 
 
-sample <- rbind(points_in,points_out)
 
+# Comprobación ------------------------------------------------------------
 
 summary(sample) # Hay una fecha de un incendio errónea
 max(sample$date,na.rm=T) # "2033-08-15"
-
 sum(sample$date==max(sample$date,na.rm=T),na.rm=T) # Aparece 3 veces, es un incendio que tiene mal la fecha
 # Para evitar errores vamos a eliminar las 3 ocurrencias de esta fecha:
 
-sample <- sample[-which(sample$date==max(sample$date,na.rm=T)),]
 
+# Corrección --------------------------------------------------------------
+# Se eliminan las observaciones con fecha de incendio errónea que se han detectado
+
+sample <- sample[-which(sample$date==max(sample$date,na.rm=T)),]
 summary(sample)
 
-save(sample,file=paste0("salidas_intermedias/sample_",Sys.Date(),".RData"))
+
+# Almacenamiento de resultados --------------------------------------------
+
+save(sample,file=paste0("salidas_intermedias/sample_strat_",Sys.Date(),".RData"))
 
 
 
-
-# NOTA Area Monte: --------------------------------------------------------
-
-# Alternativa a considerar toda Andalucía:
-
-# # Zonas de "monte" en Andalucia (en realidad solo he considerado las zonas forestales y zonas húmedas)
-# load("data_cleaning/suelo_forestal_and.RData") # suelo_forestal_and
-# suelo_forestal_and <- st_transform(suelo_forestal_and,crs_reference) |># Uso una simplificación porque es un archivo muy pesado
-#   st_simplify(dTolerance = 100) # Tolerancia de 100m
-# # > as.numeric(object.size(suelo_forestal_and_simp))/as.numeric(object.size(suelo_forestal_and))
-# # [1] 0.04667928
-# # Se reduce 20 veces el tamaño del archivo y solo estoy considerando una tolerancia de 100m que para
-# # mi trabajo no supone ninguna diferencia
-# # area_monte <- suelo_forestal_and

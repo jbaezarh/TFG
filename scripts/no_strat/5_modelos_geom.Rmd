@@ -20,7 +20,8 @@ library(ggplot2)
 
 ## Load data
 ```{r}
-load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
+load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
+# load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
 # load("salidas_intermedias/datos_depurados_geom_2024-04-26.RData")
 
 ```
