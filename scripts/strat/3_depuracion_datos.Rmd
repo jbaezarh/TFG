@@ -10,7 +10,7 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-knitr::opts_knit$set(root.dir = "..") # Para que haga knitr desde el directorio del proyecto
+knitr::opts_knit$set(root.dir = "D:/usuario/Documents/Universidad/5º/TFG - organizado") # Para que haga knitr desde el directorio del proyecto
 
 # Librerías:
 library(tidyverse) # Manipulación de datos 

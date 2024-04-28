@@ -9,6 +9,8 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "D:/usuario/Documents/Universidad/5º/TFG - organizado") # Para que haga knitr desde el directorio del proyecto
+
 ```
 
 
@@ -18,15 +20,19 @@ library(tidymodels)
 library(sf)
 library(ggplot2)
 library(terra)
+library(mapSpain)
 ```
 
 ```{r}
-load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
+load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData") # Datos
+load("salidas_intermedias/trained_models_strat_2024_04_28.RData") # Modelos
 
 ```
 
 
 Para poder estudiar casos concretos de interés, sin tener que hacer frente a todas las complicaciones derivadas del trabajar con datos raster, un enfoque puede ser el siguiente:
+
+
 1. Estudiar un incendio concreto un día y ver como evoluciona el riesgo de incendio en los días cercanos, en el área de interés (un área que contenga al incendio que se quiere estudiar).
 
 2. Generar puntos aleatoriamente en el área de interés (o formando una cuadrícula) en cada uno de los días cercanos al incendio. 
@@ -43,105 +49,111 @@ Si se obtienen resultados razonables, puede probarse a añadir variaciones en la
 
 
 
-```{r}
-set.seed(123)
 
-datos = datos %>% st_drop_geometry() %>%  dplyr::select(fire,elevacion,curvatura,pendiente)
 
-splits = initial_validation_time_split(datos, 
-                                       prop=c(0.6,0.2))
 
-training <- training(splits) %>%  st_drop_geometry()
-val_set <- validation_set(splits) %>% st_drop_geometry()
-test  <- testing(splits) %>% st_drop_geometry()
+# ---------------------
 
-```
-La idea será coger uno de los modelos entrenados y ver qué predicciones da para un día concreto y compararlo con lo que ocurrió ese día
+Se va a intentar estudiar el incendio del 8 de septiembre de 2021 en Sierra Bermeja por ser de especial relevancia.
+
 
 ```{r}
-#2º definimos el modelo
-lr_mod <- 
-  logistic_reg(penalty = NULL, mixture = NULL) %>% 
-  set_engine("glm")
+incendios21 <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",2021,".shp")) %>% 
+  st_transform(st_crs(datos)) %>% 
+  mutate(FECHA_INIC=ymd(FECHA_INIC))
 
-# 3º Creamos la receta
-# holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter", 
-#               "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
+incendio_estudio <- incendios21 %>% filter(month(FECHA_INIC)==9)
 
-lr_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-#  step_date(date,features = c("dow", "month")) %>% 
-  # step_holiday(date, holidays = holidays) %>% 
-#  step_rm(date,cod_municipio,municipio) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
-
-# 4º Creamos el workflow
-lr_workflow <- 
-  workflow() %>% 
-  add_model(lr_mod) %>% 
-  add_recipe(lr_recipe)
-
-# 5º Ajustamos el modelo.
-lr_res <- 
-  lr_workflow %>% 
-  fit(training)
-
-
-pred = cbind(predict(lr_res,new_data = validation(splits),type="prob"),
-             predict(lr_res,new_data = validation(splits),type="class"),
-             fire = validation(splits)$fire)
-pred
-
-# 6º Se evalúa el modelo:
-#   Curva ROC
-lr_auc <- pred %>% 
-  roc_curve(fire, .pred_0) %>% 
-  mutate(model = "Logistic Regression")
-
-autoplot(lr_auc)
-
-
-#   Medidas de rendimiento
-get_metrics <- function(pred) {
-  list(
-    res = tibble(
-      roc_auc = pred |> roc_auc(truth = fire, .pred_0) |> pull(.estimate),
-      accuracy = pred |> accuracy(truth = fire, .pred_class) |> pull(.estimate),
-      recall = pred |> sensitivity(truth = fire, .pred_class) |> pull(.estimate),
-      specificity = pred |> spec(truth = fire, .pred_class) |> pull(.estimate)),
-    conf_mat = pred |> conf_mat(truth = fire, .pred_class))
-}
-lr_metrics <- pred |> 
-  get_metrics()
-
-lr_metrics
+and <- esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos))
 ```
+
 
 ```{r}
-# Construir raster
-
-elevacion <- rast("data_raw/topograficas/elevacion.tif") %>% as.numeric()
-pendiente <- rast("data_raw/topograficas/pendiente.tif") %>% as.numeric() 
-orientacion <- rast("data_raw/topograficas/orientacion.tif") %>% as.numeric()
-curvatura <- rast("data_raw/topograficas/curvatura.tif") %>% as.numeric()
-
-# Codificar orientacion
-orientacion[] = cut(orientacion[],
-                           breaks = c(-Inf,-1,22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5,360),
-                           labels = c("Plano","N","NE","E","SE","S","SW","W","NW","N"))
-
-
-# Resamplear para que coincidan los los ráster pixel a pixel, se usa de modelo, elevacion
-
-pendiente = project(pendiente, elevacion) %>% resample(elevacion)
-orientacion = project(orientacion, elevacion) %>% resample(elevacion)
-curvatura = project(curvatura, elevacion) %>% resample(elevacion)
-
-newdata = c(elevacion,pendiente,curvatura)
-
-names(newdata)  = c("elevacion","pendiente","curvatura")
-  
+g = and %>% 
+  ggplot() +
+  geom_sf() + 
+  geom_sf(data = incendio_estudio, fill=alpha("black",0))
 ```
+
+
+```{r}
+# grid de puntos 10km x 10km de andalucía
+grid = st_make_grid(and,
+                    cellsize = c(10000,10000),
+                    what = "centers")[and]
+
+g + geom_sf(data = grid)
+```
+
+
+```{r}
+sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid))
+
+source("scripts/strat/fun_asignar_variables.R")
+full_grid  = asignar_variables(sample)
+
+full_grid
+```
+
+Se usará el modelo de regresión lineal entrenado con los datos de entrenamiento y validación
+
+```{r}
+# Cargar lr_model en modelos
+pred_class = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid)
+pred_probs = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid,type="prob")
+pred = cbind(full_grid,pred_class,pred_probs)
+
+g + geom_sf(data = pred, mapping = aes(color=.pred_class))
+
+g + 
+  geom_sf(data = pred, mapping = aes(color=.pred_1)) +
+  scale_color_gradientn(colours = rainbow(5,rev=T)) 
+```
+
+
+```{r}
+# Más detalle
+# grid de puntos 10km x 10km de andalucía
+grid = st_make_grid(st_buffer(incendio_estudio,dist=10000),
+                    cellsize = c(1000,1000),
+                    what = "centers")[and]
+
+# ----------
+g + geom_sf(data = grid)
+
+sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid))
+
+source("scripts/strat/fun_asignar_variables.R")
+full_grid  = asignar_variables(sample)
+
+
+# ----------
+
+# Cargar lr_model en modelos
+pred_class = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid)
+pred_probs = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid,type="prob")
+pred = cbind(full_grid,pred_class,pred_probs)
+
+g + geom_sf(data = pred, mapping = aes(color=.pred_class))
+
+bbox = st_bbox(st_buffer(incendio_estudio,dist=10000)) %>%  as.matrix() %>% t() %>% as.data.frame()
+
+g + 
+  geom_sf(data = pred, mapping = aes(color=.pred_class)) +
+ #scale_color_gradientn(colours = rainbow(5,rev=T))  +
+  geom_sf(data=incendio_estudio,fill = alpha("black",0)) +
+  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
+
+
+g + 
+  geom_sf(data = pred, mapping = aes(color=.pred_1)) +
+  scale_color_gradientn(colours = rainbow(5,rev=T))  +
+  geom_sf(data=incendio_estudio,fill = alpha("black",0)) +
+  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
+
+# Lógico ya que es un problema muy complejo y la resolución de las variables meteorológicas es de alrededor de 50km, por lo que intentar hacer predicciones a una escala menor (en este caso 50 veces menor) no es una buena idea
+# Además el incendio duró 46 días
+```
+
+
 

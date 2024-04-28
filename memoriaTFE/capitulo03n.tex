@@ -621,36 +621,35 @@ sido posible en este caso incorporarla al trabajo por diversas razones.
 
 La principal de ellas fue que hasta marzo de 2024 la base de datos de la
 EGIF solo se encontraba disponible en el Catálogo de Datos del Gobierno
-de España en formato TURTLE y esto conllevó numerosas dificultades. Se
-exploraron distintas librerías de R (y alguna de Python) para el manejo
-de datos en este formato como RDFlib. Sin embargo, al tratarse de una
-base de datos de un tamaño considerable (aproximadamente 1GB y con más
-de una decena de millones de tripletas), esta librería no era
-suficientemente eficiente para poder realizar consultas en un tiempo
-razonable al conjunto de datos. Tras explorar otras alternativas, se
-valoró la posibilidad de usar un triplestore, es decir, una base de
-datos especialmente diseñada para el almacenamiento y recuperación de
-tripletas a través de consultas semánticas. En este caso se usó Apache
-Jena Fuseki, ya que cuenta con una interfaz que facilita su uso. Sin
-embargo, aunque esto supuso una mejora considerable en la eficiencia y
-permitió realizar consultas sencillas a la base de datos, en este caso
-fue la complejidad del gráfico de datos (ontología) y la escasa
-documentación disponible sobre esta, la impidió que pudiese realizar las
-consultas más complejas que requería para llevar a cabo el proyecto.
-Además, se debeb tener en cuenta que se trata de una base de datos muy
-heterogénea y con numerosos datos faltantes debida su naturaleza, por lo
-que requiere de un preprocesamiento que probablemente será complicado y
-costoso en tiempo y en recursos computacionales. Al no disponer de
-ninguno de estos, finalmente se optó por buscar una alternativa más
-abarcable dada las limitaciones con las que cuenta un Trabajo de Fin de
-Estudios, aunque queda abierta la posibilidad de explorar esta base de
-datos en futuros estudios, la cual aportar nuevas dimensiones al estudio
-de los incendios forestales en España gracias a la enorme cantidad de
-información que ofrece.
-
-TURTLE es una sintaxis para RDF con una sintaxis compatible con SPARQL.
-RDF (Resource Description Framework) es un estándar de semántica web
-utilizado para el intercambiar de datos en la Web.
+de España en formato TURTLE\footnote{TURTLE es una sintaxis para RDF con
+  una sintaxis compatible con SPARQL. RDF (Resource Description
+  Framework) es un estándar de semántica web utilizado para el
+  intercambiar de datos en la Web.} y esto conllevó numerosas
+dificultades. Se exploraron distintas librerías de R (y alguna de
+Python) para el manejo de datos en este formato como RDFlib. Sin
+embargo, al tratarse de una base de datos de un tamaño considerable
+(aproximadamente 1GB y con más de una decena de millones de tripletas),
+esta librería no era suficientemente eficiente para poder realizar
+consultas en un tiempo razonable al conjunto de datos. Tras explorar
+otras alternativas, se valoró la posibilidad de usar un triplestore, es
+decir, una base de datos especialmente diseñada para el almacenamiento y
+recuperación de tripletas a través de consultas semánticas. En este caso
+se usó Apache Jena Fuseki, ya que cuenta con una interfaz que facilita
+su uso. Sin embargo, aunque esto supuso una mejora considerable en la
+eficiencia y permitió realizar consultas sencillas a la base de datos,
+en este caso fue la complejidad del gráfico de datos (ontología) y la
+escasa documentación disponible sobre esta, la que impidió que se
+pudiesen realizar las consultas más complejas que requería para llevar a
+cabo el proyecto. Además, se debe tener en cuenta que se trata de una
+base de datos muy heterogénea y con numerosos datos faltantes debida su
+naturaleza, por lo que requiere de un preprocesamiento que probablemente
+será complicado y costoso en tiempo y en recursos computacionales. Al no
+disponer de ninguno de estos, finalmente se optó por buscar una
+alternativa más abarcable dada las limitaciones con las que cuenta un
+Trabajo de Fin de Estudios, aunque queda abierta la posibilidad de
+explorar esta base de datos en futuros estudios, la cual aportar nuevas
+dimensiones al estudio de los incendios forestales en España gracias a
+la enorme cantidad de información que ofrece.
 
 Ante esta situación, la solución planteada fue limitar el área en
 estudio a la Comunidad Autónoma de Andalucía, aprovechando la enorme

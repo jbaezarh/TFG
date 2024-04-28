@@ -2,13 +2,17 @@
 title: "Modelos"
 author: "Juan Baeza Ruiz-Henestrosa"
 date: "`r Sys.Date()`"
-output: pdf_document
-editor_options: 
+output:
+  html_document:
+    df_print: paged
+editor_options:
   chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "D:/usuario/Documents/Universidad/5º/TFG - organizado") # Para que haga knitr desde el directorio del proyecto
+
 ```
 
 ```{r}
@@ -22,7 +26,10 @@ library(ggpubr)
 
 ```
 
-## Load data
+## Carga de datos
+
+Se cargan los datos depurados obtenidos a partir de la selección de casos estratificando según el mes.
+
 ```{r}
 load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
 # load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
@@ -30,7 +37,9 @@ load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
 
 ```
 
-## Funciones 
+## Funciones para la evaluación de modelos
+
+Las siguientes funciones se utilizarán para evaluar el rendimiento de los modelos.
 
 ```{r}
 # Función para obtener las medidas de rendimiento de los modelos a partir de un objeto predict 
@@ -40,8 +49,8 @@ get_metrics <- function(pred) {
     res = tibble(
       roc_auc = pred |> roc_auc(truth = fire, .pred_0) |> pull(.estimate),
       accuracy = pred |> accuracy(truth = fire, .pred_class) |> pull(.estimate),
-      recall = pred |> sensitivity(truth = fire, .pred_class) |> pull(.estimate),
-      specificity = pred |> spec(truth = fire, .pred_class) |> pull(.estimate)),
+      recall = pred |> sensitivity(truth = fire, .pred_class,event_level="second") |> pull(.estimate),
+      specificity = pred |> spec(truth = fire, .pred_class,event_level="second") |> pull(.estimate)),
     conf_mat = pred |> conf_mat(truth = fire, .pred_class))
 }
 
@@ -97,7 +106,7 @@ tuning_plot = function(mod_res) {
 
 ## Partición temporal entrenamiento / validación / test
 
-Se crea una partición temporal en entrenamiento / validación / test, para evitar el sesgo look-ahead.
+Se crea una partición temporal en entrenamiento / validación / test, para evitar el sesgo look-ahead (mirar al futuro). Ordenando los casos según su fecha, se toman el primer 60% para entrenar los modelos, el 20% siguiente para la validación y el último 20% para la evaluación del rendimiento.
 
 ```{r}
 set.seed(123)
@@ -139,12 +148,14 @@ test  <- testing(splits) %>% st_drop_geometry()
 
 ## Modelos
 
-### 1. Logistic regression with penalty
+### Logistic regression with penalty
 
 <!-- https://glmnet.stanford.edu/articles/glmnet.html -->
 <!-- mixture = 0 : lasso regression -->
 <!-- mixture = 1 : ridge regression -->
 <!-- penalty: parámetro de regularización -->
+
+En primer lugar se usa un modelo de regresión logística con término de penalización. En función de si el término de regularización es de grado 1 o 2, se le da el nombre de lasso o ridge (logistic) regression. Se ajusta el grado del término de penalización así como su coeficiente usando para ello el conjunto de validación.
 
 ```{r}
 # 1º Definimos el modelo:
@@ -243,114 +254,6 @@ lr_metrics
 
 ```
 
-
-## 1. Logistic regression 
-```{r}
-# 1º definimos el modelo
-lrs_mod <- 
-  logistic_reg(penalty = NULL, mixture = NULL) %>% 
-  set_engine("glm")
-
-# 2º Creamos la receta
-
-lrs_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  # step_date(date,features = c("dow","month")) %>% 
-  # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
-
-# 3º Creamos el workflow
-lrs_workflow <- 
-  workflow() %>% 
-  add_model(lrs_mod) %>% 
-  add_recipe(lrs_recipe)
-
-# 4º Ajustamos el modelo.
-lrs_res <- 
-  lrs_workflow %>% 
-  fit(training)
-
-# 5º 
-lrs_res %>% extract_fit_engine() %>% summary()
-
-lrs_pred = cbind(predict(lrs_res,new_data = validation(splits),type="prob"),
-             predict(lrs_res,new_data = validation(splits),type="class"),
-             fire = validation(splits)$fire)
-
-# 6º Se evalúa el modelo:
-#   Curva ROC
-lrs_auc <- lrs_pred %>% 
-  roc_curve(fire, .pred_0) %>% 
-  mutate(model = "Logistic Regression")
-
-autoplot(lrs_auc)
-
-
-#   Medidas de rendimiento
-lrs_metrics <- pred |> 
-  get_metrics()
-
-lrs_metrics
-```
-
-### Logistic regression + PCA
-
-```{r}
-lr_pca_mod <- 
-  logistic_reg(penalty = NULL, mixture = NULL) %>% 
-  set_engine("glm")
-
-# 3º Creamos la receta
-
-lr_pca_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  step_pca(all_numeric_predictors(),num_comp = 14) %>% 
-  step_date(date,features = c("dow","month")) %>% 
-  # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
-
-# 4º Creamos el workflow
-lr_pca_workflow <- 
-  workflow() %>% 
-  add_model(lr_pca_mod) %>% 
-  add_recipe(lr_pca_recipe)
-
-# 5º Ajustamos el modelo.
-lr_pca_res <- 
-  lr_pca_workflow %>% 
-  fit(training)
-
-lr_pca_res %>% extract_fit_engine() %>% summary()
-
-pred = cbind(predict(lr_pca_res,new_data = validation(splits),type="prob"),
-             predict(lr_pca_res,new_data = validation(splits),type="class"),
-             fire = validation(splits)$fire)
-
-# 6º Se evalúa el modelo:
-#   Curva ROC
-lr_pca_auc <- pred %>% 
-  roc_curve(fire, .pred_0) %>% 
-  mutate(model = "Logistic Regression")
-
-autoplot(lr_pca_auc)
-
-
-#   Medidas de rendimiento
-lr_pca_metrics <- pred |> 
-  get_metrics()
-
-lr_pca_metrics
-
-```
-
-No aporta ninguna mejora
-
 #### Análisis gráfico de los "residuos" / errores:
 
 ```{r}
@@ -387,6 +290,176 @@ lr_workflow %>%
 ```
 
 
+## Logistic regression 
+
+Regresión logística sin parámetro de regularización.
+
+```{r}
+# 1º definimos el modelo 
+# lrs: logistic regression simple
+
+lrs_mod <- 
+  logistic_reg(penalty = NULL, mixture = NULL) %>% 
+  set_engine("glm")
+
+# 2º Creamos la receta
+
+lrs_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Creamos el workflow
+lrs_workflow <- 
+  workflow() %>% 
+  add_model(lrs_mod) %>% 
+  add_recipe(lrs_recipe)
+
+# 4º Ajustamos el modelo.
+lrs_res <- 
+  lrs_workflow %>% 
+  fit(training)
+
+# 5º Se evalúa su rendimiento en los datos de validación.
+lrs_pred = cbind(predict(lrs_res,new_data = validation(splits),type="prob"),
+             predict(lrs_res,new_data = validation(splits),type="class"),
+             fire = validation(splits)$fire)
+
+# 6º Se evalúa el modelo:
+#   Curva ROC
+lrs_auc <- lrs_pred %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lrs_auc)
+
+
+#   Medidas de rendimiento
+lrs_metrics <- lrs_pred |> 
+  get_metrics()
+
+lrs_metrics
+```
+
+#### Coeficientes
+```{r}
+lrs_res %>% extract_fit_engine() %>% summary()
+```
+ 
+GWETTOP WD10M, orientacion, date_dow no significativas
+
+
+### Logistic regression with feature selection
+```{r}
+# 1º definimos el modelo 
+# lrs2: logistic regression simple
+
+lrs2_mod <- 
+  logistic_reg(penalty = NULL, mixture = NULL) %>% 
+  set_engine("glm")
+
+# 2º Creamos la receta
+
+lrs2_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio, GWETTOP, WD10M, orientacion) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Creamos el workflow
+lrs2_workflow <- 
+  workflow() %>% 
+  add_model(lrs2_mod) %>% 
+  add_recipe(lrs2_recipe)
+
+# 4º Ajustamos el modelo.
+lrs2_res <- 
+  lrs2_workflow %>% 
+  fit(training)
+
+# 5º Se evalúa su rendimiento en los datos de validación.
+lrs2_pred = cbind(predict(lrs2_res,new_data = validation(splits),type="prob"),
+             predict(lrs2_res,new_data = validation(splits),type="class"),
+             fire = validation(splits)$fire)
+
+# 6º Se evalúa el modelo:
+#   Curva ROC
+lrs2_auc <- lrs2_pred %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lrs2_auc)
+
+
+#   Medidas de rendimiento
+lrs2_metrics <- lrs2_pred |> 
+  get_metrics()
+
+```
+
+
+### Logistic regression + PCA
+
+```{r}
+lr_pca_mod <- 
+  logistic_reg(penalty = NULL, mixture = NULL) %>% 
+  set_engine("glm")
+
+# 3º Creamos la receta
+
+lr_pca_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_pca(all_numeric_predictors(),num_comp = 14) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 4º Creamos el workflow
+lr_pca_workflow <- 
+  workflow() %>% 
+  add_model(lr_pca_mod) %>% 
+  add_recipe(lr_pca_recipe)
+
+# 5º Ajustamos el modelo.
+lr_pca_res <- 
+  lr_pca_workflow %>% 
+  fit(training)
+
+lr_pca_res %>% extract_fit_engine() %>% summary()
+
+lr_pca_pred = cbind(predict(lr_pca_res,new_data = validation(splits),type="prob"),
+             predict(lr_pca_res,new_data = validation(splits),type="class"),
+             fire = validation(splits)$fire)
+
+# 6º Se evalúa el modelo:
+#   Curva ROC
+lr_pca_auc <- lr_pca_pred %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lr_pca_auc)
+
+
+#   Medidas de rendimiento
+lr_pca_metrics <- lr_pca_pred |> 
+  get_metrics()
+
+lr_pca_metrics
+
+```
+
+Este enfoque no parece aportar ninguna mejora.
+
 
 ## 2. Random Forest
 
@@ -420,6 +493,9 @@ rf_workflow <-
 # 4º Train and tune
 rf_mod
 extract_parameter_set_dials(rf_mod)
+```
+
+```{r eval=FALSE, include=TRUE}
 
 set.seed(345)
 rf_res <- 
@@ -429,6 +505,16 @@ rf_res <-
             control = control_grid(save_pred = TRUE),
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
+```
+
+```{r include=FALSE}
+# Tarda demasiado, lo cargamos
+
+load("salidas_intermedias/trained_models/trained_models_strat_24_04_27.RData")
+```
+
+
+``` {r}
 # Resultados del tuning
 
 rf_res |> 
@@ -480,6 +566,7 @@ lr_metrics
 
 ## 3. Neuronal Networks
 ```{r}
+load("salidas_intermedias/trained_models/svm_res_strat.RData")
 ```
 
 
@@ -506,7 +593,10 @@ svm_workflow <-
   workflow() %>% 
   add_model(svm_mod) %>% 
   add_recipe(svm_recipe)
+```
 
+
+```{r eval=FALSE, include=TRUE}
 # 4º Train and tune
 set.seed(345)
 svm_res <- 
@@ -516,8 +606,16 @@ svm_res <-
             control = control_grid(save_pred = TRUE),
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
+```
 
-# Resultados del tuning
+```{r include=FALSE}
+# Tada demasiado, lo cargamos:
+load("salidas_intermedias/trained_models/svm_res_strat.RData")
+```
+
+
+```{r}
+# 5º Evaluación de resultados del tuning
 svm_res |> 
   collect_metrics() |> 
   group_by(.metric)|> 
@@ -543,6 +641,12 @@ svm_auc <-
   mutate(model = "Support Vector Machine")
 
 autoplot(svm_auc)
+
+
+svm_metrics <- svm_res |> 
+  collect_predictions(parameters = svm_best) |> 
+  get_metrics()
+
 ```
 
 
@@ -554,6 +658,12 @@ results = rbind(
     collect_predictions(parameters = lr_best) %>% 
     get_metrics() %>% 
     .$res %>%
+    as.data.frame(),
+  lrs = lrs_metrics$res %>% 
+    as.data.frame(),
+  lrs2 = lrs2_metrics$res %>% 
+    as.data.frame(),
+  lr_pca = lr_pca_metrics$res %>% 
     as.data.frame(),
   rf = rf_res %>% 
     collect_predictions(parameters = rf_best) %>%
@@ -585,11 +695,12 @@ bind_rows(rf_auc, lr_auc,svm_auc) %>%
 
 Se unen los conjuntos training y validation para entrenar el modelo final
 
-### Logistic Regression
+### Logistic Regression 
 ```{r}
 # the last model
-lr_best # penalty = 0.0621
-last_lr_mod <- logistic_reg(penalty = lr_best$penalty, mixture = 0) |> 
+lr_best # penalty = 0.000259 
+        # mixture = 1
+last_lr_mod <- logistic_reg(penalty = lr_best$penalty, mixture = lr_best$penalty) |> 
   set_engine("glmnet")
   
 # the last workflow
@@ -612,12 +723,14 @@ last_lr_fit %>%
 last_lr_fit %>% 
   collect_predictions() %>% 
   get_metrics()
+
 ```
 
 ### RF
 ```{r}
 # the last model
-rf_best # mtry = 1 --> BOOSTING?
+rf_best # mtry = 4
+        # min_n = 35 
 
 last_rf_mod <- 
   rand_forest(mtry = rf_best$mtry, min_n = rf_best$min_n, trees = 1000) %>% 
@@ -656,13 +769,15 @@ last_rf_fit %>%
   collect_predictions() %>% 
   roc_curve(fire, .pred_0) %>% 
   autoplot()
-
 ```
+
+
 
 ### SVM
 ```{r}
 # the last model
-svm_best
+svm_best # cost = 0.145
+         # margin = 0.0270
 last_svm_mod <-  
   svm_linear(cost = svm_best$cost, margin = svm_best$margin) %>% 
   set_engine("kernlab") %>% 
@@ -689,9 +804,33 @@ last_svm_fit %>%
 ```
 
 
+```{r}
+results_test = rbind(
+  lr = last_lr_fit %>% 
+  collect_predictions() %>% 
+  get_metrics() %>% 
+    .$res %>%
+    as.data.frame(),
+  rf = last_rf_fit %>% 
+  collect_predictions() %>% 
+  get_metrics() %>% 
+    .$res %>%
+    as.data.frame(),
+  svm = last_svm_fit %>% 
+  collect_predictions() %>% 
+  get_metrics() %>% 
+    .$res %>%
+    as.data.frame()
+)
+
+library(knitr)
+
+kable(results_test,digits=3)
+```
 
 
 ```{r}
-# save(lr_res,rf_res,svm_res,file = "salidas_intermedias/trained_models_19_04_2024.RData")
+save(lr_res,rf_res,svm_res,last_svm_fit,last_lr_fit,last_rf_fit,
+     file = "salidas_intermedias/trained_models_strat_2024_04_28.RData")
 ```
 
