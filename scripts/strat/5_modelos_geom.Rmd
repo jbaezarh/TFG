@@ -775,6 +775,10 @@ last_rf_fit %>%
 
 ### SVM
 ```{r}
+# El parámetro margin solo es útil para regresión, así que estoy siendo tremendamente ineficiente al aplicarlo, pues se entrenan modelos "iguales". Hay que quitarlo
+
+# Sería interesante probar con otros kernels: svm_rdf, svm_poly
+
 # the last model
 svm_best # cost = 0.145
          # margin = 0.0270

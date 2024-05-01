@@ -20,7 +20,9 @@ output:
 source("cabecera_chunk_inicio.R")
 ```
 
-# Construcción de la base de datos
+<!-- COMENTAR LOS DOS ENFOQUES -->
+
+# Construcción del conjunto de datos
 
 El primer paso a la hora de construir cualquier modelo de predicción es disponer de datos adecuados que permitan explicar correctamente el fenómeno en estudio, en este caso los incendios forestales en Andalucía. Con este fin, se ha llevado a cabo un extenso estudio previo del dominio del problema para conocer qué variables pueden ser relevantes de cara a la predicción de incendios forestales, analizando estudios similares realizados anteriormente así como otras fuentes relativas a la ecología del fuego, que nos permitiesen conocer el efecto que cabría esperar de estas variables.
 

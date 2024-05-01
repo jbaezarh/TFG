@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.24)  28 APR 2024 22:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.1)  1 MAY 2024 20:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1016,7 +1016,7 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-<logo.png, id=212, 301.125pt x 262.9825pt>
+<logo.png, id=228, 301.125pt x 262.9825pt>
 File: logo.png Graphic file (type png)
 <use logo.png>
 Package pdftex.def Info: logo.png  used on input line 532.
@@ -1095,7 +1095,7 @@ LaTeX Info: Redefining \% on input line 1.
 
 ]
 Cap\'{\i }tulo 1.
-<D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png, id=329, 368.1253pt x 415.5525pt>
+<D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png, id=349, 368.1253pt x 415.5525pt>
 File: D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png Graphic file (type png)
 <use D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png>
 Package pdftex.def Info: D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png  used on input line 724.
@@ -1140,96 +1140,111 @@ LaTeX Info: Redefining \% on input line 965.
 LaTeX Info: Redefining \. on input line 965.
 LaTeX Info: Redefining \% on input line 965.
 [5{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-LaTeX Info: Redefining \. on input line 1020.
-LaTeX Info: Redefining \% on input line 1020.
-LaTeX Info: Redefining \. on input line 1020.
-LaTeX Info: Redefining \% on input line 1020.
+LaTeX Info: Redefining \. on input line 1024.
+LaTeX Info: Redefining \% on input line 1024.
+LaTeX Info: Redefining \. on input line 1024.
+LaTeX Info: Redefining \% on input line 1024.
 [6]
-LaTeX Info: Redefining \. on input line 1063.
-LaTeX Info: Redefining \% on input line 1063.
-LaTeX Info: Redefining \. on input line 1063.
-LaTeX Info: Redefining \% on input line 1063.
-[7]
-
-LaTeX Warning: Command \' invalid in math mode on input line 1063.
-
-LaTeX Info: Redefining \. on input line 1146.
-LaTeX Info: Redefining \% on input line 1146.
-LaTeX Info: Redefining \. on input line 1146.
-LaTeX Info: Redefining \% on input line 1146.
+LaTeX Info: Redefining \. on input line 1078.
+LaTeX Info: Redefining \% on input line 1078.
+LaTeX Info: Redefining \. on input line 1078.
+LaTeX Info: Redefining \% on input line 1078.
+[7{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [8]
-Cap\'{\i }tulo 3.
-[9
+LaTeX Info: Redefining \. on input line 1194.
+LaTeX Info: Redefining \% on input line 1194.
+LaTeX Info: Redefining \. on input line 1194.
+LaTeX Info: Redefining \% on input line 1194.
+[9]
+
+LaTeX Warning: Command \' invalid in math mode on input line 1237.
+
+LaTeX Info: Redefining \. on input line 1241.
+LaTeX Info: Redefining \% on input line 1241.
+LaTeX Info: Redefining \. on input line 1241.
+LaTeX Info: Redefining \% on input line 1241.
+[10]
+LaTeX Info: Redefining \. on input line 1320.
+LaTeX Info: Redefining \% on input line 1320.
+LaTeX Info: Redefining \. on input line 1320.
+LaTeX Info: Redefining \% on input line 1320.
+[11] [12
 
 ]
+Cap\'{\i }tulo 3.
+[13]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 1231.
+(Font)              <10> on input line 1405.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 1231.
+(Font)              <7> on input line 1405.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 1231.
-LaTeX Info: Redefining \. on input line 1271.
-LaTeX Info: Redefining \% on input line 1271.
-LaTeX Info: Redefining \. on input line 1271.
-LaTeX Info: Redefining \% on input line 1271.
-[10]
-LaTeX Info: Redefining \. on input line 1325.
-LaTeX Info: Redefining \% on input line 1325.
-LaTeX Info: Redefining \. on input line 1325.
-LaTeX Info: Redefining \% on input line 1325.
-[11]
-Overfull \hbox (290.79599pt too wide) in paragraph at lines 1382--1420
+(Font)              <5> on input line 1405.
+LaTeX Info: Redefining \. on input line 1445.
+LaTeX Info: Redefining \% on input line 1445.
+LaTeX Info: Redefining \. on input line 1445.
+LaTeX Info: Redefining \% on input line 1445.
+[14]
+LaTeX Info: Redefining \. on input line 1499.
+LaTeX Info: Redefining \% on input line 1499.
+LaTeX Info: Redefining \. on input line 1499.
+LaTeX Info: Redefining \% on input line 1499.
+[15]
+Overfull \hbox (290.79599pt too wide) in paragraph at lines 1556--1594
 [] 
  []
 
-LaTeX Info: Redefining \. on input line 1435.
-LaTeX Info: Redefining \% on input line 1435.
-LaTeX Info: Redefining \. on input line 1435.
-LaTeX Info: Redefining \% on input line 1435.
-[12]
-LaTeX Info: Redefining \. on input line 1465.
-LaTeX Info: Redefining \% on input line 1465.
-LaTeX Info: Redefining \. on input line 1465.
-LaTeX Info: Redefining \% on input line 1465.
-[13]
-LaTeX Info: Redefining \. on input line 1533.
-LaTeX Info: Redefining \% on input line 1533.
-LaTeX Info: Redefining \. on input line 1533.
-LaTeX Info: Redefining \% on input line 1533.
-[14]
+LaTeX Info: Redefining \. on input line 1609.
+LaTeX Info: Redefining \% on input line 1609.
+LaTeX Info: Redefining \. on input line 1609.
+LaTeX Info: Redefining \% on input line 1609.
+[16]
+LaTeX Info: Redefining \. on input line 1639.
+LaTeX Info: Redefining \% on input line 1639.
+LaTeX Info: Redefining \. on input line 1639.
+LaTeX Info: Redefining \% on input line 1639.
+[17]
+LaTeX Info: Redefining \. on input line 1707.
+LaTeX Info: Redefining \% on input line 1707.
+LaTeX Info: Redefining \. on input line 1707.
+LaTeX Info: Redefining \% on input line 1707.
+[18]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 1538.
+               Default added (so using `tbp') on input line 1712.
 
-LaTeX Info: Redefining \. on input line 1606.
-LaTeX Info: Redefining \% on input line 1606.
-LaTeX Info: Redefining \. on input line 1606.
-LaTeX Info: Redefining \% on input line 1606.
-[15] [16
-
-]
-Cap\'{\i }tulo 4.
-[17] [18
-
-]
-Cap\'{\i }tulo 5.
+LaTeX Info: Redefining \. on input line 1780.
+LaTeX Info: Redefining \% on input line 1780.
+LaTeX Info: Redefining \. on input line 1780.
+LaTeX Info: Redefining \% on input line 1780.
 [19] [20
 
 ]
-Cap\'{\i }tulo 6.
+Cap\'{\i }tulo 4.
 [21] [22
 
 ]
-Ap\'{e}ndice A.
+Cap\'{\i }tulo 5.
 [23] [24
 
 ]
-Ap\'{e}ndice B.
+Cap\'{\i }tulo 6.
 [25] [26
 
 ]
+Ap\'{e}ndice A.
+[27] [28
 
-Package flexbib Warning: Citation `Techopedia' undefined on input line 1786.
+]
+Ap\'{e}ndice B.
+[29] [30
+
+]
+
+Package flexbib Warning: Citation `Techopedia' undefined on input line 1960.
 
 (./tfe_principal.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 15--19
@@ -1240,7 +1255,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 15--19
 
 Package flexbib Warning: There were undefined citations.
 
-[27
+[31
 
 ] (./tfe_principal.aux
 LaTeX Info: Redefining \. on input line 9.
@@ -1251,21 +1266,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
  ***********
 Package rerunfilecheck Info: File `tfe_principal.out' has not changed.
-(rerunfilecheck)             Checksum: 4589DA40DABF548FB2D9AB00681E3F8F;7854.
+(rerunfilecheck)             Checksum: 364AFF08F2A350B759455CB575C46635;8341.
  ) 
 Here is how much of TeX's memory you used:
- 31003 strings out of 476046
- 591986 string characters out of 5790010
+ 31032 strings out of 476046
+ 592440 string characters out of 5790011
  1947496 words of memory out of 5000000
- 52349 multiletter control sequences out of 15000+600000
- 636398 words of font info for 88 fonts, out of 8000000 for 9000
+ 52362 multiletter control sequences out of 15000+600000
+ 639386 words of font info for 89 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,18n,93p,1597b,731s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on tfe_principal.pdf (39 pages, 472438 bytes).
+<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on tfe_principal.pdf (43 pages, 505751 bytes).
 PDF statistics:
- 647 PDF objects out of 1000 (max. 8388607)
- 567 compressed objects within 6 object streams
- 157 named destinations out of 1000 (max. 500000)
- 431 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 712 PDF objects out of 1000 (max. 8388607)
+ 620 compressed objects within 7 object streams
+ 171 named destinations out of 1000 (max. 500000)
+ 463 words of extra memory for PDF output out of 10000 (max. 10000000)
 

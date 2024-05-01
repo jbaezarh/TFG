@@ -765,15 +765,164 @@ correcto y adecuado para el análisis estadístico. Se trata, por tanto,
 de datos que han eliminado, corregido o imputado los valores faltantes,
 los valores especiales, los valores atípicos y los errores.
 
+\hypertarget{pca}{%
+\subsection{PCA}\label{pca}}
+
 \hypertarget{modelos}{%
 \section{Modelos}\label{modelos}}
+
+El problema que se aborda en este trabajo se engloba dentro de lo que se
+conoce como aprendizaje supervisado, ya que para cada observación del
+conjunto de entrenamiento se conoce el valor de la variable objetivo (en
+este caso si ha habido incendio o no). Más concretamente, se trata de un
+problema de clasificación binaria, ya que el objetivo es asignar cada
+observación a una de las dos clases posibles (incendio o no incendio).
+Existen numerosas técnicas de clasificación binaria supervisada, en este
+trabajo se explorarán algunas de las de uso más común en problemas
+similares.
 
 \hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
 \subsection{Regresión logística (con
 penalización)}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
 
+La regresión logística es un caso particular de modelo lineal
+generalizado basado en las siguientes hipótesis: - Hipótesis
+distribucional. Dadas las variables explicativas,
+\(\underline X_i \space \space \text{con} \space \space i = 1,2,...,n\),
+se verifica que las variables \(Y|_{\underline X= \underline x_i}\) y su
+distribución pertenece a la famila Bernouilli, es decir,
+
+\[Y|_{\underline X= \underline x_i} \sim Be(\pi( \underline x_i))\]
+
+\begin{itemize}
+\tightlist
+\item
+  Hipótesis estructural. La esperanzara
+  \(E(Y|_{\underline X= \underline x_i}) = \pi_i\) está relacionada con
+  un predictor lineal (\(\eta_i = \beta^t z_i\)) a través de la función
+  logit (con \(\underline z_i = \left(1,\underline x_i\right)\)) Es
+  decir, dado que
+  \[\eta_i = \underline \beta^t \underline z_i= \ln(\frac{\pi_i}{1-\pi_i}) \]
+  O equivalentemente,
+  \[\pi_i = \frac{\exp(\underline \beta^t \underline z_i)}{1 + \exp(\underline \beta^t \underline z_i)}\]
+\end{itemize}
+
+Bajo estas hipótesis, la función de log-verosimilitud dada una muestra
+\(\{ (\underline x_i,y_i) \}_{i=1,...,n}\) es:
+
+\[ l(\underline \beta) = 
+\sum_{i=1}^n \left[ 
+y_i\ln \left( \frac{\pi_i}{1-\pi_i} \right) + 
+\ln \left( 1 - \pi_i\right) \right]\]
+
+En la regresión logística clásica se estima el vector de parámetros
+\(\underline \beta\) maximizando la función de log-verosimilud, o lo que
+es equivalente, minimizando su opuesta. Por tanto, el problema de
+optimización a resolver será
+\[\min_{\underline \beta} -l(\underline \beta)\]
+
+Sin embargo, con el objetivo de evitar el sobreajuste y construir
+modelos con mayor capacidad de generalización existen variaciones de la
+regresión logística que incluyen un término de penalización en la
+función objetivo. Las dos variantes de uso más extendido son la
+regresión \emph{ridge} y \emph{lasso}.
+
+Sea \(\underline \beta = \left( \beta_0, \underline \beta_1 \right)\),
+donde \(\underline \beta_1\) contiene los coeficientes de las
+covariables. En la regresión \emph{ridge} el término de penalización es
+de la forma \(\| \underline \beta_1 \|^2_2\) mientras que en la
+regresión \emph{lasso} el penalización es de la forma
+\(\| \underline \beta_1 \|_1\). Por tanto, el problema de optimización
+será
+
+\[\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum \beta_i^2 \]
+en el caso de la regresión logística \emph{ridge}, y
+\[\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum |\beta_i|\]
+en el caso de la regresión logística \emph{lasso}.
+
+El paquete glmnet implementa una combinación de ambos métodos (llamada
+\emph{elastic net}), en la que se añade un parámetro de mezcla
+\(\alpha \in \left[0,1\right]\) que combina ambos enfoques. El problema
+de optimización resultante es:
+
+\[\min_{\underline \beta} -l(\underline \beta)  + \lambda \left[(1-\alpha)\sum \beta_i^2 + \alpha \sum |\beta_i| \right]\]
+
 \hypertarget{support-vector-machine}{%
 \subsection{Support Vector Machine}\label{support-vector-machine}}
+
+Las Máquinas de Vector Soporte (SVM por sus siglas en inglés) son una
+familia de modelos principalmente usados en problemas de clasificación
+binaria (si bien se pueden extender a problemas de clasificación
+multiclase o regresión) que parten de la idea de encontrar el hiperplano
+que mejor separa al conjunto de puntos.
+
+\hypertarget{linear-svm}{%
+\subsubsection{Linear SVM}\label{linear-svm}}
+
+Dada una muestra \(\left\{(\underline x_i,y_i) \right\}_{i=1,...,n}\)
+con \(\underline x_i \in \mathbb{R}^d\) y \(y_i \in \{-1,1\}\) para todo
+\(i \in \{1,...,n\}\), el objetivo es encontrar al hiperplano de la
+forma
+\[h(x) = w_1x_1 +w_2x_2+...+w_dx_d +b = \underline w^t \underline x = 0 \]
+que mejor separe a la muestra.
+
+Se dice que la muestra muestra es linealmente separable si existe un
+hiperplano, denominado hiperplano de separación, que cumple, para todo
+\(i \in 1,...,n\):
+\[\underline w^t \underline x_i + b \ge 0 \space \space \text{si} \space \space y_i=+1\]
+\[\underline w^t \underline x_i + b \le 0 \space \space \text{si} \space \space y_i=-1\]
+
+Dado un hiperplano de separación de una muestra linealmente separable,
+se define el margen como la menor de las distancias del hiperplano a
+cualquier elemento de la muestra. Se denotará por \(\tau\).
+
+Dado un punto \(\underline x_i\) y un hiperplano
+\(h(x) = w_1x_1 +w_2x_2+...+w_dx_d +b = \underline w^t \underline x = 0\),
+la distancia entre ambos viene dada por:
+\[d(h,\underline x_i) = \frac{|h(\underline x_i)|}{\|w\|} = \frac{y_i(\underline w^t \underline x_i+b)}{\|w\|}\]
+Donde \(\|\cdot\|\) hace referencia a la norma euclídea.
+
+Dada una muestra linealmente separable
+\(\left\{(\underline x_i,y_i) \right\}_{i=1,...,n}\) con
+\(\underline x_i \in \mathbb{R}^d\) y \(y_i \in \{-1,1\}\) y un
+hiperplano de separación \(h(x) = \underline w^t \underline x = 0\) con
+margen \(\tau\), se verifica que
+\[\frac{y_i(\underline w^t \underline x_i+b)}{\|w\|} \ge \tau \;\;\; \forall i\in \{1,...,n\}\]
+O equivalentemente,
+\[y_i(\underline w^t \underline x_i+b) \ge \tau\|w\| \;\;\; \forall i\in \{1,...,n\}\]
+Y, además, es posible reescribir el mismo hiperplano \(h\) de forma que
+\(\tau\|w\| = 1\).
+
+De está ultima expresión se deduce que maximizar el margen \(\tau\) es
+equivalente a minimizar la norma euclídea de \(w\). Por tanto, para
+encontrar el hiperplano de separación óptimo para una muestra en las
+condiciones de la proposición anterior basta resolver el problema de
+optimización siguiente:
+
+\begin{equation}
+\begin{aligned}
+\min_{w,b} \quad & \frac{1}{2}w^{t}w\\
+\textrm{s.t.} \quad & \underline w^t \underline x_i+b \ge 1, \quad & \forall i\in \{1,...,n\} \\
+  & w \in \mathbb{R}^d, \space b \in \mathbb{R} \\ 
+\end{aligned}
+\end{equation}
+
+En general, las muestras no son separables, por lo que es necesario
+permitir que pueda haber casos mal clasificados y penalizarlos
+proporcionalmente a la distancia a la que se encuentren del subespacio
+correcto (holgura). Para ello, se introducen en la formulación del
+modelo las variables artificiales \(\xi_i,\quad i=1,...,n\). Se habla
+entonces de hiperplano de separación \emph{soft margin}. De esta forma,
+se llega al problema de optimización siguiente:
+
+\begin{equation}
+\begin{aligned}
+\min_{w,b,\xi} \quad & \frac{1}{2}w^{t}w+C\sum_{i=1}^{n}{\xi_{i}}\\
+\textrm{s.t.} \quad & \underline w^t \underline x_i+b \ge 1, \quad & \forall i\in \{1,...,n\}\\
+  &\xi\geq0,   \quad & \forall i\in \{1,...,n\} \\
+  & w \in \mathbb{R}^d, \space b \in \mathbb{R} \\
+\end{aligned}
+\end{equation}
 
 \hypertarget{random-forest}{%
 \subsection{Random Forest}\label{random-forest}}
@@ -782,7 +931,7 @@ penalización)}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
 \subsection{Redes Neuronales}\label{redes-neuronales}}
 
 \hypertarget{validaciuxf3n-del-ajuste}{%
-\subsection{Validación del ajuste}\label{validaciuxf3n-del-ajuste}}
+\section{Validación del ajuste}\label{validaciuxf3n-del-ajuste}}
 
 Partición entrenamiento/ validación / test
 
@@ -849,20 +998,26 @@ clasificación.
 \hypertarget{herramientas}{%
 \section{Herramientas}\label{herramientas}}
 
-Lenguaje R {[}\ldots{]}, entorno de trabajo RStudio {[}\ldots{]}.
-Paquetes de R {[}\ldots{]} repositorio CRAN {[}\ldots{]}.
+Toda la parte práctica del presente trabajo se ha llevado a cabo
+empleado el lenguaje de programación R a través del entorno de
+desarrollo integrado (IDE) que ofrece RStudio. R es un lenguaje y
+entorno de programación de código abierto desarrollado dentro del
+proyecto GNU y orientado a la computación estadística. R puede extender
+sus funcionalidades fácilmente a través de la gran cantidad de paquetes
+disponibles dentro del repositorio de paquetes de CRAN (The
+Comprehensive R Archive Network), siendo este uno de sus puntos fuertes,
+dada la gran comunidad de usuarios y desarrolladores con las que cuenta
+este lenguaje.
 
-``Paquetes'' utilizados: - tidyverse:
-
-\begin{verbatim}
-• ggplot2, para la visualizaciónn.
-• dplyr, para la manipulaciónn.
-• tidyr, para la ordenación.?
-• readr, para la importación.
-• purrr, para la programación funcional
-\end{verbatim}
+Los paquetes que se han utilizado han sido:
 
 \begin{itemize}
+\item
+  tidyverse:
+
+  • ggplot2, para la visualización. • dplyr, para la manipulación. •
+  tidyr, para la ordenación. • readr, para la importación. • purrr, para
+  la programación funcional
 \item
   tidymodels
 \item
@@ -870,10 +1025,12 @@ Paquetes de R {[}\ldots{]} repositorio CRAN {[}\ldots{]}.
 \item
   terra
 \item
-  nasapower: obtenicón de información climática satelital
+  nasapower: obtención de información climática satelital
 \item
   mapSpain:
 \end{itemize}
+
+\ldots{} (podemos seguir hasta el infinito)
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 
