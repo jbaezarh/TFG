@@ -1,0 +1,24 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Preliminares}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Datos georreferenciados}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Datos Vectoriales}{3}{subsection.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.1}Simple features}{3}{subsubsection.1.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Datos Raster}{4}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Sistemas de Referencia de Coordenadas}{4}{subsection.1.1.3}%
+\contentsline {subsubsection}{\numberline {1.1.3.1}Sistemas de Coordenadas Geográficas}{5}{subsubsection.1.1.3.1}%
+\contentsline {subsubsection}{\numberline {1.1.3.2}Sistemas de Coordenadas Proyectadas}{5}{subsubsection.1.1.3.2}%
+\contentsline {section}{\numberline {1.2}Análisis exploratorio de datos}{6}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Depuración de los datos}{6}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}PCA}{6}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}Modelos}{6}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Regresión logística (con penalización)}{7}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Support Vector Machine}{8}{subsection.1.3.2}%
+\contentsline {subsubsection}{\numberline {1.3.2.1}SVM lineal}{8}{subsubsection.1.3.2.1}%
+\contentsline {subsubsection}{\numberline {1.3.2.2}SVM no lineal}{9}{subsubsection.1.3.2.2}%
+\contentsline {subsection}{\numberline {1.3.3}Decision Trees}{9}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Random Forest}{11}{subsection.1.3.4}%
+\contentsline {subsection}{\numberline {1.3.5}Redes Neuronales}{12}{subsection.1.3.5}%
+\contentsline {section}{\numberline {1.4}Validación del ajuste}{12}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Evaluación modelos}{12}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Clasificación binaria}{12}{subsection.1.5.1}%
+\contentsline {section}{\numberline {1.6}Herramientas}{13}{section.1.6}%

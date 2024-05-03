@@ -23,6 +23,7 @@ library(ggplot2)
 library(akima) # interp
 library(magrittr)
 library(ggpubr)
+library(forcats)
 
 ```
 
@@ -35,6 +36,12 @@ load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
 # load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
 # load("salidas_intermedias/datos_depurados_geom_2024-04-26.RData")
 
+datos <- datos |> 
+  mutate(uso_suelo = fct_lump(uso_suelo,
+                              n = 7, # nos quedamos con los 7 niveles del factor más frecuentes (clases 2 y 3)
+                              other_level= "Otro"))
+
+table(datos$uso_suelo,datos$fire)
 ```
 
 ## Funciones para la evaluación de modelos
@@ -50,7 +57,8 @@ get_metrics <- function(pred) {
       roc_auc = pred |> roc_auc(truth = fire, .pred_0) |> pull(.estimate),
       accuracy = pred |> accuracy(truth = fire, .pred_class) |> pull(.estimate),
       recall = pred |> sensitivity(truth = fire, .pred_class,event_level="second") |> pull(.estimate),
-      specificity = pred |> spec(truth = fire, .pred_class,event_level="second") |> pull(.estimate)),
+      specificity = pred |> spec(truth = fire, .pred_class,event_level="second") |> pull(.estimate),
+      precision = pred |> precision(truth = fire, .pred_class,event_level="second") |> pull(.estimate)),
     conf_mat = pred |> conf_mat(truth = fire, .pred_class))
 }
 
@@ -117,32 +125,6 @@ splits = initial_validation_time_split(datos,
 training <- training(splits) %>%  st_drop_geometry()
 val_set <- validation_set(splits) %>% st_drop_geometry()
 test  <- testing(splits) %>% st_drop_geometry()
-
-# # Para hacerlo por fecha manualmente:
-# splits <- make_splits(
-#   x = list(analysis = which(year(datos$date)<2021),
-#            assessment = which(year(datos$date)>=2021)),
-#   data=datos
-# )
-# 
-# training_val <- training(splits)
-# test  <- testing(splits)
-# 
-#
-# length(splits$out_id)/length(splits$in_id)
-# [1] 0.1149578
-# 
-# 1.a. Partición train- validation
-# set.seed(234)
-# val <- make_splits(
-#   x = list(analysis = which(year(datos$date)<2018),
-#            assessment = which(year(datos$date)>=2018)),
-#   data=datos
-# )
-# 
-# val_set <- validation_time_split(training_val, 
-#                                  prop = 0.80)
-
 ```
 
 
@@ -151,8 +133,8 @@ test  <- testing(splits) %>% st_drop_geometry()
 ### Logistic regression with penalty
 
 <!-- https://glmnet.stanford.edu/articles/glmnet.html -->
-<!-- mixture = 0 : lasso regression -->
-<!-- mixture = 1 : ridge regression -->
+<!-- mixture = 1 : pure lasso regression -->
+<!-- mixture = 0 : pure ridge regression -->
 <!-- penalty: parámetro de regularización -->
 
 En primer lugar se usa un modelo de regresión logística con término de penalización. En función de si el término de regularización es de grado 1 o 2, se le da el nombre de lasso o ridge (logistic) regression. Se ajusta el grado del término de penalización así como su coeficiente usando para ello el conjunto de validación.
@@ -173,6 +155,8 @@ lr_recipe <-
   # step_holiday(date, holidays = holidays) %>% 
   step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
   step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
   step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
   step_normalize(all_predictors()) # Se normalizan todos los predictores
 
@@ -186,13 +170,11 @@ lr_workflow <-
 
 
 # 4º Creamos el grid para los parámetros
-
-lr_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 30),
-                           mixture = c(0,1))
+lr_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 10),
+                           mixture = seq(0,1,length.out=10))
 
 
 # 5º Ajustamos el modelo
-
 lr_res <- 
   lr_workflow %>% 
   tune_grid(val_set,
@@ -201,18 +183,19 @@ lr_res <-
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
 # 6º Evaluación de modelos
+# Se muestran las medidas de rendimiento en función del parámetro de penalización y de mixtura
+# lr_plot <- 
+#   lr_res %>% 
+#   collect_metrics() %>% 
+#   # filter(.metric == "accuracy") %>%
+#   ggplot(aes(x = penalty, y = mean,col=.metric,linetype=as.factor(mixture))) + 
+#   geom_point() + 
+#   geom_line() + 
+#   ylab("Medidas de rendimiento") +
+#   scale_x_log10(labels = scales::label_number())
+# lr_plot
 
-# Se muestran las medidas de rendimiento en función del parámetro de penalización
-lr_plot <- 
-  lr_res %>% 
-  collect_metrics() %>% 
-  # filter(.metric == "accuracy") %>%
-  ggplot(aes(x = penalty, y = mean,col=.metric,linetype=as.factor(mixture))) + 
-  geom_point() + 
-  geom_line() + 
-  ylab("Medidas de rendimiento") +
-  scale_x_log10(labels = scales::label_number())
-lr_plot
+tuning_plot(lr_res)
 
 lr_res |> 
   collect_metrics() |> 
@@ -222,7 +205,6 @@ lr_res |>
 lr_res %>% 
   show_best(metric = "accuracy", n = 15)
 
-lr_res %>% tuning_plot()
 
 # 7º Selección del mejor modelo
 
@@ -251,24 +233,24 @@ lr_metrics <- lr_res |>
   get_metrics()
 
 lr_metrics
-
 ```
 
 #### Análisis gráfico de los "residuos" / errores:
 
 ```{r}
-## No tengo claro como medir los residuos en un modelo de clasificación:
-lr_residuals = lr_res %>%
+lr_errors = lr_res %>%
   collect_predictions(parameters = lr_best) %>% 
   mutate(residual = fire !=.pred_class,
          geometry = st_geometry(validation(splits))) %>% 
   st_as_sf(sf_column_name ="geometry")
 
-
-ggplot(lr_residuals,aes(col=residual)) + 
+ggplot(lr_errors,aes(col=residual)) + 
   geom_sf(alpha=0.6) +
-  labs(col = "Error")
+  labs(col = "Error") + 
+  scale_colour_manual(values = c("grey","red"),labels = c("Correcto","Error"))
 ```
+
+Los errores se concentran en las zonas con más incendios (al norte y al sur del Guadalquivir).
 
 #### Interpretación coeficientes
 
@@ -279,27 +261,20 @@ lr_workflow %>%
   finalize_workflow(lr_best) %>%
   fit(training) %>% 
   extract_fit_parsnip() %>% 
-  tidy()
-
-lr_workflow %>% 
-  finalize_workflow(lr_best) %>%
-  fit(training) %>%
-  extract_fit_engine() %>% 
-  tidy()
-
+  tidy() %>% print(n=100)
 ```
 
 
 ## Logistic regression 
-
+<!-- No aporta nada, salvo si acaso la significación de los coeficientes -->
 Regresión logística sin parámetro de regularización.
 
-```{r}
+```{r lr}
 # 1º definimos el modelo 
 # lrs: logistic regression simple
 
 lrs_mod <- 
-  logistic_reg(penalty = NULL, mixture = NULL) %>% 
+  logistic_reg(penalty = tune(), mixture = tune()) %>% 
   set_engine("glm")
 
 # 2º Creamos la receta
@@ -308,10 +283,13 @@ lrs_recipe <-
   recipe(fire ~ ., data = training) %>% 
   step_date(date,features = c("dow","month")) %>% 
   # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) # Se normalizan todos los predictores
+
 
 # 3º Creamos el workflow
 lrs_workflow <- 
@@ -319,7 +297,11 @@ lrs_workflow <-
   add_model(lrs_mod) %>% 
   add_recipe(lrs_recipe)
 
+
 # 4º Ajustamos el modelo.
+lr_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 5),
+                           mixture = seq(0,1,length.out=5),
+                           num_comp = seq(15,21,2))
 lrs_res <- 
   lrs_workflow %>% 
   fit(training)
@@ -350,10 +332,11 @@ lrs_metrics
 lrs_res %>% extract_fit_engine() %>% summary()
 ```
  
-GWETTOP WD10M, orientacion, date_dow no significativas
+GWETTOP WD10M, orientacion, date_dow no significativas, dist_rios
 
 
 ### Logistic regression with feature selection
+<!-- No aporta nada -->
 ```{r}
 # 1º definimos el modelo 
 # lrs2: logistic regression simple
@@ -405,45 +388,75 @@ lrs2_metrics <- lrs2_pred |>
 ```
 
 
-### Logistic regression + PCA
+### Logistic regression (with penalty) + PCA
 
 ```{r}
-lr_pca_mod <- 
-  logistic_reg(penalty = NULL, mixture = NULL) %>% 
-  set_engine("glm")
+# 1º Creamos el modelo
 
-# 3º Creamos la receta
+lr_pca_mod <- 
+  logistic_reg(penalty = tune(), mixture = tune()) %>% 
+  set_engine("glmnet")
+
+
+# 2º Creamos la receta
 
 lr_pca_recipe <- 
   recipe(fire ~ ., data = training) %>% 
-  step_pca(all_numeric_predictors(),num_comp = 14) %>% 
   step_date(date,features = c("dow","month")) %>% 
   # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) %>% # Se normalizan todos los predictores
+  step_pca(all_numeric_predictors(),num_comp = tune())
 
-# 4º Creamos el workflow
+
+# 3º Creamos el workflow
 lr_pca_workflow <- 
   workflow() %>% 
   add_model(lr_pca_mod) %>% 
   add_recipe(lr_pca_recipe)
 
-# 5º Ajustamos el modelo.
+# 4º Creamos el grid para los parámetros
+lr_pca_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 10),
+                               mixture = seq(0,1,length.out=10),
+                               num_comp = c(20,25,30,35,40,45,50))
+
+
+# 5º Ajustamos el modelo
 lr_pca_res <- 
   lr_pca_workflow %>% 
-  fit(training)
+  tune_grid(val_set,
+            grid = lr_pca_reg_grid,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
 
-lr_pca_res %>% extract_fit_engine() %>% summary()
+lr_pca_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
 
-lr_pca_pred = cbind(predict(lr_pca_res,new_data = validation(splits),type="prob"),
-             predict(lr_pca_res,new_data = validation(splits),type="class"),
-             fire = validation(splits)$fire)
+lr_pca_res %>% 
+  show_best(metric = "accuracy", n = 15)
 
-# 6º Se evalúa el modelo:
-#   Curva ROC
-lr_pca_auc <- lr_pca_pred %>% 
+
+# 7º Selección del mejor modelo
+
+lr_pca_best <- 
+  lr_pca_res %>% 
+  select_best(metric="accuracy")
+
+lr_pca_best
+
+
+# 8º Se evalúa el modelo:
+
+# Curva ROC
+lr_pca_auc <- 
+  lr_pca_res %>% 
+  collect_predictions(parameters = lr_pca_best) %>% 
   roc_curve(fire, .pred_0) %>% 
   mutate(model = "Logistic Regression")
 
@@ -451,14 +464,71 @@ autoplot(lr_pca_auc)
 
 
 #   Medidas de rendimiento
-lr_pca_metrics <- lr_pca_pred |> 
+lr_pca_metrics <- lr_pca_res |> 
+  collect_predictions(parameters = lr_pca_best) |> 
   get_metrics()
 
 lr_pca_metrics
 
 ```
 
-Este enfoque no parece aportar ninguna mejora.
+No parece aportar ninguna mejora, el mejor resultado se da con 40 componentes principales.
+
+## 2. Decision Trees
+```{r}
+dt_mod <- 
+  decision_tree(cost_complexity = tune()) %>% 
+  set_engine("rpart") %>% 
+  set_mode("classification")  
+
+
+dt_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  # step_holiday(date) %>% 
+  step_rm(date, cod_municipio, municipio) 
+
+
+dt_workflow <- 
+  workflow() %>% 
+  add_model(dt_mod) %>% 
+  add_recipe(dt_recipe)
+
+# 4º Train and tune
+set.seed(345)
+dt_res <- 
+  dt_workflow %>% 
+  tune_grid(val_set,
+            grid = 10,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# plot(dt_res |> extract_fit_engine())
+
+dt_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+dt_plot <- 
+  dt_res %>% 
+  collect_metrics() %>% 
+  # filter(.metric == "accuracy") %>%
+  ggplot(aes(x = cost_complexity, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("Medidas de rendimiento") +
+  scale_x_log10(labels = scales::label_number())
+dt_plot
+
+dt_best <- dt_res |> 
+  select_best(metric = "accuracy")
+
+dt_metrics <- dt_res |> 
+  collect_predictions(parameters = dt_best) |> 
+  get_metrics()
+```
 
 
 ## 2. Random Forest
@@ -496,12 +566,11 @@ extract_parameter_set_dials(rf_mod)
 ```
 
 ```{r eval=FALSE, include=TRUE}
-
 set.seed(345)
 rf_res <- 
   rf_workflow %>% 
   tune_grid(val_set,
-            grid = 25,
+            grid = 30,
             control = control_grid(save_pred = TRUE),
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
@@ -522,8 +591,6 @@ rf_res |>
   group_by(.metric)|> 
   summarise(max = max(mean),min=min(mean))
 # Se observa mayor variabilidad que en el caso de la regresión logística con penalización
-
-
 
 
 tuning_plot(rf_res)
@@ -558,17 +625,19 @@ rf_metrics <- rf_res |>
   get_metrics()
 
 rf_metrics
-lr_metrics
 
 # save(rf_res,file = "salidas_intermedias/trained_models/trained_models_strat_24_04_27.RData")
 ```
-
+Probablemente, dandole valores más elevados de mtry mejore el rendimiento.
 
 ## 3. Neuronal Networks
 ```{r}
 load("salidas_intermedias/trained_models/svm_res_strat.RData")
 ```
 
+```{r}
+# Con brulee se puede hacer un perceptron multiicapas con tidymodels
+```
 
 
 ## 4. SVM
@@ -649,6 +718,68 @@ svm_metrics <- svm_res |>
 
 ```
 
+## k-Nearest Neighbours
+```{r}
+knn_mod <- 
+  nearest_neighbor(neighbors = tune()) %>% 
+  set_engine("kknn") %>% 
+  set_mode("classification")  
+
+
+knn_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) # Se normalizan todos los predictores
+
+
+knn_workflow <- 
+  workflow() %>% 
+  add_model(knn_mod) %>% 
+  add_recipe(knn_recipe)
+
+# 4º Train and tune
+set.seed(345)
+knn_res <- 
+  knn_workflow %>% 
+  # fit(training)
+  tune_grid(val_set,
+            grid = expand_grid(neighbors = c(1,seq(10,250,10))),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+
+knn_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+knn_plot <- 
+  knn_res %>% 
+  collect_metrics() %>% 
+  # filter(.metric == "accuracy") %>%
+  ggplot(aes(x = neighbors, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("Medidas de rendimiento") +
+  scale_x_log10(labels = scales::label_number())
+knn_plot
+
+knn_best <- knn_res |> 
+  select_best(metric = "accuracy")
+knn_best
+
+knn_metrics <- knn_res |> 
+  collect_predictions(parameters = knn_best) |> 
+  get_metrics()
+knn_metrics
+```
 
 # Comparación
 

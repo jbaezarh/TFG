@@ -141,6 +141,10 @@ Decimos que un conjunto de datos es consistente cuando es técnicamente correcto
 
 
 ## Modelos 
+<!-- https://eight2late.wordpress.com/2016/09/20/a-gentle-introduction-to-random-forests-using-r/ -->
+<!-- https://eight2late.wordpress.com/?s=decision+tree -->
+<!-- https://eight2late.wordpress.com/?s=support+vector+machine -->
+
 El problema que se aborda en este trabajo se engloba dentro de lo que se conoce como aprendizaje supervisado, ya que para cada observación del conjunto de entrenamiento se conoce el valor de la variable objetivo (en este caso si ha habido incendio o no). Más concretamente, se trata de un problema de clasificación binaria, ya que el objetivo es asignar cada observación a una de las dos clases posibles (incendio o no incendio). Existen numerosas técnicas de clasificación binaria supervisada, en este trabajo se explorarán algunas de las de uso más común en problemas similares.
 
 ### Regresión logística (con penalización)
@@ -250,7 +254,7 @@ donde $C>0$ es un parámetro de regularización que permite controlar los errore
 <!-- En la práctica estos problemas se resuelven a través de su formulación dual. -->
 
 #### SVM no lineal
-
+<!-- https://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html -->
 Existen muchos casos en los que el SVM no es capaz de obtener buenos resultados, debido a la estructura de la distribución de las clases en la muestra. En estos casos, es común recurrir a una técnica llamada *kernel trick*. Esta técnica consiste en realizar una inmersión del conjunto de los vectores de la muestra en un espacio de dimensión superior (*feature space*) en el que los casos sí sean separables (o al menos mejore la separabilidad de estos). Esta inmersión en un espacio de dimensión superior se hace indirectamente a través de funciones *kernel*, que calculan los productos escalares entre los vectores de la muestra en el espacio de inmersión.
 Existen distintos tipos de funciones *kernel* que se corresponden con distintas inmersiones en espacios de dimensión superior:
 - Kernel polinomial: $k(x,z) = \left( \gamma(x^tz + c_0) \right)^p$
@@ -260,25 +264,82 @@ Existen distintos tipos de funciones *kernel* que se corresponden con distintas 
 ### Decision Trees 
 <!-- Elements of Statistical Learning, pag 324 -->
 
-Un árbol de decisión (DT por sus siglas en inglés) es un algoritmo de aprendizaje supervisado no paramétrico, que puede aplicarse tanto a problemas de clasificación como de regresión. Se trata de un modelo jerárquico con estructura de árbol, que consta de un nodo raiz, ramas, nodos internos y nodos hojas. Cada nodo representa una test sobre una variable, y cada rama que nace de ese nodo uno de los posibles valores que puede tomar esa variable. De esta forma, para clasificar una nueva instancia basta comenzar en el nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja correspondiente, que indicará la clasificación asignada a dicha instancia. La simplicidad del método muestra su principal ventaja, su fácil comprensión dada su estructura de árbol. 
-
-Desde un punto de vista más formal, la idea de los árboles de decisión es dividir el espacio en rectángulos y a cada uno asociarle un valor. 
+Un árbol de decisión (DT por sus siglas en inglés) es un algoritmo de aprendizaje supervisado no paramétrico, que puede aplicarse tanto a problemas de clasificación como de regresión. La idea de este método es segmentar el espacio predictor en rectángulos, de forma que para predecir una observación se usa la moda (o la media) de la región a la que pertenece. Se trata de un modelo jerárquico con estructura de árbol, que consta de un nodo raiz, ramas, nodos internos y nodos hojas. Cada nodo representa una test sobre una variable, y cada rama que nace de ese nodo uno de los posibles valores que puede tomar esa variable. De esta forma, para clasificar una nueva instancia basta comenzar en el nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja correspondiente, que indicará la clasificación asignada a dicha instancia. La simplicidad del método muestra su principal ventaja, su fácil comprensión dada su estructura de árbol. 
 
 
+Existen diversas técnicas para construir árboles de clasificación (y regresión), la que aquí se plantea es una de las más usadas y recibe el nombre de CART (Clasification And Regression Trees). Se explica para el caso de árboles de clasificación binarios, i.e. en los que de cada nodo salen dos ramas.
+
+Dada una muestra $\left\{ (\underline x_i,y_i) \right\}$ con $\underline x_i = (x_{i1},...,x{id})$, un árbol de clasificación con $J$ hojas se puede expresar como
+$$f(\underline x) = \sum_{j=1}^J c_j I(\underline x \in R_j)$$
+donde $\left\{ R_j\right\}_{j=1,...,J}$ es una partición del espacio predictivo y $c_j$ es la clase asignada en $R_j$ para todo $j \in {1,...,J}$.
+
+En la práctica, $c_j$ se estima asignando la clase mayoritaria en el recinto $R_j$. Es decir, $\hat c_j = moda(\{y_i | \underline x_i \in R_j\})$.
+<!-- Y c_j es una de las dos clases posibles -->
+
+Para construir un árbol de clasificación el algoritmo necesita decidir las variables tests y los puntos de corte en cada nodo, así como la topología del árbol. Para realizar esto, se vale de un método *greedy*, que en cada nodo elige la variable y el punto de corte que mejor separa los datos en base a una medida de impureza. Es decir, la construcción de un árbol de clasificación no se hace mediante la resolución de un solo problema de optimización global, si no a partir de la resolución de muchos problemas de optimización locales, con las implicaciones que esto pueda tener.
+
+<!-- Poner como definición: función de impureza -->
+Las medidas de impureza más comúnmente usadas son:
+
+- Error de clasificación: $1 - \max(p,1-p)$
+
+- Índice de Gini: $2p(1-p)$
+
+- Entropía: $-p \log p - (1 - p) \log (1 - p)$
+
+donde $p$ es la proporción de casos positivos en la muestra.
 <!-- disyunción de conjunciones de restricciones sobre las covariables. -->
 
+Así, el algoritmo de construcción de un árbol de clasificación es:
 
-<!-- Inconveniente: Modelo muy sesible a pequeños cambios en los datos -> Modelo con mucha varianza -> Overfitting!! -->
+1. Comenzar con el nodo raíz, que incluye todos los casos.
+
+2. Determinar el par (variable,división) que conduce a una mayor reducción de la impureza. Es decir, dada una medida de impureza $\Phi$ se busca la variable $j \in {1,..,d}$ y la división $s \in \mathbb{R}$ solución de
+$$\min_{j,s}\left[ 
+\frac{|R_1|}{|R_1|+|R_2|}\min_{c_i} \Phi \left(\{y_i |\underline x_i \in R_1(j,s)\} \right)  + 
+\frac{|R_2|}{|R_1|+|R_2|}\min_{c_i} \Phi \left(\{y_i |\underline x_i \in R_2(j,s)\} \right)\right]$$
+donde $R_1(j,s) = \{X | X_j \le s \}$ y $R_2(j,s) = \{X | X_j > s \}$.
+
+3. Aplicar iterativamente el proceso anterior a cada nuevo nodo, hasta que se verifiquen las condiciones de finalización. En este caso, el criterio será finalizar el proceso de división en el nodo una vez que el número de casos en este sea igual o inferior a una cantidad $n_{min}$ fijada de antemano. En los nodos hoja se asigna la clase mayoritaria en el nodo.
+
+4. Podar o recortar el árbol obtenido en base a un criterio de coste-complejidad. La idea fundamental es que dado un árbol completo $T$ y un valor del parámetro de coste-complejidad $\alpha$, se elije el subárbol $T_0 \subset T$ obtenido a partir de $T$ mediante poda, es decir, colapsando nodos no terminales, que minimice el criterio de coste complejidad definido como:
+
+$$C_{\alpha}(T) = \Phi(T) + \alpha|T_0|$$
+El parámetro $\alpha$ permite controlar la capacidad de generalización del modelo (*Bias-Variance tradeoff*) y se estima mediante Validación Cruzada.
+
+El gran inconveniente de los árboles de decisión es que son modelos con una varianza elevada, por lo que tienden a ser muy inestables y a producir sobreajuste. Para evitar esto, se recurre al uso de técnicas de *Bagging* y *Boosting*. El ejemplo más extendido con árboles de decisión son los Bosques Aleatorios (*Random Forest* en inglés).
+<!-- Inconveniente: Modelo muy sesible a pequeños cambios en los datos (inestable) -> Modelo con mucha varianza -> Overfitting!! -->
 <!-- Solución: Random Forest -->
+
 ### Random Forest
 
 <!-- Elements of Statistical Learning, pag 601 -->
+La idea detrás del modelo de bosques aleatorios es reducir la varianza de los árboles de decisión sin aumentar el sesgo. Para intentar conseguir este objetivo, la idea es aplicar Bagging (Bootstrap Aggregating) al modelo de árbol de decisión. Sin embargo, ya que al aplicar Bagging la redución de la varianza es mayor cuanto más incorrelados sean los predictores individuales, en cada nuevo nodo de cada árbol construido se selecciona la variable que más disminuya la impureza de entre un conjunto aleatorio  de $m_{try} < d$ predictores.
+
+<!-- Ponerlo guay como algoritmo (estilo proposición,...): -->
+Algoritmo:
+
+1. Para $b = {1,...,B}:$
+
+    a) Seleccionar una muestra bootstrap $Z^*$ de tamaño n del conjunto de entrenamiento.
+    b) Construir un árbol de decisión $T_b$ a partir de la muestra bootstrap $b$, aplicando recursivamente los siguiente pasos para cada nodo terminan del árbol, hasta que se alcanze el tamaño mínimo de nodo $n_{min}:$
+          
+          i. Seleccionar aleatoriamente $m_{try}$ variables de entre las $d$ variables predictoras.
+          ii. Elegir el mejor par variable/división de entre las $m_try$ en función de la reducción del criterio de impureza.
+          iii. Dividir el nodo en dos nodos hijos.
+
+2. De esta forma se obtiene el conjunto de árboles de decisión bootstrap $\left\{ T_b \right\}_{b=1}^B$.
+
+Para hacer una predicción en un nuevo punto $\underline x$ (clasificación): 
+Sea $\hat C_b(\underline x)$ la clase predicha por el b-ésimo árbol de decisión bootstrap. Entonces, $\hat C_{rf}^B(\underline x) = majority\space  vote \space \{\hat C_b(\underline x)\}$. Es decir, se asigna la clase más votada.
+
+<!-- Citar bien a Elements of Statistical Learning -->
 
 
 ### Redes Neuronales
 
 ## Validación del ajuste
-Partición entrenamiento/ validación / test
+Para validar el ajuste de los modelos comentados en los datos, se utilizará una partición temporal en entrenamiento/ validación/ test. Es decir, se asignará el primer 60% de los datos (de acuerdo al día de la observación) a entrenamiento, el 20% siguiente a validación y el último 20% a test. Este enfoque permite evitar el sesgo positivo debido al efecto *look-ahead* en la estimación de la capacidad de generalización de los modelos.
 
 ## Evaluación modelos
 
@@ -356,23 +417,28 @@ Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Caracter�
 ## Herramientas
 
 <!-- https://www.r-project.org/ -->
-Toda la parte práctica del presente trabajo se ha llevado a cabo empleado el lenguaje de programación R a través del entorno de desarrollo integrado (IDE) que ofrece RStudio. R es un lenguaje y entorno de programación de código abierto desarrollado dentro del proyecto GNU y orientado a la computación estadística. R puede extender sus funcionalidades fácilmente a través de la gran cantidad de paquetes disponibles dentro del repositorio de paquetes de CRAN (The Comprehensive R Archive Network), siendo este uno de sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores con las que cuenta este lenguaje.
-
+Toda la parte práctica del presente trabajo se ha llevado a cabo empleado el lenguaje de programación R a través del entorno de desarrollo integrado que ofrece RStudio. R es un lenguaje y entorno de programación de código abierto desarrollado dentro del proyecto GNU y orientado a la computación estadística. Este lenguaje puede extender sus funcionalidades fácilmente a través de la gran cantidad de paquetes disponibles dentro del repositorio de paquetes de CRAN (The Comprehensive R Archive Network), siendo este uno de sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores con la que cuenta.
 
 Los paquetes que se han utilizado han sido:
 
- - tidyverse:
- 
-    • ggplot2, para la visualización.
-    • dplyr, para la manipulación.
-    • tidyr, para la ordenación.
-    • readr, para la importación.
-    • purrr, para la programación funcional
+- tidyverse:
+    
+    - ggplot2, para la visualización.
+    - dplyr, para la manipulación.
+    - tidyr, para la ordenación.
+    - readr, para la importación.
+    - purrr, para la programación funcional
 
 
 - tidymodels
 
+    - parsnip
+    -...
+    
 - sf
+    
+    - GDAL 
+    - ...
 
 - terra
 
@@ -380,5 +446,4 @@ Los paquetes que se han utilizado han sido:
 
 - mapSpain: 
 
-
-... (podemos seguir hasta el infinito)
+...
