@@ -447,3 +447,22 @@ Los paquetes que se han utilizado han sido:
 - mapSpain: 
 
 ...
+
+library(tidyverse)
+library(skimr)
+library(sf)
+library(corrplot)
+library(GGally) # Coordenadas paralelas
+library(ggpubr)
+library(tidyverse) # Manipulación de datos 
+library(sf) # Vector data
+library(terra) # Raster data
+library(mapSpain) # Polígonos de regiones de España
+library(magrittr) # Operador %<>% 
+library(tidymodels)
+library(sf)
+library(ggplot2)
+library(akima) # interp
+library(magrittr)
+library(ggpubr)
+library(forcats)

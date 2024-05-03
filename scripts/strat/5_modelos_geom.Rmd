@@ -32,7 +32,8 @@ library(forcats)
 Se cargan los datos depurados obtenidos a partir de la selección de casos estratificando según el mes.
 
 ```{r}
-load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
+load("salidas_intermedias/datos_strat_depurados_geom_2024-05-03.RData")
+# load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
 # load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
 # load("salidas_intermedias/datos_depurados_geom_2024-04-26.RData")
 
@@ -570,7 +571,7 @@ set.seed(345)
 rf_res <- 
   rf_workflow %>% 
   tune_grid(val_set,
-            grid = 30,
+            grid = 40,
             control = control_grid(save_pred = TRUE),
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
@@ -579,7 +580,7 @@ rf_res <-
 ```{r include=FALSE}
 # Tarda demasiado, lo cargamos
 
-load("salidas_intermedias/trained_models/trained_models_strat_24_04_27.RData")
+# load("salidas_intermedias/trained_models/trained_models_strat_24_04_27.RData")
 ```
 
 
@@ -629,6 +630,69 @@ rf_metrics
 # save(rf_res,file = "salidas_intermedias/trained_models/trained_models_strat_24_04_27.RData")
 ```
 Probablemente, dandole valores más elevados de mtry mejore el rendimiento.
+
+
+## k-Nearest Neighbours
+```{r}
+knn_mod <- 
+  nearest_neighbor(neighbors = tune()) %>% 
+  set_engine("kknn") %>% 
+  set_mode("classification")  
+
+
+knn_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) # Se normalizan todos los predictores
+
+
+knn_workflow <- 
+  workflow() %>% 
+  add_model(knn_mod) %>% 
+  add_recipe(knn_recipe)
+
+# 4º Train and tune
+set.seed(345)
+knn_res <- 
+  knn_workflow %>% 
+  # fit(training)
+  tune_grid(val_set,
+            grid = expand_grid(neighbors = c(1,10,25,seq(25,400,25))),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+
+knn_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+knn_plot <- 
+  knn_res %>% 
+  collect_metrics() %>% 
+  # filter(.metric == "accuracy") %>%
+  ggplot(aes(x = neighbors, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("Medidas de rendimiento") 
+knn_plot
+
+knn_best <- knn_res |> 
+  select_best(metric = "accuracy")
+knn_best
+
+knn_metrics <- knn_res |> 
+  collect_predictions(parameters = knn_best) |> 
+  get_metrics()
+knn_metrics
+```
 
 ## 3. Neuronal Networks
 ```{r}
@@ -718,68 +782,6 @@ svm_metrics <- svm_res |>
 
 ```
 
-## k-Nearest Neighbours
-```{r}
-knn_mod <- 
-  nearest_neighbor(neighbors = tune()) %>% 
-  set_engine("kknn") %>% 
-  set_mode("classification")  
-
-
-knn_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow","month")) %>% 
-  # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
-  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
-  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
-  step_corr() %>% # Elimina variables con correlación superior a 0.9
-  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
-  step_normalize(all_predictors()) # Se normalizan todos los predictores
-
-
-knn_workflow <- 
-  workflow() %>% 
-  add_model(knn_mod) %>% 
-  add_recipe(knn_recipe)
-
-# 4º Train and tune
-set.seed(345)
-knn_res <- 
-  knn_workflow %>% 
-  # fit(training)
-  tune_grid(val_set,
-            grid = expand_grid(neighbors = c(1,seq(10,250,10))),
-            control = control_grid(save_pred = TRUE),
-            metrics = metric_set(accuracy,roc_auc,recall,spec))
-
-
-
-knn_res |> 
-  collect_metrics() |> 
-  group_by(.metric)|> 
-  summarise(max = max(mean),min=min(mean))
-
-knn_plot <- 
-  knn_res %>% 
-  collect_metrics() %>% 
-  # filter(.metric == "accuracy") %>%
-  ggplot(aes(x = neighbors, y = mean,col=.metric)) + 
-  geom_point() + 
-  geom_line() + 
-  ylab("Medidas de rendimiento") +
-  scale_x_log10(labels = scales::label_number())
-knn_plot
-
-knn_best <- knn_res |> 
-  select_best(metric = "accuracy")
-knn_best
-
-knn_metrics <- knn_res |> 
-  collect_predictions(parameters = knn_best) |> 
-  get_metrics()
-knn_metrics
-```
 
 # Comparación
 
@@ -966,6 +968,11 @@ kable(results_test,digits=3)
 
 ```{r}
 save(lr_res,rf_res,svm_res,last_svm_fit,last_lr_fit,last_rf_fit,
+     file = "salidas_intermedias/trained_models_strat_2024_04_28.RData")
+```
+
+```{r}
+save(lr_res,lrs_res,lrs2_res,lr_pc,svm_res,last_svm_fit,last_lr_fit,last_rf_fit,
      file = "salidas_intermedias/trained_models_strat_2024_04_28.RData")
 ```
 

@@ -537,9 +537,9 @@ linewidth=4pt]{mBox}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
-\hypertarget{construcciuxf3n-de-la-base-de-datos}{%
-\chapter{Construcción de la base de
-datos}\label{construcciuxf3n-de-la-base-de-datos}}
+\hypertarget{construcciuxf3n-del-conjunto-de-datos}{%
+\chapter{Construcción del conjunto de
+datos}\label{construcciuxf3n-del-conjunto-de-datos}}
 
 El primer paso a la hora de construir cualquier modelo de predicción es
 disponer de datos adecuados que permitan explicar correctamente el
@@ -622,26 +622,26 @@ sido posible en este caso incorporarla al trabajo por diversas razones.
 La principal de ellas fue que hasta marzo de 2024 la base de datos de la
 EGIF solo se encontraba disponible en el Catálogo de Datos del Gobierno
 de España en formato TURTLE\footnote{TURTLE es una sintaxis para RDF con
-  una sintaxis compatible con SPARQL. RDF (Resource Description
-  Framework) es un estándar de semántica web utilizado para el
-  intercambiar de datos en la Web.} y esto conllevó numerosas
-dificultades. Se exploraron distintas librerías de R (y alguna de
-Python) para el manejo de datos en este formato como RDFlib. Sin
-embargo, al tratarse de una base de datos de un tamaño considerable
-(aproximadamente 1GB y con más de una decena de millones de tripletas),
-esta librería no era suficientemente eficiente para poder realizar
-consultas en un tiempo razonable al conjunto de datos. Tras explorar
-otras alternativas, se valoró la posibilidad de usar un triplestore, es
-decir, una base de datos especialmente diseñada para el almacenamiento y
-recuperación de tripletas a través de consultas semánticas. En este caso
-se usó Apache Jena Fuseki, ya que cuenta con una interfaz que facilita
-su uso. Sin embargo, aunque esto supuso una mejora considerable en la
-eficiencia y permitió realizar consultas sencillas a la base de datos,
-en este caso fue la complejidad del gráfico de datos (ontología) y la
-escasa documentación disponible sobre esta, la que impidió que se
-pudiesen realizar las consultas más complejas que requería para llevar a
-cabo el proyecto. Además, se debe tener en cuenta que se trata de una
-base de datos muy heterogénea y con numerosos datos faltantes debida su
+  compatible con SPARQL. RDF (Resource Description Framework) es un
+  estándar de semántica web utilizado para el intercambiar de datos en
+  la Web.} y esto conllevó numerosas dificultades. Se exploraron
+distintas librerías de R (y alguna de Python) para el manejo de datos en
+este formato como RDFlib. Sin embargo, al tratarse de una base de datos
+de un tamaño considerable (aproximadamente 1GB y con más de una decena
+de millones de tripletas), esta librería no era suficientemente
+eficiente para poder realizar consultas en un tiempo razonable al
+conjunto de datos. Tras explorar otras alternativas, se valoró la
+posibilidad de usar un triplestore, es decir, una base de datos
+especialmente diseñada para el almacenamiento y recuperación de
+tripletas a través de consultas semánticas. En este caso se usó Apache
+Jena Fuseki, ya que cuenta con una interfaz que facilita su uso. Sin
+embargo, aunque esto supuso una mejora considerable en la eficiencia y
+permitió realizar consultas sencillas a la base de datos, en este caso
+fue la complejidad del gráfico de datos (ontología) y la escasa
+documentación disponible sobre esta, la que impidió que se pudiesen
+realizar las consultas más complejas que requería para llevar a cabo el
+proyecto. Además, se debe tener en cuenta que se trata de una base de
+datos muy heterogénea y con numerosos datos faltantes debida su
 naturaleza, por lo que requiere de un preprocesamiento que probablemente
 será complicado y costoso en tiempo y en recursos computacionales. Al no
 disponer de ninguno de estos, finalmente se optó por buscar una
@@ -664,6 +664,10 @@ inferior a 100ha no han sido considerados. Sin embargo, frente a no
 disponer de otra información operativa de mayor calidad, se utilizará
 esta teniendo en cuenta que tendrá un efecto sobre las conclusiones que
 se puedan sacar de los modelos que se construyan.
+
+De esta forma, se han recopilado los polígonos de 1090 incendios
+forestales ocurridos en Andalucía entre 2002 y 2022, junto con la fecha
+de inicio de cada uno de ellos.
 
 \hypertarget{variables-predictoras}{%
 \subsection{Variables predictoras}\label{variables-predictoras}}
@@ -742,7 +746,10 @@ forestales en Andalucía. Estos conjuntos se recogen en la Tabla
 obtenido cada uno de ellos, el tipo de datos que contiene (indicando su
 resolución en el caso de los datos ráster) y la frecuencia de las
 observaciones (o resolución temporal) en el caso de las variables
-temporales.
+temporales. En realidad, el número de archivos de datos que se manejan
+es mucho mayor, ya que por ejemplo para la variable NDVI se dispone de
+un archivo tiff para cada mes del periodo de estudio, lo que añade
+cierta complejidad al manejo de la información.
 
 Es relevante la heterogeneidad de los datos recopilados, pues se dispone
 tanto de datos tabulares como de datos espaciales y dentro de estos
@@ -769,14 +776,14 @@ que se ha considerado viable y de cara a la construcción de unos
 primeros modelos aproximativos podría ser suficiente. Si quisiese
 extenderse el estudio, sería conveniente profundizar en la búsqueda de
 alternativas que permitan obtener información meteorológica de una mayor
-calidad.
+calidad y detalle.
 
 \begin{table}
 \begin{threeparttable}[]
 \resizebox{\textwidth}{!}{
 \begin{tabular}{lllll}
 \hline
-\textbf{Categoría}     & \textbf{Dato}          & \textbf{Fuente}    & \textbf{Tipo de dato}       & \textbf{Frecuencia} \\ \hline
+\textbf{Categoría}     & \textbf{Datos}          & \textbf{Fuente}    & \textbf{Tipo de dato}       & \textbf{Frecuencia} \\ \hline
 \multirow{4}{*}{Topográficas}   & Altitud                                                        & DERA\tnote{a}  & TIFF (100m)        & -          \\
                                 & Orientación                                                    & REDIAM\tnote{b}     & TIFF (100m)        & -          \\
                                 & Pendiente                                                      & REDIAM     & TIFF (100m)        & -          \\
@@ -848,7 +855,15 @@ distintos conjuntos de datos en bruto:
 \tightlist
 \item
   Generación de una muestra balanceada de casos positivos y negativos.
+\item
+  Asignación de las variables descriptivas a cada observación.
+\item
+  Depuración de la muestra.
 \end{enumerate}
+
+\hypertarget{generaciuxf3n-de-una-muestra-balanceada-de-casos-positivos-y-negativos.}{%
+\subsection{Generación de una muestra balanceada de casos positivos y
+negativos.}\label{generaciuxf3n-de-una-muestra-balanceada-de-casos-positivos-y-negativos.}}
 
 Para poder construir cualquier modelo de clasificación binaria se
 necesita disponer de una muestra que cuente con un número suficiente de
@@ -864,52 +879,240 @@ día y lugar de la observación. Estas observaciones deberán generarse a
 partir de los polígonos de incendios disponibles. Para ello, se usará un
 enfoque similar al utilizado en
 {[}\url{https://www.researchgate.net/publication/228527438_Learning_to_predict_forest_fires_with_different_data_mining_techniques}{]},
-con una diferencia fundamental. En {[}cita al paper{]} usan los puntos
-de ignición como muestras positivas y su objetivo es predecir los puntos
-de origen de los incendios forestales. En cambio, en el presente trabajo
-no se disponen de los puntos de ignición de los incendios, por lo que el
-enfoque adoptado es ligeramente diferente; el objetivo es predecir las
-zonas que pueden verse afectadas por un incendio forestal (superior a
-100ha) bajo unas circunstancias concretas. De esta forma, los casos
-positivos serán puntos aletorios tomados dentro de los polígonos de
-incendio en los días que estos ocurrieron. Los casos negativos se
-generarán igual que en {[}cita paper{]}: se toman fechas aleatorias
-dentro del periodo de estudio y a cada una de ellas se le asocia una
-localización aleatoria dentro del área de estudio satisfaciendo que
-deben estar a al menos 15km de de cualquier incendio detectado en un
-margen de ± 3 días. Esta forma de tomar los casos negativos asegura que
-estén lo suficientemente alejados de los incendios forestales para
-representar condiciones no influidas por estos, dando prioridad así a
-las áreas con una menor prioridad de ocurrencia de incendio en un
-período definido. Las ubicaciones de los ejemplos positivos y negativos
-de ocurrencia de incendios estaban vinculadas espacial y temporalmente a
-los datos descriptivos.
+con algunas diferencias importantes. En {[}cita al paper{]} usan los
+puntos de ignición como muestras positivas y su objetivo es predecir los
+puntos de origen de los incendios forestales. En cambio, en el presente
+trabajo no se disponen de los puntos de ignición de los incendios, por
+lo que el enfoque adoptado es ligeramente diferente; el objetivo es
+predecir las zonas que pueden verse afectadas por un incendio forestal
+(superior a 100ha) bajo unas circunstancias concretas. De esta forma,
+para construir la muestra de casos positivos se han generado 10 puntos
+aleatorios dentro de cada polígono de incendio y se les ha asignado la
+fecha del día de incio del incendio. Los casos negativos se generarán
+igual que en {[}cita paper{]}: se toman fechas aleatorias dentro del
+periodo de estudio y a cada una de ellas se le asocia una localización
+aleatoria dentro del área de estudio satisfaciendo que deben estar a al
+menos 15km de de cualquier incendio detectado en un margen de ± 3 días.
+Esta forma de tomar los casos negativos asegura que estén lo
+suficientemente alejados de los incendios forestales para representar
+condiciones no influidas por estos, dando prioridad así a las áreas con
+una menor prioridad de ocurrencia de incendio en un período definido.
+Sin embargo, sería conveniente en estudios futuros plantearse si esos
+parámetros (franja de ± 3 días y distancia superior a 15km) son
+adecuados o tal vez sería más adecuado tomar otros valores, basados, por
+ejemplo, en la duración media de los incendios en Andalucía y otras
+características propias de los incendios en la región.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\item
-  Asignación a cada observación los valores correspondientes a ese día y
-  a esa localización concreta de todas las variables predictoras a
-  partir de los conjuntos de datos que se han recopilado (recogidos en
-  la Tabla \ref{tab:fuentes}). Para ello se ha hecho uso de las
-  funciones disponibles en los paquetes \texttt{terra} y \texttt{sf}.
-\item
-  Depuración de la muestra generada, se eliminan los valores perdidos y
-  se ajustan adecuadamente los tipos de las variables. Las variable
-  \texttt{WD10M} se codifica mediante los 4 puntos cardinales y sus
-  bisectrices, generando así 8 clases. En el caso de la variable
-  \texttt{orientacion} se procede de manera idéntica pero se incluye
-  también la clase ``plano'', si la pendiente del punto es 0.
-\end{enumerate}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.5\textwidth]{graficos/incendios_mes.png}
+\caption{Incendios durante el periodo de estudio}
+\label{fig:incendios_mes}
+\end{figure}
 
-El resultado es un conjunto de datos con 20998 observaciones de las
-variables que se muestran en la Tabla \ref{tab:variables}.
+Tanto en (cita paper anterior) como en otros estudios consultados se
+generan los casos negativos tomando fechas completamente aleatorias
+dentro de la franja temporal del estudio. Sin embargo, esto induce un
+claro sesgo en los datos, ya que las observaciones positivas no se
+distribuyen uniformemente entre los 12 meses, si no que se concentran
+marcadamente en los meses de verano, como puede observarse en la Figura
+\ref{fig:incendios_mes}. Generar el conjunto de datos sin tener en
+cuenta este hecho hace que las muestras positivas y negativas tengan
+características meteorológicas muy diferenciadas que no responden al
+verdadero proceso latente de aparición de incendios forestales sino al
+proceso de selección de la muestra, pudiendo provocar un marcado sesgo
+positivo en las medidas de evaluación de los modelos que en realidad no
+estarían reflejando la realidad si no los sesgos introducidos en los
+conjuntos de datos. Por ello, en el presente trabajo para de generar los
+días de las muestras negativas se seguirá una distribución de
+probabilidad proporcional a la cantidad de incendios observados a lo
+largo del periodo de estudio en cada mes. Mediante este enfoque se
+espera obtener una muestra balanceada y estratificada por mes que
+permita construir modelos de clasificación capaces de captar los
+patrones latentes de aparición de incendios forestales. Además, este
+enfoque permite centrar el esfuerzo en los periodos que más incendios se
+producen.
+
+\hypertarget{asignaciuxf3n-de-las-variables-descriptivas-a-cada-observaciuxf3n}{%
+\subsection{Asignación de las variables descriptivas a cada
+observación}\label{asignaciuxf3n-de-las-variables-descriptivas-a-cada-observaciuxf3n}}
+
+Una vez generada una muestra balanceada de 22170 observaciones dentro de
+Andalucía entre el 1 de enero de 2002 y el 31 de diciembre de 2022, el
+siguiente paso es asignar a cada una de ellas los valores
+correspondientes a ese día y a esa localización concreta de todas las
+variables predictoras a partir de los conjuntos de datos que se han
+recopilado (recogidos en la Tabla \ref{tab:fuentes}). Dado que será
+necesario calcular distancias, se usa un Sistema de Referencia de
+Coordenadas proyectado al generar la muestra. En particular se usa una
+variante del UTM30N por ser el que traen los archivos \emph{raster} de
+las variables topográficas (es conveniente siempre que sea posible no
+transformar el crs de los datos \emph{raster} pues al hacerlo se deben
+interpolar los valores de los píxeles, produciendo pérdida de
+información).
+
+A continuación se detalla el proceso seguido para manipular construir
+cada variable:
+
+\begin{itemize}
+\item
+  Variables topográficas: Simplemente se extrae el dato del píxel en el
+  que cae cada observación para cada uno de los conjuntos de datos.
+\item
+  Variables antropológicas:
+
+  \begin{itemize}
+  \item
+    Se calculan las distancias de cada observación a la red de
+    carreteras, a la red de ferrocarril, a las poblaciones y a la línea
+    electrica, creando así las variables \emph{dist\_carreteras},
+    \emph{dist\_ferrocarril}, \emph{dist\_poblaciones} y
+    \emph{dist\_electr}, respectivamente. Las geometrías de los
+    senderos, de las vías verdes y de los carriles bicis se unen y se
+    calcula la distancia de cada observación a este conjunto de
+    geometrías, generando así la variable \emph{dist\_sendero}. De la
+    misma forma se procede con los caminos y las vías pecuarias, que dan
+    origen a la variable \emph{dist\_camino}. Estas uniones se han
+    llevado a cabo por considerar que sus elementos tienen
+    características similares. Siempre se hace referencia a la distancia
+    euclídea.
+  \item
+    Para construir una variable dicotómica \emph{enp} que indique si la
+    observación se encuentra o no dentro de un Espacio Natural Protegido
+    primero se ha rasterizado el conjunto de polígonos de Espacios
+    Naturales Protegidos de Andalucía (de forma que en cada píxel se
+    indica 1 si el centro de este está dentro del polígono de un ENP o 0
+    si no) y posteriormente se ha extraído el valor del píxel que
+    contiene a cada observación. En la rasterización se ha usado como
+    modelo el ráster de eleviaciones con una resolución de
+    \(100m \times 100m\). Proceder de este modo hace que se pierda algo
+    de resolución pero resulta muchísimo más eficiente
+    computacionalmente que comprobar para cada observación la relación
+    espacial ``estar dentro del polígono de algún ENP'' (este enfoque
+    resultaba computacionalmente inabarcable para el equipo disponible).
+  \item
+    Para construir la variable \emph{uso\_suelo} se ha procedido de
+    manera similar. Primero se ha rasterizado, usando como modelo el
+    mapa de elevaciones con una resolución de \(100m \times 100m\),
+    asignando a cada píxel la categoría de uso de suelo del polígono que
+    cubriese el centro del píxel. Y posteriormente, para cada
+    observación se ha extraído el valor del píxel sobre el que
+    estuviese. De nuevo, se ha procedido así por cuestiones de
+    eficiencia. Es necesario hacer algunos comentarios más sobre esta
+    variable. La información de uso de suelo proviene del mapa de
+    Ocupación de Uso de Suelo CORINE Land Cover 2018, donde se
+    establecen con 3 niveles de clasificación con 5, 15 y 44 clases,
+    respectivamente. La primera clase se corresponde con el primer
+    dígito del código, las segunda con el segundo y la tercera con el
+    tercero. En este trabajo se ha decidido trabajar con el segundo
+    nivel de clasificación. En la Tabla \ref{tab:codigos_uso_suelo} se
+    recoge la clase correspondiente a cada código.
+  \end{itemize}
+\end{itemize}
+
+\begin{table}[]
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\toprule
+Nivel 1                                                     & Nivel 2                                                  & Código \\ \midrule
+Superficies artificiales                                    & Zonas urbanas                                            & 11     \\
+                                                            & Zonas industriales, comerciales y de transporte          & 12     \\
+                                                            & Zonas de extracción minera, vertederos y de construcción & 13     \\
+                                                            & Zonas verdes artificiales, no agrícolas                  & 14     \\ \hline
+Zonas agrícolas                                             & Tierras de labor                                         & 21     \\
+                                                            & Cultivos permanentes                                     & 22     \\
+                                                            & Prados y praderas                                        & 23     \\
+                                                            & Zonas agrícolas heterogéneas                             & 24     \\ \hline
+Zonas forestales con vegetación natural y espacios abiertos & Bosque                                                   & 31     \\ 
+                                                            & Espacios de vegetación arbustiva y/o herbácea            & 32     \\
+                                                            & Espacios abiertos con poca o sin vegetación              & 33     \\ \hline
+Zonas húmedas                                               & Zonas húmedas continentales                              & 41     \\
+                                                            & Zonas húmedas litorales                                  & 42     \\ \hline
+Superficies de agua                                         & Aguas continentales                                      & 51     \\
+                                                            & Aguas marinas                                            & 52     \\ \bottomrule
+\end{tabular}%
+}
+\caption{Códigos de uso de suelo}
+\label{tab:codigos_uso_suelo}
+\end{table}
+
+\begin{itemize}
+\item
+  Para construir la variable \emph{poblacion} se ha asignado a cada
+  observación el código del municipio en el que está y se ha hecho un
+  \emph{left\_join} con el código del municipio y el año de la
+  observación. Para la variable \emph{dens\_población} se ha procedido
+  de la misma manera pero se ha divido por la extensión del municipio en
+  \(km^2\).
+\item
+  La distancia a los ríos \emph{dist\_rios} se ha obtenido simplemente
+  calculando la distancia de cada observación al conjunto de geometrías
+  de los principales ríos de España.
+\item
+  El NDVI viene en archivos \emph{raster} mensuales (lo que supone un
+  total de unos 240 archivos en formato \emph{.tiff}). Para cada
+  observación se ha extraído el valor del píxel correspondiente (en
+  función de las coordenadas del punto) del archivo correspondiente (que
+  depende del mes y año de la observación).
+\end{itemize}
+
+\hypertarget{depuraciuxf3n-de-la-muestra}{%
+\subsection{Depuración de la
+muestra}\label{depuraciuxf3n-de-la-muestra}}
+
+Una vez construido el conjunto de datos ``en bruto'', se tratan los
+valores perdidos y se ajustan adecuadamente los tipos de las variables.
+En primer lugar se convierten en factores las variables \emph{fire},
+\emph{enp} y \emph{uso\_suelo}. A continuación se codifican las
+variables numéricas \emph{WD10M} y \emph{orientación} en los 4 puntos
+cárdinales y sus bisectrices, generando así 8 clases (``N'', ``NW'',
+``W'', ``SW'', ``S'', ``SE'', ``E'', ``NE''). En el caso de la variable
+orientación se añade también la clase ``plano'', si la pendiente en ese
+punto es 0.
+
+El conjunto de datos construido tiene \(200\) registros incompletos, lo
+cual supone un \(0.1\%\) del total de registros. De estos, el \(68\%\)
+son casos negativos y el \(32\%\) son casos positivos. Los valores
+perdidos se encuentran en las variables demográficas (85), en
+\emph{uso\_suelo} (8), en NDVI (85) y en las variables topográficas
+(53). Las causas de los datos perdidos faltantes son:
+
+\begin{itemize}
+\item
+  El dato no está disponible para esa observación. Esto sucede con las
+  variables demográficas (hay años para los que no está disponible el
+  número de habitantes de algunos municipios) y el NDVI (para algunos
+  meses no se dispone del archivo correspondiente).
+\item
+  En el caso de las variables topográficas los valores perdidos se
+  encuentran todos en los límites de la comunidad (Figura
+  \ref{fig:nas_topograficas}). Al proceder de datos en formato
+  \emph{raster}, los píxeles con información no se ajustan exactamente a
+  los límites de Andalucía (ya que son cuadrados). Esto provoca que para
+  algunos puntos situados en los bordes del polígono no esté disponible
+  la información de las variables topográficas.
+\end{itemize}
+
+Tras explorar otras alternativas y teniendo en cuenta tanto el reducido
+número de registros incompletos como la naturaleza de los valores
+desconocidos, se opta simplemente por eliminar estos registros.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.5\textwidth]{graficos/nas_topograficas.png}
+\caption{Observaciones para los que no está disponible alguna de las variables topográficas}
+\label{fig:nas_topograficas}
+\end{figure}
+
+El resultado de todo este proceso es un conjunto de datos con 21546
+registros y 27 variables, las cuales se detallan en la Tabla
+\ref{tab:variables}.
 
 \begin{table}[]
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{llll}
 \hline
+
 Categoría         & Nombre           & Descripción                                                                            & Tipo       \\ \hline
 Topográficas      & elevacion        & Elevación sobre el nivel del mar (m)                                                   & numérica   \\
                   & orientacion      & Orientación de la pendiente descendiente                                               & categórica \\

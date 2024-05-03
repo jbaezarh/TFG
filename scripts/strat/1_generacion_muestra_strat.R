@@ -52,7 +52,6 @@ n_out=1089*10 # Número de muestras negativas
 # Se generan fechas aleatorias para las muestras negativas entre 2002 y 2022 siguiendo la misma
 # distribución de probabilidad mensual que en los incendios observados:
 
-set.seed(12345) # Fijamos una semilla
 incendios = NULL
 
 for (year in 2002:2022) {
@@ -75,6 +74,8 @@ possible_dates = tibble (date = seq(as.Date('2002/01/01'), as.Date('2022/12/31')
   mutate(MES = month(date)) %>% 
   left_join(incendios_mes,
             join_by(MES)) 
+
+set.seed(12345) # Fijamos una semilla
 
 dates = sample(possible_dates$date, n_out,replace = T,prob = possible_dates$n) # Estas serán las fechas de las muestras negativas
 

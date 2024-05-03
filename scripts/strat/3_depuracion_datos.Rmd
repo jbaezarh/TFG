@@ -87,9 +87,9 @@ Variables:
 
     - municipio: Nombre del municipio en en el que está la observación.
     
-    - poblacion: Número de habitantes del municipio en el que se encuentra la observación en ese año.
+    - poblacion: Número de habitantes del municipio ese año.
     
-    - dens_poblacion:
+    - dens_poblacion: Densidad de población del municipio ese año.
     
     - uso_suelo: Clasificación del uso del suelo.
     
@@ -148,11 +148,35 @@ datos <- datos |>
 
 ## Valores perdidos
 
+Se detectan valores perdidos en las variables topográficas (pendiente, orientación y curvatura), en `población`, en `uso_suelo` y en `NDVI`.
+
 ```{r}
 summary(datos)
+
+nas = dataset %>% apply(1,anyNA) %>% sum()
+
+nas # 200 registoros incompletos
+nas/nrow(dataset) # aproximadamente un 0.1% de los registros
+
+table(dataset %>% apply(1,anyNA),datos$fire) %>% prop.table(1) 
+# 68% de los valores faltantes en casos negativos y 32% en los positivos
 ```
 
-Se detectan valores perdidos en las variables topográficas (pendiente, orientación y curvatura), en `población`, en `uso_suelo` y en `NDVI`.
+Dada la reducida cantidad de observaciones con valores perdidos, se opta directamente por eliminarlas.
+
+```{r}
+datos1 = datos %>% drop_na()
+```
+
+
+```{r}
+datos = datos1
+
+save(datos,
+     file = paste0("salidas_intermedias/datos_strat_depurados_geom_",Sys.Date(),".RData")) # datos sin
+```
+
+A continuación se detalla un análisis de los valores faltantes de cada variable.
 
 ### Variables topográficas:
 
@@ -220,10 +244,12 @@ datos %<>% filter(!is.na(poblacion))
 ### Uso de suelo
 ```{r}
 plot(st_geometry(andalucia_proj),reset=F)
+
+dataset |> filter(is.na(uso_suelo)) %>% count()
 dataset |> filter(is.na(uso_suelo)) |> st_geometry() |> plot(pch=16,col="red",add=T)
 ```
 
-Se trata de observaciones que se encuentran también en los límites de Andalucía, en este caso en la costa. Esto nos puede indicar que la causa de que este valor no esté disponible es la misma que anteriormente con las variables topográficas. Dado que el Sistema de Referencia de Coordenadas no se ha modificado, probablemente sea debido a pequeñas discrepancias entre los polígonos utilizados. Estas observaciones ya se han eliminado en las etapas anteriores, por lo que no es necesario hacer nada.
+Se trata de 8 observaciones que se encuentran también en los límites de Andalucía, en este caso en la costa. Esto nos puede indicar que la causa de que este valor no esté disponible es la misma que anteriormente con las variables topográficas. Dado que el Sistema de Referencia de Coordenadas no se ha modificado, probablemente sea debido a pequeñas discrepancias entre los polígonos utilizados. Estas observaciones ya se han eliminado en las etapas anteriores, por lo que no es necesario hacer nada.
     
 ```{r}
 datos = datos |>  
@@ -371,7 +397,7 @@ Se guarda el conjunto de datos depurado:
 
 ```{r}
 # install.packages("feather")
-library(feather)
+# library(feather)
 
 # load("salidas_intermedias/datos_depurados2024-04-09.RData")
 # write_feather(datos, "salidas_intermedias/datos_depurados2024-04-09.feather")

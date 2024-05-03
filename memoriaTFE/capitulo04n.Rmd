@@ -27,6 +27,9 @@ source("cabecera_chunk_inicio.R")
 
 ## Análisis exploratorio de datos
 
+\ref{tab:fuentes}
+\ref{tab:variables}
+
 ## Estudio de las variables
 
 ## Modelización
