@@ -529,6 +529,7 @@ dt_best <- dt_res |>
 dt_metrics <- dt_res |> 
   collect_predictions(parameters = dt_best) |> 
   get_metrics()
+dt_metrics
 ```
 
 
@@ -566,7 +567,7 @@ rf_mod
 extract_parameter_set_dials(rf_mod)
 ```
 
-```{r eval=FALSE, include=TRUE}
+```{r }
 set.seed(345)
 rf_res <- 
   rf_workflow %>% 
@@ -694,6 +695,12 @@ knn_metrics <- knn_res |>
 knn_metrics
 ```
 
+```{r}
+# save(lr_res,rf_res,knn_res,lrs_res,lr_pca_res,lrs2_res,dt_res,
+# file = "salidas_intermedias/trained_models_strat_faltasvm_2024_05_03.RData")
+```
+
+
 ## 3. Neuronal Networks
 ```{r}
 load("salidas_intermedias/trained_models/svm_res_strat.RData")
@@ -708,7 +715,7 @@ load("salidas_intermedias/trained_models/svm_res_strat.RData")
 ```{r}
 # 1º Construir el modelo
 svm_mod <- 
-  svm_linear(cost = tune(), margin = tune()) %>% 
+  svm_linear(cost = tune()) %>% 
   set_engine("kernlab") %>% 
   set_mode("classification")
 
@@ -726,28 +733,20 @@ svm_workflow <-
   workflow() %>% 
   add_model(svm_mod) %>% 
   add_recipe(svm_recipe)
-```
 
-
-```{r eval=FALSE, include=TRUE}
 # 4º Train and tune
 set.seed(345)
 svm_res <- 
   svm_workflow %>% 
   tune_grid(val_set,
-            grid = 25,
+            grid = 15,
             control = control_grid(save_pred = TRUE),
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
-```
 
-```{r include=FALSE}
 # Tada demasiado, lo cargamos:
-load("salidas_intermedias/trained_models/svm_res_strat.RData")
-```
+# load("salidas_intermedias/trained_models/svm_res_strat.RData")
 
-
-```{r}
 # 5º Evaluación de resultados del tuning
 svm_res |> 
   collect_metrics() |> 
@@ -779,50 +778,126 @@ autoplot(svm_auc)
 svm_metrics <- svm_res |> 
   collect_predictions(parameters = svm_best) |> 
   get_metrics()
+svm_metrics
 
+# save(svm_res,file = "salidas_intermedias/trained_models_svm_2024_05_04.RData")
 ```
 
+
+```{r}
+# 1º Construir el modelo
+svm_rbf_mod <- 
+  svm_rbf(cost = tune(),rbf_sigma = tune()) %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+svm_rbf_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  step_rm(date, cod_municipio, municipio) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Ensamblar todo con workflow
+svm_rbf_workflow <- 
+  workflow() %>% 
+  add_model(svm_rbf_mod) %>% 
+  add_recipe(svm_rbf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+svm_rbf_res <- 
+  svm_rbf_workflow %>% 
+  tune_grid(val_set,
+            grid = 8,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+
+# 5º Evaluación de resultados del tuning
+svm_rbf_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+tuning_plot(svm_rbf_res)
+
+# Se observa que hay muy poca variabilidad en los resultados de cada combinación de parámetros, menos de un 2.5% para cada medida de rendimiento. Ante este resultado, de nuevo, se opta por maximizar la tasa de acierto
+
+
+# Mejor modelo
+svm_rbf_best <- 
+  svm_rbf_res %>% 
+  select_best(metric="accuracy")
+
+svm_rbf_best
+
+# Curva ROC
+svm_rbf_auc <- 
+  svm_rbf_res %>% 
+  collect_predictions(parameters = svm_rbf_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Support Vector Machine")
+
+autoplot(svm_rbf_auc)
+
+
+svm_rbf_metrics <- svm_rbf_res |> 
+  collect_predictions(parameters = svm_rbf_best) |> 
+  get_metrics()
+svm_rbf_metrics
+
+# save(svm_rbf_res,file = "salidas_intermedias/trained_models_svm_rbf_2024_05_04.RData")
+```
 
 # Comparación
 
 ```{r}
-results = rbind(
-  lr = lr_res %>% 
-    collect_predictions(parameters = lr_best) %>% 
-    get_metrics() %>% 
-    .$res %>%
-    as.data.frame(),
-  lrs = lrs_metrics$res %>% 
-    as.data.frame(),
-  lrs2 = lrs2_metrics$res %>% 
-    as.data.frame(),
-  lr_pca = lr_pca_metrics$res %>% 
-    as.data.frame(),
-  rf = rf_res %>% 
-    collect_predictions(parameters = rf_best) %>%
-    get_metrics() %>% 
-    .$res %>%
-    as.data.frame(),
-  svm = svm_res %>% 
-    collect_predictions(parameters = svm_best) %>%
-    get_metrics() %>% 
-    .$res %>%
-    as.data.frame()
-)
+load("salidas_intermedias/trained_models_svm_rbf_2024_05_04.RData")
+load("salidas_intermedias/trained_models_svm_2024_05_04.RData")
+load("salidas_intermedias/trained_models_strat_faltasvm_2024_05_03.RData")
 
-library(knitr)
+models = tibble(model_name = c("lr","lr_pca","dt","rf","svm_linear","svm_rbf","knn"),
+                models_tune = list(lr_res,lr_pca_res,dt_res,rf_res,svm_res,svm_rbf_res,knn_res))
 
-kable(results,digits=3)
-```
+models = models %>% mutate(best_tuning = map(models_tune,function(x) select_best(x,metric = "accuracy")),
+                           best_metrics = map2(models_tune,
+                                               best_tuning,
+                                               ~ collect_predictions(.x,parameters = .y) %>% 
+                                                 get_metrics() %>% 
+                                                 extract2(1)), # Para extraer solo las medidas y no la matriz de confusión
+                           roc = map2(models_tune,
+                                      best_tuning,
+                                      ~ collect_predictions(.x,parameters = .y) %>% 
+                                        roc_curve(fire, .pred_0))
+                           ) 
 
-```{r}
-bind_rows(rf_auc, lr_auc,svm_auc) %>% 
-  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model)) + 
+
+metrics = models %>% select(model_name,best_metrics) %>% unnest(best_metrics)
+metrics
+
+library(fira)
+
+models %>% select(model_name,roc) %>% unnest(roc) %>% 
+  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model_name)) + 
   geom_path(lwd = 1, alpha = 0.7) +
   geom_abline(lty = 3) + 
   coord_equal() + 
-  scale_color_viridis_d(option = "turbo", end = .6)
+  labs(color="Modelo")+
+  # scale_color_viridis_d(option = "turbo",name="Modelo") +
+  theme_minimal() + 
+  ggtitle("Curva ROC en validación")
+
+library(knitr)
+
+kable(metrics,digits=3)
 ```
+
 
 # Test
 
@@ -971,8 +1046,5 @@ save(lr_res,rf_res,svm_res,last_svm_fit,last_lr_fit,last_rf_fit,
      file = "salidas_intermedias/trained_models_strat_2024_04_28.RData")
 ```
 
-```{r}
-save(lr_res,lrs_res,lrs2_res,lr_pc,svm_res,last_svm_fit,last_lr_fit,last_rf_fit,
-     file = "salidas_intermedias/trained_models_strat_2024_04_28.RData")
-```
+
 
