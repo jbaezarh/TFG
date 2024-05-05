@@ -60,7 +60,15 @@ La principal de ellas fue que hasta marzo de 2024 la base de datos de la EGIF so
 
 Ante esta situación, la solución planteada fue limitar el área en estudio a la Comunidad Autónoma de Andalucía, aprovechando la enorme disponibilidad de información medioambiental que ofrece la Red de Información Ambiental de Andalucía (REDIAM). En particular, se emplea la cartografía generada por la REDIAM sobre las áreas recorridas por los incendios forestales entre 1975 y 2022. Esta contiene los perímetros de incendios forestales mayores de 100 ha en Andalucía obtenidos a partir de imágenes de satélite y datos de campo. Se trata por tanto de una información que no es exhaustiva, pues los incendios con una extensión inferior a 100ha no han sido considerados. Sin embargo, frente a no disponer de otra información operativa de mayor calidad, se utilizará esta teniendo en cuenta que tendrá un efecto sobre las conclusiones que se puedan sacar de los modelos que se construyan. 
 
-De esta forma, se han recopilado los polígonos de 1090 incendios forestales ocurridos en Andalucía entre 2002 y 2022, junto con la fecha de inicio de cada uno de ellos.
+De esta forma, se han recopilado los polígonos de 1090 incendios forestales ocurridos en Andalucía entre 2002 y 2022, junto con la fecha de inicio de cada uno de ellos (Figura \ref{fig:area_fuego}).
+
+\begin{figure}[thb]
+\centering
+\includegraphics[width=0.5\textwidth]{graficos/areas_fuego.png}
+\caption{Áreas recorridas por el fuego entre 2002 y 2024 en incendios mayores de 100 hectáreas en Andalucía.}
+\label{fig:area_fuego}
+\end{figure}
+
 
 <!-- https://portalrediam.cica.es/geonetwork/srv/spa/catalog.search#/home -->
 

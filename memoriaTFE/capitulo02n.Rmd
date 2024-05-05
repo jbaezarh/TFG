@@ -107,6 +107,8 @@ El análisis exploratorio de datos (EDA, por sus siglas en inglés), es una part
 
 El EDA hace referencia al conjunto de técnicas estadísticas con las que se pretende explorar, describir y resumir la naturaleza de los datos, comprender las relaciones existentes entre las distintas variables presentes, identificar posibles errores o revelar posibles valores atípicos, todo esto con el objetivo de maximizar nuestra compresión sobre el conjunto de datos.
 
+<!-- Uso de técnicas numéricas y gráficas -->
+
 ### Depuración de los datos
 <!-- DEBATE INTERNO SOBRE SI METERLO DENTRO DEL EDA -->
 <!-- Citar bien -->

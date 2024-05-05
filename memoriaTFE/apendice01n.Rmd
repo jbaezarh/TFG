@@ -21,7 +21,161 @@ source("cabecera_chunk_inicio.R")
 ```
 
 
-# Apéndice: Título del Apéndice
+# Apéndice: Gráficos espaciales EDA
 
-## Primera sección
+## Variables meteorológicas
 
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/T2M_spat.png}
+\caption{Distribución espacial de T2M por mes.}
+\label{fig:T2M_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/RH2M_spat.png}
+\caption{Distribución espacial de RH2M por mes.}
+\label{fig:RH2M_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/GWETTOP_spat.png}
+\caption{Distribución espacial de GWETTOP por mes.}
+\label{fig:GWETTOP_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/WS10M_spat.png}
+\caption{Distribución espacial de WS10M por mes.}
+\label{fig:WS10M_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/PRECTOTCORR_spat.png}
+\caption{Distribución espacial de PRECTOTCORR por mes.}
+\label{fig:PRECTOTCORR_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/WD10M_spat.png}
+\caption{Distribución espacial de WD10M por mes.}
+\label{fig:WD10M_spat}
+\end{figure}
+
+
+
+
+
+
+
+## Variables demográficas
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/poblacion_spat.png}
+\caption{Distribución espacial de poblacion.}
+\label{fig:poblacion_spat}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/dens_poblacion_spat.png}
+\caption{Distribución espacial de dens\_poblacion.}
+\label{fig:dens_poblacion_spat}
+\end{figure}
+
+
+## Variable de vegetación
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/NDVI_spat.png}
+\caption{Distribución espacial de NDVI por mes.}
+\label{fig:NDVI_spat}
+\end{figure}
+
+## Variables topográficas
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/elevacion_spat.png}
+\caption{Distribución espacial de elevacion.}
+\label{fig:elevacion_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/pendiente_spat.png}
+\caption{Distribución espacial de pendiente.}
+\label{fig:pendiente_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/curvatura_spat.png}
+\caption{Distribución espacial de curvatura.}
+\label{fig:curvatura_spat}
+\end{figure}
+
+
+
+## Variables antropológicas
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/dist_carretera_spat.png}
+\caption{Distribución espacial de dist\_carretera.}
+\label{fig:dist_carretera_spat}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/dist_sendero_spat.png}
+\caption{Distribución espacial de dist\_sendero.}
+\label{fig:dist_sendero_spat}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/dist_camino_spat.png}
+\caption{Distribución espacial de dist\_camino.}
+\label{fig:dist_camino_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/dist_poblacion_spat.png}
+\caption{Distribución espacial de dist\_poblacion.}
+\label{fig:dist_poblacion_spat}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/dist_electr_spat.png}
+\caption{Distribución espacial de dist\_electr.}
+\label{fig:dist_electr_spat}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/dist_ferrocarril_spat.png}
+\caption{Distribución espacial de dist\_ferrocarril.}
+\label{fig:dist_ferrocarril_spat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/uso_suelo_spat.png}
+\caption{Distribución espacial de uso\_suelo.}
+\label{fig:uso_suelo_spat}
+\end{figure}
