@@ -37,7 +37,7 @@ load("salidas_intermedias/datos_strat_depurados_geom_2024-05-03.RData")
 ## Resumen numérico
 
 ```{r}
-datos %>%  st_drop_geometry %>% skim()
+datos %>%  st_drop_geometry %>% skim(.data_name = "datos")
 ```
 
 Se tienen variables numéricas, categóricas, así como fechas y cadenas de caracteres. 
@@ -53,14 +53,20 @@ En primer lugar se estudiará gráficamente la distribución temporal y espacial
 ### Distribución temporal
 #### Mes
 ```{r}
-datos %>% 
+g_mes <- datos %>% 
   st_drop_geometry() %>% 
   # filter(fire==1) %>% 
   count(month(date,label=T),fire) %>% 
   rename("mes" = "month(date, label = T)") %>% 
   ggplot(aes(x = mes,y = n,fill=fire)) +
   geom_col(position="dodge",alpha=0.8) +
-  theme(axis.text.x = element_text(angle = 90))
+  # theme(axis.text.x = element_text(angle = 90)) +
+  scale_fill_hue(direction = -1) +
+  theme_minimal() +
+  xlab("Mes") +
+  ylab("Número de observaciones")
+
+g_mes
 ```
 
 Se observa que las observaciones se concentran entorno a los meses de verano y que en cada mes hay una cantidad similar de observaciones positivas y negativas. Esto se debe al procedimiento de muestreo que se ha utilizado para generar la muestra, ya que se ha estratificado por mes, de forma que la proporción de observaciones en cada mes fuese igual en ambas clases. Esto se ha hecho así con el fin de evitar introducir sesgos en la muestra para que los modelos entrenados usándola permitan efectivamente ser útiles en la predicción de incendios forestales.
@@ -69,7 +75,7 @@ Se observa que las observaciones se concentran entorno a los meses de verano y q
 
 #### Año
 ```{r}
-datos %>% 
+g_year <- datos %>% 
   st_drop_geometry() %>% 
   # filter(fire==1) %>% 
   count(year(date),fire) %>% 
@@ -77,10 +83,15 @@ datos %>%
   ggplot(aes(x = año,y = n,fill=fire)) +
   geom_col(position="dodge",alpha=0.8) +
   scale_x_continuous(breaks=2002:2022) +
+  geom_smooth(se=F,aes(color=fire),alpha=0.1) +
+  scale_color_manual(values=c("darkblue","darkred")) + 
+  scale_fill_hue(direction = -1) +
+  theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  geom_smooth(se=F,aes(color=fire)) +
-  scale_color_manual(values=c("darkred","darkblue"))
+  xlab("Año") +
+  ylab("Número de observaciones")
 
+g_year
 # En 2007 no se han generado observaciones positivas
 # Causa: En el shapefile que contiene los incendios producidos en 2007 solo hay 4 observaciones y ninguna tenía la fecha, por lo que estas no han podido utilizarse
 
@@ -92,7 +103,7 @@ datos %>%
 
 #### Día
 ```{r}
-datos %>% 
+g_dia <- datos %>% 
   st_drop_geometry() %>% 
   # filter(fire==1) %>% 
   count(weekdays(date),fire) %>% 
@@ -101,9 +112,19 @@ datos %>%
   geom_col(position="dodge",alpha=0.8) +
   scale_x_discrete(limits=c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")) +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5)) +
-  geom_smooth(se=F)
+ # geom_smooth(se=F) +
+  scale_fill_hue(direction = -1) +
+  theme_minimal() +
+  xlab("Día") +
+  ylab("Número de observaciones")
+
+g_dia
 ```
 Podría dar la impresión de que más incendios ocurren en fin de semana
+
+```{r}
+ggarrange(g_dia,g_mes,g_year,ncol=1,common.legend = T,legend = "bottom")
+```
 
 ### Distribución espacial
 ```{r}
@@ -114,13 +135,15 @@ prov <- esp_get_prov() %>% filter(nuts2.name=="Andalucía") %>% st_transform(st_
 g1 = ggplot(data = prov) + 
   geom_sf() +
   geom_sf(data = datos %>% filter(fire==1),size = 1, alpha = 0.4,col="red")+
-  ggtitle("Distribución espacial de casos positivos")
+  ggtitle("Distribución espacial de casos positivos") +
+  theme_minimal()
 
 # Casos negativos
 g0 = ggplot(data = prov) + 
   geom_sf() +
   geom_sf(data = datos %>% filter(fire==0),size = 1, alpha = 0.4,col="blue") +
-  ggtitle("Distribución espacial de casos negativos")
+  ggtitle("Distribución espacial de casos negativos") +
+  theme_minimal()
 
 ggarrange(g1,g0,nrow=2)
 ```
@@ -134,15 +157,18 @@ ggarrange(g1,g0,nrow=2)
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=T2M),size = 1, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE))+
+  geom_sf(data = datos, aes(color=T2M),size = 1.2, alpha = 0.6) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Distribución espacial de T2M por mes") + 
+  theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
-        axis.ticks.y=element_blank()) + 
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de T2M por mes")
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 ```
 
 Las temperaturas más elevadas se encuentran en el interior.
@@ -155,7 +181,9 @@ datos %>%
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_T2M,fill=fire)) +
   geom_col(position="dodge",alpha=0.8) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+  scale_fill_hue(direction = -1) +
+  theme_minimal()  
+  # + theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
 En prácticamente todos los meses, la media de temperaturas en las observaciones positivas es mayor que en las observaciones negativas. Las temperaturas son más altas en los meses de verano, como cabía esperar.
@@ -167,15 +195,18 @@ En prácticamente todos los meses, la media de temperaturas en las observaciones
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=RH2M),size = 1, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE))+
+  geom_sf(data = datos, aes(color=RH2M),size = 1.2, alpha = 0.6) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=F)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Distribución espacial de RH2M por mes") +
+  theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
-        axis.ticks.y=element_blank()) + 
-  scale_color_gradientn(colours = rainbow(5,rev=F)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de RH2M por mes")
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 ```
 
 La humedad del aire es mayor en las de costa. Las zonas más secas se encuentran en las zonas de interior del norte de Andalucía.
@@ -188,7 +219,9 @@ datos %>%
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_RH2M,fill=fire)) +
   geom_col(position="dodge",alpha=0.8) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+  scale_fill_hue(direction = -1) +
+  theme_minimal()  
+  # + theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
 En prácticamente todos los meses, la humedad del aire media entre las observaciones positivas es menor que en las observaciones negativas. La humedad del aire disminuye significativamente en verano.
@@ -199,14 +232,17 @@ En prácticamente todos los meses, la humedad del aire media entre las observaci
 ggplot(data = prov) + 
   geom_sf() +
   geom_sf(data = datos, aes(color=GWETTOP),size = 1, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE))+
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=F)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Distribución espacial de GWETTOP por mes") +
+  theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
-        axis.ticks.y=element_blank()) + 
-  scale_color_gradientn(colours = rainbow(5,rev=F)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de GWETTOP por mes")
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 ```
 
 Las zonas con mayor humedad superficial de suelo son las que se encuentran en la costa mediterránea. Las zonas con un suelo más seco son las que se encuentran al norte de la cuenca el Guadalquivir, destacando la provincia de Huelva (hay que tener en cuenta que también es una zona en la que hay muchos incendios, la mayoría de los cuales se produce en verano, por lo que hay una gran concentración de observaciones durante el periodo estival, lo que explica el hecho de que se observen tantas observaciones con valores tan bajos de la humedad superficia de suelo).
@@ -219,7 +255,9 @@ datos %>%
   summarize(AVG_GWETTOP = mean(GWETTOP),
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_GWETTOP,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8)
+  geom_col(position="dodge",alpha=0.8) +
+  scale_fill_hue(direction = -1) +
+  theme_minimal()  
 ```
 
 En general, la humedad superficial de suelo media entre los casos positivos es inferior que entre los casos negativos. Esto es especialmente evidendente entre los meses de primavera y otoño. En los meses de invierno esto no está tan claro, incluso parece revertirse la tendencia.
@@ -228,15 +266,19 @@ En general, la humedad superficial de suelo media entre los casos positivos es i
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=WS10M),size = 1, alpha = 0.6) +
+  geom_sf(data = datos, aes(color=WS10M,alpha=WS10M,size=as.numeric(ifelse(WS10M<7.5,1,1.2)))) +
   scale_color_gradientn(colours = rainbow(5,rev=T)) +
   facet_wrap(~month(date,label=TRUE))+
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Distribución espacial de WS10M por mes") +
+  theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
-        axis.ticks.y=element_blank()) + 
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de WS10M por mes")
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(size="none",alpha="none")
 ```
 
 Los valores más elevados de la velocidad del viento a 10m de altura se dan en las zonas costeras.
@@ -249,7 +291,9 @@ datos %>%
   summarize(AVG_WS10M = mean(WS10M),
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_WS10M,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8)
+  geom_col(position="dodge",alpha=0.8)+
+  scale_fill_hue(direction = -1) +
+  theme_minimal()  
 ```
 
 En todos los meses, los valores medios de la velocidad del viento a 10m sobre la superficie son significativamente mayores en las observaciones positivas.
@@ -258,15 +302,21 @@ En todos los meses, los valores medios de la velocidad del viento a 10m sobre la
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=WD10M),size = 1, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE))+
+  geom_sf(data = datos, aes(color=WD10M),size = 1.2, alpha = 0.6) +
+  facet_wrap(~month(date,label=TRUE))+ 
+  # scale_color_stepsn(colours = rainborainbpw(8,rev=T)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Distribución espacial de WD10M por mes") +
+  theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
-        axis.ticks.y=element_blank()) + 
-  # scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de WD10M")
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(color = guide_legend(override.aes = list(size = 5))) +
+  scale_color_viridis_d(option="turbo")
+
 ```
 
 ```{r}
@@ -292,16 +342,20 @@ tibble(mes = datos_mode_WD10M[datos_mode_WD10M$fire==1,1],
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=PRECTOTCORR,size=PRECTOTCORR), alpha = 1) +
-  facet_wrap(~month(date,label=TRUE))+
+  geom_sf(data = datos, aes(color=PRECTOTCORR,size=PRECTOTCORR,alpha=PRECTOTCORR)) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=F)) +
+  guides(size="none") +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Distribución espacial de PRECTOTCORR por mes") +
+  theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
-        axis.ticks.y=element_blank()) + 
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none") +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de PRECTOTCORR por mes")
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(alpha="none")
 ```
 
 En la gran mayoría de las observaciones no se han observado precipitaciones. Se observan algunos valores positivos de precipitaciones distribuidos por el territorio Andaluz, alcanzándose los máximos en observaciones localizadas ne las coordilleras béticas.
@@ -313,7 +367,9 @@ datos %>%
   summarize(AVG_PRECTOTCORR = mean(PRECTOTCORR),
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_PRECTOTCORR,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8)
+  geom_col(position="dodge",alpha=0.8) +
+  scale_fill_hue(direction = -1) +
+  theme_minimal()  
 ```
 
 Se observa una clara diferencia en la media mensual de precipitaciones en ambas clases en todos los meses, siendo mucho mayores entre las observaciones negativas. En los meses de verano esto sigue siendo cierto, si bien las diferencias se suavizan significativamente, ya que en ambos clases las precipitaciones son reducidas.
@@ -329,15 +385,18 @@ Se observa una clara diferencia en la media mensual de precipitaciones en ambas 
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=NDVI),size = 1, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE))+
+  geom_sf(data = datos, aes(color=NDVI),size = 1.2, alpha = 0.6) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Distribución espacial de NDVI por mes") +
+  theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
-        axis.ticks.y=element_blank()) + 
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de NDVI por mes")
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 ```
 
 Los valores más elevados del NDVI se encuentran en el norte de la comunidad (Sierra Morena y Sierra de Aracena) y en la zona sur-centro. Los valores son especialmente elevados en la Sierra de Grazalema y en las marismas del Guadalquivir y especialmente bajos en el este de la comunidad (Almería).
@@ -350,7 +409,9 @@ datos %>%
             Mes = `month(date, label = T)`) %>% 
   ggplot(aes(x=Mes,y=AVG_NDVI,fill=fire)) +
   geom_col(position="dodge",alpha=0.8) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+  scale_fill_hue(direction = -1) +
+  theme_minimal()    
+  # theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
 El valor del NDVI disminuye en los meses de verano y alcanza su máximo en los meses de invierno. No se observa claramente una relación entre el NDVI y la clase de la observación en la muestra.
@@ -360,11 +421,18 @@ El valor del NDVI disminuye en los meses de verano y alcanza su máximo en los m
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=poblacion,size = poblacion), alpha = 0.6) +
+  geom_sf(data = datos, aes(color=poblacion,size = poblacion,alpha=poblacion/median(poblacion))) +
   scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none") +
+  guides(size="none",alpha="none") +
   # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de poblacion")
+  ggtitle("Distribución espacial de poblacion") + 
+  theme_minimal() #+
+  # theme(axis.text.x=element_blank(),
+  #       axis.ticks.x=element_blank(),
+  #       axis.text.y=element_blank(),
+  #       axis.ticks.y=element_blank(),
+  #       panel.grid.major = element_blank(),
+  #       panel.grid.minor = element_blank())
 ```
 
 En la gran mayoría del territorio se observan niveles de población inferiores a 20.000 habitantes. Destacan las capitales de provincia por tener valores significativamente más elevados.
@@ -390,16 +458,17 @@ by(datos$poblacion,datos$fire,summary)
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
-  geom_sf(data = datos, aes(color=dens_poblacion, size= dens_poblacion), alpha = 0.6) +
+  geom_sf(data = datos, aes(color=dens_poblacion, size= dens_poblacion, alpha=dens_poblacion)) +
 # facet_wrap(~fire)+
 # theme(axis.text.x=element_blank(),
 #       axis.ticks.x=element_blank(),
 #       axis.text.y=element_blank(),
 #       axis.ticks.y=element_blank()) + 
   scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none") +
+  guides(size="none",alpha="none") +
   # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de dens_poblacion")
+  ggtitle("Distribución espacial de dens_poblacion") +
+  theme_minimal()
 ```
 
 Comentario similar a la población. Mayor densidad de población en las zonas de costa y en las capitales de provincia.
@@ -408,7 +477,109 @@ Comentario similar a la población. Mayor densidad de población en las zonas de
 by(datos$dens_poblacion,datos$fire,summary)
 ```
 
+### pendiente
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=pendiente, size= pendiente, alpha=pendiente)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de pendiente") +
+  theme_minimal()
+```
 
+
+### elevacion
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=elevacion, size= elevacion, alpha=elevacion)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de elevacion") +
+  theme_minimal()
+```
+
+### curvatura
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=curvatura, alpha=curvatura)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de curvatura") +
+  theme_minimal()
+```
+
+
+
+### dist_carretera
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=dist_carretera, alpha=dist_carretera)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de dist_carretera") +
+  theme_minimal()
+```
+
+
+### dist_electr
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=dist_electr, alpha=dist_electr)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de dist_electr") +
+  theme_minimal()
+```
+
+### dist_camino
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=dist_camino, alpha=dist_camino)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de dist_camino") +
+  theme_minimal()
+```
+
+### dist_sendero
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=dist_sendero, alpha=dist_sendero)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de dist_sendero") +
+  theme_minimal()
+```
+
+
+### dist_poblacion
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=dist_poblacion, alpha=dist_poblacion)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de dist_poblacion") +
+  theme_minimal()
+```
+
+### dist_ferrocarril
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=dist_ferrocarril, alpha=dist_ferrocarril)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de dist_ferrocarril") +
+  theme_minimal()
+```
 
 ## Variables numéricas
 
@@ -428,7 +599,7 @@ Se estudian primero las correlaciones entre las variables.
 ```{r}
 R = cor(datos_numeric)
 
-corrplot(R,method = "ellipse",type = "upper")
+corrplot(R,method = "ellipse",type = "lower")
 
 summary(R-diag(diag(R)))
 ```
@@ -443,7 +614,12 @@ Las variables más correlacionadas en la muestra son T2M con RH2M (negativamente
 datos |> 
   select(fire,where(is.numeric)) |> 
   ggparcoord(columns=2:19,alphaLines=0.1,groupColumn = "fire") +
-  xlab('') + ylab('') + scale_x_discrete(labels=colnames(datos_numeric)) +
+  xlab('') + 
+  ylab('') + 
+  scale_x_discrete(labels=colnames(datos_numeric)) +
+  scale_color_hue(direction = -1) +
+  # guides(color ="none")+
+  theme_minimal() + 
   ggtitle("Tipificación a normal estándar (por defecto)") +
   theme(plot.title = element_text(size = 9),
         axis.text.x = element_text(angle = 90))
@@ -458,6 +634,7 @@ Considerando las variables tipificadas, se observa que aquellas con más variabi
 ```{r}
 boxplots <- map(names(datos_numeric), ~ ggplot(datos, aes(x = fire, y = .data[[.x]],fill=fire)) +
                   geom_boxplot() +
+                  scale_fill_hue(direction = -1) +
                   guides(fill="none") +
                   labs(title = paste(.x, "~ fire")))
 
@@ -486,7 +663,6 @@ Acumular 46.06mm de lluvia en un día es un valor posible, probablemente atípic
 
 
 
-
 ## Variables categóricas
 
 Las variables date, cod_municipio y municipio son "identificadoras". Las variables explicativas categóricas son WD10M, orientacion, enp y uso_suelo. 
@@ -501,6 +677,8 @@ datos_categ <- datos |> select(WD10M,orientacion,enp,uso_suelo) %>% st_drop_geom
 ```{r}
 histogramas <- map(names(datos_categ), ~ ggplot(datos, aes(x = .data[[.x]], fill = fire)) +
                     geom_bar(position = "dodge", alpha = 0.8) +
+                    scale_fill_hue(direction = - 1) +
+                    theme_minimal() +
                     labs(title = .x)+theme(axis.text.x = element_text(size=7)))
 
 ggarrange(plotlist = histogramas, ncol = 2, nrow = ceiling(length(histogramas)/2))
@@ -514,6 +692,25 @@ La variable `enp` no parece mostrar diferencias en ambas clases.
 
 En el caso de la variable `uso_suelo`, sí que se observan diferencias significativas en ambas clases, que sin duda también son debidas al proceso de muestreo seguido.
 
+```{r}
+datos |> 
+  mutate(uso_suelo = fct_lump(uso_suelo,
+                              n = 7, 
+                              other_level= "Otro"))  |>
+  ggplot() + 
+  geom_sf(data = prov) + 
+  geom_sf(aes(color=uso_suelo),size = 1.2, alpha = 0.6) +
+  ggtitle("Distribución espacial de uso_suelo") +
+  theme_minimal() +
+  guides(color = guide_legend(override.aes = list(size = 5))) +
+  scale_color_viridis_d(option="turbo")
+  # scale_color_stepsn(colours = rainborainbpw(8,rev=T)) +
+  # scale_color_gradient(low="blue", high="red")+
+
+   
+
+```
+
 
 ## PCA
 
@@ -521,7 +718,10 @@ En el caso de la variable `uso_suelo`, sí que se observan diferencias significa
 ```{r}
 pca <- princomp(datos_numeric,cor=T)
 
-summary(pca)
+library(knitr)
+summary(pca) 
+str(s)
+pca$loadings
 ```
 
 Se necesitan al menos 11 componentes principales para explicar el 80% de la variabilidad de las 18 variables numéricas de la muestra (tipificadas) y al menos 14 para explicar el 90%. Esto refleja, la complejidad del conjunto de datos.

@@ -91,11 +91,12 @@ tuning_plot = function(mod_res) {
     p = ggplot(datos_interp_df, aes(x = x, y = y, fill = z)) +
       geom_tile() +
       # scale_fill_viridis_c(option = "turbo", limits = c(min,max), name = NULL)+
-      scale_fill_viridis_c(option = "turbo", name = NULL)+
-      labs(title = metric,
+      scale_fill_viridis_c(option = "turbo", name = NULL,na.value = "transparent")+
+      labs(title = "",
            x = colnames(datos)[1],
            y = colnames(datos)[2],
-           fill = metric)
+           fill = metric) +
+      theme_minimal()
     
     plots[[metric]] = p
     
@@ -105,7 +106,9 @@ tuning_plot = function(mod_res) {
   #           legend = "right",
   #           common.legend = T)
   
-  ggarrange(plotlist = plots)
+  ggarrange(plotlist = plots,
+            labels=c("Accuracy","Specificy","ROC-AUC","Recall"),
+            align = "hv")
   
   
 }
@@ -201,10 +204,15 @@ tuning_plot(lr_res)
 lr_res |> 
   collect_metrics() |> 
   group_by(.metric)|> 
-  summarise(max = max(mean),min=min(mean))
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) |> 
+  summarise(max = max(mean),min=min(mean))   
+lr_tuning
 
 lr_res %>% 
-  show_best(metric = "accuracy", n = 15)
+  show_best(metric = "accuracy", n = 15) %>% 
+  arrange(desc(mean),penalty)
 
 
 # 7º Selección del mejor modelo
@@ -247,8 +255,8 @@ lr_errors = lr_res %>%
 
 ggplot(lr_errors,aes(col=residual)) + 
   geom_sf(alpha=0.6) +
-  labs(col = "Error") + 
-  scale_colour_manual(values = c("grey","red"),labels = c("Correcto","Error"))
+  labs(col = "Predicción") + 
+  scale_colour_manual(values = c("grey","red"),labels = c("Correcta","Errónea"))
 ```
 
 Los errores se concentran en las zonas con más incendios (al norte y al sur del Guadalquivir).
@@ -434,13 +442,14 @@ lr_pca_res <-
             control = control_grid(save_pred = TRUE),
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
-lr_pca_res |> 
+lr_pca_tuning = lr_pca_res |> 
   collect_metrics() |> 
   group_by(.metric)|> 
   summarise(max = max(mean),min=min(mean))
 
 lr_pca_res %>% 
-  show_best(metric = "accuracy", n = 15)
+  show_best(metric = "accuracy", n = 15) %>% 
+  arrange(desc(mean))
 
 
 # 7º Selección del mejor modelo
@@ -507,44 +516,76 @@ dt_res <-
 
 # plot(dt_res |> extract_fit_engine())
 
-dt_res |> 
+dt_tuning = dt_res |> 
   collect_metrics() |> 
   group_by(.metric)|> 
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) |> 
   summarise(max = max(mean),min=min(mean))
+dt_tuning
 
 dt_plot <- 
   dt_res %>% 
-  collect_metrics() %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) |> 
   # filter(.metric == "accuracy") %>%
   ggplot(aes(x = cost_complexity, y = mean,col=.metric)) + 
   geom_point() + 
   geom_line() + 
-  ylab("Medidas de rendimiento") +
-  scale_x_log10(labels = scales::label_number())
+  ylab("") +
+  scale_x_log10(labels = scales::label_number())+
+  theme_minimal()
 dt_plot
 
 dt_best <- dt_res |> 
   select_best(metric = "accuracy")
+dt_best
 
 dt_metrics <- dt_res |> 
   collect_predictions(parameters = dt_best) |> 
   get_metrics()
 dt_metrics
+
+```
+
+```{r}
+# library(rpart.plot)
+# library(rattle)
+# library(RColorBrewer)
+# 
+# arbol = dt_workflow %>% 
+#   finalize_workflow(dt_best) %>%
+#   fit(training) %>% 
+#   extract_fit_engine() 
+# 
+# fancyRpartPlot(arbol,cex=0.6)
+# rpart.plot(arbol,cex=0.6)
+# 
+# plot(arbol,main="Arbol de clasificación: datos spam",margin=0.1,compress=T,branch=0.8)
+# text(arbol,col="blue",cex=0.6)
+
 ```
 
 
 ## 2. Random Forest
 
-```{r}
+```{r }
+
 # Detectar el número de núcleos para trabajar en paralelo
 cores <- parallel::detectCores()
 cores
 
 # Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo de forma que la computación sea más eficiente
 
+# ETAPA 1: fijado mtry=4, se ajusta min_n
+# -----------------
+
 # 1º Construir el modelo
-rf_mod <- 
-  rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>% 
+rf_mod1 <- 
+  rand_forest(mtry = 4, min_n = tune(), trees = 1000) %>% 
   set_engine("ranger", num.threads = cores) %>% 
   set_mode("classification")
 
@@ -557,80 +598,130 @@ rf_recipe <-
 # No normalizamos en este caso pues no es necesario
 
 # 3º Ensamblar todo con workflow
-rf_workflow <- 
+rf_workflow1 <- 
   workflow() %>% 
-  add_model(rf_mod) %>% 
+  add_model(rf_mod1) %>% 
   add_recipe(rf_recipe)
 
 # 4º Train and tune
-rf_mod
-extract_parameter_set_dials(rf_mod)
-```
-
-```{r }
 set.seed(345)
-rf_res <- 
-  rf_workflow %>% 
+
+rf_res1 <-
+  rf_workflow %>%
   tune_grid(val_set,
-            grid = 40,
+            grid = expand_grid(min_n = seq(1000,2500,100)),
             control = control_grid(save_pred = TRUE),
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
-```
-
-```{r include=FALSE}
-# Tarda demasiado, lo cargamos
-
-# load("salidas_intermedias/trained_models/trained_models_strat_24_04_27.RData")
-```
-
-
-``` {r}
 # Resultados del tuning
 
-rf_res |> 
+rf_tuning1 <- rf_res1 |> 
   collect_metrics() |> 
   group_by(.metric)|> 
   summarise(max = max(mean),min=min(mean))
-# Se observa mayor variabilidad que en el caso de la regresión logística con penalización
 
+rf_tuning1
 
-tuning_plot(rf_res)
+# plot
 
-# Se observa que al disminuir mtry y aumentar min_n aumenta la tasa de acierto. Sin embargo, los valores más elevados de recall se encuentran para valores pequeños de min_n, al contrario de lo que ocurre con la especificidad. Sin embargo, dado que la variación en la especificidad es de casi un 20% mientras que la de la sensitividad es de tan solo un 7% se opta por maximizar la tasa de acierto como solución de compromiso.
+rf_plot1 <- 
+  rf_res1 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = min_n, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = "Etapa 1\nFijado mtry = 4, se ajusta min_n")
 
-# En comparación con el modelo de regresión logística este nos permite conseguir niveles de sensitividad más elevados (superiores al 90%) 
 
 # Mejor modelo
-rf_best <- 
-  rf_res %>% 
-  select_best(metric = "accuracy")
+rf_best1 <- 
+  rf_res1 %>% 
+  select_best(metric = "spec")
 
-rf_best
+rf_best1
 
-# mtry = 1 --> BOOSTING DECISION TREES??
-
-
-# Curva ROC
-rf_auc <- 
-  rf_res %>% 
-  collect_predictions(parameters = rf_best) %>% 
-  roc_curve(fire, .pred_0) %>% 
-  mutate(model = "Random Forest")
-
-autoplot(rf_auc)
-
-#   Medidas de rendimiento:
-
-rf_metrics <- rf_res |> 
-  collect_predictions(parameters = rf_best) |> 
+rf_metrics1 <- rf_res1 |> 
+  collect_predictions(parameters = rf_best1) |> 
   get_metrics()
 
-rf_metrics
+rf_metrics1
 
-# save(rf_res,file = "salidas_intermedias/trained_models/trained_models_strat_24_04_27.RData")
+
+# ETAPA 2: fijado min_n de la etapa anterior, se ajusta mtry
+# -----------------
+
+# 1º Se construye el modelo
+rf_mod2 <- 
+  rand_forest(mtry = tune(), min_n = rf_best1$min_n, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Se usa la misma receta que antes
+
+# 3º Ensamblar todo con workflow
+rf_workflow2 <- 
+  workflow() %>% 
+  add_model(rf_mod2) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res2 <-
+  rf_workflow2 %>%
+  tune_grid(val_set,
+            grid = expand_grid(mtry = 1:10),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# Resultados del tuning
+
+rf_tuning2 <- rf_res2 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning2
+
+#plot
+rf_plot2 <- 
+  rf_res2 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = mtry, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = paste0("Etapa 2\nFijado min_n = ", rf_best1$min_n, " se ajusta mtry"))
+
+# Mejor modelo
+rf_best2 <- 
+  rf_res2 %>% 
+  select_best(metric = "spec")
+rf_best2
+
+rf_metrics2 <- rf_res2 |> 
+  collect_predictions(parameters = rf_best2) |> 
+  get_metrics()
+
+rf_metrics2
+
+
+# ---------
+
+# Plots
+ggarrange(rf_plot1,rf_plot2,nrow=1,common.legend = T,legend = "bottom")
+
 ```
-Probablemente, dandole valores más elevados de mtry mejore el rendimiento.
 
 
 ## k-Nearest Neighbours
@@ -670,19 +761,23 @@ knn_res <-
 
 
 
-knn_res |> 
+knn_tuning <- knn_res |> 
   collect_metrics() |> 
   group_by(.metric)|> 
   summarise(max = max(mean),min=min(mean))
 
 knn_plot <- 
   knn_res %>% 
-  collect_metrics() %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
   # filter(.metric == "accuracy") %>%
   ggplot(aes(x = neighbors, y = mean,col=.metric)) + 
   geom_point() + 
   geom_line() + 
-  ylab("Medidas de rendimiento") 
+  ylab("") +
+  theme_minimal()
 knn_plot
 
 knn_best <- knn_res |> 
@@ -707,11 +802,12 @@ load("salidas_intermedias/trained_models/svm_res_strat.RData")
 ```
 
 ```{r}
-# Con brulee se puede hacer un perceptron multiicapas con tidymodels
+# Con brulee se puede hacer un perceptron multicapas con tidymodels
 ```
 
 
-## 4. SVM
+## 4. SVM lineal
+
 ```{r}
 # 1º Construir el modelo
 svm_mod <- 
@@ -744,8 +840,6 @@ svm_res <-
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
 
-# Tada demasiado, lo cargamos:
-# load("salidas_intermedias/trained_models/svm_res_strat.RData")
 
 # 5º Evaluación de resultados del tuning
 svm_res |> 
@@ -753,8 +847,19 @@ svm_res |>
   group_by(.metric)|> 
   summarise(max = max(mean),min=min(mean))
 
-tuning_plot(svm_res)
-
+svm_plot <- 
+  svm_res %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  # filter(.metric == "accuracy") %>%
+  ggplot(aes(x = cost, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()
+svm_plot
 # Se observa que hay muy poca variabilidad en los resultados de cada combinación de parámetros, menos de un 2.5% para cada medida de rendimiento. Ante este resultado, de nuevo, se opta por maximizar la tasa de acierto
 
 
@@ -782,8 +887,7 @@ svm_metrics
 
 # save(svm_res,file = "salidas_intermedias/trained_models_svm_2024_05_04.RData")
 ```
-
-
+### SVM radial
 ```{r}
 # 1º Construir el modelo
 svm_rbf_mod <- 
@@ -825,9 +929,7 @@ svm_rbf_res |>
   group_by(.metric)|> 
   summarise(max = max(mean),min=min(mean))
 
-tuning_plot(svm_rbf_res)
-
-# Se observa que hay muy poca variabilidad en los resultados de cada combinación de parámetros, menos de un 2.5% para cada medida de rendimiento. Ante este resultado, de nuevo, se opta por maximizar la tasa de acierto
+tuning_plot(svm_rbf_res) # No puede hacerse el gráfico
 
 
 # Mejor modelo
@@ -861,9 +963,10 @@ svm_rbf_metrics
 load("salidas_intermedias/trained_models_svm_rbf_2024_05_04.RData")
 load("salidas_intermedias/trained_models_svm_2024_05_04.RData")
 load("salidas_intermedias/trained_models_strat_faltasvm_2024_05_03.RData")
+load("salidas_intermedias/trained_models_rf_2024_05_05.RData")
 
 models = tibble(model_name = c("lr","lr_pca","dt","rf","svm_linear","svm_rbf","knn"),
-                models_tune = list(lr_res,lr_pca_res,dt_res,rf_res,svm_res,svm_rbf_res,knn_res))
+                models_tune = list(lr_res,lr_pca_res,dt_res,rf_res2,svm_res,svm_rbf_res,knn_res))
 
 models = models %>% mutate(best_tuning = map(models_tune,function(x) select_best(x,metric = "accuracy")),
                            best_metrics = map2(models_tune,
@@ -881,7 +984,20 @@ models = models %>% mutate(best_tuning = map(models_tune,function(x) select_best
 metrics = models %>% select(model_name,best_metrics) %>% unnest(best_metrics)
 metrics
 
-library(fira)
+# plot
+metrics %>% 
+  pivot_longer(cols = c(roc_auc, accuracy, recall, specificity, precision),
+               names_to = "metric") %>% 
+  ggplot(aes(x = metric, y = value, group = model_name)) +
+  geom_line(aes(col = model_name),size=1) +
+  geom_point(aes(col = model_name),size=2.3) +
+  scale_color_viridis_d(option="turbo") +
+  geom_vline(xintercept=1:5, linetype="dotted") +
+  labs(col = "Modelo", title = "Métricas sobre validación") +
+  theme_minimal() +
+  theme(axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1))
+  
 
 models %>% select(model_name,roc) %>% unnest(roc) %>% 
   ggplot(aes(x = 1 - specificity, y = sensitivity, col = model_name)) + 

@@ -343,7 +343,7 @@ Sea $\hat C_b(\underline x)$ la clase predicha por el b-ésimo árbol de decisi�
 ## Validación del ajuste
 Para validar el ajuste de los modelos comentados en los datos, se utilizará una partición temporal en entrenamiento/ validación/ test. Es decir, se asignará el primer 60% de los datos (de acuerdo al día de la observación) a entrenamiento, el 20% siguiente a validación y el último 20% a test. Este enfoque permite evitar el sesgo positivo debido al efecto *look-ahead* en la estimación de la capacidad de generalización de los modelos.
 
-## Evaluación modelos
+## Evaluación de los modelos
 
 Una vez construido un modelo predictivo es necesario conocer el rendimiento de este sobre nuevos datos, con el objetivo de estimar su capacidad de generalización. Esto es fundamental de cara a determinar si el modelo es adecuado para el propósito previsto o si necesita ajustes o mejoras. Además, la evaluación del rendimiento permite comparar entre diferentes modelos y seleccionar el que mejor se adapte a las necesidades específicas del problema en cuestión. Para ello, se recurre a distintas métricas, en función de las características propias de cada problema.
 
