@@ -966,8 +966,12 @@ load("salidas_intermedias/trained_models_strat_faltasvm_2024_05_03.RData")
 load("salidas_intermedias/trained_models_rf_2024_05_05.RData")
 
 models = tibble(model_name = c("lr","lr_pca","dt","rf","svm_linear","svm_rbf","knn"),
-                models_tune = list(lr_res,lr_pca_res,dt_res,rf_res2,svm_res,svm_rbf_res,knn_res))
+                models_tune = list(lr_res,lr_pca_res,dt_res,rf_res2,svm_res,svm_rbf_res,knn_res),
+                models_workflow = list(lr_workflow,lr_pca_workflow,dt_workflow,rf_workflow2,svm_workflow,svm_rbf_workflow,knn_workflow))
 
+# save(models, file="salidas_intermedias/all_models.RData")
+
+load("salidas_intermedias/all_models.RData")
 models = models %>% mutate(best_tuning = map(models_tune,function(x) select_best(x,metric = "accuracy")),
                            best_metrics = map2(models_tune,
                                                best_tuning,
@@ -984,7 +988,8 @@ models = models %>% mutate(best_tuning = map(models_tune,function(x) select_best
 metrics = models %>% select(model_name,best_metrics) %>% unnest(best_metrics)
 metrics
 
-# plot
+
+# curva roc
 metrics %>% 
   pivot_longer(cols = c(roc_auc, accuracy, recall, specificity, precision),
                names_to = "metric") %>% 
@@ -998,15 +1003,18 @@ metrics %>%
   theme(axis.line.x = element_line(color="black", size = 1),
         axis.line.y = element_line(color="black", size = 1))
   
-
+# plot medidas
 models %>% select(model_name,roc) %>% unnest(roc) %>% 
   ggplot(aes(x = 1 - specificity, y = sensitivity, col = model_name)) + 
   geom_path(lwd = 1, alpha = 0.7) +
   geom_abline(lty = 3) + 
   coord_equal() + 
+  scale_color_viridis_d(option="turbo") +
   labs(color="Modelo")+
   # scale_color_viridis_d(option = "turbo",name="Modelo") +
   theme_minimal() + 
+  theme(axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1))+
   ggtitle("Curva ROC en validación")
 
 library(knitr)
@@ -1019,148 +1027,95 @@ kable(metrics,digits=3)
 
 Se unen los conjuntos training y validation para entrenar el modelo final
 
-### Logistic Regression 
 ```{r}
-# the last model
-lr_best # penalty = 0.000259 
-        # mixture = 1
-last_lr_mod <- logistic_reg(penalty = lr_best$penalty, mixture = lr_best$penalty) |> 
-  set_engine("glmnet")
-  
-# the last workflow
-last_lr_workflow <- 
-  lr_workflow %>% 
-  update_model(last_lr_mod)
 
-# the last fit
+cores = 8
+
 set.seed(345)
-last_lr_fit <- 
-  last_lr_workflow %>% 
-  last_fit(splits,
-           add_validation_set = T)
+models <- models %>% mutate(final_workflow = map2(models_workflow,best_tuning,finalize_workflow),
+                           last_fit = map(final_workflow,function(x) last_fit(x,splits,add_validation_set=T)))
 
-last_lr_fit
+models = models %>% mutate(test_metrics = map(last_fit,
+                                              ~collect_predictions(.x) %>% 
+                                                 get_metrics() %>% 
+                                                 extract2(1)), # Para extraer solo las medidas 
+                           test_roc = map(last_fit,
+                                          ~collect_predictions(.x) %>% 
+                                             roc_curve(fire, .pred_0))
+                           ) 
 
-last_lr_fit %>% 
-  collect_metrics()
+# save(models, file="salidas_intermedias/all_models_test.RData")
 
-last_lr_fit %>% 
-  collect_predictions() %>% 
-  get_metrics()
+
+test_metrics = models %>% select(model_name,test_metrics) %>% unnest(test_metrics)
+test_metrics
+
+
+# plot
+test_metrics %>% 
+  pivot_longer(cols = c(roc_auc, accuracy, recall, specificity, precision),
+               names_to = "metric") %>% 
+  ggplot(aes(x = metric, y = value, group = model_name)) +
+  geom_line(aes(col = model_name),size=1) +
+  geom_point(aes(col = model_name),size=2.3) +
+  scale_color_viridis_d(option="turbo") +
+  geom_vline(xintercept=1:5, linetype="dotted") +
+  labs(col = "Modelo", title = "Métricas sobre test") +
+  theme_minimal() +
+  theme(axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1))
+  
+
+models %>% select(model_name,test_roc) %>% unnest(test_roc) %>% 
+  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model_name)) + 
+  geom_path(lwd = 1, alpha = 0.7) +
+  geom_abline(lty = 3) + 
+  coord_equal() + 
+  scale_color_viridis_d(option="turbo") +
+  labs(color="Modelo")+
+  # scale_color_viridis_d(option = "turbo",name="Modelo") +
+  theme_minimal() + 
+  theme(axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1))+
+  ggtitle("Curva ROC en test")
+
+library(knitr)
+
+kable(test_metrics,digits=3)
 
 ```
 
-### RF
+### RF - VIP
 ```{r}
-# the last model
-rf_best # mtry = 4
-        # min_n = 35 
+# Calcular VIP
+# No se hace desde el principio para que la computación sea más rápida
 
+# Se hace el last_fit manualmente:
+
+# the last model
 last_rf_mod <- 
-  rand_forest(mtry = rf_best$mtry, min_n = rf_best$min_n, trees = 1000) %>% 
+  rand_forest(mtry = rf_best2$mtry, min_n = rf_best1$min_n, trees = 1000) %>% 
   set_engine("ranger", num.threads = cores,importance="impurity") %>% 
   set_mode("classification")
   
 # the last workflow
 last_rf_workflow <- 
-  rf_workflow %>% 
+  rf_workflow2 %>% 
   update_model(last_rf_mod)
 
 # the last fit
-
 set.seed(345)
 last_rf_fit <- 
   last_rf_workflow %>% 
   last_fit(splits,
            add_validation_set = T)
 
-last_rf_fit
-
-last_rf_fit %>% 
-  collect_metrics()
-
-last_rf_fit %>% 
-  collect_predictions() %>% 
-  get_metrics()
-
 
 library(vip)
 last_rf_fit %>% 
   extract_fit_parsnip() %>% 
-  vip(num_features = 20)
-
-last_rf_fit %>% 
-  collect_predictions() %>% 
-  roc_curve(fire, .pred_0) %>% 
-  autoplot()
+  vip(num_features = 50,aesthetics = list(fill="lightblue")) +
+  theme_minimal()
 ```
-
-
-
-### SVM
-```{r}
-# El parámetro margin solo es útil para regresión, así que estoy siendo tremendamente ineficiente al aplicarlo, pues se entrenan modelos "iguales". Hay que quitarlo
-
-# Sería interesante probar con otros kernels: svm_rdf, svm_poly
-
-# the last model
-svm_best # cost = 0.145
-         # margin = 0.0270
-last_svm_mod <-  
-  svm_linear(cost = svm_best$cost, margin = svm_best$margin) %>% 
-  set_engine("kernlab") %>% 
-  set_mode("classification")
-  
-# the last workflow
-last_svm_workflow <- 
-  svm_workflow %>% 
-  update_model(last_svm_mod)
-
-# the last fit
-set.seed(345)
-last_svm_fit <- 
-  last_svm_workflow %>% 
-  last_fit(splits,
-           add_validation_set = T)
-
-last_svm_fit %>% 
-  collect_metrics()
-
-last_svm_fit %>% 
-  collect_predictions() %>% 
-  get_metrics()
-```
-
-
-```{r}
-results_test = rbind(
-  lr = last_lr_fit %>% 
-  collect_predictions() %>% 
-  get_metrics() %>% 
-    .$res %>%
-    as.data.frame(),
-  rf = last_rf_fit %>% 
-  collect_predictions() %>% 
-  get_metrics() %>% 
-    .$res %>%
-    as.data.frame(),
-  svm = last_svm_fit %>% 
-  collect_predictions() %>% 
-  get_metrics() %>% 
-    .$res %>%
-    as.data.frame()
-)
-
-library(knitr)
-
-kable(results_test,digits=3)
-```
-
-
-```{r}
-save(lr_res,rf_res,svm_res,last_svm_fit,last_lr_fit,last_rf_fit,
-     file = "salidas_intermedias/trained_models_strat_2024_04_28.RData")
-```
-
 
 
