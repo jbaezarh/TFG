@@ -334,7 +334,7 @@ Por último, se ha construido el modelo de SVM usando un kernel gaussiano. El pr
 
 ## Comparación
 
-A continuación se muestran las métricas de cada uno de los modelos seleccionados en los datos de validación en la Tabla \ref{tab:metricas_val} y en la Figura \ref{fig:validation_metrics}.
+A continuación se muestran las métricas de cada uno de los modelos seleccionados en los datos de validación en la Tabla \ref{tab:metricas_val} y en la Figura \ref{fig:validation_metrics}. Las curvas ROC de todos los modelos se muestran en la Figura \ref{fig:roc_validation}.
 
 \begin{table}[]
 \resizebox{\columnwidth}{!}{%
@@ -363,16 +363,52 @@ knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomr
 \label{fig:validation_metrics}
 \end{figure}
 
-Por último, para conocer la capacidad de generalización de los modelos construidos,
-estos se evaluarán sobre nuevas observaciones, el conjunto de datos test. Recuérdese que el
-entrenamiento de los modelos se ha realizado con el conjunto de entrenamiento, formado
-por 12927 observaciones tomadas entre el 2002 y mediados de 2014 y para ajustar los
-parámetros de cada modelo, se han utilizado 4309 observaciones tomadas entre mediados
-de 2014 y mediados de 2019. Finalmente, se evaluará la capacidad de predicción de los
-modelos sobre 4310 nuevas observaciones tomadas entre mediados de 2019 y 2022. Para
-ello, primero se juntarán los conjuntos de entrenamiento y validación para reentrenar los
-modelos con la configuración de parámetros seleccionada en cada caso, y posterior mente
-se compararán los valores predichos por los modelos con los valores reales. Los resultados
-obtenidos se muestran en la Tabla 4.2 y el la Figura 4.22. Las curvas ROC de los distintos
-modelos sobre el conjunto de datos test se muestra en la Figura 4.23.
+\begin{figure}[h]
+\centering
+\includegraphics[width =\textwidth]{graficos/roc_validation.png}
+\caption{Curvas ROC sobre el conjunto de validación.}
+\label{fig:roc_validation}
+\end{figure}
+
+
+
+Por último, para conocer la capacidad de generalización de los modelos construidos, estos se evaluarán sobre nuevas observaciones, el conjunto de datos test. Recuérdese que el entrenamiento de los modelos se ha realizado con el conjunto de entrenamiento, formado por 12927 observaciones tomadas entre el 2002 y mediados de 2014 y para ajustar los parámetros de cada modelo, se han utilizado 4309 observaciones tomadas entre mediados de 2014 y mediados de 2019. Finalmente, se evaluará la capacidad de predicción de los modelos sobre 4310 nuevas observaciones tomadas entre mediados de 2019 y 2022. Para ello, primero se juntarán los conjuntos de entrenamiento y validación para reentrenar los modelos con la configuración de parámetros seleccionada en cada caso, y posterior mente se compararán los valores predichos por los modelos con los valores reales. Los resultados obtenidos se muestran en la Tabla \ref{tab:metricas_test} y el la Figura \ref{fig:test_metrics}. Las curvas ROC de los distintos modelos sobre el conjunto de datos test se muestra en la Figura \ref{fig:roc_test}.
+
+Por último, evaluamos el rendimiento de estos modelos sobre el conjunto de datos test, formado por las observaciones de junio de 2019 en adelante. Para entrenar los modelos s
+
+\ref{fig:test_metrics} \ref{fig:roc_test}
+
+\begin{table}[]
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llllll@{}}
+\toprule
+model\_name & roc\_auc & accuracy & recall & specificity & precision \\ \midrule
+lr          & 0.795    & 0.710    & 0.726  & 0.693       & 0.718     \\
+lr\_pca     & 0.715    & 0.645    & 0.631  & 0.661       & 0.667     \\
+dt          & 0.667    & 0.668    & 0.712  & 0.621       & 0.670     \\
+rf          & 0.762    & 0.699    & 0.727  & 0.669       & 0.703     \\
+svm\_linear & 0.790    & 0.705    & 0.729  & 0.680       & 0.710     \\
+svm\_rbf    & 0.789    & 0.706    & 0.727  & 0.683       & 0.712     \\
+knn         & 0.744    & 0.673    & 0.719  & 0.624       & 0.673     \\ \bottomrule
+\end{tabular}%
+}
+\caption{Métricas sobre el conjunto test.}
+\label{tab:metricas_test}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width =\textwidth]{graficos/test_metrics.png}
+\caption{Métricas obtenidas sobre el conjunto test por cada uno de los modelos seleccionados.}
+\label{fig:test_metrics}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width =\textwidth]{graficos/roc_test.png}
+\caption{Curvas ROC sobre test.}
+\label{fig:roc_test}
+\end{figure}
+
+
 
