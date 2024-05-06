@@ -374,9 +374,6 @@ knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomr
 
 Por último, para conocer la capacidad de generalización de los modelos construidos, estos se evaluarán sobre nuevas observaciones, el conjunto de datos test. Recuérdese que el entrenamiento de los modelos se ha realizado con el conjunto de entrenamiento, formado por 12927 observaciones tomadas entre el 2002 y mediados de 2014 y para ajustar los parámetros de cada modelo, se han utilizado 4309 observaciones tomadas entre mediados de 2014 y mediados de 2019. Finalmente, se evaluará la capacidad de predicción de los modelos sobre 4310 nuevas observaciones tomadas entre mediados de 2019 y 2022. Para ello, primero se juntarán los conjuntos de entrenamiento y validación para reentrenar los modelos con la configuración de parámetros seleccionada en cada caso, y posterior mente se compararán los valores predichos por los modelos con los valores reales. Los resultados obtenidos se muestran en la Tabla \ref{tab:metricas_test} y el la Figura \ref{fig:test_metrics}. Las curvas ROC de los distintos modelos sobre el conjunto de datos test se muestra en la Figura \ref{fig:roc_test}.
 
-Por último, evaluamos el rendimiento de estos modelos sobre el conjunto de datos test, formado por las observaciones de junio de 2019 en adelante. Para entrenar los modelos s
-
-\ref{fig:test_metrics} \ref{fig:roc_test}
 
 \begin{table}[]
 \resizebox{\columnwidth}{!}{%
