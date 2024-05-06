@@ -545,8 +545,8 @@ El primer paso a la hora de construir cualquier modelo de predicción es
 disponer de datos adecuados que permitan explicar correctamente el
 fenómeno en estudio, en este caso los incendios forestales en Andalucía.
 Con este fin, se ha llevado a cabo un extenso estudio previo del dominio
-del problema para conocer qué variables pueden ser relevantes de cara a
-la predicción de incendios forestales, analizando estudios similares
+del problema para conocer qué variables son relevantes de cara a la
+predicción de incendios forestales, analizando estudios similares
 realizados anteriormente así como otras fuentes relativas a la ecología
 del fuego, que nos permitiesen conocer el efecto que cabría esperar de
 estas variables.
@@ -555,8 +555,8 @@ Se ha querido adoptar un enfoque dinámico, es decir, el objetivo no es
 construir un modelo estacionario que nos indique si una determinada zona
 se verá afectada por un incendio forestal a lo largo de un amplio
 periodo temporal, si no que se pretende ser capaz de predecir si un
-determinado punto del territorio andaluz se verá afectado por un
-incendio forestal en un momento concreto, en base a las covariables
+determinado punto del territorio se verá afectado por un incendio
+forestal en un momento concreto, en base a las covariables
 correspondientes a ese lugar en ese momento. Es decir, se considera no
 solo la dimensión espacial de los datos si no también la temporal, al
 mayor nivel de desagregación disponible. Este es un enfoque mucho menos
@@ -622,26 +622,26 @@ sido posible en este caso incorporarla al trabajo por diversas razones.
 La principal de ellas fue que hasta marzo de 2024 la base de datos de la
 EGIF solo se encontraba disponible en el Catálogo de Datos del Gobierno
 de España en formato TURTLE\footnote{TURTLE es una sintaxis para RDF con
-  compatible con SPARQL. RDF (Resource Description Framework) es un
-  estándar de semántica web utilizado para el intercambiar de datos en
-  la Web.} y esto conllevó numerosas dificultades. Se exploraron
+  compatible con SPARQL. RDF (\emph{Resource Description Framework}) es
+  un estándar de semántica web utilizado para el intercambiar de datos
+  en la Web.} y esto conllevó numerosas dificultades. Se exploraron
 distintas librerías de R (y alguna de Python) para el manejo de datos en
-este formato como RDFlib. Sin embargo, al tratarse de una base de datos
-de un tamaño considerable (aproximadamente 1GB y con más de una decena
-de millones de tripletas), esta librería no era suficientemente
+este formato como \emph{RDFlib}. Sin embargo, al tratarse de una base de
+datos de un tamaño considerable (aproximadamente 1GB y con más de una
+decena de millones de tripletas), esta librería no era suficientemente
 eficiente para poder realizar consultas en un tiempo razonable al
 conjunto de datos. Tras explorar otras alternativas, se valoró la
-posibilidad de usar un triplestore, es decir, una base de datos
+posibilidad de usar un \emph{triplestore}, es decir, una base de datos
 especialmente diseñada para el almacenamiento y recuperación de
-tripletas a través de consultas semánticas. En este caso se usó Apache
-Jena Fuseki, ya que cuenta con una interfaz que facilita su uso. Sin
-embargo, aunque esto supuso una mejora considerable en la eficiencia y
-permitió realizar consultas sencillas a la base de datos, en este caso
-fue la complejidad del gráfico de datos (ontología) y la escasa
-documentación disponible sobre esta, la que impidió que se pudiesen
-realizar las consultas más complejas que requería para llevar a cabo el
-proyecto. Además, se debe tener en cuenta que se trata de una base de
-datos muy heterogénea y con numerosos datos faltantes debida su
+tripletas a través de consultas semánticas. En este caso se usó
+\emph{Apache Jena Fuseki}, ya que cuenta con una interfaz que facilita
+su uso. Sin embargo, aunque esto supuso una mejora considerable en la
+eficiencia y permitió realizar consultas sencillas a la base de datos,
+en este caso fue la complejidad del gráfico de datos (ontología) y la
+escasa documentación disponible sobre esta, la que impidió que se
+pudiesen realizar las consultas más complejas requeridas para llevar a
+cabo el proyecto. Además, se debe tener en cuenta que se trata de una
+base de datos muy heterogénea y con numerosos datos faltantes debida su
 naturaleza, por lo que requiere de un preprocesamiento que probablemente
 será complicado y costoso en tiempo y en recursos computacionales. Al no
 disponer de ninguno de estos, finalmente se optó por buscar una
@@ -682,18 +682,18 @@ de inicio de cada uno de ellos (Figura \ref{fig:area_fuego}).
 Una vez limitada la extensión territorial del estudio el siguiente paso
 era acotar la franja temporal que abarcaría el estudio en base a la
 disponibilidad de datos adecuados para explicar el fenómeno en cuestión
-desagregados espacial y temporalmente.
+desagregando espacial y temporalmente.
 
 Los incendios forestales son un proceso sumamente complejo, en el que
-actúan numerosos factores de muy distinta índole (\ldots). Además,
-dentro de un incendio forestal se pueden distinguir distintas fases que
-presentan características muy diversas y sobre las que actúan distintos
-agentes: ignición, propagación y extinción. Dada la información sobre
-incendios forestales disponible, se está obligado a adoptar un enfoque
-global, pues no se dispone de los puntos de ignición u origen de los
-incendios forestales. El enfoque será, por tanto, intentar predecir si
-una determinada localización se verá afectada por un incendio forestal
-(de más de 100 ha) en un momento concreto.
+actúan numerosos factores de muy distinta índole (citar estudio\ldots).
+Además, dentro de un incendio forestal se pueden distinguir distintas
+fases que presentan características muy diversas y sobre las que actúan
+distintos agentes: ignición, propagación y extinción. Dada la
+información sobre incendios forestales disponible, se está obligado a
+adoptar un enfoque global, pues no se dispone de los puntos de ignición
+u origen de los incendios forestales. El enfoque será, por tanto,
+intentar predecir si una determinada localización se verá afectada por
+un incendio forestal (de más de 100 ha) en un momento concreto.
 
 Además, es importante tener en cuenta que existen factores estructurales
 que tienen una influencia directa sobre los regímenes de incendios
@@ -732,7 +732,8 @@ temporalmente.
 
 En base a todo lo mencionado y a la disponibilidad de información de
 calidad de las categorías comentadas, se ha decidido limitar la franja
-temporal del estudio a 20 años que van de 2002 a 2022, ambos inclusive.
+temporal del estudio a los 20 años que van de 2002 a 2022, ambos
+inclusive.
 
 \hypertarget{fuentes-de-datos}{%
 \section{Fuentes de datos}\label{fuentes-de-datos}}
@@ -740,10 +741,10 @@ temporal del estudio a 20 años que van de 2002 a 2022, ambos inclusive.
 Como se ha comentado en la sección anterior, los datos sobre los
 incendios forestales se han obtenido de los perímetros de incendios
 forestales mayores de 100 ha en Andalucía entre 1975 y 2020 disponibles
-la REDIAM. De cada incendio registrado se dispone de su fecha de inicio,
-del área recorrida por el fuego y del municipio en el que originó, así
-como de otras variables que dependen del año de la campaña y que no son
-relevantes de cara a nuestro estudio.
+la REDIAM. De cada incendio registrado se dispone de su fecha de inicio
+y del polígono del área recorrida por el fuego, así como de otras
+variables que dependen del año de la campaña y que no serán relevantes
+de cara al estudio.
 
 Tomando como base estudios similares (\ldots) y partiendo de las 6
 categorías ya mencionadas se han recopilado 23 conjuntos de datos de
@@ -754,9 +755,11 @@ obtenido cada uno de ellos, el tipo de datos que contiene (indicando su
 resolución en el caso de los datos ráster) y la frecuencia de las
 observaciones (o resolución temporal) en el caso de las variables
 temporales. En realidad, el número de archivos de datos que se manejan
-es mucho mayor, ya que por ejemplo para la variable NDVI se dispone de
-un archivo tiff para cada mes del periodo de estudio, lo que añade
-cierta complejidad al manejo de la información.
+es mucho mayor, ya que, por ejemplo, para la variable \emph{NDVI} se
+dispone de un archivo \emph{tiff} para cada mes del periodo de estudio,
+resultando en un total de unos 240 archivos ráster diferentes solo para
+esta variable. Inevitablemente, esto añade cierta complejidad al manejo
+de los datos.
 
 Es relevante la heterogeneidad de los datos recopilados, pues se dispone
 tanto de datos tabulares como de datos espaciales y dentro de estos
@@ -779,7 +782,7 @@ el paquete \texttt{nasapower} permite la descarga de una gran cantidad
 de variables meteorológicas con frecuencia diaria y con una resolución
 de aproximadamente \(0.5 \times 0.625\) grados de latitud y longitud
 (unos 50km). Si bien es cierto que no es lo ideal, es la única opción
-que se ha considerado viable y de cara a la construcción de unos
+que se ha considerado viable y, de cara a la construcción de unos
 primeros modelos aproximativos podría ser suficiente. Si quisiese
 extenderse el estudio, sería conveniente profundizar en la búsqueda de
 alternativas que permitan obtener información meteorológica de una mayor
@@ -803,7 +806,8 @@ Vegetación                      & NDVI                                         
                                 & Espacio protegido                                              & DERA       & Shapefile          & -          \\
                                 & Senderos / Vías Verde / Carriles Bici                          & DERA       & Shapefile          & -          \\
                                 & Caminos / Vías Pecuarias                                       & DERA       & Shapefile          & -          \\ \hline
-Demográficas                    & Población del municipio                                        & IECA\tnote{c}       & csv                & Anual      \\ \hline
+\multirow{2}{*}{Demográficas}   & Número de habitantes por municipio y año                       & IECA\tnote{c}       & csv                & Anual      \\
+                                & Extensión municipal                                            & IECA\tnote{c}       & csv                & -      \\ \hline
 Hidrográficas                   & Principales Ríos                                               & MAGRAMA\tnote{d}    & Shapefile          & -          \\ \hline
 \multirow{6}{*}{Meteorológicas} & Precipitación (mm/day)                                         & NASA POWER\tnote{e} & df (0.5º x 0.625º) & Diaria     \\
                                 & Temperatura a 2m sobre la superficie (º)                       & NASA POWER & df (0.5º x 0.625º) & Diaria     \\
@@ -831,14 +835,14 @@ Hidrográficas                   & Principales Ríos                            
 
 Una vez se dispone de todos los conjuntos de datos que se usarán en el
 estudio, el siguiente paso será combinarlos de manera adecuada y
-transformarlos a un formato apto para el análisis estadístico y la
-construcción de modelos predictivos, es decir, a un data frame. Dado que
-el objetivo que se persigue es predecir si, dada unas condiciones
-meteorológicas concretas en un momento dado, un punto del territorio
-andaluz se verá afectado o no por un incendio forestal, será necesario
-disponer de una cantidad suficiente de muestras negativas y positivas
-distribuidas espacial y temporalmente que tengan asociadas las variables
-explicativas correspondientes.
+transformarlos a un formato tabular apto para el análisis estadístico y
+la construcción de modelos predictivos. Dado que el objetivo que se
+persigue es predecir si, dada unas condiciones meteorológicas concretas
+en un momento dado, un punto del territorio andaluz se verá afectado o
+no por un incendio forestal, será necesario disponer de una cantidad
+suficiente de muestras negativas y positivas distribuidas espacial y
+temporalmente que tengan asociadas las variables explicativas
+correspondientes.
 
 Intuitivamente, las muestras positivas serán aquellas observaciones
 (puntos definidos en el tiempo y en el espacio) dentro del marco
@@ -930,33 +934,33 @@ verdadero proceso latente de aparición de incendios forestales sino al
 proceso de selección de la muestra, pudiendo provocar un marcado sesgo
 positivo en las medidas de evaluación de los modelos que en realidad no
 estarían reflejando la realidad si no los sesgos introducidos en los
-conjuntos de datos. Por ello, en el presente trabajo para de generar los
-días de las muestras negativas se seguirá una distribución de
-probabilidad proporcional a la cantidad de incendios observados a lo
-largo del periodo de estudio en cada mes. Mediante este enfoque se
-espera obtener una muestra balanceada y estratificada por mes que
-permita construir modelos de clasificación capaces de captar los
+conjuntos de datos. Por ello, en el presente trabajo, para generar
+aleatoriamente los días de las muestras negativas se seguirá una
+distribución de probabilidad proporcional a la cantidad de incendios
+observados a lo largo del periodo de estudio en cada mes. Mediante este
+enfoque se espera obtener una muestra balanceada y estratificada por mes
+que permita construir modelos de clasificación capaces de captar los
 patrones latentes de aparición de incendios forestales. Además, este
-enfoque permite centrar el esfuerzo en los periodos que más incendios se
-producen.
+enfoque permite centrar el esfuerzo computacional en los periodos en los
+que más incendios se producen.
 
 \hypertarget{asignaciuxf3n-de-las-variables-descriptivas-a-cada-observaciuxf3n}{%
 \subsection{Asignación de las variables descriptivas a cada
 observación}\label{asignaciuxf3n-de-las-variables-descriptivas-a-cada-observaciuxf3n}}
 
 Una vez generada una muestra balanceada de 22170 observaciones dentro de
-Andalucía entre el 1 de enero de 2002 y el 31 de diciembre de 2022, el
-siguiente paso es asignar a cada una de ellas los valores
-correspondientes a ese día y a esa localización concreta de todas las
-variables predictoras a partir de los conjuntos de datos que se han
-recopilado (recogidos en la Tabla \ref{tab:fuentes}). Dado que será
-necesario calcular distancias, se usa un Sistema de Referencia de
-Coordenadas proyectado al generar la muestra. En particular se usa una
-variante del UTM30N por ser el que traen los archivos \emph{raster} de
-las variables topográficas (es conveniente siempre que sea posible no
-transformar el crs de los datos \emph{raster} pues al hacerlo se deben
-interpolar los valores de los píxeles, produciendo pérdida de
-información).
+Andalucía entre el 1 de enero de 2002 y el 31 de diciembre de 2022
+siguiendo el enfoque apenas descrito, el siguiente paso es asignar a
+cada una de ellas los valores correspondientes a ese día y a esa
+localización concreta de todas las variables predictoras a partir de los
+conjuntos de datos que se han recopilado (recogidos en la Tabla
+\ref{tab:fuentes}). Dado que será necesario calcular distancias, se usa
+un Sistema de Referencia de Coordenadas proyectado al generar la
+muestra. En particular se usa una variante del UTM30N por ser el que
+traen los archivos \emph{raster} de las variables topográficas (es
+conveniente, siempre que sea posible, no transformar el crs de los datos
+\emph{raster} pues al hacerlo se deben interpolar los valores de los
+píxeles, produciendo pérdida de información).
 
 A continuación se detalla el proceso seguido para manipular construir
 cada variable:
@@ -996,7 +1000,7 @@ cada variable:
     de resolución pero resulta muchísimo más eficiente
     computacionalmente que comprobar para cada observación la relación
     espacial ``estar dentro del polígono de algún ENP'' (este enfoque
-    resultaba computacionalmente inabarcable para el equipo disponible).
+    resultaba computacionalmente inviable dado el equipo disponible).
   \item
     Para construir la variable \emph{uso\_suelo} se ha procedido de
     manera similar. Primero se ha rasterizado, usando como modelo el
@@ -1007,18 +1011,19 @@ cada variable:
     estuviese. De nuevo, se ha procedido así por cuestiones de
     eficiencia. Es necesario hacer algunos comentarios más sobre esta
     variable. La información de uso de suelo proviene del mapa de
-    Ocupación de Uso de Suelo CORINE Land Cover 2018, donde se
-    establecen con 3 niveles de clasificación con 5, 15 y 44 clases,
-    respectivamente. La primera clase se corresponde con el primer
-    dígito del código, las segunda con el segundo y la tercera con el
-    tercero. En este trabajo se ha decidido trabajar con el segundo
-    nivel de clasificación. En la Tabla \ref{tab:codigos_uso_suelo} se
-    recoge la clase correspondiente a cada código.
+    Ocupación de Uso de Suelo CORINE Land Cover 2018, donde se establece
+    3 niveles de clasificación con 5, 15 y 44 clases, respectivamente.
+    La primera clase se corresponde con el primer dígito del código, las
+    segunda con el segundo y la tercera con el tercero. En este trabajo
+    se ha decidido trabajar con el segundo nivel de clasificación, por
+    lo que se consideran solo los dos primeros dígitos del código de
+    cada observación. En la Tabla \ref{tab:codigos_uso_suelo} se recoge
+    la clase correspondiente a cada código.
   \end{itemize}
 \end{itemize}
 
 \begin{table}[]
-\resizebox{0.8\columnwidth}{!}{%
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lll@{}}
 \toprule
 Nivel 1                                                     & Nivel 2                                                  & Código \\ \midrule
@@ -1070,8 +1075,8 @@ muestra}\label{depuraciuxf3n-de-la-muestra}}
 Una vez construido el conjunto de datos ``en bruto'', se tratan los
 valores perdidos y se ajustan adecuadamente los tipos de las variables.
 En primer lugar se convierten en factores las variables \emph{fire},
-\emph{enp} y \emph{uso\_suelo}. A continuación se codifican las
-variables numéricas \emph{WD10M} y \emph{orientación} en los 4 puntos
+\emph{enp} y \emph{uso\_suelo}. A continuación, se codifican las
+variables numéricas \emph{WD10M} y \emph{orientacion} en los 4 puntos
 cárdinales y sus bisectrices, generando así 8 clases (``N'', ``NW'',
 ``W'', ``SW'', ``S'', ``SE'', ``E'', ``NE''). En el caso de la variable
 orientación se añade también la clase ``plano'', si la pendiente en ese
@@ -1082,7 +1087,7 @@ cual supone un \(0.1\%\) del total de registros. De estos, el \(68\%\)
 son casos negativos y el \(32\%\) son casos positivos. Los valores
 perdidos se encuentran en las variables demográficas (85), en
 \emph{uso\_suelo} (8), en NDVI (85) y en las variables topográficas
-(53). Las causas de los datos perdidos faltantes son:
+(53). Las causas de los datos faltantes son:
 
 \begin{itemize}
 \item
@@ -1134,6 +1139,7 @@ Antropogénicas    & uso\_suelo       & Clasificación del uso del suelo        
                   & dist\_sendero    & Distancia a la vía verde, al carril bici o al sendero más cercano (m)                  & numérica   \\
                   & dist\_camino     & Distancia al camino o a la vía pecuaria más cercano (m)                                & numérica   \\
 Demográficas      & poblacion        & Número de habitantes del municipio                                                     & numérica   \\
+                  & dens\_poblacion  & Densindad de población del municipio                                                   & numérica   \\
 Hidrográficas     & dist\_rios       & Distancia al río más próximo (m)                                                       & numérica   \\
 Meteorológicas &
   PRECTRORCORR &

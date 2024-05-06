@@ -98,7 +98,7 @@ El objetivo de esta investigación será construir modelos que permitan predecir
 
 Subobjetivos: 
 
-1. Construir un conjunto de datos que permita la realización de análisis y la posterior construcción de modelos de Machine Learning para la predicción de incendioa forestalwa en Andalucía a partir de un estudio previo del problema. 
+1. Construir un conjunto de datos que permita la realización de análisis y la posterior construcción de modelos de Machine Learning para la predicción de incendios forestales en Andalucía a partir de un estudio previo del problema. 
 
 2. Modelizar el riesgo de de incendio forestal usando distintos algoritmos de ML y comparar sus resultados
 
@@ -119,18 +119,18 @@ Subobjetivos:
 
 
 <!-- ## Análisis del problema -->
-<!-- <!-- Se puede incluir directamente en la introducción --> -->
+<!-- Se puede incluir directamente en la introducción -->
 
-<!-- <!-- Área de de estudio --> -->
+<!-- Área de de estudio -->
 <!-- El área de estudio abarca el conjunto de la comunidad autónoma de Andalucía (España), la región más meridional de la península Ibérica, un territorio de 87.268 km2, donde el 50,8 % de la superficie está ocupada por usos y cubiertas forestales. -->
 
 <!-- -> MAPA -->
 
-<!-- <!-- Franja temporal del estudio --> -->
+<!-- Franja temporal del estudio -->
 <!-- 2002-2022 Razones: -->
 <!--   - Disponibilidad datos -->
 <!--   - Cambios en los regímenes de incendios -->
 
 
-<!-- <!-- ¿Qué es un incendio forestal? --> -->
+<!-- ¿Qué es un incendio forestal? -->
 

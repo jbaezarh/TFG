@@ -362,3 +362,17 @@ knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomr
 \caption{Métricas obtenidas sobre el conjunto de validación por cada uno de los modelos seleccionados.}
 \label{fig:validation_metrics}
 \end{figure}
+
+Por último, para conocer la capacidad de generalización de los modelos construidos,
+estos se evaluarán sobre nuevas observaciones, el conjunto de datos test. Recuérdese que el
+entrenamiento de los modelos se ha realizado con el conjunto de entrenamiento, formado
+por 12927 observaciones tomadas entre el 2002 y mediados de 2014 y para ajustar los
+parámetros de cada modelo, se han utilizado 4309 observaciones tomadas entre mediados
+de 2014 y mediados de 2019. Finalmente, se evaluará la capacidad de predicción de los
+modelos sobre 4310 nuevas observaciones tomadas entre mediados de 2019 y 2022. Para
+ello, primero se juntarán los conjuntos de entrenamiento y validación para reentrenar los
+modelos con la configuración de parámetros seleccionada en cada caso, y posterior mente
+se compararán los valores predichos por los modelos con los valores reales. Los resultados
+obtenidos se muestran en la Tabla 4.2 y el la Figura 4.22. Las curvas ROC de los distintos
+modelos sobre el conjunto de datos test se muestra en la Figura 4.23.
+
