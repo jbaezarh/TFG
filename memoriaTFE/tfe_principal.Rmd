@@ -54,11 +54,11 @@ output:
 <!-- Si "metodobib: false", modificar este "nocite:"  -->
 <!-- Si "metodobib: true", modificar el "nocite:" del final de este fichero  -->
 
----
-nocite: | 
-  @Luque2017,@Luque2019,@RStudio,@R-base2,
-  @R-knitr,@R-rmarkdown,@Techopedia
-...
+<!-- --- -->
+<!-- nocite: | -->
+<!--   @Luque2017,@Luque2019,@RStudio,@R-base2, -->
+<!--   @R-knitr,@R-rmarkdown,@Techopedia -->
+<!-- ... -->
 
 
 <!-- \newcommand\Mycite[1]{\citeauthor{#1}~[\citeyear{#1}]} -->

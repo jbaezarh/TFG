@@ -27,7 +27,7 @@ source("cabecera_chunk_inicio.R")
 
 \begin{figure}[h]
 \centering
-\includegraphics[width =\textwidth]{graficos/lr_coef.png}
+\includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{graficos/lr_coef.png}
 \caption{Coeficientes del modelos de regresión logística lasso seleccionado.}
 \label{fig:lr_coef}
 \end{figure}
