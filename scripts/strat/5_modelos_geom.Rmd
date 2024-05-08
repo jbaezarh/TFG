@@ -134,7 +134,7 @@ test  <- testing(splits) %>% st_drop_geometry()
 
 ## Modelos
 
-### Logistic regression with penalty
+### 1. Logistic regression with penalty
 
 <!-- https://glmnet.stanford.edu/articles/glmnet.html -->
 <!-- mixture = 1 : pure lasso regression -->
@@ -274,7 +274,7 @@ lr_workflow %>%
 ```
 
 
-## Logistic regression 
+### 1.a Logistic regression 
 <!-- No aporta nada, salvo si acaso la significación de los coeficientes -->
 Regresión logística sin parámetro de regularización.
 
@@ -344,7 +344,7 @@ lrs_res %>% extract_fit_engine() %>% summary()
 GWETTOP WD10M, orientacion, date_dow no significativas, dist_rios
 
 
-### Logistic regression with feature selection
+### 1.b. Logistic regression with feature selection
 <!-- No aporta nada -->
 ```{r}
 # 1º definimos el modelo 
@@ -397,7 +397,7 @@ lrs2_metrics <- lrs2_pred |>
 ```
 
 
-### Logistic regression (with penalty) + PCA
+### 2. Logistic regression (with penalty) + PCA
 
 ```{r}
 # 1º Creamos el modelo
@@ -484,7 +484,7 @@ lr_pca_metrics
 
 No parece aportar ninguna mejora, el mejor resultado se da con 40 componentes principales.
 
-## 2. Decision Trees
+## 3. Decision Trees
 ```{r}
 dt_mod <- 
   decision_tree(cost_complexity = tune()) %>% 
@@ -570,7 +570,7 @@ dt_metrics
 ```
 
 
-## 2. Random Forest
+### 4. Random Forest
 
 ```{r }
 
@@ -724,7 +724,7 @@ ggarrange(rf_plot1,rf_plot2,nrow=1,common.legend = T,legend = "bottom")
 ```
 
 
-## k-Nearest Neighbours
+### 5. k-Nearest Neighbours
 ```{r}
 knn_mod <- 
   nearest_neighbor(neighbors = tune()) %>% 
@@ -796,17 +796,14 @@ knn_metrics
 ```
 
 
-## 3. Neuronal Networks
-```{r}
-load("salidas_intermedias/trained_models/svm_res_strat.RData")
-```
+<!-- ## 5. Neuronal Networks -->
 
-```{r}
-# Con brulee se puede hacer un perceptron multicapas con tidymodels
-```
+<!-- ```{r} -->
+<!-- # Con brulee se puede hacer un perceptron multicapas con tidymodels -->
+<!-- ``` -->
 
 
-## 4. SVM lineal
+### 6. SVM lineal
 
 ```{r}
 # 1º Construir el modelo
@@ -887,7 +884,9 @@ svm_metrics
 
 # save(svm_res,file = "salidas_intermedias/trained_models_svm_2024_05_04.RData")
 ```
-### SVM radial
+
+
+### 7. SVM radial
 ```{r}
 # 1º Construir el modelo
 svm_rbf_mod <- 

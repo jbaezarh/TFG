@@ -25,8 +25,14 @@ library(mapSpain)
 
 ```{r}
 load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData") # Datos
-load("salidas_intermedias/trained_models_strat_2024_04_28.RData") # Modelos
+datos <- datos |> 
+  mutate(uso_suelo = fct_lump(uso_suelo,
+                              n = 7, # nos quedamos con los 7 niveles del factor más frecuentes (clases 2 y 3)
+                              other_level= "Otro"))
+table(datos$uso_suelo)
 
+# load("salidas_intermedias/trained_models_strat_2024_04_28.RData") # Modelos
+load("Private/all_models_test.RData")
 ```
 
 
@@ -73,13 +79,16 @@ g = and %>%
   ggplot() +
   geom_sf() + 
   geom_sf(data = incendio_estudio, fill=alpha("black",0))
+g
+
+
 ```
 
 
 ```{r}
 # grid de puntos 10km x 10km de andalucía
 grid = st_make_grid(and,
-                    cellsize = c(10000,10000),
+                    cellsize = c(25000,25000), # 10000
                     what = "centers")[and]
 
 g + geom_sf(data = grid)
@@ -87,7 +96,12 @@ g + geom_sf(data = grid)
 
 
 ```{r}
-sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid))
+sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid) %>% # el día del incendio
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # 15 días después
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # el mes después
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-15,length(grid)),geometry = grid)) %>%  # 15 días antes
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-30,length(grid)),geometry = grid))) # el mes antes
+
 
 source("scripts/strat/fun_asignar_variables.R")
 full_grid  = asignar_variables(sample)
@@ -99,6 +113,7 @@ Se usará el modelo de regresión lineal entrenado con los datos de entrenamient
 
 ```{r}
 # Cargar lr_model en modelos
+model
 pred_class = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid)
 pred_probs = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid,type="prob")
 pred = cbind(full_grid,pred_class,pred_probs)
@@ -121,7 +136,14 @@ grid = st_make_grid(st_buffer(incendio_estudio,dist=10000),
 # ----------
 g + geom_sf(data = grid)
 
-sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid))
+# sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid))
+
+sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid) %>% # el día del incendio
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # 15 días después
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # el mes después
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-15,length(grid)),geometry = grid)) %>%  # 15 días antes
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-30,length(grid)),geometry = grid))) # el mes antes
+
 
 source("scripts/strat/fun_asignar_variables.R")
 full_grid  = asignar_variables(sample)

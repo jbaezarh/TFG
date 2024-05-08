@@ -15,6 +15,7 @@ asignar_variables = function(sample) {
   and = esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos)) 
   
   # Variables meteorológicas ------------------------------------------------
+  cat("Asignando variables meteorológicas...\n")
   
   # Tranformamos los datos a WGS84
   andalucia_WGS84 <- st_transform(and,crs="WGS84")
@@ -78,6 +79,7 @@ asignar_variables = function(sample) {
   # save(dataset,file = paste0("salidas_intermedias/dataset_clim",Sys.Date(),".RData"))
   
   # Variables topográficas --------------------------------------------------
+  cat("Asignando variables topográficas...\n")
   elev <- rast("data_raw/topograficas/elevacion.tif")
   pend <- rast("data_raw/topograficas/pendiente.tif")
   orient <- rast("data_raw/topograficas/orientacion.tif")
@@ -101,7 +103,7 @@ asignar_variables = function(sample) {
   
   
   # Variables antropológicas ------------------------------------------------
-  
+  cat("Asignando variables antropológicas...\n")
   ### Carreteras: ----
   carreteras <- read_sf("data_raw/antropologicas/RedCarreteras/09_14_RedCarreteras.shp") |> 
     st_union()
@@ -187,7 +189,6 @@ asignar_variables = function(sample) {
   rm(enp,enp1,enp2,enp_sf,enp_rast)
   
   ### Uso Suelo: ----
-  
   # UsoSuelo <- read_sf("data_raw/antropologicas/UsoSuelo/06_01_UsoSuelo.shp")
   # UsoSuelo_rast <- rasterize(UsoSuelo,
   #                            rast("data_raw/topograficas/pendiente.tif"), # Nos sirve de modelo
@@ -201,7 +202,7 @@ asignar_variables = function(sample) {
   
   
   # Demográficas -----------------------------------------------------------
-  
+  cat("Asignando variables demográficas...\n")
   ### Población y densidad de población: ----
   
   # Asigno población y densidad de población:
@@ -259,7 +260,7 @@ asignar_variables = function(sample) {
   
   
   # Hidrográficas -----------------------------------------------------------
-  
+  cat("Asignando variables hidrográficas...\n")
   # Distancia a ríos
   rios <- read_sf("data_raw/hidrograficas/Rios_Espana.shp") |> 
     st_transform(st_crs(dataset)) |> 
@@ -276,7 +277,7 @@ asignar_variables = function(sample) {
   
   
   # Vegetación --------------------------------------------------------------
-  
+  cat("Asignando variables de vegetación...\n")
   dataset$NDVI = NA
   
   for (YEAR in 2002:2022) {
