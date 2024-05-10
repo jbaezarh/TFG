@@ -21,6 +21,7 @@ library(sf)
 library(ggplot2)
 library(terra)
 library(mapSpain)
+library(skimr)
 ```
 
 ```{r}
@@ -29,32 +30,228 @@ datos <- datos |>
   mutate(uso_suelo = fct_lump(uso_suelo,
                               n = 7, # nos quedamos con los 7 niveles del factor más frecuentes (clases 2 y 3)
                               other_level= "Otro"))
-table(datos$uso_suelo)
-
-# load("salidas_intermedias/trained_models_strat_2024_04_28.RData") # Modelos
-load("Private/all_models_test.RData")
 ```
 
 
-Para poder estudiar casos concretos de interés, sin tener que hacer frente a todas las complicaciones derivadas del trabajar con datos raster, un enfoque puede ser el siguiente:
+<!-- Para poder estudiar casos concretos de interés, sin tener que hacer frente a todas las complicaciones derivadas del trabajar con datos raster, un enfoque puede ser el siguiente: -->
 
 
-1. Estudiar un incendio concreto un día y ver como evoluciona el riesgo de incendio en los días cercanos, en el área de interés (un área que contenga al incendio que se quiere estudiar).
+<!-- 1. Estudiar un incendio concreto un día y ver como evoluciona el riesgo de incendio en los días cercanos, en el área de interés (un área que contenga al incendio que se quiere estudiar). -->
 
-2. Generar puntos aleatoriamente en el área de interés (o formando una cuadrícula) en cada uno de los días cercanos al incendio. 
+<!-- 2. Generar puntos aleatoriamente en el área de interés (o formando una cuadrícula) en cada uno de los días cercanos al incendio.  -->
 
-3. Asociar a cada punto sus variables correspondientes siguiendo el procedimiento usado para generar la muestra.
+<!-- 3. Asociar a cada punto sus variables correspondientes siguiendo el procedimiento usado para generar la muestra. -->
 
-4. Usar el modelo para clasificar cada punto (o predecir la probabilidad de incendio).
+<!-- 4. Usar el modelo para clasificar cada punto (o predecir la probabilidad de incendio). -->
 
-5. Mostrar los gráficos de cada día con el polígono del incendio y compararlos para estudiar la capacidad de discretización del modelo.
+<!-- 5. Mostrar los gráficos de cada día con el polígono del incendio y compararlos para estudiar la capacidad de discretización del modelo. -->
 
-6. En función del rendimiento del modelo se puede probar a extender el área de estudio y usar instantes de tiempo más alejados entre sí (p.e. semanas), pues es razonable que en días próximos y localizaciones cercanas los riesgos no varíen en exceso.
+<!-- 6. En función del rendimiento del modelo se puede probar a extender el área de estudio y usar instantes de tiempo más alejados entre sí (p.e. semanas), pues es razonable que en días próximos y localizaciones cercanas los riesgos no varíen en exceso. -->
 
-Si se obtienen resultados razonables, puede probarse a añadir variaciones en las variables climáticas (p.e. temperatura) para ver sus efectos.
+<!-- Si se obtienen resultados razonables, puede probarse a añadir variaciones en las variables climáticas (p.e. temperatura) para ver sus efectos. -->
 
 
+## Visión general del desempeño del modelo
 
+
+```{r}
+and <- esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos))
+```
+
+Se construye la rejilla
+```{r}
+# grid de puntos 10km x 10km de andalucía
+grid = st_make_grid(and,
+                    cellsize = c(10000,10000), # 10000
+                    what = "centers")[and]
+
+g = and %>% 
+  ggplot() +
+  geom_sf() +
+  theme_minimal()
+ 
+g + geom_sf(data = grid,color="red",size=0.6)
+```
+
+Se va a analizar cada observación el 15 de cada mes.
+```{r}
+sample = NULL
+
+for (m in 1:12) {
+  if (is.null(sample)){
+    sample <- tibble(date = rep(ymd(paste("2022",m,"15",sep="/"))),geometry = grid) %>% st_sf()
+  } else
+  sample <- sample %>% 
+    bind_rows(tibble(date = rep(ymd(paste("2022",m,"15",sep="/"))),geometry = grid))
+}
+
+```
+
+Se le asocian todas las variables correspondientes a cada observación.
+```{r}
+source("scripts/strat/fun_asignar_variables.R")
+full_grid  = asignar_variables(sample)
+
+full_grid
+```
+
+
+Se imputan los valores faltantes de NDVI asignandoles los del año anterior, ya que faltan los archivos de marzo y diciembre de 2022.
+```{r}
+# La siguiente función lee el archivo con el NDVI correspondiente a un mes y a un año dados (si está disponible)
+
+read_NDVI = function(MM,YYYY) {
+  MM = str_pad(as.character(MM),2,"left",pad = "0")
+  YY = substr(as.character(YYYY),3,4)
+  if (as.numeric(YY)<=06) {
+    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/TERMOD_",YY,MM,"01_h17v05_medmndvi.tif")
+  } else if (as.numeric(YY)<=11) {
+    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIF/TERMOD_",YY,MM,"01_h17v05_medmndvi.tif")
+  } else if (as.numeric(YY)<=21){
+    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/termod_",YY,MM,"01_h17v05_medmndvi.tif")
+  }else {
+    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod_",YY,MM,"01_h17v05_medmndvi_COG.tif")
+  }
+
+  if (file.exists(ruta)) {
+    NDVI = rast(ruta)
+  } else
+    NDVI = NA
+  return(NDVI)
+}
+
+# Los meses para los cuales no está disponible el archivo de NDVI:
+year_month_missing_NDVI = c(
+"2003-01",
+"2003-04",
+"2017-02",
+"2018-11",
+"2020-11",
+"2021-12",
+"2022-03",
+"2022-12")
+
+# Para cada observación para la que no está disponible el NDVI (porque la información de ese mes no está disponible), se obtiene el correspondiente al mismo mes del año anterior, si este está disponible, si no, el del año posterior:
+
+missing_NDVI = full_grid |> 
+  filter(is.na(NDVI)) |> 
+  mutate(year = year(date),month = month(date)) |> 
+  group_by(year,month) |> 
+  filter(paste(year,str_pad(as.character(month),2,"left",pad = "0"),sep="-") %in%   year_month_missing_NDVI) |>  # Se filtra porque también hay observaciones que tienen NA en el NDVI no porque no exista el archivo, si no lo mismo que en ocasiones anteriores, porques discrepancias entre los límites de los polígonos
+  nest() |>    
+  mutate(NDVI_rast = map2(month,year-1,read_NDVI), # Se lee primero el del año anterior
+         NDVI_rast = ifelse(is.na(unlist(NDVI_rast)),map2(month,year+1,read_NDVI),NDVI_rast), # Si no está disponible, se toma el del año posterior
+         NDVI_nuevo = map2(NDVI_rast,data,~terra::extract(.x,.y)[,2])) |> 
+  select(-NDVI_rast) |> 
+  unnest(c(data,NDVI_nuevo)) |> 
+  mutate(NDVI = NDVI_nuevo,.keep="unused")
+
+ind_modificados = is.na(full_grid$NDVI) & (paste(year(full_grid$date),str_pad(as.character(month(full_grid$date)),2,"left",pad = "0"),sep="-") %in% year_month_missing_NDVI) # Los elementos que han sido modificados
+
+# Se asignan los valores imputados del NDVI:
+full_grid[ind_modificados,]$NDVI = missing_NDVI$NDVI
+```
+
+```{r}
+summary(full_grid)
+
+datos %>%  st_drop_geometry %>% skim(.data_name = "datos")
+```
+
+Se agrupan los niveles de uso de suelo
+```{r}
+full_grid <- full_grid |> 
+  mutate(uso_suelo = fct_other(uso_suelo,
+                               keep = c("21","22","23","24","31","32","33"),
+                               other_level= "Otro"))
+
+full_grid %>% st_drop_geometry() %>% skim()
+# save(full_grid,file = "salidas_intermedias/full_grid_meses_2022_processed.RData")
+```
+
+Se usará el modelo de regresión logística lasso final,
+```{r}
+# load("salidas_intermedias/trained_models_strat_2024_04_28.RData") # Modelos
+load("Private/all_models_test.RData")
+
+lr_final <- models %>% filter(model_name=="lr")
+rm(models) # Es un archivo muy pesado, lo eliminamos de la memoria
+```
+
+
+```{r}
+pred_class = lr_final %>% 
+  pull(last_fit) %>% 
+  .[[1]] %>% 
+  extract_workflow() %>% 
+  predict(new_data = full_grid)
+pred_probs = lr_final %>% 
+  pull(last_fit) %>% 
+  .[[1]] %>% 
+  extract_workflow() %>% 
+  predict(new_data = full_grid,type="prob")
+pred = cbind(full_grid,pred_class,pred_probs)
+```
+
+Salidas gráficas:
+```{r}
+g <- ggplot(data = and) + 
+  geom_sf() +
+  geom_sf(data = pred, aes(color=.pred_1, alpha = .pred_0),size = 1.5) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Title") + 
+  labs(alpha = "none") + 
+  theme_minimal() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+g
+```
+
+Le añadimos los incendios producidos en 2022
+```{r}
+incendios22 <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",2022,".shp")) %>% 
+  st_transform(st_crs(full_grid)) %>% 
+  mutate(date=ymd(fecha_inic))
+```
+
+```{r}
+g + 
+  geom_sf(data = incendios22, color = "red",fill="transparent") +
+  geom_sf(data = st_buffer(incendios22,dist=5000), color = "firebrick",fill="firebrick",alpha=0.2,linetype="dotted") 
+  
+```
+Prácticamente todos los incendios se han producido en zonas con probabilidad de riesgo elevada
+
+## Caso de interés
+
+## Efecto del aumento de las temperaturas
+```{r}
+
+
+g <- ggplot(data = and) + 
+  geom_sf() +
+  geom_sf(data = pred, aes(color=.pred_1, alpha = .pred_0),size = 1.5) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Title") + 
+  labs(alpha = "none") + 
+  theme_minimal() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+```
 
 
 

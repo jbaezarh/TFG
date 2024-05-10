@@ -327,7 +327,8 @@ asignar_variables = function(sample) {
                        breaks = c(0,22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5,360),
                        labels = c("N","NE","E","SE","S","SW","W","NW","N")),
            uso_suelo = uso_suelo |> as.character() |> str_sub(0,2) |> as.factor()
-           )
+           ) %>% 
+    select(-c(YEAR,MM,DD))
   
   return(dataset)
 }

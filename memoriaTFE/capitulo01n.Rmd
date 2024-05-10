@@ -20,7 +20,6 @@ output:
 source("cabecera_chunk_inicio.R")
 ```
 
-# Capítulo 1: Introducción
 
 ## Introducción
 

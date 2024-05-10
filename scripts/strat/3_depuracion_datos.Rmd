@@ -301,7 +301,7 @@ NDVI_mes |>
 Se imputan las observaciones faltantes de los demás meses, tomando utilizando una técnica similar a la imputación Hot Deck. Para cada mes para el que no esté disponible el NDVI, se le asigna el valor correspondiente al mismo mes del año anterior si está disponible y si no el del año posterior.
 
 ```{r}
-# La siguiente función lee el archivo con el NDVI corresponfiente a un mes y a un año dados (si está disponible)
+# La siguiente función lee el archivo con el NDVI correspondiente a un mes y a un año dados (si está disponible)
 
 read_NDVI = function(MM,YYYY) {
   MM = str_pad(as.character(MM),2,"left",pad = "0")
