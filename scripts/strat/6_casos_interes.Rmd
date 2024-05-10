@@ -197,12 +197,12 @@ Salidas gráficas:
 ```{r}
 g <- ggplot(data = and) + 
   geom_sf() +
-  geom_sf(data = pred, aes(color=.pred_1, alpha = .pred_0),size = 1.5) +
+  geom_sf(data = pred, aes(color=.pred_1, alpha = .pred_1),size = 1.5) +
   facet_wrap(~month(date,label=TRUE)) + 
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
   # scale_color_gradient(low="blue", high="red")+
   ggtitle("Title") + 
-  labs(alpha = "none") + 
+  guides(alpha = "none") + 
   theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
@@ -222,9 +222,23 @@ incendios22 <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",2022,"
 ```
 
 ```{r}
-g + 
+ ggplot(data = and) + 
+  geom_sf() +
+  geom_sf(data = pred, aes(color=.pred_1),alpha=0.5,size = 1.5) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("Title") + 
+  guides(alpha = "none") + 
+  theme_minimal() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_sf(data = incendios22, color = "red",fill="transparent") +
-  geom_sf(data = st_buffer(incendios22,dist=5000), color = "firebrick",fill="firebrick",alpha=0.2,linetype="dotted") 
+  geom_sf(data = st_buffer(incendios22,dist=5000), color = "firebrick",fill="firebrick",alpha=0.5,linetype="dotted")
   
 ```
 Prácticamente todos los incendios se han producido en zonas con probabilidad de riesgo elevada
@@ -233,16 +247,29 @@ Prácticamente todos los incendios se han producido en zonas con probabilidad de
 
 ## Efecto del aumento de las temperaturas
 ```{r}
+temp05 <- full_grid %>% 
+  mutate(T2M = 1.05*T2M)
 
+pred_class_temp05 = lr_final %>% 
+  pull(last_fit) %>% 
+  .[[1]] %>% 
+  extract_workflow() %>% 
+  predict(new_data = temp05)
+pred_probs_temp05 = lr_final %>% 
+  pull(last_fit) %>% 
+  .[[1]] %>% 
+  extract_workflow() %>% 
+  predict(new_data = temp05,type="prob")
+pred_temp05 = cbind(full_grid,pred_class_temp05,pred_probs_temp05)
 
-g <- ggplot(data = and) + 
+g_temp05 <- ggplot(data = and) + 
   geom_sf() +
-  geom_sf(data = pred, aes(color=.pred_1, alpha = .pred_0),size = 1.5) +
+  geom_sf(data = pred_temp05, aes(color=.pred_1, alpha = .pred_1),size = 1.5) +
   facet_wrap(~month(date,label=TRUE)) + 
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
   # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Title") + 
-  labs(alpha = "none") + 
+  ggtitle("temp + 5%") + 
+  guides(alpha = "none") + 
   theme_minimal() +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
@@ -251,9 +278,98 @@ g <- ggplot(data = and) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())
 
+g_temp05
+g
 ```
 
 
+```{r}
+temp10 <- full_grid %>% 
+  mutate(T2M = 1.10*T2M)
+
+pred_class_temp10 = lr_final %>% 
+  pull(last_fit) %>% 
+  .[[1]] %>% 
+  extract_workflow() %>% 
+  predict(new_data = temp10)
+pred_probs_temp10 = lr_final %>% 
+  pull(last_fit) %>% 
+  .[[1]] %>% 
+  extract_workflow() %>% 
+  predict(new_data = temp10,type="prob")
+pred_temp10 = cbind(full_grid,pred_class_temp10,pred_probs_temp10)
+
+g_temp10 <- ggplot(data = and) + 
+  geom_sf() +
+  geom_sf(data = pred_temp10, aes(color=.pred_1, alpha = .pred_1),size = 1.5) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("temp + 10%") + 
+  guides(alpha = "none") + 
+  theme_minimal() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+g_temp10
+
+g
+```
+
+```{r}
+mean(pred$.pred_1)
+mean(pred_temp05$.pred_1)
+mean(pred_temp10$.pred_1)
+
+boxplot(data.frame(Original = pred$.pred_1,
+                   Temp05 =pred_temp05$.pred_1,
+                   Temp10 =pred_temp10$.pred_1))
+```
+
+
+```{r}
+clim1 <- full_grid %>% 
+  mutate(T2M = 1.10*T2M,
+         GWETTOP = 0.8*GWETTOP,
+         PRECTOTCORR = 0.8*PRECTOTCORR,
+         NDVI = 0.8*NDVI,
+         RH2M = 0.8*RH2M)
+
+pred_class_clim1 = lr_final %>% 
+  pull(last_fit) %>% 
+  .[[1]] %>% 
+  extract_workflow() %>% 
+  predict(new_data = clim1)
+pred_probs_clim1 = lr_final %>% 
+  pull(last_fit) %>% 
+  .[[1]] %>% 
+  extract_workflow() %>% 
+  predict(new_data = clim1,type="prob")
+pred_clim1 = cbind(full_grid,pred_class_clim1,pred_probs_clim1)
+
+g_clim1 <- ggplot(data = and) + 
+  geom_sf() +
+  geom_sf(data = pred_clim1, aes(color=.pred_1, alpha = .pred_1),size = 1.5) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
+  # scale_color_gradient(low="blue", high="red")+
+  ggtitle("temp + 10%") + 
+  guides(alpha = "none") + 
+  theme_minimal() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+g_clim1
+g
+```
 
 # ---------------------
 
