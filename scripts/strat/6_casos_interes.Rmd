@@ -201,7 +201,7 @@ g <- ggplot(data = and) +
   facet_wrap(~month(date,label=TRUE)) + 
   scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
   # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Title") + 
+  ggtitle("Probabilidad estimada de incendio el día 15 de cada mes") + 
   guides(alpha = "none") + 
   theme_minimal() +
   theme(axis.text.x=element_blank(),
@@ -228,7 +228,7 @@ incendios22 <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",2022,"
   facet_wrap(~month(date,label=TRUE)) + 
   scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
   # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Title") + 
+  ggtitle("Probabilidad estimada de incendio forestal + Incendios observados") + 
   guides(alpha = "none") + 
   theme_minimal() +
   theme(axis.text.x=element_blank(),
@@ -241,9 +241,24 @@ incendios22 <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",2022,"
   geom_sf(data = st_buffer(incendios22,dist=5000), color = "firebrick",fill="firebrick",alpha=0.5,linetype="dotted")
   
 ```
-Prácticamente todos los incendios se han producido en zonas con probabilidad de riesgo elevada
 
-## Caso de interés
+Prácticamente todos los incendios se han producido en zonas con probabilidad de riesgo elevada. Es interesante como las zonas con alto riesgo de incendio van variando cada mes y, además, como se detectan zonas aisladas con una mayor probabilidad de incendio de incendio que se corresponde con las zonas en las que han ocurrido incendios. Ejemplo de esto son los meses de agosto, octubre o noviembre. En estos meses en los que, en general, la probabilidad estimada de incendio es significativamente menor a junio y julio se, se detectan zonas más o menos aisladas en las que la probabilidad de incendio es significativamente mayor. Y es en estas zonas, en general, en las que se han observado incendios.
+
+
+```{r}
+# ESTO EN REALIDAD ES UNA MALA IDEA PONERLO, PORQUE NO SE ESTÁN SELECCIONANDO LOS PUNTOS QUE DEBERÍAN
+
+# En las localizaciones en las que ha habido incendio
+pred[incendios22,]$.pred_1 %>% summary()
+pred[incendios22,] %>% 
+  ggplot(aes(y = .pred_1)) +
+  geom_boxplot(fill = "grey") +
+  theme_minimal() +
+  labs(title = "Boxplot de la probabilidad estimada de incendio en las localizaciones en
+       las que ha habido incendio")
+
+pred[incendios22,]$.pred_1 %>% boxplot()
+```
 
 ## Efecto del aumento de las temperaturas
 ```{r}
@@ -371,7 +386,7 @@ g_clim1
 g
 ```
 
-# ---------------------
+## Caso de interés
 
 Se va a intentar estudiar el incendio del 8 de septiembre de 2021 en Sierra Bermeja por ser de especial relevancia.
 
@@ -391,11 +406,105 @@ and <- esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos))
 g = and %>% 
   ggplot() +
   geom_sf() + 
-  geom_sf(data = incendio_estudio, fill=alpha("black",0))
+  geom_sf(data = incendio_estudio, color="red",fill=alpha("red",0.2))+
+  theme_minimal()
 g
 
+```
+
+
+```{r}
+
+bbox = st_buffer(incendio_estudio,dist=10000) %>% 
+  st_bbox() 
+#   as.matrix() %>% t() %>% 
+#   as.data.frame()
+
+
+g + coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
+ 
+```
+
+
+```{r}
+grid = st_make_grid(st_buffer(incendio_estudio,dist=010000),
+                    cellsize = c(1000,1000),
+                    what = "centers")[and]
+g + 
+  geom_sf(data = grid,size=0.7) +
+  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
 
 ```
+
+```{r}
+sample = tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid) %>% # el día del incendio
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # 15 días después
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # el mes después
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-15,length(grid)),geometry = grid)) %>%  # 15 días antes
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-30,length(grid)),geometry = grid)) %>% # el mes antes
+  st_sf() 
+
+```
+
+
+# --------------------------
+```{r}
+# Más detalle
+grid = st_make_grid(st_buffer(incendio_estudio,dist=010000),
+                    cellsize = c(1000,1000),
+                    what = "centers")[and]
+
+# ----------
+g + 
+  geom_sf(data = grid,size=0.7) +
+  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
+
+# sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid))
+
+sample = tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid) %>% # el día del incendio
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # 15 días después
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # el mes después
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-15,length(grid)),geometry = grid)) %>%  # 15 días antes
+                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-30,length(grid)),geometry = grid)) %>% # el mes antes
+  st_sf() 
+
+
+source("scripts/strat/fun_asignar_variables.R")
+full_grid  = asignar_variables(sample)
+
+
+# ----------
+
+# Cargar lr_model en modelos
+pred_class = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid)
+pred_probs = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid,type="prob")
+pred = cbind(full_grid,pred_class,pred_probs)
+
+g + geom_sf(data = pred, mapping = aes(color=.pred_class))
+
+bbox = st_bbox(st_buffer(incendio_estudio,dist=10000)) %>%  as.matrix() %>% t() %>% as.data.frame()
+
+g + 
+  geom_sf(data = pred, mapping = aes(color=.pred_class)) +
+ #scale_color_gradientn(colours = rainbow(5,rev=T))  +
+  geom_sf(data=incendio_estudio,fill = alpha("black",0)) +
+  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
+
+
+g + 
+  geom_sf(data = pred, mapping = aes(color=.pred_1)) +
+  scale_color_gradientn(colours = rainbow(5,rev=T))  +
+  geom_sf(data=incendio_estudio,fill = alpha("black",0)) +
+  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
+
+# Lógico ya que es un problema muy complejo y la resolución de las variables meteorológicas es de alrededor de 50km, por lo que intentar hacer predicciones a una escala menor (en este caso 50 veces menor) no es una buena idea
+# Además el incendio duró 46 días
+```
+
+
+
+
+# Otras cosas pa borrar
 
 
 ```{r}
@@ -437,58 +546,5 @@ g +
   geom_sf(data = pred, mapping = aes(color=.pred_1)) +
   scale_color_gradientn(colours = rainbow(5,rev=T)) 
 ```
-
-
-```{r}
-# Más detalle
-# grid de puntos 10km x 10km de andalucía
-grid = st_make_grid(st_buffer(incendio_estudio,dist=10000),
-                    cellsize = c(1000,1000),
-                    what = "centers")[and]
-
-# ----------
-g + geom_sf(data = grid)
-
-# sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid))
-
-sample = st_sf(tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid) %>% # el día del incendio
-                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # 15 días después
-                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # el mes después
-                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-15,length(grid)),geometry = grid)) %>%  # 15 días antes
-                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-30,length(grid)),geometry = grid))) # el mes antes
-
-
-source("scripts/strat/fun_asignar_variables.R")
-full_grid  = asignar_variables(sample)
-
-
-# ----------
-
-# Cargar lr_model en modelos
-pred_class = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid)
-pred_probs = last_lr_fit %>% extract_workflow() %>% predict(new_data = full_grid,type="prob")
-pred = cbind(full_grid,pred_class,pred_probs)
-
-g + geom_sf(data = pred, mapping = aes(color=.pred_class))
-
-bbox = st_bbox(st_buffer(incendio_estudio,dist=10000)) %>%  as.matrix() %>% t() %>% as.data.frame()
-
-g + 
-  geom_sf(data = pred, mapping = aes(color=.pred_class)) +
- #scale_color_gradientn(colours = rainbow(5,rev=T))  +
-  geom_sf(data=incendio_estudio,fill = alpha("black",0)) +
-  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
-
-
-g + 
-  geom_sf(data = pred, mapping = aes(color=.pred_1)) +
-  scale_color_gradientn(colours = rainbow(5,rev=T))  +
-  geom_sf(data=incendio_estudio,fill = alpha("black",0)) +
-  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
-
-# Lógico ya que es un problema muy complejo y la resolución de las variables meteorológicas es de alrededor de 50km, por lo que intentar hacer predicciones a una escala menor (en este caso 50 veces menor) no es una buena idea
-# Además el incendio duró 46 días
-```
-
 
 
