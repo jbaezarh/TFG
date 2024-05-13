@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.2)  7 MAY 2024 14:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.2)  14 MAY 2024 00:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1016,7 +1016,7 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-<logo.png, id=284, 301.125pt x 262.9825pt>
+<logo.png, id=288, 301.125pt x 262.9825pt>
 File: logo.png Graphic file (type png)
 <use logo.png>
 Package pdftex.def Info: logo.png  used on input line 532.
@@ -1063,6 +1063,11 @@ Overfull \hbox (0.56052pt too wide) detected at line 4
  [][]
  []
 
+
+Overfull \hbox (0.56052pt too wide) detected at line 6
+ [][]
+ []
+
 [1
 
 ] [2])
@@ -1081,672 +1086,730 @@ LaTeX Info: Redefining \% on input line 1.
 [9
 
 
-])
+] [10])
 \tf@lof=\write6
 \openout6 = `tfe_principal.lof'.
 
-[10] (./tfe_principal.lot
+[11] [12
+
+] (./tfe_principal.lot
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 )
 \tf@lot=\write7
 \openout7 = `tfe_principal.lot'.
 
-[11
+[13
 
-
-] [12
+] [14
 
 ]
-Cap\'{\i }tulo 1.
-<D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png, id=533, 368.1253pt x 415.5525pt>
+<D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png, id=566, 368.1253pt x 415.5525pt>
 File: D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png Graphic file (type png)
 <use D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png>
-Package pdftex.def Info: D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png  used on input line 724.
+Package pdftex.def Info: D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png  used on input line 721.
 (pdftex.def)             Requested size: 368.14125pt x 415.5705pt.
+LaTeX Info: Redefining \. on input line 731.
+LaTeX Info: Redefining \% on input line 731.
+LaTeX Info: Redefining \. on input line 731.
+LaTeX Info: Redefining \% on input line 731.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.734 \FloatBarrier
-                    [1
-
-]
-LaTeX Info: Redefining \. on input line 734.
-LaTeX Info: Redefining \% on input line 734.
-LaTeX Info: Redefining \. on input line 734.
-LaTeX Info: Redefining \% on input line 734.
+l.731 \FloatBarrier
+                    [1]
+LaTeX Info: Redefining \. on input line 731.
+LaTeX Info: Redefining \% on input line 731.
+LaTeX Info: Redefining \. on input line 731.
+LaTeX Info: Redefining \% on input line 731.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.734 \FloatBarrier
+l.731 \FloatBarrier
                     [2 <d:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png>]
-Cap\'{\i }tulo 2.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 810.
+Cap\'{\i }tulo 1.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 807.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [3
 
 ]
-LaTeX Info: Redefining \. on input line 881.
-LaTeX Info: Redefining \% on input line 881.
-LaTeX Info: Redefining \. on input line 881.
-LaTeX Info: Redefining \% on input line 881.
+LaTeX Info: Redefining \. on input line 878.
+LaTeX Info: Redefining \% on input line 878.
+LaTeX Info: Redefining \. on input line 878.
+LaTeX Info: Redefining \% on input line 878.
 [4{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 934.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 931.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \. on input line 957.
-LaTeX Info: Redefining \% on input line 957.
-LaTeX Info: Redefining \. on input line 957.
-LaTeX Info: Redefining \% on input line 957.
+LaTeX Info: Redefining \. on input line 954.
+LaTeX Info: Redefining \% on input line 954.
+LaTeX Info: Redefining \. on input line 954.
+LaTeX Info: Redefining \% on input line 954.
 [5{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-LaTeX Info: Redefining \. on input line 1016.
-LaTeX Info: Redefining \% on input line 1016.
-LaTeX Info: Redefining \. on input line 1016.
-LaTeX Info: Redefining \% on input line 1016.
+LaTeX Info: Redefining \. on input line 1013.
+LaTeX Info: Redefining \% on input line 1013.
+LaTeX Info: Redefining \. on input line 1013.
+LaTeX Info: Redefining \% on input line 1013.
 [6]
-LaTeX Info: Redefining \. on input line 1078.
-LaTeX Info: Redefining \% on input line 1078.
-LaTeX Info: Redefining \. on input line 1078.
-LaTeX Info: Redefining \% on input line 1078.
+LaTeX Info: Redefining \. on input line 1075.
+LaTeX Info: Redefining \% on input line 1075.
+LaTeX Info: Redefining \. on input line 1075.
+LaTeX Info: Redefining \% on input line 1075.
 [7{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
-Package mdframed Info: mdframed works in twoside mode on input line 1101.
+Package mdframed Info: mdframed works in twoside mode on input line 1098.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1101.
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 1102.
+(mdframed)              on input line 1098.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 1099.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Package mdframed Info: mdframed works in twoside mode on input line 1107.
+Package mdframed Info: mdframed works in twoside mode on input line 1104.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1107.
-LaTeX Info: Redefining \. on input line 1130.
-LaTeX Info: Redefining \% on input line 1130.
-LaTeX Info: Redefining \. on input line 1130.
-LaTeX Info: Redefining \% on input line 1130.
+(mdframed)              on input line 1104.
+LaTeX Info: Redefining \. on input line 1127.
+LaTeX Info: Redefining \% on input line 1127.
+LaTeX Info: Redefining \. on input line 1127.
+LaTeX Info: Redefining \% on input line 1127.
 [8]
-LaTeX Info: Redefining \. on input line 1201.
-LaTeX Info: Redefining \% on input line 1201.
-LaTeX Info: Redefining \. on input line 1201.
-LaTeX Info: Redefining \% on input line 1201.
+LaTeX Info: Redefining \. on input line 1198.
+LaTeX Info: Redefining \% on input line 1198.
+LaTeX Info: Redefining \. on input line 1198.
+LaTeX Info: Redefining \% on input line 1198.
 [9]
-LaTeX Info: Redefining \. on input line 1266.
-LaTeX Info: Redefining \% on input line 1266.
-LaTeX Info: Redefining \. on input line 1266.
-LaTeX Info: Redefining \% on input line 1266.
+LaTeX Info: Redefining \. on input line 1263.
+LaTeX Info: Redefining \% on input line 1263.
+LaTeX Info: Redefining \. on input line 1263.
+LaTeX Info: Redefining \% on input line 1263.
 [10]
-LaTeX Info: Redefining \. on input line 1350.
-LaTeX Info: Redefining \% on input line 1350.
-LaTeX Info: Redefining \. on input line 1350.
-LaTeX Info: Redefining \% on input line 1350.
+LaTeX Info: Redefining \. on input line 1347.
+LaTeX Info: Redefining \% on input line 1347.
+LaTeX Info: Redefining \. on input line 1347.
+LaTeX Info: Redefining \% on input line 1347.
 [11]
-LaTeX Info: Redefining \. on input line 1403.
-LaTeX Info: Redefining \% on input line 1403.
-LaTeX Info: Redefining \. on input line 1403.
-LaTeX Info: Redefining \% on input line 1403.
+LaTeX Info: Redefining \. on input line 1400.
+LaTeX Info: Redefining \% on input line 1400.
+LaTeX Info: Redefining \. on input line 1400.
+LaTeX Info: Redefining \% on input line 1400.
 [12]
 
-LaTeX Warning: Command \' invalid in math mode on input line 1413.
+LaTeX Warning: Command \' invalid in math mode on input line 1410.
 
-LaTeX Info: Redefining \. on input line 1460.
-LaTeX Info: Redefining \% on input line 1460.
-LaTeX Info: Redefining \. on input line 1460.
-LaTeX Info: Redefining \% on input line 1460.
+LaTeX Info: Redefining \. on input line 1457.
+LaTeX Info: Redefining \% on input line 1457.
+LaTeX Info: Redefining \. on input line 1457.
+LaTeX Info: Redefining \% on input line 1457.
 [13]
-LaTeX Info: Redefining \. on input line 1519.
-LaTeX Info: Redefining \% on input line 1519.
-LaTeX Info: Redefining \. on input line 1519.
-LaTeX Info: Redefining \% on input line 1519.
+LaTeX Info: Redefining \. on input line 1516.
+LaTeX Info: Redefining \% on input line 1516.
+LaTeX Info: Redefining \. on input line 1516.
+LaTeX Info: Redefining \% on input line 1516.
 [14]
-Cap\'{\i }tulo 3.
+Cap\'{\i }tulo 2.
 [15
 
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 1604.
+(Font)              <10> on input line 1601.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 1604.
+(Font)              <7> on input line 1601.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 1604.
-LaTeX Info: Redefining \. on input line 1644.
-LaTeX Info: Redefining \% on input line 1644.
-LaTeX Info: Redefining \. on input line 1644.
-LaTeX Info: Redefining \% on input line 1644.
+(Font)              <5> on input line 1601.
+LaTeX Info: Redefining \. on input line 1641.
+LaTeX Info: Redefining \% on input line 1641.
+LaTeX Info: Redefining \. on input line 1641.
+LaTeX Info: Redefining \% on input line 1641.
 [16]
-<graficos/areas_fuego.png, id=677, 433.62pt x 496.64616pt>
+<graficos/areas_fuego.png, id=710, 433.62pt x 496.64616pt>
 File: graficos/areas_fuego.png Graphic file (type png)
 <use graficos/areas_fuego.png>
-Package pdftex.def Info: graficos/areas_fuego.png  used on input line 1651.
+Package pdftex.def Info: graficos/areas_fuego.png  used on input line 1648.
 (pdftex.def)             Requested size: 227.62082pt x 260.70525pt.
-LaTeX Info: Redefining \. on input line 1674.
-LaTeX Info: Redefining \% on input line 1674.
-LaTeX Info: Redefining \. on input line 1674.
-LaTeX Info: Redefining \% on input line 1674.
+LaTeX Info: Redefining \. on input line 1671.
+LaTeX Info: Redefining \% on input line 1671.
+LaTeX Info: Redefining \. on input line 1671.
+LaTeX Info: Redefining \% on input line 1671.
 [17 <./graficos/areas_fuego.png>]
-LaTeX Info: Redefining \. on input line 1740.
-LaTeX Info: Redefining \% on input line 1740.
-LaTeX Info: Redefining \. on input line 1740.
-LaTeX Info: Redefining \% on input line 1740.
+LaTeX Info: Redefining \. on input line 1737.
+LaTeX Info: Redefining \% on input line 1737.
+LaTeX Info: Redefining \. on input line 1737.
+LaTeX Info: Redefining \% on input line 1737.
 [18]
-Overfull \hbox (290.79599pt too wide) in paragraph at lines 1769--1808
+Overfull \hbox (290.79599pt too wide) in paragraph at lines 1766--1805
 [] 
  []
 
-LaTeX Info: Redefining \. on input line 1823.
-LaTeX Info: Redefining \% on input line 1823.
-LaTeX Info: Redefining \. on input line 1823.
-LaTeX Info: Redefining \% on input line 1823.
+LaTeX Info: Redefining \. on input line 1820.
+LaTeX Info: Redefining \% on input line 1820.
+LaTeX Info: Redefining \. on input line 1820.
+LaTeX Info: Redefining \% on input line 1820.
 [19]
-LaTeX Info: Redefining \. on input line 1893.
-LaTeX Info: Redefining \% on input line 1893.
-LaTeX Info: Redefining \. on input line 1893.
-LaTeX Info: Redefining \% on input line 1893.
+LaTeX Info: Redefining \. on input line 1890.
+LaTeX Info: Redefining \% on input line 1890.
+LaTeX Info: Redefining \. on input line 1890.
+LaTeX Info: Redefining \% on input line 1890.
 [20]
-<graficos/incendios_mes.png, id=711, 299.31825pt x 340.8735pt>
+<graficos/incendios_mes.png, id=744, 299.31825pt x 340.8735pt>
 File: graficos/incendios_mes.png Graphic file (type png)
 <use graficos/incendios_mes.png>
-Package pdftex.def Info: graficos/incendios_mes.png  used on input line 1896.
+Package pdftex.def Info: graficos/incendios_mes.png  used on input line 1893.
 (pdftex.def)             Requested size: 227.62581pt x 259.22778pt.
-LaTeX Info: Redefining \. on input line 1923.
-LaTeX Info: Redefining \% on input line 1923.
-LaTeX Info: Redefining \. on input line 1923.
-LaTeX Info: Redefining \% on input line 1923.
+LaTeX Info: Redefining \. on input line 1920.
+LaTeX Info: Redefining \% on input line 1920.
+LaTeX Info: Redefining \. on input line 1920.
+LaTeX Info: Redefining \% on input line 1920.
 [21 <./graficos/incendios_mes.png>]
-LaTeX Info: Redefining \. on input line 1999.
-LaTeX Info: Redefining \% on input line 1999.
-LaTeX Info: Redefining \. on input line 1999.
-LaTeX Info: Redefining \% on input line 1999.
+LaTeX Info: Redefining \. on input line 1996.
+LaTeX Info: Redefining \% on input line 1996.
+LaTeX Info: Redefining \. on input line 1996.
+LaTeX Info: Redefining \% on input line 1996.
 [22]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 2002.
+               Default added (so using `tbp') on input line 1999.
 
-LaTeX Info: Redefining \. on input line 2068.
-LaTeX Info: Redefining \% on input line 2068.
-LaTeX Info: Redefining \. on input line 2068.
-LaTeX Info: Redefining \% on input line 2068.
+LaTeX Info: Redefining \. on input line 2065.
+LaTeX Info: Redefining \% on input line 2065.
+LaTeX Info: Redefining \. on input line 2065.
+LaTeX Info: Redefining \% on input line 2065.
 [23]
-<graficos/nas_topograficas.png, id=733, 353.78687pt x 209.24686pt>
+<graficos/nas_topograficas.png, id=765, 353.78687pt x 209.24686pt>
 File: graficos/nas_topograficas.png Graphic file (type png)
 <use graficos/nas_topograficas.png>
-Package pdftex.def Info: graficos/nas_topograficas.png  used on input line 2091.
+Package pdftex.def Info: graficos/nas_topograficas.png  used on input line 2088.
 (pdftex.def)             Requested size: 227.62125pt x 134.62633pt.
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 2100.
+               Default added (so using `tbp') on input line 2097.
 
-LaTeX Info: Redefining \. on input line 2141.
-LaTeX Info: Redefining \% on input line 2141.
-LaTeX Info: Redefining \. on input line 2141.
-LaTeX Info: Redefining \% on input line 2141.
+LaTeX Info: Redefining \. on input line 2138.
+LaTeX Info: Redefining \% on input line 2138.
+LaTeX Info: Redefining \. on input line 2138.
+LaTeX Info: Redefining \% on input line 2138.
 [24 <./graficos/nas_topograficas.png>]
-LaTeX Info: Redefining \. on input line 2170.
-LaTeX Info: Redefining \% on input line 2170.
-LaTeX Info: Redefining \. on input line 2170.
-LaTeX Info: Redefining \% on input line 2170.
+LaTeX Info: Redefining \. on input line 2167.
+LaTeX Info: Redefining \% on input line 2167.
+LaTeX Info: Redefining \. on input line 2167.
+LaTeX Info: Redefining \% on input line 2167.
 [25] [26
 
 ]
-Cap\'{\i }tulo 4.
+Cap\'{\i }tulo 3.
 [27]
-<graficos/skim_datos.png, id=758, 712.16063pt x 555.57562pt>
+<graficos/skim_datos.png, id=791, 712.16063pt x 555.57562pt>
 File: graficos/skim_datos.png Graphic file (type png)
 <use graficos/skim_datos.png>
-Package pdftex.def Info: graficos/skim_datos.png  used on input line 2246.
+Package pdftex.def Info: graficos/skim_datos.png  used on input line 2243.
 (pdftex.def)             Requested size: 455.23792pt x 355.14331pt.
-<graficos/distribucion_temporal_fire.png, id=759, 444.54454pt x 557.99162pt>
+<graficos/distribucion_temporal_fire.png, id=792, 444.54454pt x 557.99162pt>
 File: graficos/distribucion_temporal_fire.png Graphic file (type png)
 <use graficos/distribucion_temporal_fire.png>
-Package pdftex.def Info: graficos/distribucion_temporal_fire.png  used on input line 2260.
+Package pdftex.def Info: graficos/distribucion_temporal_fire.png  used on input line 2257.
 (pdftex.def)             Requested size: 227.62366pt x 285.71288pt.
-LaTeX Info: Redefining \. on input line 2284.
-LaTeX Info: Redefining \% on input line 2284.
-LaTeX Info: Redefining \. on input line 2284.
-LaTeX Info: Redefining \% on input line 2284.
+LaTeX Info: Redefining \. on input line 2281.
+LaTeX Info: Redefining \% on input line 2281.
+LaTeX Info: Redefining \. on input line 2281.
+LaTeX Info: Redefining \% on input line 2281.
 [28 <./graficos/skim_datos.png>]
-<graficos/distribucion_espacial_fire.png, id=767, 433.62pt x 496.64616pt>
+<graficos/distribucion_espacial_fire.png, id=800, 433.62pt x 496.64616pt>
 File: graficos/distribucion_espacial_fire.png Graphic file (type png)
 <use graficos/distribucion_espacial_fire.png>
-Package pdftex.def Info: graficos/distribucion_espacial_fire.png  used on input line 2291.
+Package pdftex.def Info: graficos/distribucion_espacial_fire.png  used on input line 2288.
 (pdftex.def)             Requested size: 227.62082pt x 260.70525pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-LaTeX Info: Redefining \. on input line 2318.
-LaTeX Info: Redefining \% on input line 2318.
-LaTeX Info: Redefining \. on input line 2318.
-LaTeX Info: Redefining \% on input line 2318.
+LaTeX Info: Redefining \. on input line 2315.
+LaTeX Info: Redefining \% on input line 2315.
+LaTeX Info: Redefining \. on input line 2315.
+LaTeX Info: Redefining \% on input line 2315.
 [29 <./graficos/distribucion_temporal_fire.png>]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 2325.
+               Default added (so using `tbp') on input line 2322.
 
-<graficos/boxplots.png, id=779, 1108.42012pt x 447.90593pt>
+<graficos/boxplots.png, id=811, 1108.42012pt x 447.90593pt>
 File: graficos/boxplots.png Graphic file (type png)
 <use graficos/boxplots.png>
-Package pdftex.def Info: graficos/boxplots.png  used on input line 2327.
+Package pdftex.def Info: graficos/boxplots.png  used on input line 2324.
 (pdftex.def)             Requested size: 227.6166pt x 91.9785pt.
-LaTeX Info: Redefining \. on input line 2351.
-LaTeX Info: Redefining \% on input line 2351.
-LaTeX Info: Redefining \. on input line 2351.
-LaTeX Info: Redefining \% on input line 2351.
+LaTeX Info: Redefining \. on input line 2348.
+LaTeX Info: Redefining \% on input line 2348.
+LaTeX Info: Redefining \. on input line 2348.
+LaTeX Info: Redefining \% on input line 2348.
 [30 <./graficos/distribucion_espacial_fire.png> <./graficos/boxplots.png>]
-<graficos/T2M_mes.png, id=790, 433.62pt x 496.64616pt>
+<graficos/T2M_mes.png, id=822, 433.62pt x 496.64616pt>
 File: graficos/T2M_mes.png Graphic file (type png)
 <use graficos/T2M_mes.png>
-Package pdftex.def Info: graficos/T2M_mes.png  used on input line 2360.
+Package pdftex.def Info: graficos/T2M_mes.png  used on input line 2357.
 (pdftex.def)             Requested size: 227.62082pt x 260.70525pt.
-<graficos/RH2M_mes.png, id=792, 433.62pt x 496.64616pt>
+<graficos/RH2M_mes.png, id=824, 433.62pt x 496.64616pt>
 File: graficos/RH2M_mes.png Graphic file (type png)
 <use graficos/RH2M_mes.png>
-Package pdftex.def Info: graficos/RH2M_mes.png  used on input line 2371.
+Package pdftex.def Info: graficos/RH2M_mes.png  used on input line 2368.
 (pdftex.def)             Requested size: 227.62082pt x 260.70525pt.
-LaTeX Info: Redefining \. on input line 2375.
-LaTeX Info: Redefining \% on input line 2375.
-LaTeX Info: Redefining \. on input line 2375.
-LaTeX Info: Redefining \% on input line 2375.
+LaTeX Info: Redefining \. on input line 2372.
+LaTeX Info: Redefining \% on input line 2372.
+LaTeX Info: Redefining \. on input line 2372.
+LaTeX Info: Redefining \% on input line 2372.
 [31 <./graficos/T2M_mes.png>]
-<graficos/PRECTOTCORR_mes.png, id=799, 433.62pt x 496.64616pt>
+<graficos/PRECTOTCORR_mes.png, id=831, 433.62pt x 496.64616pt>
 File: graficos/PRECTOTCORR_mes.png Graphic file (type png)
 <use graficos/PRECTOTCORR_mes.png>
-Package pdftex.def Info: graficos/PRECTOTCORR_mes.png  used on input line 2385.
+Package pdftex.def Info: graficos/PRECTOTCORR_mes.png  used on input line 2382.
 (pdftex.def)             Requested size: 227.62082pt x 260.70525pt.
-<graficos/GWETTOP_mes.png, id=801, 433.62pt x 496.64616pt>
+<graficos/GWETTOP_mes.png, id=833, 433.62pt x 496.64616pt>
 File: graficos/GWETTOP_mes.png Graphic file (type png)
 <use graficos/GWETTOP_mes.png>
-Package pdftex.def Info: graficos/GWETTOP_mes.png  used on input line 2397.
+Package pdftex.def Info: graficos/GWETTOP_mes.png  used on input line 2394.
 (pdftex.def)             Requested size: 227.62082pt x 260.70525pt.
-LaTeX Info: Redefining \. on input line 2400.
-LaTeX Info: Redefining \% on input line 2400.
-LaTeX Info: Redefining \. on input line 2400.
-LaTeX Info: Redefining \% on input line 2400.
+LaTeX Info: Redefining \. on input line 2397.
+LaTeX Info: Redefining \% on input line 2397.
+LaTeX Info: Redefining \. on input line 2397.
+LaTeX Info: Redefining \% on input line 2397.
 [32 <./graficos/RH2M_mes.png> <./graficos/PRECTOTCORR_mes.png>]
-<graficos/WS10M_mes.png, id=809, 433.62pt x 496.64616pt>
+<graficos/WS10M_mes.png, id=841, 433.62pt x 496.64616pt>
 File: graficos/WS10M_mes.png Graphic file (type png)
 <use graficos/WS10M_mes.png>
-Package pdftex.def Info: graficos/WS10M_mes.png  used on input line 2410.
+Package pdftex.def Info: graficos/WS10M_mes.png  used on input line 2407.
 (pdftex.def)             Requested size: 227.62082pt x 260.70525pt.
-LaTeX Info: Redefining \. on input line 2419.
-LaTeX Info: Redefining \% on input line 2419.
-LaTeX Info: Redefining \. on input line 2419.
-LaTeX Info: Redefining \% on input line 2419.
+LaTeX Info: Redefining \. on input line 2416.
+LaTeX Info: Redefining \% on input line 2416.
+LaTeX Info: Redefining \. on input line 2416.
+LaTeX Info: Redefining \% on input line 2416.
 [33 <./graficos/GWETTOP_mes.png> <./graficos/WS10M_mes.png>]
-<graficos/NDVI_mes.png, id=817, 433.62pt x 496.64616pt>
+<graficos/NDVI_mes.png, id=850, 433.62pt x 496.64616pt>
 File: graficos/NDVI_mes.png Graphic file (type png)
 <use graficos/NDVI_mes.png>
-Package pdftex.def Info: graficos/NDVI_mes.png  used on input line 2422.
+Package pdftex.def Info: graficos/NDVI_mes.png  used on input line 2419.
 (pdftex.def)             Requested size: 227.62082pt x 260.70525pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2458--2460
+Underfull \hbox (badness 10000) in paragraph at lines 2455--2457
 
  []
 
-<graficos/corrplot.png, id=821, 475.63744pt x 456.30942pt>
+<graficos/corrplot.png, id=854, 475.63744pt x 456.30942pt>
 File: graficos/corrplot.png Graphic file (type png)
 <use graficos/corrplot.png>
-Package pdftex.def Info: graficos/corrplot.png  used on input line 2467.
+Package pdftex.def Info: graficos/corrplot.png  used on input line 2464.
 (pdftex.def)             Requested size: 455.24956pt x 436.75003pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-LaTeX Info: Redefining \. on input line 2479.
-LaTeX Info: Redefining \% on input line 2479.
-LaTeX Info: Redefining \. on input line 2479.
-LaTeX Info: Redefining \% on input line 2479.
+LaTeX Info: Redefining \. on input line 2476.
+LaTeX Info: Redefining \% on input line 2476.
+LaTeX Info: Redefining \. on input line 2476.
+LaTeX Info: Redefining \% on input line 2476.
 [34 <./graficos/NDVI_mes.png>]
-<graficos/parcoord.png, id=830, 658.71094pt x 439.6425pt>
+<graficos/parcoord.png, id=864, 658.71094pt x 439.6425pt>
 File: graficos/parcoord.png Graphic file (type png)
 <use graficos/parcoord.png>
-Package pdftex.def Info: graficos/parcoord.png  used on input line 2499.
+Package pdftex.def Info: graficos/parcoord.png  used on input line 2496.
 (pdftex.def)             Requested size: 455.2548pt x 303.85007pt.
-LaTeX Info: Redefining \. on input line 2502.
-LaTeX Info: Redefining \% on input line 2502.
-LaTeX Info: Redefining \. on input line 2502.
-LaTeX Info: Redefining \% on input line 2502.
+LaTeX Info: Redefining \. on input line 2499.
+LaTeX Info: Redefining \% on input line 2499.
+LaTeX Info: Redefining \. on input line 2499.
+LaTeX Info: Redefining \% on input line 2499.
 [35 <./graficos/corrplot.png>]
-<graficos/pca.png, id=838, 743.77875pt x 109.91063pt>
+<graficos/pca.png, id=871, 743.77875pt x 109.91063pt>
 File: graficos/pca.png Graphic file (type png)
 <use graficos/pca.png>
-Package pdftex.def Info: graficos/pca.png  used on input line 2515.
+Package pdftex.def Info: graficos/pca.png  used on input line 2512.
 (pdftex.def)             Requested size: 455.2592pt x 67.27513pt.
-LaTeX Info: Redefining \. on input line 2534.
-LaTeX Info: Redefining \% on input line 2534.
-LaTeX Info: Redefining \. on input line 2534.
-LaTeX Info: Redefining \% on input line 2534.
+LaTeX Info: Redefining \. on input line 2531.
+LaTeX Info: Redefining \% on input line 2531.
+LaTeX Info: Redefining \. on input line 2531.
+LaTeX Info: Redefining \% on input line 2531.
 [36 <./graficos/parcoord.png (PNG copy)> <./graficos/pca.png>]
 
-LaTeX Warning: Reference `fig:uso_suelo' on page 37 undefined on input line 2557.
+LaTeX Warning: Reference `fig:uso_suelo' on page 37 undefined on input line 2554.
 
-<graficos/histogramas.png, id=846, 624.83438pt x 306.39468pt>
+<graficos/histogramas.png, id=879, 624.83438pt x 306.39468pt>
 File: graficos/histogramas.png Graphic file (type png)
 <use graficos/histogramas.png>
-Package pdftex.def Info: graficos/histogramas.png  used on input line 2562.
+Package pdftex.def Info: graficos/histogramas.png  used on input line 2559.
 (pdftex.def)             Requested size: 455.25769pt x 223.24081pt.
-LaTeX Info: Redefining \. on input line 2582.
-LaTeX Info: Redefining \% on input line 2582.
-LaTeX Info: Redefining \. on input line 2582.
-LaTeX Info: Redefining \% on input line 2582.
+LaTeX Info: Redefining \. on input line 2579.
+LaTeX Info: Redefining \% on input line 2579.
+LaTeX Info: Redefining \. on input line 2579.
+LaTeX Info: Redefining \% on input line 2579.
 [37 <./graficos/histogramas.png>]
-LaTeX Info: Redefining \. on input line 2647.
-LaTeX Info: Redefining \% on input line 2647.
-LaTeX Info: Redefining \. on input line 2647.
-LaTeX Info: Redefining \% on input line 2647.
+LaTeX Info: Redefining \. on input line 2644.
+LaTeX Info: Redefining \% on input line 2644.
+LaTeX Info: Redefining \. on input line 2644.
+LaTeX Info: Redefining \% on input line 2644.
 [38]
-<graficos/lr_tuningplot.png, id=864, 540.30429pt x 383.37514pt>
+<graficos/lr_tuningplot.png, id=896, 540.30429pt x 383.37514pt>
 File: graficos/lr_tuningplot.png Graphic file (type png)
 <use graficos/lr_tuningplot.png>
-Package pdftex.def Info: graficos/lr_tuningplot.png  used on input line 2653.
+Package pdftex.def Info: graficos/lr_tuningplot.png  used on input line 2650.
 (pdftex.def)             Requested size: 318.67783pt x 226.11917pt.
-LaTeX Info: Redefining \. on input line 2691.
-LaTeX Info: Redefining \% on input line 2691.
-LaTeX Info: Redefining \. on input line 2691.
-LaTeX Info: Redefining \% on input line 2691.
+LaTeX Info: Redefining \. on input line 2688.
+LaTeX Info: Redefining \% on input line 2688.
+LaTeX Info: Redefining \. on input line 2688.
+LaTeX Info: Redefining \% on input line 2688.
 [39 <./graficos/lr_tuningplot.png (PNG copy)>]
-<graficos/dt_tuningplot.png, id=873, 493.52803pt x 428.8654pt>
+<graficos/dt_tuningplot.png, id=906, 493.52803pt x 428.8654pt>
 File: graficos/dt_tuningplot.png Graphic file (type png)
 <use graficos/dt_tuningplot.png>
-Package pdftex.def Info: graficos/dt_tuningplot.png  used on input line 2694.
+Package pdftex.def Info: graficos/dt_tuningplot.png  used on input line 2691.
 (pdftex.def)             Requested size: 318.68085pt x 276.92688pt.
 
-LaTeX Warning: Reference `rf_tuningplot' on page 40 undefined on input line 2722.
+LaTeX Warning: Reference `rf_tuningplot' on page 40 undefined on input line 2719.
 
-<graficos/rf_tuningplot.png, id=874, 493.52803pt x 428.8654pt>
+<graficos/rf_tuningplot.png, id=907, 493.52803pt x 428.8654pt>
 File: graficos/rf_tuningplot.png Graphic file (type png)
 <use graficos/rf_tuningplot.png>
-Package pdftex.def Info: graficos/rf_tuningplot.png  used on input line 2728.
+Package pdftex.def Info: graficos/rf_tuningplot.png  used on input line 2725.
 (pdftex.def)             Requested size: 318.68085pt x 276.92688pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Info: Redefining \. on input line 2744.
-LaTeX Info: Redefining \% on input line 2744.
-LaTeX Info: Redefining \. on input line 2744.
-LaTeX Info: Redefining \% on input line 2744.
+LaTeX Info: Redefining \. on input line 2741.
+LaTeX Info: Redefining \% on input line 2741.
+LaTeX Info: Redefining \. on input line 2741.
+LaTeX Info: Redefining \% on input line 2741.
 [40 <./graficos/dt_tuningplot.png>]
-<graficos/knn_tuningplot.png, id=883, 493.52803pt x 428.8654pt>
+<graficos/knn_tuningplot.png, id=916, 493.52803pt x 428.8654pt>
 File: graficos/knn_tuningplot.png Graphic file (type png)
 <use graficos/knn_tuningplot.png>
-Package pdftex.def Info: graficos/knn_tuningplot.png  used on input line 2747.
+Package pdftex.def Info: graficos/knn_tuningplot.png  used on input line 2744.
 (pdftex.def)             Requested size: 318.68085pt x 276.92688pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<graficos/svm_tuningplot.png, id=885, 493.52803pt x 428.8654pt>
+<graficos/svm_tuningplot.png, id=918, 493.52803pt x 428.8654pt>
 File: graficos/svm_tuningplot.png Graphic file (type png)
 <use graficos/svm_tuningplot.png>
-Package pdftex.def Info: graficos/svm_tuningplot.png  used on input line 2764.
+Package pdftex.def Info: graficos/svm_tuningplot.png  used on input line 2761.
 (pdftex.def)             Requested size: 318.68085pt x 276.92688pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Info: Redefining \. on input line 2788.
-LaTeX Info: Redefining \% on input line 2788.
-LaTeX Info: Redefining \. on input line 2788.
-LaTeX Info: Redefining \% on input line 2788.
+LaTeX Info: Redefining \. on input line 2785.
+LaTeX Info: Redefining \% on input line 2785.
+LaTeX Info: Redefining \. on input line 2785.
+LaTeX Info: Redefining \% on input line 2785.
 [41 <./graficos/rf_tuningplot.png (PNG copy)>]
+LaTeX Info: Redefining \. on input line 2786.
+LaTeX Info: Redefining \% on input line 2786.
+LaTeX Info: Redefining \. on input line 2786.
+LaTeX Info: Redefining \% on input line 2786.
+[42 <./graficos/knn_tuningplot.png> <./graficos/svm_tuningplot.png>]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 2789.
+               Default added (so using `tbp') on input line 2796.
 
-LaTeX Info: Redefining \. on input line 2806.
-LaTeX Info: Redefining \% on input line 2806.
-LaTeX Info: Redefining \. on input line 2806.
-LaTeX Info: Redefining \% on input line 2806.
-[42 <./graficos/knn_tuningplot.png> <./graficos/svm_tuningplot.png>]
-<graficos/validation_metrics.png, id=903, 493.52803pt x 428.8654pt>
+<graficos/validation_metrics.png, id=935, 493.52803pt x 428.8654pt>
 File: graficos/validation_metrics.png Graphic file (type png)
 <use graficos/validation_metrics.png>
-Package pdftex.def Info: graficos/validation_metrics.png  used on input line 2810.
+Package pdftex.def Info: graficos/validation_metrics.png  used on input line 2817.
 (pdftex.def)             Requested size: 318.68085pt x 276.92688pt.
-<graficos/roc_validation.png, id=904, 519.2029pt x 428.8654pt>
+<graficos/roc_validation.png, id=936, 519.2029pt x 428.8654pt>
 File: graficos/roc_validation.png Graphic file (type png)
 <use graficos/roc_validation.png>
-Package pdftex.def Info: graficos/roc_validation.png  used on input line 2817.
+Package pdftex.def Info: graficos/roc_validation.png  used on input line 2824.
 (pdftex.def)             Requested size: 318.67805pt x 263.2304pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+LaTeX Info: Redefining \. on input line 2845.
+LaTeX Info: Redefining \% on input line 2845.
+LaTeX Info: Redefining \. on input line 2845.
+LaTeX Info: Redefining \% on input line 2845.
+[43 <./graficos/validation_metrics.png>]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 2839.
+               Default added (so using `tbp') on input line 2856.
 
-<graficos/test_metrics.png, id=908, 519.2029pt x 428.8654pt>
+<graficos/test_metrics.png, id=945, 519.2029pt x 428.8654pt>
 File: graficos/test_metrics.png Graphic file (type png)
 <use graficos/test_metrics.png>
-Package pdftex.def Info: graficos/test_metrics.png  used on input line 2860.
+Package pdftex.def Info: graficos/test_metrics.png  used on input line 2877.
 (pdftex.def)             Requested size: 318.67805pt x 263.2304pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<graficos/roc_test.png, id=909, 519.2029pt x 428.8654pt>
+<graficos/roc_test.png, id=946, 519.2029pt x 428.8654pt>
 File: graficos/roc_test.png Graphic file (type png)
 <use graficos/roc_test.png>
-Package pdftex.def Info: graficos/roc_test.png  used on input line 2867.
+Package pdftex.def Info: graficos/roc_test.png  used on input line 2884.
 (pdftex.def)             Requested size: 318.67805pt x 263.2304pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-LaTeX Info: Redefining \. on input line 2872.
-LaTeX Info: Redefining \% on input line 2872.
-LaTeX Info: Redefining \. on input line 2872.
-LaTeX Info: Redefining \% on input line 2872.
-[43 <./graficos/validation_metrics.png>]
-LaTeX Info: Redefining \. on input line 2872.
-LaTeX Info: Redefining \% on input line 2872.
-LaTeX Info: Redefining \. on input line 2872.
-LaTeX Info: Redefining \% on input line 2872.
+LaTeX Info: Redefining \. on input line 2889.
+LaTeX Info: Redefining \% on input line 2889.
+LaTeX Info: Redefining \. on input line 2889.
+LaTeX Info: Redefining \% on input line 2889.
 [44 <./graficos/roc_validation.png>]
-LaTeX Info: Redefining \. on input line 2872.
-LaTeX Info: Redefining \% on input line 2872.
-LaTeX Info: Redefining \. on input line 2872.
-LaTeX Info: Redefining \% on input line 2872.
+LaTeX Info: Redefining \. on input line 2889.
+LaTeX Info: Redefining \% on input line 2889.
+LaTeX Info: Redefining \. on input line 2889.
+LaTeX Info: Redefining \% on input line 2889.
 [45 <./graficos/test_metrics.png> <./graficos/roc_test.png>] [46
 
 
 ]
-Cap\'{\i }tulo 5.
-[47] [48
+Cap\'{\i }tulo 4.
+<graficos/mallapuntos10.png, id=965, 402.75468pt x 226.59656pt>
+File: graficos/mallapuntos10.png Graphic file (type png)
+<use graficos/mallapuntos10.png>
+Package pdftex.def Info: graficos/mallapuntos10.png  used on input line 2946.
+(pdftex.def)             Requested size: 227.61827pt x 128.06186pt.
+[47 <./graficos/mallapuntos10.png>]
+<graficos/fire_prob_and22_lr.png, id=976, 752.8125pt x 408.02437pt>
+File: graficos/fire_prob_and22_lr.png Graphic file (type png)
+<use graficos/fire_prob_and22_lr.png>
+Package pdftex.def Info: graficos/fire_prob_and22_lr.png  used on input line 2965.
+(pdftex.def)             Requested size: 455.25194pt x 246.74655pt.
+<graficos/fire_prob_and22_svm_linear.png, id=977, 823.57687pt x 447.17062pt>
+File: graficos/fire_prob_and22_svm_linear.png Graphic file (type png)
+<use graficos/fire_prob_and22_svm_linear.png>
+Package pdftex.def Info: graficos/fire_prob_and22_svm_linear.png  used on input line 2972.
+(pdftex.def)             Requested size: 455.24326pt x 247.17961pt.
+<graficos/fire_prob_and22_rf.png, id=978, 752.8125pt x 408.02437pt>
+File: graficos/fire_prob_and22_rf.png Graphic file (type png)
+<use graficos/fire_prob_and22_rf.png>
+Package pdftex.def Info: graficos/fire_prob_and22_rf.png  used on input line 2979.
+(pdftex.def)             Requested size: 455.25194pt x 246.74655pt.
+LaTeX Info: Redefining \. on input line 3018.
+LaTeX Info: Redefining \% on input line 3018.
+LaTeX Info: Redefining \. on input line 3018.
+LaTeX Info: Redefining \% on input line 3018.
+[48 <./graficos/fire_prob_and22_lr.png (PNG copy)>]
+<graficos/caso_estudio.png, id=984, 828.09375pt x 377.15906pt>
+File: graficos/caso_estudio.png Graphic file (type png)
+<use graficos/caso_estudio.png>
+Package pdftex.def Info: graficos/caso_estudio.png  used on input line 3042.
+(pdftex.def)             Requested size: 455.25081pt x 207.34604pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+LaTeX Info: Redefining \. on input line 3058.
+LaTeX Info: Redefining \% on input line 3058.
+LaTeX Info: Redefining \. on input line 3058.
+LaTeX Info: Redefining \% on input line 3058.
+[49 <./graficos/fire_prob_and22_svm_linear.png (PNG copy)>]
+<graficos/fire_prob_sierra_bermeja.png, id=991, 605.69142pt x 440.50285pt>
+File: graficos/fire_prob_sierra_bermeja.png Graphic file (type png)
+<use graficos/fire_prob_sierra_bermeja.png>
+Package pdftex.def Info: graficos/fire_prob_sierra_bermeja.png  used on input line 3061.
+(pdftex.def)             Requested size: 455.23787pt x 331.08208pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+LaTeX Info: Redefining \. on input line 3078.
+LaTeX Info: Redefining \% on input line 3078.
+LaTeX Info: Redefining \. on input line 3078.
+LaTeX Info: Redefining \% on input line 3078.
+[50 <./graficos/fire_prob_and22_rf.png (PNG copy)> <./graficos/caso_estudio.png>]
+LaTeX Info: Redefining \. on input line 3115.
+LaTeX Info: Redefining \% on input line 3115.
+LaTeX Info: Redefining \. on input line 3115.
+LaTeX Info: Redefining \% on input line 3115.
+[51 <./graficos/fire_prob_sierra_bermeja.png (PNG copy)>] [52
 
 ]
-Cap\'{\i }tulo 6.
-[49] [50
+Cap\'{\i }tulo 5.
+[53] [54
 
 ]
 Ap\'{e}ndice A.
-<graficos/T2M_spat.png, id=949, 539.50395pt x 309.24837pt>
+<graficos/T2M_spat.png, id=1015, 539.50395pt x 309.24837pt>
 File: graficos/T2M_spat.png Graphic file (type png)
 <use graficos/T2M_spat.png>
-Package pdftex.def Info: graficos/T2M_spat.png  used on input line 2973.
+Package pdftex.def Info: graficos/T2M_spat.png  used on input line 3155.
 (pdftex.def)             Requested size: 455.23827pt x 260.94653pt.
-<graficos/RH2M_spat.png, id=950, 539.50395pt x 315.13081pt>
+<graficos/RH2M_spat.png, id=1016, 539.50395pt x 315.13081pt>
 File: graficos/RH2M_spat.png Graphic file (type png)
 <use graficos/RH2M_spat.png>
-Package pdftex.def Info: graficos/RH2M_spat.png  used on input line 2980.
+Package pdftex.def Info: graficos/RH2M_spat.png  used on input line 3162.
 (pdftex.def)             Requested size: 455.23827pt x 265.91019pt.
-[51 <./graficos/T2M_spat.png>]
-<graficos/GWETTOP_spat.png, id=957, 539.50395pt x 297.48349pt>
+[55 <./graficos/T2M_spat.png>]
+<graficos/GWETTOP_spat.png, id=1023, 539.50395pt x 297.48349pt>
 File: graficos/GWETTOP_spat.png Graphic file (type png)
 <use graficos/GWETTOP_spat.png>
-Package pdftex.def Info: graficos/GWETTOP_spat.png  used on input line 2987.
+Package pdftex.def Info: graficos/GWETTOP_spat.png  used on input line 3169.
 (pdftex.def)             Requested size: 455.23827pt x 251.01923pt.
-<graficos/WS10M_spat.png, id=958, 539.50395pt x 302.52559pt>
+<graficos/WS10M_spat.png, id=1024, 539.50395pt x 302.52559pt>
 File: graficos/WS10M_spat.png Graphic file (type png)
 <use graficos/WS10M_spat.png>
-Package pdftex.def Info: graficos/WS10M_spat.png  used on input line 2994.
+Package pdftex.def Info: graficos/WS10M_spat.png  used on input line 3176.
 (pdftex.def)             Requested size: 455.23827pt x 255.27379pt.
-LaTeX Info: Redefining \. on input line 2998.
-LaTeX Info: Redefining \% on input line 2998.
-LaTeX Info: Redefining \. on input line 2998.
-LaTeX Info: Redefining \% on input line 2998.
-[52 <./graficos/RH2M_spat.png> <./graficos/GWETTOP_spat.png>]
-<graficos/PRECTOTCORR_spat.png, id=966, 539.50395pt x 292.44139pt>
+LaTeX Info: Redefining \. on input line 3180.
+LaTeX Info: Redefining \% on input line 3180.
+LaTeX Info: Redefining \. on input line 3180.
+LaTeX Info: Redefining \% on input line 3180.
+[56 <./graficos/RH2M_spat.png> <./graficos/GWETTOP_spat.png>]
+<graficos/PRECTOTCORR_spat.png, id=1031, 539.50395pt x 292.44139pt>
 File: graficos/PRECTOTCORR_spat.png Graphic file (type png)
 <use graficos/PRECTOTCORR_spat.png>
-Package pdftex.def Info: graficos/PRECTOTCORR_spat.png  used on input line 3001.
+Package pdftex.def Info: graficos/PRECTOTCORR_spat.png  used on input line 3183.
 (pdftex.def)             Requested size: 455.23827pt x 246.76465pt.
-<graficos/WD10M_spat.png, id=967, 540.30429pt x 440.50285pt>
+<graficos/WD10M_spat.png, id=1032, 540.30429pt x 440.50285pt>
 File: graficos/WD10M_spat.png Graphic file (type png)
 <use graficos/WD10M_spat.png>
-Package pdftex.def Info: graficos/WD10M_spat.png  used on input line 3008.
+Package pdftex.def Info: graficos/WD10M_spat.png  used on input line 3190.
 (pdftex.def)             Requested size: 455.26228pt x 371.16925pt.
-LaTeX Info: Redefining \. on input line 3012.
-LaTeX Info: Redefining \% on input line 3012.
-LaTeX Info: Redefining \. on input line 3012.
-LaTeX Info: Redefining \% on input line 3012.
-[53 <./graficos/WS10M_spat.png> <./graficos/PRECTOTCORR_spat.png>]
-<graficos/poblacion_spat.png, id=975, 539.50395pt x 316.81151pt>
+LaTeX Info: Redefining \. on input line 3194.
+LaTeX Info: Redefining \% on input line 3194.
+LaTeX Info: Redefining \. on input line 3194.
+LaTeX Info: Redefining \% on input line 3194.
+[57 <./graficos/WS10M_spat.png> <./graficos/PRECTOTCORR_spat.png>]
+<graficos/poblacion_spat.png, id=1040, 539.50395pt x 316.81151pt>
 File: graficos/poblacion_spat.png Graphic file (type png)
 <use graficos/poblacion_spat.png>
-Package pdftex.def Info: graficos/poblacion_spat.png  used on input line 3018.
+Package pdftex.def Info: graficos/poblacion_spat.png  used on input line 3200.
 (pdftex.def)             Requested size: 455.23827pt x 267.32838pt.
-LaTeX Info: Redefining \. on input line 3022.
-LaTeX Info: Redefining \% on input line 3022.
-LaTeX Info: Redefining \. on input line 3022.
-LaTeX Info: Redefining \% on input line 3022.
-[54 <./graficos/WD10M_spat.png (PNG copy)>]
-<graficos/dens_poblacion_spat.png, id=980, 433.62pt x 221.01175pt>
+LaTeX Info: Redefining \. on input line 3204.
+LaTeX Info: Redefining \% on input line 3204.
+LaTeX Info: Redefining \. on input line 3204.
+LaTeX Info: Redefining \% on input line 3204.
+[58 <./graficos/WD10M_spat.png (PNG copy)>]
+<graficos/dens_poblacion_spat.png, id=1045, 433.62pt x 221.01175pt>
 File: graficos/dens_poblacion_spat.png Graphic file (type png)
 <use graficos/dens_poblacion_spat.png>
-Package pdftex.def Info: graficos/dens_poblacion_spat.png  used on input line 3025.
+Package pdftex.def Info: graficos/dens_poblacion_spat.png  used on input line 3207.
 (pdftex.def)             Requested size: 433.63878pt x 221.02132pt.
-<graficos/NDVI_spat.png, id=981, 537.82326pt x 305.04663pt>
+<graficos/NDVI_spat.png, id=1046, 537.82326pt x 305.04663pt>
 File: graficos/NDVI_spat.png Graphic file (type png)
 <use graficos/NDVI_spat.png>
-Package pdftex.def Info: graficos/NDVI_spat.png  used on input line 3035.
+Package pdftex.def Info: graficos/NDVI_spat.png  used on input line 3217.
 (pdftex.def)             Requested size: 455.24802pt x 258.21097pt.
-LaTeX Info: Redefining \. on input line 3039.
-LaTeX Info: Redefining \% on input line 3039.
-LaTeX Info: Redefining \. on input line 3039.
-LaTeX Info: Redefining \% on input line 3039.
-[55 <./graficos/poblacion_spat.png> <./graficos/dens_poblacion_spat.png>]
-<graficos/elevacion_spat.png, id=989, 433.62pt x 244.54152pt>
+LaTeX Info: Redefining \. on input line 3221.
+LaTeX Info: Redefining \% on input line 3221.
+LaTeX Info: Redefining \. on input line 3221.
+LaTeX Info: Redefining \% on input line 3221.
+[59 <./graficos/poblacion_spat.png> <./graficos/dens_poblacion_spat.png>]
+<graficos/elevacion_spat.png, id=1054, 433.62pt x 244.54152pt>
 File: graficos/elevacion_spat.png Graphic file (type png)
 <use graficos/elevacion_spat.png>
-Package pdftex.def Info: graficos/elevacion_spat.png  used on input line 3045.
+Package pdftex.def Info: graficos/elevacion_spat.png  used on input line 3227.
 (pdftex.def)             Requested size: 433.63217pt x 244.54837pt.
-<graficos/pendiente_spat.png, id=990, 433.62pt x 241.18011pt>
+<graficos/pendiente_spat.png, id=1055, 433.62pt x 241.18011pt>
 File: graficos/pendiente_spat.png Graphic file (type png)
 <use graficos/pendiente_spat.png>
-Package pdftex.def Info: graficos/pendiente_spat.png  used on input line 3052.
+Package pdftex.def Info: graficos/pendiente_spat.png  used on input line 3234.
 (pdftex.def)             Requested size: 433.63217pt x 241.18686pt.
-LaTeX Info: Redefining \. on input line 3056.
-LaTeX Info: Redefining \% on input line 3056.
-LaTeX Info: Redefining \. on input line 3056.
-LaTeX Info: Redefining \% on input line 3056.
-[56 <./graficos/NDVI_spat.png> <./graficos/elevacion_spat.png>]
-<graficos/curvatura_spat.png, id=999, 433.62pt x 242.02046pt>
+LaTeX Info: Redefining \. on input line 3238.
+LaTeX Info: Redefining \% on input line 3238.
+LaTeX Info: Redefining \. on input line 3238.
+LaTeX Info: Redefining \% on input line 3238.
+[60 <./graficos/NDVI_spat.png> <./graficos/elevacion_spat.png>]
+<graficos/curvatura_spat.png, id=1064, 433.62pt x 242.02046pt>
 File: graficos/curvatura_spat.png Graphic file (type png)
 <use graficos/curvatura_spat.png>
-Package pdftex.def Info: graficos/curvatura_spat.png  used on input line 3059.
+Package pdftex.def Info: graficos/curvatura_spat.png  used on input line 3241.
 (pdftex.def)             Requested size: 433.62555pt x 242.02354pt.
-<graficos/dist_carretera_spat.png, id=1000, 466.74374pt x 283.81032pt>
+<graficos/dist_carretera_spat.png, id=1065, 466.74374pt x 283.81032pt>
 File: graficos/dist_carretera_spat.png Graphic file (type png)
 <use graficos/dist_carretera_spat.png>
-Package pdftex.def Info: graficos/dist_carretera_spat.png  used on input line 3069.
+Package pdftex.def Info: graficos/dist_carretera_spat.png  used on input line 3251.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-LaTeX Info: Redefining \. on input line 3073.
-LaTeX Info: Redefining \% on input line 3073.
-LaTeX Info: Redefining \. on input line 3073.
-LaTeX Info: Redefining \% on input line 3073.
-[57 <./graficos/pendiente_spat.png> <./graficos/curvatura_spat.png>]
-<graficos/dist_sendero_spat.png, id=1007, 466.74374pt x 283.81032pt>
+LaTeX Info: Redefining \. on input line 3255.
+LaTeX Info: Redefining \% on input line 3255.
+LaTeX Info: Redefining \. on input line 3255.
+LaTeX Info: Redefining \% on input line 3255.
+[61 <./graficos/pendiente_spat.png> <./graficos/curvatura_spat.png>]
+<graficos/dist_sendero_spat.png, id=1072, 466.74374pt x 283.81032pt>
 File: graficos/dist_sendero_spat.png Graphic file (type png)
 <use graficos/dist_sendero_spat.png>
-Package pdftex.def Info: graficos/dist_sendero_spat.png  used on input line 3076.
+Package pdftex.def Info: graficos/dist_sendero_spat.png  used on input line 3258.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-<graficos/dist_camino_spat.png, id=1008, 466.74374pt x 283.81032pt>
+<graficos/dist_camino_spat.png, id=1073, 466.74374pt x 283.81032pt>
 File: graficos/dist_camino_spat.png Graphic file (type png)
 <use graficos/dist_camino_spat.png>
-Package pdftex.def Info: graficos/dist_camino_spat.png  used on input line 3083.
+Package pdftex.def Info: graficos/dist_camino_spat.png  used on input line 3265.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-LaTeX Info: Redefining \. on input line 3087.
-LaTeX Info: Redefining \% on input line 3087.
-LaTeX Info: Redefining \. on input line 3087.
-LaTeX Info: Redefining \% on input line 3087.
-[58 <./graficos/dist_carretera_spat.png (PNG copy)> <./graficos/dist_sendero_spat.png (PNG copy)>]
-<graficos/dist_poblacion_spat.png, id=1014, 466.74374pt x 283.81032pt>
+LaTeX Info: Redefining \. on input line 3269.
+LaTeX Info: Redefining \% on input line 3269.
+LaTeX Info: Redefining \. on input line 3269.
+LaTeX Info: Redefining \% on input line 3269.
+[62 <./graficos/dist_carretera_spat.png (PNG copy)> <./graficos/dist_sendero_spat.png (PNG copy)>]
+<graficos/dist_poblacion_spat.png, id=1079, 466.74374pt x 283.81032pt>
 File: graficos/dist_poblacion_spat.png Graphic file (type png)
 <use graficos/dist_poblacion_spat.png>
-Package pdftex.def Info: graficos/dist_poblacion_spat.png  used on input line 3090.
+Package pdftex.def Info: graficos/dist_poblacion_spat.png  used on input line 3272.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-<graficos/dist_electr_spat.png, id=1015, 466.74374pt x 283.81032pt>
+<graficos/dist_electr_spat.png, id=1080, 466.74374pt x 283.81032pt>
 File: graficos/dist_electr_spat.png Graphic file (type png)
 <use graficos/dist_electr_spat.png>
-Package pdftex.def Info: graficos/dist_electr_spat.png  used on input line 3097.
+Package pdftex.def Info: graficos/dist_electr_spat.png  used on input line 3279.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-LaTeX Info: Redefining \. on input line 3101.
-LaTeX Info: Redefining \% on input line 3101.
-LaTeX Info: Redefining \. on input line 3101.
-LaTeX Info: Redefining \% on input line 3101.
-[59 <./graficos/dist_camino_spat.png (PNG copy)> <./graficos/dist_poblacion_spat.png (PNG copy)>]
-<graficos/dist_ferrocarril_spat.png, id=1021, 466.74374pt x 283.81032pt>
+LaTeX Info: Redefining \. on input line 3283.
+LaTeX Info: Redefining \% on input line 3283.
+LaTeX Info: Redefining \. on input line 3283.
+LaTeX Info: Redefining \% on input line 3283.
+[63 <./graficos/dist_camino_spat.png (PNG copy)> <./graficos/dist_poblacion_spat.png (PNG copy)>]
+<graficos/dist_ferrocarril_spat.png, id=1086, 466.74374pt x 283.81032pt>
 File: graficos/dist_ferrocarril_spat.png Graphic file (type png)
 <use graficos/dist_ferrocarril_spat.png>
-Package pdftex.def Info: graficos/dist_ferrocarril_spat.png  used on input line 3104.
+Package pdftex.def Info: graficos/dist_ferrocarril_spat.png  used on input line 3286.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-<graficos/uso_suelo_spat.png, id=1022, 419.166pt x 253.97743pt>
+<graficos/uso_suelo_spat.png, id=1087, 419.166pt x 253.97743pt>
 File: graficos/uso_suelo_spat.png Graphic file (type png)
 <use graficos/uso_suelo_spat.png>
-Package pdftex.def Info: graficos/uso_suelo_spat.png  used on input line 3111.
+Package pdftex.def Info: graficos/uso_suelo_spat.png  used on input line 3293.
 (pdftex.def)             Requested size: 419.17776pt x 253.98454pt.
-LaTeX Info: Redefining \. on input line 3115.
-LaTeX Info: Redefining \% on input line 3115.
-LaTeX Info: Redefining \. on input line 3115.
-LaTeX Info: Redefining \% on input line 3115.
-[60 <./graficos/dist_electr_spat.png (PNG copy)> <./graficos/dist_ferrocarril_spat.png (PNG copy)>]
-LaTeX Info: Redefining \. on input line 3144.
-LaTeX Info: Redefining \% on input line 3144.
-LaTeX Info: Redefining \. on input line 3144.
-LaTeX Info: Redefining \% on input line 3144.
-[61 <./graficos/uso_suelo_spat.png (PNG copy)>] [62
+LaTeX Info: Redefining \. on input line 3297.
+LaTeX Info: Redefining \% on input line 3297.
+LaTeX Info: Redefining \. on input line 3297.
+LaTeX Info: Redefining \% on input line 3297.
+[64 <./graficos/dist_electr_spat.png (PNG copy)> <./graficos/dist_ferrocarril_spat.png (PNG copy)>]
+LaTeX Info: Redefining \. on input line 3326.
+LaTeX Info: Redefining \% on input line 3326.
+LaTeX Info: Redefining \. on input line 3326.
+LaTeX Info: Redefining \% on input line 3326.
+[65 <./graficos/uso_suelo_spat.png (PNG copy)>] [66
 
 ]
 Ap\'{e}ndice B.
-<graficos/lr_coef.png, id=1036, 147.55125pt x 597.73312pt>
+<graficos/lr_coef.png, id=1102, 147.55125pt x 597.73312pt>
 File: graficos/lr_coef.png Graphic file (type png)
 <use graficos/lr_coef.png>
-Package pdftex.def Info: graficos/lr_coef.png  used on input line 3151.
+Package pdftex.def Info: graficos/lr_coef.png  used on input line 3333.
 (pdftex.def)             Requested size: 156.14464pt x 632.54521pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[63]
-LaTeX Info: Redefining \. on input line 3156.
-LaTeX Info: Redefining \% on input line 3156.
-LaTeX Info: Redefining \. on input line 3156.
-LaTeX Info: Redefining \% on input line 3156.
-[64 <./graficos/lr_coef.png>]
+[67]
+LaTeX Info: Redefining \. on input line 3338.
+LaTeX Info: Redefining \% on input line 3338.
+LaTeX Info: Redefining \. on input line 3338.
+LaTeX Info: Redefining \% on input line 3338.
+[68 <./graficos/lr_coef.png>]
 
-Package flexbib Warning: Citation `Luque2017' undefined on input line 3180.
-
-
-Package flexbib Warning: Citation `Luque2019' undefined on input line 3180.
+Package flexbib Warning: Citation `Luque2017' undefined on input line 3362.
 
 
-Package flexbib Warning: Citation `RStudio' undefined on input line 3180.
+Package flexbib Warning: Citation `Luque2019' undefined on input line 3362.
 
 
-Package flexbib Warning: Citation `R-base2' undefined on input line 3180.
+Package flexbib Warning: Citation `RStudio' undefined on input line 3362.
 
 
-Package flexbib Warning: Citation `Techopedia' undefined on input line 3180.
+Package flexbib Warning: Citation `R-base2' undefined on input line 3362.
 
 
-Package flexbib Warning: Citation `webfacmatematicasus1' undefined on input line 3180.
+Package flexbib Warning: Citation `Techopedia' undefined on input line 3362.
 
 
-Package flexbib Warning: Citation `webUS2a' undefined on input line 3180.
+Package flexbib Warning: Citation `webfacmatematicasus1' undefined on input line 3362.
 
 
-Package flexbib Warning: Citation `webPedroLuque' undefined on input line 3180.
+Package flexbib Warning: Citation `webUS2a' undefined on input line 3362.
 
 
-Package flexbib Warning: Citation `lopez2007aplicacion' undefined on input line 3180.
+Package flexbib Warning: Citation `webPedroLuque' undefined on input line 3362.
+
+
+Package flexbib Warning: Citation `lopez2007aplicacion' undefined on input line 3362.
 
 (./tfe_principal.bbl
 Underfull \hbox (badness 1259) in paragraph at lines 10--14
@@ -1762,7 +1825,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--14
 
 Package flexbib Warning: There were undefined citations.
 
-[65
+[69
 
 
 
@@ -1778,21 +1841,21 @@ L3 programming layer <2024-04-11>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `tfe_principal.out' has not changed.
-(rerunfilecheck)             Checksum: 21EF176BCD568DA8EF5AD45982525EA9;12055.
+(rerunfilecheck)             Checksum: 52DF990E8BF0F1989DD3043DB63D6A63;12237.
  ) 
 Here is how much of TeX's memory you used:
- 31615 strings out of 475992
- 608200 string characters out of 5788807
- 1949754 words of memory out of 5000000
- 52867 multiletter control sequences out of 15000+600000
+ 31679 strings out of 475992
+ 610193 string characters out of 5788807
+ 1950754 words of memory out of 5000000
+ 52917 multiletter control sequences out of 15000+600000
  652402 words of font info for 93 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,18n,93p,1597b,760s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on tfe_principal.pdf (79 pages, 3349604 bytes).
+Output written on tfe_principal.pdf (85 pages, 4241331 bytes).
 PDF statistics:
- 1221 PDF objects out of 1440 (max. 8388607)
- 1002 compressed objects within 11 object streams
- 297 named destinations out of 1000 (max. 500000)
- 805 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1288 PDF objects out of 1440 (max. 8388607)
+ 1055 compressed objects within 11 object streams
+ 311 named destinations out of 1000 (max. 500000)
+ 843 words of extra memory for PDF output out of 10000 (max. 10000000)
 

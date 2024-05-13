@@ -128,6 +128,12 @@ Decimos que un conjunto de datos es consistente cuando es técnicamente correcto
 
 ### PCA
 
+<!-- El Análisis de Componentes Principales (PCA por sus siglas en inglés) es una técnica de reducción de la dimensionalidad ampliamente usada en el análisis de datos multivariante.  -->
+
+
+
+
+
 <!-- Imputación: Hot Deck Imputation -->
 
 <!-- Escalado y normalización:
@@ -406,10 +412,7 @@ $$ Recall = \frac{TP}{TP + FN}$$
 
 
 **AUC-ROC**.
-Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Característica Operativa del Receptor en castellano). Esta curva es una representación gráfica del rendimiento de un modelo de clasificación binaria para todos los umbrales de clasificación.
-
-<!-- Curva ROC -->
-
+Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Característica Operativa del Receptor en castellano). Esta curva es una representación gráfica del rendimiento de un modelo de clasificación binaria para todos los umbrales de clasificación. Representa la sensibilidad frente a la proporción de falsos positivos para cada posible umbral de clasificación. De esta forma, el AUC toma valores entre 0 y 1. En general, se suelen considerar aceptables modelos con un valor del AUC superior a 0.75.
 
 
 

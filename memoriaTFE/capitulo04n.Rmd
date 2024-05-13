@@ -328,7 +328,9 @@ Por último, se ha construido el modelo de SVM usando un kernel gaussiano. El pr
 
 ## Comparación
 
-A continuación se muestran las métricas de cada uno de los modelos seleccionados en los datos de validación en la Tabla \ref{tab:metricas_val} y en la Figura \ref{fig:validation_metrics}. Las curvas ROC de todos los modelos se muestran en la Figura \ref{fig:roc_validation}.
+A continuación se muestran las métricas de cada uno de los modelos seleccionados en los datos de validación en la Tabla \ref{tab:metricas_val} y en la Figura \ref{fig:validation_metrics}. Las curvas ROC de todos los modelos se muestran en la Figura \ref{fig:roc_validation}. 
+
+Puede observarse que los resultados obtenidos por todos los modelos son bastante similares. Destacan el modelo de bosque aleatorio y el de regresión logística con penalización, el primero por ser el que tiene la tasa de acierto y la sensitividad más elevadas, y el segundo por dar los mejores resultado en cuanto a precisión y especificidad. Las curvas ROC de los modelos de bosque aleatorio, regresión logística con penalización, SVM lineal y SVM radial son prácticamente iguales. Los modelos más pobres son la regresión logística aplicando PCA, KNN y el árbol de decisión.
 
 \begin{table}[]
 \centering
@@ -368,6 +370,8 @@ knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomr
 
 
 Por último, para conocer la capacidad de generalización de los modelos construidos, estos se evaluarán sobre nuevas observaciones, el conjunto de datos test. Recuérdese que el entrenamiento de los modelos se ha realizado con el conjunto de entrenamiento, formado por 12927 observaciones tomadas entre el 2002 y mediados de 2014 y para ajustar los parámetros de cada modelo, se han utilizado 4309 observaciones tomadas entre mediados de 2014 y mediados de 2019. Finalmente, se evaluará la capacidad de predicción de los modelos sobre 4310 nuevas observaciones tomadas entre mediados de 2019 y 2022. Para ello, primero se juntarán los conjuntos de entrenamiento y validación para reentrenar los modelos con la configuración de parámetros seleccionada en cada caso, y posterior mente se compararán los valores predichos por los modelos con los valores reales. Los resultados obtenidos se muestran en la Tabla \ref{tab:metricas_test} y el la Figura \ref{fig:test_metrics}. Las curvas ROC de los distintos modelos sobre el conjunto de datos test se muestra en la Figura \ref{fig:roc_test}.
+
+En este caso, los mejores resultados en todas las medidas los da el modelo de regresión logística con penalización. Los modelos de SVM muestran resultados bastante similares entre ellos y prácticamente iguales al modelo de regresión logística. Sobre los datos test, el modelo de bosque aleatorio ha dado un rendimiento peor que el obtenido en validación, quedando por detrás de los tres modelos ya comentados, aunque la sensitividad de todos estos modelos es prácticamente igual. De nuevo, los peores resultados los dan los modelos de regresión logística aplicando PCA y el árbol de decisión, seguidos del KNN.
 
 
 \begin{table}[]
