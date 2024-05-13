@@ -22,6 +22,7 @@ library(ggplot2)
 library(terra)
 library(mapSpain)
 library(skimr)
+library(ggpubr)
 ```
 
 ```{r}
@@ -70,7 +71,9 @@ g = and %>%
   geom_sf() +
   theme_minimal()
  
-g + geom_sf(data = grid,color="red",size=0.6)
+g + 
+  geom_sf(data = grid,color="red",size=0.6) +
+  labs(title = "Malla de puntos con una resulción de 10km x 10km")
 ```
 
 Se va a analizar cada observación el 15 de cada mes.
@@ -167,11 +170,11 @@ full_grid <- full_grid |>
 
 full_grid %>% st_drop_geometry() %>% skim()
 # save(full_grid,file = "salidas_intermedias/full_grid_meses_2022_processed.RData")
+load("salidas_intermedias/full_grid_meses_2022_processed.RData")
 ```
 
 Se usará el modelo de regresión logística lasso final,
 ```{r}
-# load("salidas_intermedias/trained_models_strat_2024_04_28.RData") # Modelos
 load("Private/all_models_test.RData")
 
 model <- models %>% filter(model_name=="lr")
@@ -204,7 +207,7 @@ g <- ggplot(data = and) +
   facet_wrap(~month(date,label=TRUE)) + 
   scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
   # scale_color_gradient(low="blue", high="red")+
-  labs(title="Probabilidad estimada de incendio el día 15 de cada mes de 2021",
+  labs(title="Probabilidad estimada de incendio el día 15 de cada mes de 2022",
        subtitle = paste0("Model: ",model$model_name)) + 
   guides(alpha = "none") + 
   theme_minimal() +
@@ -228,6 +231,29 @@ incendios22 <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",2022,"
 ```
 
 ```{r}
+# OPCIÓN 1 (mejor)
+ggplot(data = and) + 
+  geom_sf() +
+  geom_sf(data = pred, aes(color=.pred_1),alpha=0.8,size = 1.5) +
+  facet_wrap(~month(date,label=TRUE)) + 
+  scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
+  # scale_color_gradient(low="blue", high="red")+
+  guides(alpha = "none") + 
+  theme_minimal() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_sf(data = incendios22 %>% st_centroid, color = "black", shape =24, size=1,fill = "red") + 
+  labs(title = "Probabilidad de incendio estimada el día 15 de cada mes de 2022",
+       subtitle = paste0("Modelo: ",model$model_name),
+       color = "Probalidad\nde incendio\nestimada")
+```
+
+
+```{r}
  ggplot(data = and) + 
   geom_sf() +
   geom_sf(data = pred, aes(color=.pred_1),alpha=0.5,size = 1.5) +
@@ -243,7 +269,7 @@ incendios22 <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",2022,"
         axis.ticks.y=element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
-  geom_sf(data = incendios22, color = "red",fill="transparent") +
+  geom_sf(data = incendios22, color = "firebrick",fill="transparent") +
   geom_sf(data = st_buffer(incendios22,dist=5000), color = "firebrick",fill="firebrick",alpha=0.5,linetype="dotted")
   
 ```
@@ -416,10 +442,18 @@ g = prov %>%
   ggplot() +
   geom_sf() + 
   geom_sf(data = incendio_estudio, color="red",fill=alpha("red",0.2))+
-  theme_minimal() +
-  labs(title = "Caso de estudio: Incendio de Sierra Bermeja",
-       subtitle = "8 de septiembre de 2021") +
-  theme(plot.title = element_text(face="bold"))
+  theme_minimal()+
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) 
+  
+  # labs(title = "Caso de estudio: Incendio de Sierra Bermeja",
+  #      subtitle = "8 de septiembre de 2021") +
+  
+  # theme(plot.title = element_text(face="bold"))
 g
 ```
 
@@ -430,9 +464,26 @@ bbox = st_buffer(incendio_estudio,dist=10000) %>%
 #   as.matrix() %>% t() %>% 
 #   as.data.frame()
 
+# ggplot(bbox %>% st_as_sfc()) + 
+#   geom_sf() + 
+#   geom_sf(data = st_buffer(incendio_estudio,dist=10000)) +
+#   geom_sf(data=incendio_estudio)
 
-g + coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
+g1 = g + coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
  
+g1 = prov %>% 
+  ggplot() +
+  geom_sf() + 
+  geom_sf(data = incendio_estudio, color="red",fill=alpha("red",0.2))+
+  theme_minimal() +
+  # labs(title = "Caso de estudio: Incendio de Sierra Bermeja",
+  #      subtitle = "8 de septiembre de 2021") +
+  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
+  
+gg <- ggarrange(g,g1)
+
+annotate_figure(gg, top = text_grob("Caso de estudio: Incendio de Sierra Bermeja\n8 de septiembre de 2021", 
+                                    size = 14))
 ```
 
 
@@ -474,6 +525,7 @@ full_grid <- full_grid |>
 
 full_grid %>% st_drop_geometry() %>% skim()
 # save(full_grid,file = "salidas_intermedias/full_grid_incendio_0921_processed.RData")
+load("salidas_intermedias/full_grid_incendio_0921_processed.RData")
 ```
 
 Se usará el modelo de regresión logística lasso final,
@@ -482,6 +534,7 @@ Se usará el modelo de regresión logística lasso final,
 load("Private/all_models_test.RData")
 
 model <- models %>% filter(model_name=="lr")
+# model <- models %>% filter(model_name=="svm_rbf")
 # model <- models %>% filter(model_name=="svm_linear")
 # model <- models %>% filter(model_name=="rf")
 
@@ -510,7 +563,7 @@ g <- ggplot(data = and) +
   facet_wrap(~date) + 
   scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
   # scale_color_gradient(low="blue", high="red")+
-  labs(title="Incendio de Sierra Bermeja, 8 de septiembre de 2021",
+  labs(title="Incendio de Sierra Bermeja",
        subtitle = paste0("Model: ",model$model_name)) + 
   guides(alpha = "none") + 
   theme_minimal() +
@@ -521,12 +574,38 @@ g <- ggplot(data = and) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_sf(data = incendio_estudio, fill="transparent",col="red") +
+  labs(color = "Probabilidad\nestimada de\nincendio") +
   coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax)) 
   
 
 g 
 ```
 
+```{r}
+g <- ggplot(data = and) + 
+  geom_sf() +
+  geom_sf(data = pred, aes(color=.pred_class, alpha = .pred_1),size = 1.5) +
+  facet_wrap(~date) + 
+  # scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
+  # scale_color_gradient(low="blue", high="red")+
+  labs(title="Incendio de Sierra Bermeja",
+       subtitle = paste0("Model: ",model$model_name)) + 
+  guides(alpha = "none") + 
+  theme_minimal() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_sf(data = incendio_estudio, fill="transparent",col="red") +
+  labs(color = "Probabilidad\nestimada de\nincendio") +
+  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax)) 
+  
+
+g 
+
+```
 
 ```{r}
 pred %>% 
