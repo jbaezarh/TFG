@@ -956,6 +956,74 @@ svm_rbf_metrics
 # save(svm_rbf_res,file = "salidas_intermedias/trained_models_svm_rbf_2024_05_04.RData")
 ```
 
+### 8. ANN
+
+```{r}
+# 1º Construir el modelo
+mlp <- 
+  mlp(hidden_units = c(30,15,5)) %>% 
+  set_engine("brulee") %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+mlp_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  step_rm(date, cod_municipio, municipio) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Ensamblar todo con workflow
+mlp_workflow <- 
+  workflow() %>% 
+  add_model(mlp) %>% 
+  add_recipe(mlp_recipe)
+
+# 4º Train and tune
+set.seed(345)
+mlp_res <- 
+  mlp_workflow %>% 
+  fit(training)
+
+
+
+# 5º Evaluación de resultados del tuning
+svm_rbf_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+tuning_plot(svm_rbf_res) # No puede hacerse el gráfico
+
+
+# Mejor modelo
+svm_rbf_best <- 
+  svm_rbf_res %>% 
+  select_best(metric="accuracy")
+
+svm_rbf_best
+
+# Curva ROC
+svm_rbf_auc <- 
+  svm_rbf_res %>% 
+  collect_predictions(parameters = svm_rbf_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Support Vector Machine")
+
+autoplot(svm_rbf_auc)
+
+
+svm_rbf_metrics <- svm_rbf_res |> 
+  collect_predictions(parameters = svm_rbf_best) |> 
+  get_metrics()
+svm_rbf_metrics
+
+```
+
+
 # Comparación
 
 ```{r}

@@ -35,35 +35,35 @@ source("cabecera_chunk_inicio.R")
 <!-- Usar como modelo la introducción de: https://r.geocompx.org/intro -->
 
 
-Todos los datos empleados en este trabajo son georreferenciados, lo que significa que están asociados a ubicaciones geográficas específicas. Por ello, resulta esencial introducir, aunque sea de forma general, los tipos de datos más utilizados para trabajar con esta información, sus características y las herramientas disponibles para manipularlos. Se tratarán los datos vectoriales y los datos rasters, al ser los tipos de datos fundamentales en este contexto, con características bien diferenciadas entre ellos.
+Todos los datos empleados en este trabajo son datos georreferenciados, lo que significa que están asociados a ubicaciones geográficas específicas. Por ello, resulta esencial introducir los tipos de datos más utilizados para trabajar con esta información, sus características y las herramientas disponibles para manipularlos. Se tratarán los datos vectoriales y los datos ráster, al ser los tipos de datos fundamentales en este contexto, con características bien diferenciadas entre ellos.
 
 
 ### Datos Vectoriales
 
-El modelo de datos vectoriales geográficos se basa en puntos ubicados dentro de un sistema de referencia de coordenadas (CRS, por sus siglas en inglés). Estos puntos pueden representar características independientes o pueden estar conectados para formar geometrías más complejas como líneas y polígonos.
+El modelo de datos vectoriales se basa en puntos ubicados dentro de un sistema de referencia de coordenadas (CRS, por sus siglas en inglés). Estos puntos pueden representar características independientes o pueden estar conectados para formar geometrías más complejas como líneas y polígonos.
 
 #### Simple features
 
-Las "Simple features" son un estándar abierto ampliamente usado para la representación de datos vectoriales, desarrollado y respaldado por el Open Geospatial Consortium (OGC, por sus siglas en inglés), una organización sin ánimo de lucro dedicada a la creación de estándares abiertos e interoperables a nivel global dentro del marco de los sistemas geográficos de información (GIS, por sus siglas en ingés) y de la *World Wide Web*.
+Las *Simple features* son un estándar abierto ampliamente utilizado para la representación de datos vectoriales, desarrollado y respaldado por el *Open Geospatial Consortium* (OGC), una organización sin ánimo de lucro dedicada a la creación de estándares abiertos e interoperables a nivel global dentro del marco de los sistemas geográficos de información (GIS, por sus siglas en ingés) y de la *World Wide Web*.
 
 El paquete *sf* proporciona clases para datos vectoriales geográficos y una interfaz de línea de comandos consistente para importantes bibliotecas de bajo nivel para geoprocesamiento (*GDAL*, *PROJ*, *GEOS*, *S2*,...).
 
-Los objetos *sf* son fáciles de manipular ya que son dataframes o tibbles con dos características fundamentales En primer lugar, contienen metadatos geográficos adicionales: tipo de geometría, dimensión, *Bounding Box* (límites o extensión geográfica)  e información sobre el Sistema de referencia de coordenadas. Y además, presentan una columna de geometrías. Algunas ventajas del uso del modelo de *simple features* en R son que en la mayoría de operaciones los objeto *sf* se pueden tratar como data frames, los nombres de las funciones son consistentes (todos empiezan por `st_`), las funciones se pueden combinar con el operador tubería y además funcionan bien con el ecosistema de paquetes *tidyverse*.
+Los objetos *sf* son fáciles de manipular ya que son dataframes o tibbles con dos características fundamentales. En primer lugar, contienen metadatos geográficos adicionales: tipo de geometría, dimensión, *Bounding Box* (límites o extensión geográfica)  e información sobre el Sistema de referencia de coordenadas. Y además, presentan una columna de geometrías. Algunas ventajas del uso de este modelo de datos en R son que en la mayoría de operaciones los objeto *sf* se pueden tratar como data frames, los nombres de las funciones son consistentes (todos empiezan por `st_`), las funciones se pueden combinar con el operador tubería y además funcionan bien con el ecosistema de paquetes *tidyverse*.
 
 El paquete *sf* de R soporta 18 tipos de geometrías para las *simple features*, de las cuales las más utilizadas son: *POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, MULTIPOLYGON* y *GEOMETRYCOLLECTION*.
 
 
 ### Datos Ráster
 
-El modelo de datos ráster representa el espacio con una cuadrícula de celdas (también llamadas píxeles), que generalmente es regular, es decir, con todas las celdas de igual tamaño. Aunque no se tratarán en el presente trabajo, cabe mencionar que existen otros modelos de ráster más complejos en los que se usan cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas) y que pueden manipularse con el paquete de R (stars)[https://cran.r-project.org/web/packages/stars/index.html]. A cada una de estas celdas se le asocia un valor (rásteres de una sola capa) o varios (rásteres multicapa).
+El modelo de datos ráster representa el espacio con una cuadrícula de celdas (o píxeles) a cada una de las cuales se le asocia un valor o varios, tratándose así de ráster de una o varias capas, respectivamente. Lo más común es trabajar con cuadrículas regulares, es decir, formadas por celdas rectangulares de igual tamaño. Sin embargo, existen otros modelos de ráster más complejos en los que se usan cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas).
 
-Los datos en formato ráster constan de una cabecera y una matriz cuyos elementos representan celdas equipespaciadas. En la cabecera del raster se definen el Sistema de referencia de coordenadas, la extensión (o límites espaciales del área cubierta por el ráster), la resolución y el origen. El origen son las coordenadas de uno de los píxeles del ráster, que sirve de referencia para los demás, siendo generalmente utilizado el de la esquina inferior izquierda (aunque el paquete TERRA usado en este trabajo usa por defecto el de la esquina superior izquierda). La resolución se calcula como:
+Los datos en formato ráster constan de una cabecera y una matriz cuyos elementos representan celdas equipespaciadas. En la cabecera del raster se definen el Sistema de referencia de coordenadas, la extensión (o límites espaciales del área cubierta por el ráster), la resolución y el origen. El origen son las coordenadas de uno de los píxeles del ráster, que sirve de referencia para los demás, siendo generalmente utilizado el de la esquina inferior izquierda (aunque el paquete *TERRA*, usado en este trabajo, usa por defecto el de la esquina superior izquierda). La resolución se calcula como:
 
 $$ resolution = \frac{x_{max}-x_{min}}{ncol},\frac{y_{max}-y_{min}}{nrow} $$
 
 La representación en forma de matriz evita tener que almacenar explícitamente las coordenadas de cada una de las cuatro esquinas de cada píxel, debiendo almacenar solamente las coordenadas de un punto (el origen). Esto, unido a las operaciones del álgebra de mapas hacen que el procesamiento de datos ráster sea mucho más eficiente que el de datos vectoriales.
 
-Se usará el paquete *TERRA* para tratar los datos en formato ráster. Este paquete permite tratar el modelo de rásteres regulares con una o varias capas a través de la clase de objetos `SpatRaster`. Sin embargo, existen otras alternativas, como el paquete \href{https://cran.r-project.org/web/packages/stars/index.html}{\it stars}, que además de ser más potente, permite trabajar con rásteres no regulares y ofrece una mejor integración con el paquete sf y el entorno tidyverse.
+Se usará el paquete *TERRA* para tratar los datos en formato ráster. Este paquete permite tratar el modelo de rásteres regulares con una o varias capas a través de la clase de objetos `SpatRaster`. Sin embargo, existen otras alternativas, como el paquete \href{https://cran.r-project.org/web/packages/stars/index.html}{\it stars}, que además de ser más potente, permite trabajar con rásteres no regulares y ofrece una mejor integración con el paquete *sf* y el entorno *tidyverse*.
 
 
 
@@ -72,11 +72,13 @@ Se usará el paquete *TERRA* para tratar los datos en formato ráster. Este paqu
 <!-- https://mgimond.github.io/Spatial/chp09_0.html -->
 <!-- https://r.geocompx.org/spatial-operations#map-algebra -->
 
-Intrínseco a cualquier modelo de datos espaciales está el concepto de Sistema de referencia de coordenadas (CRS), que establece cómo la geometría de los datos se relaciona con la superficie terrestre. Es decir, es el nexo de unión entre el modelo de datos y la realidad, por lo que juega un papel fundamental dentro de cualquier modelo de datos espaciales. Los CRS pueden ser de dos tipos: geográficos o proyectados.
+Intrínseco a cualquier modelo de datos espaciales está el concepto de Sistema de referencia de coordenadas (CRS), que establece cómo la geometría de los datos se relaciona con la superficie terrestre. Es decir, es el nexo de unión entre el modelo de datos y la realidad, por lo que juega un papel fundamental. Los CRS pueden ser de dos tipos: geográficos o proyectados.
 
 #### Sistemas de Coordenadas Geográficas
 
-Los sistemas de coordenadas geográficas (GCS por sus siglas en inglés) identifican cada punto de la superficie terrestre utilizando la longitud y la latitud. La longitud es la distancia angular al Meridiano de Greenwich medida en la dirección Este-Oeste. La latitud es la distancia angular al Ecuador medida en la dirección Sur-Norte.
+Los sistemas de coordenadas geográficas (GCS) identifican cada punto de la superficie terrestre utilizando la longitud y la latitud. La longitud es la distancia angular al Meridiano de Greenwich medida en la dirección Este-Oeste. La latitud es la distancia angular al Ecuador medida en la dirección Sur-Norte.
+
+<!-- Podría incluir el dibujo -->
 
 Cualquier sistema de coordenadas geográficas se compone de tres elementos: el elipsoide, el geoide y el *datum*. El primero es el elipsoide (o esfera) utilizado para representar de forma simplificada la superficie terrestre, sobre el que se supone que se encuentran los datos y que permitirá realizar mediciones. El segundo, el geoide, es el modelo matemático que representa la verdadera forma de la Tierra, que no es suave sino que presenta ondulaciones debidas a las fluctuaciones del campo gravitatorio a lo largo de la superficie terrestre, que además cambian a una amplia escala temporal. Y el tercero, el *datum*, indica cómo se alinean el elipsoide y el geoide, es decir, cómo el modelo matemático se ajusta a la realidad. Este puede ser local o geocéntrico, en función de si el elipsoide se ajusta al geoide en un punto concreto de la superficie terrestre o de si es el centro del elipsoide el que se alinea con el centro de la Tierra. Ejemplos de *datum* geocéntricos usados en este trabajo son:
 
@@ -86,11 +88,11 @@ Cualquier sistema de coordenadas geográficas se compone de tres elementos: el e
 
 #### Sistemas de Coordenadas Proyectadas
 
-Un Sistema de Coordenadas Proyectadas (PCS por sus siglas en inglés) es un sistema de referencia que permite identificar localizaciones terrestres y realizar mediciones en una superficie plana, es decir, en un mapa. Estos sistemas de coordenadas se basan en las coordenadas cartesianas, por lo que tienen un origen, un eje X y un eje Y y usan una unidad lineal de medida (en este trabajo se usará el metro). Pasar de una superficie elíptica (GCR) a una superficie plana (PCS) requiere de transformaciones matemáticas apropiadas y siempre induce deformaciones en los datos.
+Un Sistema de Coordenadas Proyectadas (PCS) es un sistema de referencia que permite identificar localizaciones terrestres y realizar mediciones en una superficie plana, es decir, en un mapa. Estos sistemas de coordenadas se basan en las coordenadas cartesianas, por lo que tienen un origen, un eje X y un eje Y y usan una unidad lineal de medida (en este trabajo se usará el metro). Pasar de una superficie elíptica (GCR) a una superficie plana (PCS) requiere de transformaciones matemáticas apropiadas y siempre induce deformaciones en los datos.
 
 Al proyectar la superficie terrestre en una superficie plana siempre se modifican algunas propiedades de los objetos, como el área, la dirección, la distancia o la forma. Un PCS solo puede conservar alguna de estas propiedades pero no todas, por lo que es habitual clasificar los PCS en función de la propiedad que mantienen: las proyecciones de igual área preservan el área, las azimutales preservan la dirección, las equidistantes preservan la distancia y las conformales preservan la forma local. En función de como se realice la proyección, estas también se pueden clasificar en planas, cilíndricas o cónicas.
 
-Un caso particular y ampliamente usado de PCS cilíndrico son los *Universe Transverse Mercator* (UTM), en el los que se proyecta el elipsoide sobre un cilindro tangente a este por las líneas de longitud (los meridianos). De esta forma, se divide el globo en 60 zonas de 6º de longitud, para cada una de las cuales existe un PCS UTM correspondiente que está asociado al meridiano central. Se trata de proyecciones conformales, por lo que preservan ángulos y formas en pequeñas regiones, pero distorsionan distancias y áreas. 
+Un caso particular y ampliamente usado de PCS cilíndrico son los *Universe Transverse Mercator* (UTM), en los que se proyecta el elipsoide sobre un cilindro tangente a este por las líneas de longitud (los meridianos). De esta forma, se divide el globo en 60 zonas de 6º de longitud, para cada una de las cuales existe un PCS UTM correspondiente que está asociado al meridiano central. Se trata de proyecciones conformales, por lo que preservan ángulos y formas en pequeñas regiones, pero distorsionan distancias y áreas. 
 
 A lo largo de este trabajo se utilizará ampliamente el Sistema de coordenadas proyectadas UTM30N (es habitual especificar el hemisferio para evitar confusión en los valores del eje Y, ya que miden distancia al ecuador, de ahí la N de hemisferio norte).  
 
@@ -101,12 +103,11 @@ A lo largo de este trabajo se utilizará ampliamente el Sistema de coordenadas p
 <!-- https://datos.gob.es/es/documentacion/guia-practica-de-introduccion-al-analisis-exploratorio-de-datos -->
 <!-- https://r4ds.hadley.nz/eda#introduction -->
 
-El análisis exploratorio de datos (EDA, por sus siglas en inglés), es una parte fundamental de todo proyecto de Machine Learning y en general de cualquier proyecto en el que se deba trabajar con datos de cualquier procedencia para extraer de ellos conclusiones. Antes del procesamiento de los datos es siempre necesario explorar, entender y evaluar la calidad de estos, pues como indica la expresión inglesa *garbage in, garbage out*, si trabajamos con datos pobres, no podemos esperar obtener buenos resultados con ellos.
+El análisis exploratorio de datos (EDA), es una parte fundamental de todo proyecto de *Machine Learning* y en general de cualquier proyecto en el que se deba trabajar con datos de cualquier procedencia para extraer de ellos conclusiones. Antes del procesamiento de los datos es siempre necesario explorar, entender y evaluar la calidad de estos, pues como indica la expresión inglesa *garbage in, garbage out*, si trabajamos con datos pobres, no podemos esperar obtener de ellos buenos resultados.
 
 
-El EDA hace referencia al conjunto de técnicas estadísticas con las que se pretende explorar, describir y resumir la naturaleza de los datos, comprender las relaciones existentes entre las distintas variables presentes, identificar posibles errores o revelar posibles valores atípicos. Todo esto con el objetivo de maximizar nuestra compresión sobre el conjunto de datos.
+El EDA hace referencia al conjunto de técnicas estadísticas (tanto numéricas como gráficas) con las que se pretende explorar, describir y resumir la naturaleza de los datos, comprender las relaciones existentes entre las distintas variables presentes, identificar posibles errores o revelar posibles valores atípicos. Todo esto con el objetivo de maximizar nuestra compresión sobre el conjunto de datos.
 
-<!-- Uso de técnicas numéricas y gráficas -->
 
 ### Depuración de los datos
 <!-- DEBATE INTERNO SOBRE SI METERLO DENTRO DEL EDA -->
@@ -115,24 +116,46 @@ El EDA hace referencia al conjunto de técnicas estadísticas con las que se pre
 <!-- https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf -->
 <!-- https://r4ds.hadley.nz/eda#introduction -->
 
-La depuración de los datos o *data cleaning* es el proceso de detectar y corregir o eliminar datos incorrectos, corruptos, con formato incorrecto, duplicados o incompletos dentro de un conjunto de datos. Puede considerarse una fase dentro del EDA (como se sugiere en R4DS, Wickman) o una fase previa a este. 
+La depuración de los datos o *data cleaning* es el proceso de detectar y corregir o eliminar datos incorrectos, corruptos, con formato incorrecto, duplicados o incompletos dentro de un conjunto de datos. Puede considerarse una fase dentro del EDA (como se sugiere en @wickham2016r) o una fase previa a este. 
 
 Puede entenderse que el *data cleaning* es el proceso de pasar de *raw data* o datos en bruto a datos  técnicamente correctos y finalmente a datos consistentes. 
 
-<!-- El grafiquito de la página 6 de file:///D:/usuario/Documents/Universidad/5%C2%BA/EP/TEMAS/TEMA_4_DataCleaning/uRos2017_data-cleaning-workshop.pdf puede quedar flama -->
+<!-- \begin{figure}[!h] -->
+<!-- \centering -->
+<!-- \includegraphics[width=\textwidth]{graficos/statistical_value_chain.png} -->
+<!-- \caption{Cadena de valor estadística. Fuente: } -->
+<!-- \label{fig:statistical_value_chain} -->
+<!-- \end{figure} -->
+
+```{r, echo = FALSE, fig.cap = "Cadena de valor estadística. Fuente: [@van2018statistical]"}
+knitr::include_graphics("graficos/statistical_value_chain.png")
+```
+<!-- CUIDADO!! TENGO QUE VER COMO CITARLO BIEN -->
 
 Entendemos que un conjunto de datos es técnicamente correcto cuando cada valor pertenece a una variable y está almacenado en el tipo que que le corresponde en base al conocimiento del dominio del problema. Para ello se debe reajustar el tipo de cada variable al que le corresponda en base al conocimiento que se tenga sobre esta, codificando los valores en las clases adecuadas si fuese necesario.
 
 Decimos que un conjunto de datos es consistente cuando es técnicamente correcto y, además, adecuado para el análisis estadístico. Se trata, por tanto, de datos que han eliminado, corregido o imputado los valores faltantes, los valores especiales, los valores atípicos y los errores.
 
 
-### PCA
+### Análisis de componentes principales
 
-<!-- El Análisis de Componentes Principales (PCA por sus siglas en inglés) es una técnica de reducción de la dimensionalidad ampliamente usada en el análisis de datos multivariante.  -->
+El Análisis de Componentes Principales (PCA) es una técnica de reducción de la dimensionalidad ampliamente usada en el análisis de datos multivariante. Al emplear técnicas de reducción de dimensionalidad como PCA, se persiguen diversos objetivos: eliminar correlaciones redundantes, reducir el ruido presente en los datos y facilitar el uso de algoritmos cuya eficiencia computacional está fuertemente influenciada por la dimensionalidad de los datos.
 
+\begin{definition}
+Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las *k* componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión *p* que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
+\end{definition}
 
+De la propia definición se desprende que las componentes principales no son únicas.
 
+\begin{proposition}
+Las *p* primeras componentes principales se corresponden con los autovectores unitarios asociados a los $p$ mayores autovalores $\lambda_j$ de la matriz de covarianzas muestrales. 
+\end{proposition}
 
+\begin{definition}
+Se define la fracción de varianza explicada por las $p$ primeras componentes principales como $\frac{\sum_{j=1}^p \lambda_j}{\sum_{j=1}^k \lambda_j}$.
+\end{definition}
+
+El número de componentes principales necesarias para explicar un porcentaje dado de la varianza de los datos puede servir para caracterizar la magnitud del problema.
 
 <!-- Imputación: Hot Deck Imputation -->
 
@@ -194,7 +217,7 @@ $$\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum |\beta_i|$$
 
 en el caso de la regresión logística *lasso*.
 
-En este trabajo se usará el paquete *glmnet* implementa una combinación de ambos métodos (llamada *elastic net*), en la que se añade un parámetro de mixtura $\alpha \in \left[0,1\right]$ que combina ambos enfoques. El problema de optimización resultante en este caso será:
+En este trabajo se usará el paquete *glmnet*, que implementa una combinación de ambos métodos (llamada *elastic net*), en la que se añade un parámetro de mixtura $\alpha \in \left[0,1\right]$ que combina ambos enfoques. El problema de optimización resultante en este caso será:
 
 $$\min_{\underline \beta} -l(\underline \beta)  + \lambda \left[(1-\alpha)\sum \beta_i^2 + \alpha \sum |\beta_i| \right]$$ 
 
@@ -205,7 +228,7 @@ $$\min_{\underline \beta} -l(\underline \beta)  + \lambda \left[(1-\alpha)\sum \
 
 ### Support Vector Machine
 
-Las Máquinas de Vector Soporte (SVM por sus siglas en inglés) son una familia de modelos principalmente usados en problemas de clasificación binaria (si bien se pueden extender a problemas de clasificación multiclase o de regresión) que parten de la idea de encontrar el hiperplano que "mejor" separa al conjunto de puntos.
+Las Máquinas de Vector Soporte (SVM) son una familia de modelos principalmente usados en problemas de clasificación binaria (si bien se pueden extender a problemas de clasificación multiclase o de regresión) que parten de la idea de encontrar el hiperplano que "mejor" separa al conjunto de puntos.
 
 #### SVM lineal
 
@@ -274,7 +297,7 @@ donde $C>0$ es un parámetro de regularización que permite controlar los errore
 #### SVM no lineal
 <!-- https://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html -->
 
-Existen muchos casos en los que el SVM no es capaz de obtener buenos resultados, debido a la estructura de la distribución de las clases en la muestra. En estos casos, es común recurrir a una técnica llamada *kernel trick*. Esta técnica consiste en realizar una inmersión del conjunto de los vectores de la muestra en un espacio de dimensión superior (*feature space*) en el que los casos sí sean separables (o al menos mejore la separabilidad de estos). Esta inmersión en un espacio de dimensión superior se hace indirectamente a través de funciones *kernel*, que calculan los productos escalares entre los vectores de la muestra en el espacio de inmersión.
+Existen muchos casos en los que el SVM no es capaz de obtener buenos resultados, debido a la estructura de la distribución de las clases en la muestra. En estos casos, es común recurrir a una técnica llamada *kernel trick*. Esta técnica consiste en realizar una inmersión del conjunto de los vectores de la muestra en un espacio de dimensión superior (llamado *feature space*) en el que los casos sí sean separables (o al menos mejore la separabilidad de estos). Esta inmersión en un espacio de dimensión superior se hace indirectamente a través de funciones *kernel*, que calculan los productos escalares entre los vectores de la muestra en el espacio de inmersión.
 Existen distintos tipos de funciones *kernel* que se corresponden con distintas inmersiones en espacios de dimensión superior:
 
 - Kernel polinomial: $k(x,z) = \left( \gamma(x^tz + c_0) \right)^p$
@@ -284,10 +307,10 @@ Existen distintos tipos de funciones *kernel* que se corresponden con distintas 
 ### Decision Trees 
 <!-- Elements of Statistical Learning, pag 324 -->
 
-Un árbol de decisión (DT por sus siglas en inglés) es un algoritmo de aprendizaje supervisado no paramétrico, que puede aplicarse tanto a problemas de clasificación como de regresión. La idea de este método es segmentar el espacio predictor en rectángulos, de forma que para predecir una observación se usa la moda (o la media) de la región a la que pertenece. Se trata de un modelo jerárquico con estructura de árbol, que consta de un nodo raiz, ramas, nodos internos y nodos hojas. Cada nodo representa un test sobre una variable, y cada las ramas que nacen de ese nodo representan los posibles valores que puede tomar esa variable. De esta forma, para clasificar una nueva instancia basta comenzar en el nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja correspondiente, que indicará la clasificación asignada a dicha instancia. La simplicidad del método muestra su principal ventaja, su fácil comprensión dada su estructura de árbol. 
+Un árbol de decisión (DT) es un algoritmo de aprendizaje supervisado no paramétrico, que puede aplicarse tanto a problemas de clasificación como de regresión. La idea de este método es segmentar el espacio predictor en rectángulos, de forma que para predecir una observación se usa la moda (o la media) de la región a la que pertenece. Se trata de un modelo jerárquico con estructura de árbol, que consta de un nodo raiz, ramas, nodos internos y nodos hojas. Cada nodo representa un test sobre una variable, y cada las ramas que nacen de ese nodo representan los posibles valores que puede tomar esa variable. De esta forma, para clasificar una nueva instancia basta comenzar en el nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja correspondiente, que indicará la clasificación asignada a dicha instancia. La simplicidad del método muestra su principal ventaja, su fácil comprensión dada su estructura de árbol. 
 
 
-Existen diversas técnicas para construir árboles de clasificación (y regresión), la que aquí se plantea es una de las más usadas y recibe el nombre de CART (*Clasification And Regression Trees*). Se explica para el caso de árboles de clasificación binarios, i.e. en los que de cada nodo salen dos ramas.
+Existen diversas técnicas para construir árboles de clasificación (y regresión), aquí se ilustra es una de las más usadas que recibe el nombre de CART (*Clasification And Regression Trees*). Se explica para el caso de árboles de clasificación binarios, es decir,  en los que de cada nodo salen dos ramas.
 
 Dada una muestra $\left\{ (\underline x_i,y_i) \right\}$ con $\underline x_i = (x_{i1},...,x_{id})$, un árbol de clasificación con $J$ hojas se puede expresar como
 $$f(\underline x) = \sum_{j=1}^J c_j I(\underline x \in R_j)$$
@@ -339,7 +362,7 @@ El gran inconveniente de los árboles de decisión es que en general son modelos
 La idea detrás del modelo de bosques aleatorios es reducir la varianza de los árboles de decisión sin aumentar el sesgo. Para intentar conseguir este objetivo, la idea es aplicar *Bagging* (*Bootstrap Aggregating*) al modelo de árbol de decisión. Sin embargo, ya que al aplicar *Bagging* la redución de la varianza es mayor cuanto más incorrelados sean los predictores individuales, en cada nuevo nodo de cada árbol construido se selecciona la variable que más disminuya la impureza de entre un conjunto aleatorio  de $m_{try} < d$ predictores.
 
 <!-- Ponerlo guay como algoritmo (estilo proposición,...): -->
-Algoritmo:
+El algoritmo para construir un bosque aletorio es el siguiente:
 
 1. Para $b = {1,...,B}:$
 
@@ -353,6 +376,7 @@ Algoritmo:
 2. De esta forma se obtiene el conjunto de árboles de decisión bootstrap $\left\{ T_b \right\}_{b=1}^B$.
 
 Para predecir la clase de un nuevo punto $\underline x$ se aplica la regla de la clase más votada al conjunto de clases predichas por los $B$ árboles de decisión bootstrap para $\underline x$.
+
 
 <!-- Sea $\hat C_b(\underline x)$ la clase predicha por el b-ésimo árbol de decisión bootstrap. Entonces, $\hat C_{rf}^B(\underline x) = majority\space  vote \space \{\hat C_b(\underline x)\}$. Es decir, se asigna la clase más votada. -->
 
@@ -375,11 +399,12 @@ Para validar el ajuste de los modelos comentados en los datos, se utilizará una
 
 ## Evaluación de los modelos
 
-Una vez construido un modelo predictivo es necesario conocer el rendimiento de este sobre nuevos datos, con el objetivo de estimar su capacidad de generalización. Esto es fundamental de cara a determinar si el modelo es adecuado para el propósito previsto o si necesita ajustes o mejoras. Además, la evaluación del rendimiento permite comparar entre diferentes modelos y seleccionar el que mejor se adapte a las necesidades específicas del problema en cuestión. Para ello, se recurre a distintas métricas, en función de las características propias de cada problema.
+Una vez construido un modelo predictivo es necesario conocer el rendimiento de este sobre nuevos datos, con el objetivo de estimar su capacidad de generalización. Esto es fundamental de cara a determinar si el modelo es adecuado para el propósito previsto o si necesita ajustes o mejoras. La evaluación del rendimiento permite comparar entre diferentes modelos y seleccionar el que mejor se adapte a las necesidades específicas del problema en cuestión. Para ello, se recurre al uso de distintas métricas, en función de las características propias de cada problema.
 
 
 ### Clasificación binaria
 En el presente trabajo el problema que se aborda es un problema de clasificación binaria, pues tenemos solo dos clases que son la clase positiva y la clase negativa. A la hora de clasificar una nueva instancia pueden darse 4 situaciones:
+<!-- Puedo añadir un dibujito -->
 
 - Que se clasifique como positiva siendo realmente positiva, en cuyo caso se dirá que forma parte de las *True Positives (TP)*
 
@@ -389,7 +414,7 @@ En el presente trabajo el problema que se aborda es un problema de clasificació
 
 - Que se clasifique como negativa siendo realmente positiva, en cuyo caso se dirá que forma parte de las *False Negatives (FN)*
 
-Se definen las siguientes métricas de rendimiento de un modelo de clasificación binaria:
+Se considerarán las siguientes métricas de rendimiento para problemas de clasificación binaria:
 
 <!-- Hay que ver cómo poner ahí la definición bien: bookdown -->
 
@@ -412,7 +437,7 @@ $$ Recall = \frac{TP}{TP + FN}$$
 
 
 **AUC-ROC**.
-Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Característica Operativa del Receptor en castellano). Esta curva es una representación gráfica del rendimiento de un modelo de clasificación binaria para todos los umbrales de clasificación. Representa la sensibilidad frente a la proporción de falsos positivos para cada posible umbral de clasificación. De esta forma, el AUC toma valores entre 0 y 1. En general, se suelen considerar aceptables modelos con un valor del AUC superior a 0.75.
+Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Característica Operativa del Receptor en castellano). Esta curva es una representación gráfica del rendimiento de un modelo de clasificación binaria para todos los umbrales de clasificación. Representa la sensibilidad frente a la proporción de falsos positivos para cada posible umbral de clasificación. El AUC está comprendido entre 0 y 1, entendiéndose que el rendimiento del es mejor cuanto mayor sea su valor. En general, se suelen considerar aceptables modelos con un valor del AUC superior a 0.75.
 
 
 

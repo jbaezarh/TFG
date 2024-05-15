@@ -21,9 +21,9 @@ source("cabecera_chunk_inicio.R")
 ```
 
 
-# Apéndice: Título del Apéndice
+# Apéndice: Salidas de los modelos
 
-## Primera sección
+## Regresión logística con penalización
 
 \begin{figure}[h]
 \centering
