@@ -21,7 +21,7 @@ source("cabecera_chunk_inicio.R")
 ```
 
 
-## Introducción
+# Introducción
 
 <!-- Posible estructura de la introducción obtenida de "Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian" -->
 

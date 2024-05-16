@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.15)  16 MAY 2024 10:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.15)  16 MAY 2024 13:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1651,150 +1651,148 @@ Ap\'{e}ndice A.
 <graficos/T2M_spat.png, id=1038, 539.50395pt x 309.24837pt>
 File: graficos/T2M_spat.png Graphic file (type png)
 <use graficos/T2M_spat.png>
-Package pdftex.def Info: graficos/T2M_spat.png  used on input line 3219.
+Package pdftex.def Info: graficos/T2M_spat.png  used on input line 3194.
 (pdftex.def)             Requested size: 455.23827pt x 260.94653pt.
 <graficos/RH2M_spat.png, id=1039, 539.50395pt x 315.13081pt>
 File: graficos/RH2M_spat.png Graphic file (type png)
 <use graficos/RH2M_spat.png>
-Package pdftex.def Info: graficos/RH2M_spat.png  used on input line 3226.
+Package pdftex.def Info: graficos/RH2M_spat.png  used on input line 3201.
 (pdftex.def)             Requested size: 455.23827pt x 265.91019pt.
-[57
-
- <./graficos/T2M_spat.png>]
+[57 <./graficos/T2M_spat.png>]
 <graficos/GWETTOP_spat.png, id=1047, 539.50395pt x 297.48349pt>
 File: graficos/GWETTOP_spat.png Graphic file (type png)
 <use graficos/GWETTOP_spat.png>
-Package pdftex.def Info: graficos/GWETTOP_spat.png  used on input line 3233.
+Package pdftex.def Info: graficos/GWETTOP_spat.png  used on input line 3208.
 (pdftex.def)             Requested size: 455.23827pt x 251.01923pt.
 <graficos/WS10M_spat.png, id=1048, 539.50395pt x 302.52559pt>
 File: graficos/WS10M_spat.png Graphic file (type png)
 <use graficos/WS10M_spat.png>
-Package pdftex.def Info: graficos/WS10M_spat.png  used on input line 3240.
+Package pdftex.def Info: graficos/WS10M_spat.png  used on input line 3215.
 (pdftex.def)             Requested size: 455.23827pt x 255.27379pt.
-LaTeX Info: Redefining \. on input line 3244.
-LaTeX Info: Redefining \% on input line 3244.
-LaTeX Info: Redefining \. on input line 3244.
-LaTeX Info: Redefining \% on input line 3244.
+LaTeX Info: Redefining \. on input line 3219.
+LaTeX Info: Redefining \% on input line 3219.
+LaTeX Info: Redefining \. on input line 3219.
+LaTeX Info: Redefining \% on input line 3219.
 [58 <./graficos/RH2M_spat.png> <./graficos/GWETTOP_spat.png>]
 <graficos/PRECTOTCORR_spat.png, id=1055, 539.50395pt x 292.44139pt>
 File: graficos/PRECTOTCORR_spat.png Graphic file (type png)
 <use graficos/PRECTOTCORR_spat.png>
-Package pdftex.def Info: graficos/PRECTOTCORR_spat.png  used on input line 3247.
+Package pdftex.def Info: graficos/PRECTOTCORR_spat.png  used on input line 3222.
 (pdftex.def)             Requested size: 455.23827pt x 246.76465pt.
 <graficos/WD10M_spat.png, id=1056, 540.30429pt x 440.50285pt>
 File: graficos/WD10M_spat.png Graphic file (type png)
 <use graficos/WD10M_spat.png>
-Package pdftex.def Info: graficos/WD10M_spat.png  used on input line 3254.
+Package pdftex.def Info: graficos/WD10M_spat.png  used on input line 3229.
 (pdftex.def)             Requested size: 455.26228pt x 371.16925pt.
-LaTeX Info: Redefining \. on input line 3258.
-LaTeX Info: Redefining \% on input line 3258.
-LaTeX Info: Redefining \. on input line 3258.
-LaTeX Info: Redefining \% on input line 3258.
+LaTeX Info: Redefining \. on input line 3233.
+LaTeX Info: Redefining \% on input line 3233.
+LaTeX Info: Redefining \. on input line 3233.
+LaTeX Info: Redefining \% on input line 3233.
 [59 <./graficos/WS10M_spat.png> <./graficos/PRECTOTCORR_spat.png>]
 <graficos/poblacion_spat.png, id=1063, 539.50395pt x 316.81151pt>
 File: graficos/poblacion_spat.png Graphic file (type png)
 <use graficos/poblacion_spat.png>
-Package pdftex.def Info: graficos/poblacion_spat.png  used on input line 3264.
+Package pdftex.def Info: graficos/poblacion_spat.png  used on input line 3239.
 (pdftex.def)             Requested size: 455.23827pt x 267.32838pt.
-LaTeX Info: Redefining \. on input line 3268.
-LaTeX Info: Redefining \% on input line 3268.
-LaTeX Info: Redefining \. on input line 3268.
-LaTeX Info: Redefining \% on input line 3268.
+LaTeX Info: Redefining \. on input line 3243.
+LaTeX Info: Redefining \% on input line 3243.
+LaTeX Info: Redefining \. on input line 3243.
+LaTeX Info: Redefining \% on input line 3243.
 [60 <./graficos/WD10M_spat.png (PNG copy)>]
 <graficos/dens_poblacion_spat.png, id=1068, 433.62pt x 221.01175pt>
 File: graficos/dens_poblacion_spat.png Graphic file (type png)
 <use graficos/dens_poblacion_spat.png>
-Package pdftex.def Info: graficos/dens_poblacion_spat.png  used on input line 3271.
+Package pdftex.def Info: graficos/dens_poblacion_spat.png  used on input line 3246.
 (pdftex.def)             Requested size: 433.63878pt x 221.02132pt.
 <graficos/NDVI_spat.png, id=1069, 537.82326pt x 305.04663pt>
 File: graficos/NDVI_spat.png Graphic file (type png)
 <use graficos/NDVI_spat.png>
-Package pdftex.def Info: graficos/NDVI_spat.png  used on input line 3281.
+Package pdftex.def Info: graficos/NDVI_spat.png  used on input line 3256.
 (pdftex.def)             Requested size: 455.24802pt x 258.21097pt.
-LaTeX Info: Redefining \. on input line 3285.
-LaTeX Info: Redefining \% on input line 3285.
-LaTeX Info: Redefining \. on input line 3285.
-LaTeX Info: Redefining \% on input line 3285.
+LaTeX Info: Redefining \. on input line 3260.
+LaTeX Info: Redefining \% on input line 3260.
+LaTeX Info: Redefining \. on input line 3260.
+LaTeX Info: Redefining \% on input line 3260.
 [61 <./graficos/poblacion_spat.png> <./graficos/dens_poblacion_spat.png>]
 <graficos/elevacion_spat.png, id=1077, 433.62pt x 244.54152pt>
 File: graficos/elevacion_spat.png Graphic file (type png)
 <use graficos/elevacion_spat.png>
-Package pdftex.def Info: graficos/elevacion_spat.png  used on input line 3291.
+Package pdftex.def Info: graficos/elevacion_spat.png  used on input line 3266.
 (pdftex.def)             Requested size: 433.63217pt x 244.54837pt.
 <graficos/pendiente_spat.png, id=1078, 433.62pt x 241.18011pt>
 File: graficos/pendiente_spat.png Graphic file (type png)
 <use graficos/pendiente_spat.png>
-Package pdftex.def Info: graficos/pendiente_spat.png  used on input line 3298.
+Package pdftex.def Info: graficos/pendiente_spat.png  used on input line 3273.
 (pdftex.def)             Requested size: 433.63217pt x 241.18686pt.
-LaTeX Info: Redefining \. on input line 3302.
-LaTeX Info: Redefining \% on input line 3302.
-LaTeX Info: Redefining \. on input line 3302.
-LaTeX Info: Redefining \% on input line 3302.
+LaTeX Info: Redefining \. on input line 3277.
+LaTeX Info: Redefining \% on input line 3277.
+LaTeX Info: Redefining \. on input line 3277.
+LaTeX Info: Redefining \% on input line 3277.
 [62 <./graficos/NDVI_spat.png> <./graficos/elevacion_spat.png>]
 <graficos/curvatura_spat.png, id=1087, 433.62pt x 242.02046pt>
 File: graficos/curvatura_spat.png Graphic file (type png)
 <use graficos/curvatura_spat.png>
-Package pdftex.def Info: graficos/curvatura_spat.png  used on input line 3305.
+Package pdftex.def Info: graficos/curvatura_spat.png  used on input line 3280.
 (pdftex.def)             Requested size: 433.62555pt x 242.02354pt.
 <graficos/dist_carretera_spat.png, id=1088, 466.74374pt x 283.81032pt>
 File: graficos/dist_carretera_spat.png Graphic file (type png)
 <use graficos/dist_carretera_spat.png>
-Package pdftex.def Info: graficos/dist_carretera_spat.png  used on input line 3315.
+Package pdftex.def Info: graficos/dist_carretera_spat.png  used on input line 3290.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-LaTeX Info: Redefining \. on input line 3319.
-LaTeX Info: Redefining \% on input line 3319.
-LaTeX Info: Redefining \. on input line 3319.
-LaTeX Info: Redefining \% on input line 3319.
+LaTeX Info: Redefining \. on input line 3294.
+LaTeX Info: Redefining \% on input line 3294.
+LaTeX Info: Redefining \. on input line 3294.
+LaTeX Info: Redefining \% on input line 3294.
 [63 <./graficos/pendiente_spat.png> <./graficos/curvatura_spat.png>]
 <graficos/dist_sendero_spat.png, id=1096, 466.74374pt x 283.81032pt>
 File: graficos/dist_sendero_spat.png Graphic file (type png)
 <use graficos/dist_sendero_spat.png>
-Package pdftex.def Info: graficos/dist_sendero_spat.png  used on input line 3322.
+Package pdftex.def Info: graficos/dist_sendero_spat.png  used on input line 3297.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
 <graficos/dist_camino_spat.png, id=1097, 466.74374pt x 283.81032pt>
 File: graficos/dist_camino_spat.png Graphic file (type png)
 <use graficos/dist_camino_spat.png>
-Package pdftex.def Info: graficos/dist_camino_spat.png  used on input line 3329.
+Package pdftex.def Info: graficos/dist_camino_spat.png  used on input line 3304.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-LaTeX Info: Redefining \. on input line 3333.
-LaTeX Info: Redefining \% on input line 3333.
-LaTeX Info: Redefining \. on input line 3333.
-LaTeX Info: Redefining \% on input line 3333.
+LaTeX Info: Redefining \. on input line 3308.
+LaTeX Info: Redefining \% on input line 3308.
+LaTeX Info: Redefining \. on input line 3308.
+LaTeX Info: Redefining \% on input line 3308.
 [64 <./graficos/dist_carretera_spat.png (PNG copy)> <./graficos/dist_sendero_spat.png (PNG copy)>]
 <graficos/dist_poblacion_spat.png, id=1104, 466.74374pt x 283.81032pt>
 File: graficos/dist_poblacion_spat.png Graphic file (type png)
 <use graficos/dist_poblacion_spat.png>
-Package pdftex.def Info: graficos/dist_poblacion_spat.png  used on input line 3336.
+Package pdftex.def Info: graficos/dist_poblacion_spat.png  used on input line 3311.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
 <graficos/dist_electr_spat.png, id=1105, 466.74374pt x 283.81032pt>
 File: graficos/dist_electr_spat.png Graphic file (type png)
 <use graficos/dist_electr_spat.png>
-Package pdftex.def Info: graficos/dist_electr_spat.png  used on input line 3343.
+Package pdftex.def Info: graficos/dist_electr_spat.png  used on input line 3318.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
-LaTeX Info: Redefining \. on input line 3347.
-LaTeX Info: Redefining \% on input line 3347.
-LaTeX Info: Redefining \. on input line 3347.
-LaTeX Info: Redefining \% on input line 3347.
+LaTeX Info: Redefining \. on input line 3322.
+LaTeX Info: Redefining \% on input line 3322.
+LaTeX Info: Redefining \. on input line 3322.
+LaTeX Info: Redefining \% on input line 3322.
 [65 <./graficos/dist_camino_spat.png (PNG copy)> <./graficos/dist_poblacion_spat.png (PNG copy)>]
 <graficos/dist_ferrocarril_spat.png, id=1110, 466.74374pt x 283.81032pt>
 File: graficos/dist_ferrocarril_spat.png Graphic file (type png)
 <use graficos/dist_ferrocarril_spat.png>
-Package pdftex.def Info: graficos/dist_ferrocarril_spat.png  used on input line 3350.
+Package pdftex.def Info: graficos/dist_ferrocarril_spat.png  used on input line 3325.
 (pdftex.def)             Requested size: 455.26204pt x 276.82869pt.
 <graficos/uso_suelo_spat.png, id=1111, 419.166pt x 253.97743pt>
 File: graficos/uso_suelo_spat.png Graphic file (type png)
 <use graficos/uso_suelo_spat.png>
-Package pdftex.def Info: graficos/uso_suelo_spat.png  used on input line 3357.
+Package pdftex.def Info: graficos/uso_suelo_spat.png  used on input line 3332.
 (pdftex.def)             Requested size: 419.17776pt x 253.98454pt.
-LaTeX Info: Redefining \. on input line 3361.
-LaTeX Info: Redefining \% on input line 3361.
-LaTeX Info: Redefining \. on input line 3361.
-LaTeX Info: Redefining \% on input line 3361.
+LaTeX Info: Redefining \. on input line 3336.
+LaTeX Info: Redefining \% on input line 3336.
+LaTeX Info: Redefining \. on input line 3336.
+LaTeX Info: Redefining \% on input line 3336.
 [66 <./graficos/dist_electr_spat.png (PNG copy)> <./graficos/dist_ferrocarril_spat.png (PNG copy)>]
-LaTeX Info: Redefining \. on input line 3390.
-LaTeX Info: Redefining \% on input line 3390.
-LaTeX Info: Redefining \. on input line 3390.
-LaTeX Info: Redefining \% on input line 3390.
+LaTeX Info: Redefining \. on input line 3365.
+LaTeX Info: Redefining \% on input line 3365.
+LaTeX Info: Redefining \. on input line 3365.
+LaTeX Info: Redefining \% on input line 3365.
 [67 <./graficos/uso_suelo_spat.png (PNG copy)>] [68
 
 ]
@@ -1802,17 +1800,17 @@ Ap\'{e}ndice B.
 <graficos/lr_coef.png, id=1125, 147.55125pt x 597.73312pt>
 File: graficos/lr_coef.png Graphic file (type png)
 <use graficos/lr_coef.png>
-Package pdftex.def Info: graficos/lr_coef.png  used on input line 3398.
+Package pdftex.def Info: graficos/lr_coef.png  used on input line 3373.
 (pdftex.def)             Requested size: 156.14464pt x 632.54521pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(./tfe_principal.bbl [69]
-LaTeX Info: Redefining \. on input line 1.
-LaTeX Info: Redefining \% on input line 1.
-LaTeX Info: Redefining \. on input line 1.
-LaTeX Info: Redefining \% on input line 1.
-[70 <./graficos/lr_coef.png>]
+[69]
+LaTeX Info: Redefining \. on input line 3378.
+LaTeX Info: Redefining \% on input line 3378.
+LaTeX Info: Redefining \. on input line 3378.
+LaTeX Info: Redefining \% on input line 3378.
+[70 <./graficos/lr_coef.png>] (./tfe_principal.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 10--14
 []$\T1/lmr/m/n/12 https : / / github . com / rstudio / rmarkdown$[]. R pac-ka-ge ver-sion 2.26,
  []
@@ -1824,14 +1822,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 37--39
 
 [71
 
+
+
 ])
 
 Package flexbib Warning: There were undefined citations.
 
-LaTeX Info: Redefining \. on input line 3409.
-LaTeX Info: Redefining \% on input line 3409.
-LaTeX Info: Redefining \. on input line 3409.
-LaTeX Info: Redefining \% on input line 3409.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
 [72] (./tfe_principal.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
@@ -1855,7 +1858,7 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  84i,18n,93p,1597b,760s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on tfe_principal.pdf (88 pages, 4292943 bytes).
+Output written on tfe_principal.pdf (88 pages, 4292932 bytes).
 PDF statistics:
  1343 PDF objects out of 1440 (max. 8388607)
  1102 compressed objects within 12 object streams
