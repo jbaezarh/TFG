@@ -231,10 +231,10 @@ knitr::write_bib(c("knitr","rmarkdown"),
 <!-- Si "metodobib: true", modificar este "nocite:"  -->
 <!-- Si "metodobib: false", modificar el "nocite:" del inicio de este fichero  -->
 
-<!-- \nocite{*} -->
-\nocite{Luque2017,Luque2019,RStudio,R-base2,
-R-knitr,R-rmarkdown,Techopedia,
-webfacmatematicasus1,webUS2a,webPedroLuque,
-lopez2007aplicacion}
+\nocite{*}
+<!-- \nocite{Luque2017,Luque2019,RStudio,R-base2, -->
+<!-- R-knitr,R-rmarkdown,Techopedia, -->
+<!-- webfacmatematicasus1,webUS2a,webPedroLuque, -->
+<!-- lopez2007aplicacion} -->
 
 \fi 
