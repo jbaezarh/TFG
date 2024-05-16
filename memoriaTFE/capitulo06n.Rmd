@@ -21,5 +21,14 @@ source("cabecera_chunk_inicio.R")
 ```
 
 
-# Conclusión
+# Conclusión y Trabajo futuro
 
+## Aportaciones
+
+## Conclusiones
+<!-- Comentar las limitaciones -->
+## Trabajo futuro
+<!-- Future work: -->
+<!-- - EGIF -->
+<!-- - Datos meteorologicos AEMET -->
+<!-- - Muestreo  -->

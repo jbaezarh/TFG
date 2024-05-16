@@ -70,6 +70,7 @@ source("cabecera_chunk_inicio.R")
 
 
 <!-- 7. Enfoque del trabajo presente -->
+<!-- Aquí, terminar comentando las secciones de las que consta el trabajo, sin usar los títulos de los capítulos. Parafrasear -->
 
 <!-- En el presente trabajo se pretende estudiar el riesgo de que los distintos puntos del territorio Andaluz se vean afectados por un incendio forestal en un momento concreto a través de [26] variables explicativas (antropogénicas, hidrográficas, topográficas, meteorológicas y vegetación). A diferencia de la mayoría de estudios similares realizados, se aborda el problema desde una perspectiva dinámica. Esto significa que no se pretende obtener un valor estacionario o estático del riesgo de incendio forestal en cada punto, si no que se busca estimar el riesgo de que una zona concreta se vea afectada por un incendio forestal en un momento concreto. Para ello, se consideran los valores de las variables correspondiente al momento concreto de la observación (usando la información más desagregada temporal y especialmente de la que se ha podido disponer).  -->
 
