@@ -315,9 +315,10 @@ asignar_variables = function(sample) {
     } 
   }
   
-  # "Depuración":
-  # --------------
-  
+
+  # Factores ----------------------------------------------------------------
+
+  # Codificación de las variables categóricas como factores:
   dataset <- dataset |> 
     mutate(enp = as.factor(enp),
            orientacion = cut(orientacion,
@@ -332,3 +333,4 @@ asignar_variables = function(sample) {
   
   return(dataset)
 }
+

@@ -1,6 +1,6 @@
 
 # Librerías ---------------------------------------------------------------
-# Se cargan las librerías que se 
+# Se cargan las librerías que se usarán en esta sección
 
 library(terra) # Raster data
 library(sf) # Vector data
@@ -18,9 +18,10 @@ rm(pend)
 
 
 
+
 # Polígono de Andalucía ---------------------------------------------------
-Andalucia <- esp_get_ccaa(ccaa = "Andalucía")
-andalucia_proj <- st_transform(Andalucia,crs_reference)
+Andalucia <- esp_get_ccaa(ccaa = "Andalucía") # Se obtiene el polígono de la comunidad autónoma de Andalucía
+andalucia_proj <- st_transform(Andalucia,crs_reference) # Se transforma al sistema de referencia usado en el 
 
 #* *HACER CROP con el mapa de andalucia en los incendios y en la zona de suelo forestal para evitar problemas*
 
@@ -34,8 +35,8 @@ area_monte <- andalucia_proj
 
 # Generación de la muestra ------------------------------------------------
 
-# Generación de la muestra, estratificando por mes de forma que a nivel global haya la misma cantidad de observaciones en
-# cada mes (sumando todos los años):
+# Generación de la muestra estratificando por mes de forma que la proporción de 
+# observaciones positivas y negativas por mes (en todo el periodo) sea la misma
 
 # 1089 incencios correctamente registrados entre 2002 y 2022
 
@@ -182,6 +183,8 @@ summary(sample)
 # Almacenamiento de resultados --------------------------------------------
 
 save(sample,file=paste0("salidas_intermedias/sample_strat_",Sys.Date(),".RData"))
+
+
 
 
 

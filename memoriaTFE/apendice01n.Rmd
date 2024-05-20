@@ -21,9 +21,11 @@ source("cabecera_chunk_inicio.R")
 ```
 
 
-# Apéndice: Gráficos espaciales EDA
+# Apéndice 1
 
-## Variables meteorológicas
+## Gráficos espaciales EDA
+
+### Variables meteorológicas
 
 \begin{figure}[H]
 \centering
@@ -73,7 +75,7 @@ source("cabecera_chunk_inicio.R")
 
 
 
-## Variables demográficas
+### Variables demográficas
 
 \begin{figure}[H]
 \centering
@@ -91,7 +93,7 @@ source("cabecera_chunk_inicio.R")
 \end{figure}
 
 
-## Variable de vegetación
+### Variable de vegetación
 
 \begin{figure}[H]
 \centering
@@ -100,7 +102,7 @@ source("cabecera_chunk_inicio.R")
 \label{fig:NDVI_spat}
 \end{figure}
 
-## Variables topográficas
+### Variables topográficas
 
 \begin{figure}[H]
 \centering
@@ -125,7 +127,7 @@ source("cabecera_chunk_inicio.R")
 
 
 
-## Variables antropológicas
+### Variables antropológicas
 
 \begin{figure}[H]
 \centering
@@ -179,3 +181,21 @@ source("cabecera_chunk_inicio.R")
 \caption{Distribución espacial de uso\_suelo.}
 \label{fig:uso_suelo_spat}
 \end{figure}
+
+
+## Salidas de los modelos
+<!-- Corregir las referenicas!! -->
+
+### Regresión logística con penalización
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{graficos/lr_coef.png}
+\caption{Coeficientes del modelos de regresión logística lasso seleccionado.}
+\label{fig:lr_coef}
+\end{figure}
+
+<!-- Añadir:  -->
+<!-- - Árbol de regresión -->
+<!-- - Importancia variables bosque aleatorio -->
+

@@ -26,6 +26,7 @@ Cargamos el archivo de datos que hemos creado anteriormente con `1_generacion_mu
 
 ```{r}
 # load("salidas_intermedias/dataset_completo2024-03-27.RData")
+
 load("salidas_intermedias/dataset_strat_completo2024-04-26.RData")
 str(dataset)
 ```
