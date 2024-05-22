@@ -64,8 +64,7 @@ get_metrics <- function(pred) {
 }
 
 
-# Función para mostrar graficamente los resultados del tuning de un modelo con dos parámetros
-
+# Función para mostrar gráficamente los resultados del tuning de un modelo con dos parámetros
 tuning_plot = function(mod_res) {
   datos_metrics = mod_res %>% 
     collect_metrics()

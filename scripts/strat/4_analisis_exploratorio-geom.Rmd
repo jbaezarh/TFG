@@ -245,7 +245,7 @@ ggplot(data = prov) +
         panel.grid.minor = element_blank())
 ```
 
-Las zonas con mayor humedad superficial de suelo son las que se encuentran en la costa mediterránea. Las zonas con un suelo más seco son las que se encuentran al norte de la cuenca el Guadalquivir, destacando la provincia de Huelva (hay que tener en cuenta que también es una zona en la que hay muchos incendios, la mayoría de los cuales se produce en verano, por lo que hay una gran concentración de observaciones durante el periodo estival, lo que explica el hecho de que se observen tantas observaciones con valores tan bajos de la humedad superficia de suelo).
+Las zonas con mayor humedad superficial de suelo son las que se encuentran en la costa mediterránea. Las zonas con un suelo más seco son las que se encuentran al norte de la cuenca el Guadalquivir, destacando la provincia de Huelva (hay que tener en cuenta que también es una zona en la que hay muchos incendios, la mayoría de los cuales se produce en verano, por lo que hay una gran concentración de observaciones durante el periodo estival, lo que explica el hecho de que se observen tantas observaciones con valores tan bajos de la humedad superficial de suelo).
 
 
 ```{r}

@@ -137,9 +137,9 @@ Entendemos que un conjunto de datos es técnicamente correcto cuando cada valor 
 Decimos que un conjunto de datos es consistente cuando es técnicamente correcto y, además, adecuado para el análisis estadístico. Se trata, por tanto, de datos que han eliminado, corregido o imputado los valores faltantes, los valores especiales, los valores atípicos y los errores.
 
 
-### Análisis de componentes principales
+### Análisis de Componentes Principales
 
-El Análisis de Componentes Principales (PCA) es una técnica de reducción de la dimensionalidad ampliamente usada en el análisis de datos multivariante. Al emplear técnicas de reducción de dimensionalidad como PCA, se persiguen diversos objetivos: eliminar correlaciones redundantes, reducir el ruido presente en los datos y facilitar el uso de algoritmos cuya eficiencia computacional está fuertemente influenciada por la dimensionalidad de los datos.
+El Análisis de Componentes Principales (PCA) es una técnica de reducción de la dimensionalidad ampliamente usada en el análisis de datos multivariante. Al emplear técnicas de reducción de dimensionalidad como PCA, se persiguen diversos objetivos: eliminar correlaciones redundantes, reducir el ruido presente en los datos y facilitar el uso de algoritmos cuya eficiencia computacional está fuertemente influenciada por la dimensionalidad de los datos. A continuación, se definen los conceptos fundamentales del Análisis de Componentes Principales siguiendo el enfoque expuesto en @PCAShaoDeng.
 
 \begin{definition}
 Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las *k* componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión *p* que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
@@ -310,7 +310,7 @@ Existen distintos tipos de funciones *kernel* que se corresponden con distintas 
 Un árbol de decisión (DT) es un algoritmo de aprendizaje supervisado no paramétrico, que puede aplicarse tanto a problemas de clasificación como de regresión. La idea de este método es segmentar el espacio predictor en rectángulos, de forma que para predecir una observación se usa la moda (o la media) de la región a la que pertenece. Se trata de un modelo jerárquico con estructura de árbol, que consta de un nodo raiz, ramas, nodos internos y nodos hojas. Cada nodo representa un test sobre una variable, y cada las ramas que nacen de ese nodo representan los posibles valores que puede tomar esa variable. De esta forma, para clasificar una nueva instancia basta comenzar en el nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja correspondiente, que indicará la clasificación asignada a dicha instancia. La simplicidad del método muestra su principal ventaja, su fácil comprensión dada su estructura de árbol. 
 
 
-Existen diversas técnicas para construir árboles de clasificación (y regresión), aquí se ilustra es una de las más usadas que recibe el nombre de CART (*Clasification And Regression Trees*). Se explica para el caso de árboles de clasificación binarios, es decir,  en los que de cada nodo salen dos ramas.
+Existen diversas técnicas para construir árboles de clasificación (y regresión), aquí se ilustra una de las más usadas que recibe el nombre de CART (*Clasification And Regression Trees*, @breiman1984classification). Se explica para el caso de árboles de clasificación binarios, es decir,  en los que de cada nodo salen dos ramas.
 
 Dada una muestra $\left\{ (\underline x_i,y_i) \right\}$ con $\underline x_i = (x_{i1},...,x_{id})$, un árbol de clasificación con $J$ hojas se puede expresar como
 $$f(\underline x) = \sum_{j=1}^J c_j I(\underline x \in R_j)$$
@@ -325,11 +325,11 @@ Para construir un árbol de clasificación, el algoritmo necesita decidir las va
 <!-- Poner como definición: función de impureza -->
 Las medidas de impureza más comúnmente usadas son:
 
-- Error de clasificación: $1 - \max(p,1-p)$
+- Error de clasificación: $\Phi(p) = 1 - \max(p,1-p)$
 
-- Índice de Gini: $2p(1-p)$
+- Índice de Gini: $\Phi(p) = 2p(1-p)$
 
-- Entropía: $-p \log p - (1 - p) \log (1 - p)$
+- Entropía: $\Phi(p) = -p \log p - (1 - p) \log (1 - p)$
 
 donde $p$ denota la proporción de casos positivos en la muestra.
 <!-- disyunción de conjunciones de restricciones sobre las covariables. -->
@@ -339,9 +339,9 @@ Así, el algoritmo de construcción de un árbol de clasificación es:
 1. Comenzar con el nodo raíz, que incluye todos los casos.
 
 2. Determinar el par (variable,corte) que conduce a una mayor reducción de la impureza. Es decir, dada una medida de impureza $\Phi$ se busca la variable $j \in {1,..,d}$ y el corte $s \in \mathbb{R}$ solución de
-$$\min_{j,s}\left[ 
-\frac{|R_1|}{|R_1|+|R_2|}\min_{c_i} \Phi \left(\{y_i |\underline x_i \in R_1(j,s)\} \right)  + 
-\frac{|R_2|}{|R_1|+|R_2|}\min_{c_i} \Phi \left(\{y_i |\underline x_i \in R_2(j,s)\} \right)\right]$$
+$$\min_{j \in {1,..,d},\;s \in \mathbb{R}}\left[ 
+\frac{|R_1|}{|R_1|+|R_2|} \Phi \left(\{y_i |\underline x_i \in R_1(j,s)\} \right)  + 
+\frac{|R_2|}{|R_1|+|R_2|} \Phi \left(\{y_i |\underline x_i \in R_2(j,s)\} \right)\right]$$
 donde $R_1(j,s) = \{X | X_j \le s \}$ y $R_2(j,s) = \{X | X_j > s \}$.
 
 3. Aplicar iterativamente el proceso anterior a cada nuevo nodo, hasta que se verifiquen las condiciones de finalización. En este caso, el criterio será finalizar el proceso de división en el nodo una vez que el número de casos en este sea igual o inferior a una cantidad $n_{min}$ fijada de antemano. En los nodos hoja se asigna la clase mayoritaria en el nodo.

@@ -770,8 +770,8 @@ tanto, de datos que han eliminado, corregido o imputado los valores
 faltantes, los valores especiales, los valores atípicos y los errores.
 
 \hypertarget{anuxe1lisis-de-componentes-principales}{%
-\subsection{Análisis de componentes
-principales}\label{anuxe1lisis-de-componentes-principales}}
+\subsection{Análisis de Componentes
+Principales}\label{anuxe1lisis-de-componentes-principales}}
 
 El Análisis de Componentes Principales (PCA) es una técnica de reducción
 de la dimensionalidad ampliamente usada en el análisis de datos
@@ -779,7 +779,9 @@ multivariante. Al emplear técnicas de reducción de dimensionalidad como
 PCA, se persiguen diversos objetivos: eliminar correlaciones
 redundantes, reducir el ruido presente en los datos y facilitar el uso
 de algoritmos cuya eficiencia computacional está fuertemente
-influenciada por la dimensionalidad de los datos.
+influenciada por la dimensionalidad de los datos. A continuación, se
+definen los conceptos fundamentales del Análisis de Componentes
+Principales siguiendo el enfoque expuesto en \citet{PCAShaoDeng}.
 
 \begin{definition}
 Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las *k* componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión *p* que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
@@ -1010,10 +1012,11 @@ método muestra su principal ventaja, su fácil comprensión dada su
 estructura de árbol.
 
 Existen diversas técnicas para construir árboles de clasificación (y
-regresión), aquí se ilustra es una de las más usadas que recibe el
-nombre de CART (\emph{Clasification And Regression Trees}). Se explica
-para el caso de árboles de clasificación binarios, es decir, en los que
-de cada nodo salen dos ramas.
+regresión), aquí se ilustra una de las más usadas que recibe el nombre
+de CART (\emph{Clasification And Regression Trees},
+\citet{breiman1984classification}). Se explica para el caso de árboles
+de clasificación binarios, es decir, en los que de cada nodo salen dos
+ramas.
 
 Dada una muestra \(\left\{ (\underline x_i,y_i) \right\}\) con
 \(\underline x_i = (x_{i1},...,x_{id})\), un árbol de clasificación con
@@ -1041,11 +1044,11 @@ Las medidas de impureza más comúnmente usadas son:
 
 \begin{itemize}
 \item
-  Error de clasificación: \(1 - \max(p,1-p)\)
+  Error de clasificación: \(\Phi(p) = 1 - \max(p,1-p)\)
 \item
-  Índice de Gini: \(2p(1-p)\)
+  Índice de Gini: \(\Phi(p) = 2p(1-p)\)
 \item
-  Entropía: \(-p \log p - (1 - p) \log (1 - p)\)
+  Entropía: \(\Phi(p) = -p \log p - (1 - p) \log (1 - p)\)
 \end{itemize}
 
 donde \(p\) denota la proporción de casos positivos en la muestra.
@@ -1060,9 +1063,9 @@ Así, el algoritmo de construcción de un árbol de clasificación es:
   Determinar el par (variable,corte) que conduce a una mayor reducción
   de la impureza. Es decir, dada una medida de impureza \(\Phi\) se
   busca la variable \(j \in {1,..,d}\) y el corte \(s \in \mathbb{R}\)
-  solución de \[\min_{j,s}\left[ 
-  \frac{|R_1|}{|R_1|+|R_2|}\min_{c_i} \Phi \left(\{y_i |\underline x_i \in R_1(j,s)\} \right)  + 
-  \frac{|R_2|}{|R_1|+|R_2|}\min_{c_i} \Phi \left(\{y_i |\underline x_i \in R_2(j,s)\} \right)\right]\]
+  solución de \[\min_{j \in {1,..,d},\;s \in \mathbb{R}}\left[ 
+  \frac{|R_1|}{|R_1|+|R_2|} \Phi \left(\{y_i |\underline x_i \in R_1(j,s)\} \right)  + 
+  \frac{|R_2|}{|R_1|+|R_2|} \Phi \left(\{y_i |\underline x_i \in R_2(j,s)\} \right)\right]\]
   donde \(R_1(j,s) = \{X | X_j \le s \}\) y
   \(R_2(j,s) = \{X | X_j > s \}\).
 \item
@@ -1235,9 +1238,10 @@ Operating Characteristic} o Característica Operativa del Receptor en
 castellano). Esta curva es una representación gráfica del rendimiento de
 un modelo de clasificación binaria para todos los umbrales de
 clasificación. Representa la sensibilidad frente a la proporción de
-falsos positivos para cada posible umbral de clasificación. De esta
-forma, el AUC toma valores entre 0 y 1. En general, se suelen considerar
-aceptables modelos con un valor del AUC superior a 0.75.
+falsos positivos para cada posible umbral de clasificación. El AUC está
+comprendido entre 0 y 1, entendiéndose que el rendimiento del es mejor
+cuanto mayor sea su valor. En general, se suelen considerar aceptables
+modelos con un valor del AUC superior a 0.75.
 
 \hypertarget{herramientas}{%
 \section{Herramientas}\label{herramientas}}

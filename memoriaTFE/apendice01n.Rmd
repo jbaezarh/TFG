@@ -186,7 +186,7 @@ source("cabecera_chunk_inicio.R")
 ## Salidas de los modelos
 <!-- Corregir las referenicas!! -->
 
-### Regresión logística con penalización
+### Coeficientes regresión logística con penalización
 
 \begin{figure}[h]
 \centering
@@ -195,7 +195,16 @@ source("cabecera_chunk_inicio.R")
 \label{fig:lr_coef}
 \end{figure}
 
+### VIP bosque aletorio
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth,keepaspectratio]{graficos/rf_vip_final.png}
+\caption{Importancia de las variables en el bosque aleatorio final.}
+\label{fig:rf_vip_final}
+\end{figure}
+
 <!-- Añadir:  -->
-<!-- - Árbol de regresión -->
-<!-- - Importancia variables bosque aleatorio -->
+<!-- - Árbol de decisión -->
+
 

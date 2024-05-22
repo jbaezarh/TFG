@@ -36,6 +36,50 @@
 \urlstyle{same}  % don't use monospace font for urls
 %
 \usepackage[usenames,dvipsnames]{xcolor}  %new PLLC
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+% PLLC modifica-ini
+% PLLC modifica-fin
+
 \IfFileExists{parskip.sty}{%
 \usepackage{parskip}
 }{% else
@@ -537,19 +581,2127 @@ linewidth=4pt]{mBox}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
-\hypertarget{apuxe9ndice-tuxedtulo-del-apuxe9ndice}{%
-\chapter{Apéndice: Título del
-Apéndice}\label{apuxe9ndice-tuxedtulo-del-apuxe9ndice}}
+\hypertarget{apuxe9ndice-cuxf3digo}{%
+\chapter{Apéndice: Código}\label{apuxe9ndice-cuxf3digo}}
 
-\hypertarget{primera-secciuxf3n}{%
-\section{Primera sección}\label{primera-secciuxf3n}}
+\hypertarget{generaciuxf3n-de-la-muestra}{%
+\section{Generación de la muestra}\label{generaciuxf3n-de-la-muestra}}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{graficos/lr_coef.png}
-\caption{Coeficientes del modelos de regresión logística lasso seleccionado.}
-\label{fig:lr_coef}
-\end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Librerías {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se cargan las librerías que se usarán en esta sección}
+
+\FunctionTok{library}\NormalTok{(terra) }\CommentTok{\# Raster data}
+\FunctionTok{library}\NormalTok{(sf) }\CommentTok{\# Vector data}
+\FunctionTok{library}\NormalTok{(mapSpain) }\CommentTok{\# Polígonos de las regiones de España}
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# Manipulación de datos}
+
+
+
+\CommentTok{\# CRS de referencia {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Será el CRS que se use en todo el proyecto}
+
+\NormalTok{pend }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\StringTok{"data\_raw/topograficas/pendiente.tif"}\NormalTok{)}
+\NormalTok{crs\_reference }\OtherTok{=} \FunctionTok{crs}\NormalTok{(pend)}
+\FunctionTok{rm}\NormalTok{(pend) }\CommentTok{\# Se elimina de la memoria para liberar espacio}
+
+
+\CommentTok{\# Polígono de Andalucía {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{Andalucia }\OtherTok{\textless{}{-}} \FunctionTok{esp\_get\_ccaa}\NormalTok{(}\AttributeTok{ccaa =} \StringTok{"Andalucía"}\NormalTok{) }\CommentTok{\# Se obtiene el polígono de la comunidad autónoma de Andalucía}
+\NormalTok{andalucia\_proj }\OtherTok{\textless{}{-}} \FunctionTok{st\_transform}\NormalTok{(Andalucia,crs\_reference) }\CommentTok{\# Se transforma al sistema de referencia usado en el proyecto}
+
+\CommentTok{\# area\_monte es el área donde se generarán las muestras negativas.}
+
+\CommentTok{\# Dado que no hay un mapa que indique claramente cuales son las zonas que se consideran "monte" en Andalucía y dado que los polígonos de incendios también cubren zonas agrícolas y urbanas (aunque menores en número que las zonas forestales), se considerará "monte" toda Andalucía, sin distinción. El sentido de esta variable es, precisamente, que pueda modificarse en futuros estudios}
+\NormalTok{area\_monte }\OtherTok{\textless{}{-}}\NormalTok{ andalucia\_proj}
+
+\CommentTok{\# Generación de la muestra {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+
+\CommentTok{\# Generación de la muestra estratificando por mes de forma que la proporción de observaciones positivas y negativas por mes (en todo el periodo) sea la misma}
+
+\DocumentationTok{\#\#  Tamaño muestral {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se dispone de 1089 incencios correctamente registrados entre 2002 y 2022}
+
+\NormalTok{n\_in}\OtherTok{=}\DecValTok{10} \CommentTok{\# Número de puntos a muestrear dentro de cada poligono}
+\NormalTok{n\_out}\OtherTok{=}\DecValTok{1089}\SpecialCharTok{*}\DecValTok{10} \CommentTok{\# Número de muestras negativas}
+
+\DocumentationTok{\#\#  Generación aleatoria de fechas para las muestras negativas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+
+\CommentTok{\# Primero se leen todos los datos de todos los archivos de incendios y se almacenan en la variable incendios}
+\NormalTok{incendios }\OtherTok{=} \ConstantTok{NULL}
+
+\ControlFlowTok{for}\NormalTok{ (year }\ControlFlowTok{in} \DecValTok{2002}\SpecialCharTok{:}\DecValTok{2022}\NormalTok{) \{}
+\NormalTok{  incendios }\OtherTok{=} \FunctionTok{rbind}\NormalTok{(incendios, }
+                    \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./data\_raw/incendios\_2000{-}2022/incendios\_"}\NormalTok{,year,}\StringTok{".shp"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+                      \FunctionTok{select}\NormalTok{(}\StringTok{"FECHA\_INIC"} \OtherTok{=} \FunctionTok{matches}\NormalTok{(}\StringTok{"(?i)\^{}FECHA\_INIC$|\^{}fecha\_inic.$"}\NormalTok{))) }
+\NormalTok{\}}
+
+\CommentTok{\# Se cuenta el número de incendios con fecha de inicio correcta en cada mes}
+\NormalTok{incendios\_mes }\OtherTok{=}\NormalTok{ incendios }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{FECHA\_INIC =} \FunctionTok{ymd}\NormalTok{(FECHA\_INIC),}\AttributeTok{.keep=}\StringTok{"unused"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FECHA\_INIC)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{year}\NormalTok{(FECHA\_INIC)}\SpecialCharTok{\textless{}=}\DecValTok{2022}\NormalTok{,}\FunctionTok{year}\NormalTok{(FECHA\_INIC)}\SpecialCharTok{\textgreater{}=}\DecValTok{2002}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{MES =} \FunctionTok{month}\NormalTok{(}\FunctionTok{month}\NormalTok{(FECHA\_INIC))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(MES) }
+
+\CommentTok{\# Fechas posibles para las muestras negativas}
+\NormalTok{possible\_dates }\OtherTok{=} \FunctionTok{tibble}\NormalTok{ (}\AttributeTok{date =} \FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{\textquotesingle{}2002/01/01\textquotesingle{}}\NormalTok{), }\FunctionTok{as.Date}\NormalTok{(}\StringTok{\textquotesingle{}2022/12/31\textquotesingle{}}\NormalTok{), }\AttributeTok{by=}\StringTok{"day"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{MES =} \FunctionTok{month}\NormalTok{(date)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{left\_join}\NormalTok{(incendios\_mes,}
+            \FunctionTok{join\_by}\NormalTok{(MES)) }
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{12345}\NormalTok{) }\CommentTok{\# Se fija la semilla para que sea reproducible}
+
+\CommentTok{\# Se generan fechas aleatorias para las muestras negativas entre 2002 y 2022 siguiendo con una distribución de probabilidad proporcional a la cantidad de incendios observados en cada mes}
+\NormalTok{dates }\OtherTok{=} \FunctionTok{sample}\NormalTok{(possible\_dates}\SpecialCharTok{$}\NormalTok{date, }
+\NormalTok{               n\_out,}\AttributeTok{replace =}\NormalTok{ T,}
+               \AttributeTok{prob =}\NormalTok{ possible\_dates}\SpecialCharTok{$}\NormalTok{n) }
+
+\FunctionTok{rm}\NormalTok{(incendios, possible\_dates) }\CommentTok{\# Se borran para liberar memoria}
+
+\DocumentationTok{\#\#  Selección de localizaciones aleatorias {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Para la selección de la muestra se seguirá el siguiente procedimiento:}
+\CommentTok{\# 1. Para las muestra positivas: Se tomarán n\_in puntos aleatorios dentro de cada polígono de incendio y se le asociará a cada uno de ellos la fecha de inicio del incendio.}
+\CommentTok{\# 2. Para la muestras negativas: Se le asociará una localización aleatoria dentro de area\_monte a cada una de las fechas aleatorias generadas dentro del periodo de estudio (dates). Se tendrá en cuenta que no pueden haber muestras negativas a menos de 15km de una zona en la que haya habido un incendio en una franja de 6 días alrededor de la fecha de la observación (3 días antes a 3 días después).}
+
+\NormalTok{points\_in }\OtherTok{=} \ConstantTok{NULL}  \CommentTok{\# Almacena las muestras positvas}
+\NormalTok{points\_out }\OtherTok{=} \ConstantTok{NULL} \CommentTok{\# Almacena las muestras negativas}
+
+\ControlFlowTok{for}\NormalTok{ (year }\ControlFlowTok{in} \DecValTok{2002}\SpecialCharTok{:}\DecValTok{2022}\NormalTok{) \{}
+  
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"YEAR "}\NormalTok{, year,}\StringTok{" : {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"  Generando muestras positivas...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  incendios }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./data\_raw/incendios\_2000{-}2022/incendios\_"}\NormalTok{,year,}\StringTok{".shp"}\NormalTok{),}\AttributeTok{quiet=}\NormalTok{T) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_transform}\NormalTok{(}\AttributeTok{crs =}\NormalTok{ crs\_reference) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{rename\_with}\NormalTok{(}\AttributeTok{.fn=}\NormalTok{tolower) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fecha\_inic=}\FunctionTok{ymd}\NormalTok{(fecha\_inic),geometry,}\AttributeTok{.keep=}\StringTok{"none"}\NormalTok{)}
+  
+  
+  \DocumentationTok{\#\# Generación de puntos positivos}
+  
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(incendios)) \{}
+\NormalTok{    point\_in\_sfc }\OtherTok{\textless{}{-}} \FunctionTok{st\_sample}\NormalTok{(incendios[i,],}\AttributeTok{size=}\NormalTok{n\_in) }\CommentTok{\# Se generan n\_i puntos dentro de cada incendio}
+\NormalTok{    point\_in\_attr }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{fire =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,n\_in),}\AttributeTok{date =} \FunctionTok{rep}\NormalTok{(incendios[i,]}\SpecialCharTok{$}\NormalTok{fecha\_inic,n\_in))}
+\NormalTok{    point\_in }\OtherTok{\textless{}{-}} \FunctionTok{st\_sf}\NormalTok{(point\_in\_attr,}\AttributeTok{geometry=}\NormalTok{ point\_in\_sfc)}
+    
+    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(points\_in)) \{}
+\NormalTok{      points\_in }\OtherTok{\textless{}{-}}\NormalTok{ point\_in }
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{      points\_in }\OtherTok{\textless{}{-}}\NormalTok{ points\_in }\SpecialCharTok{|\textgreater{}} 
+        \FunctionTok{add\_row}\NormalTok{(point\_in) }
+\NormalTok{    \}}
+\NormalTok{  \}}
+  
+  \DocumentationTok{\#\# Generación de puntos negativos}
+  
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"  Generando muestras negativas...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \CommentTok{\# {-}{-}{-}\textgreater{} Nota: los puntos se generan en area\_monte}
+  
+\NormalTok{  dates\_year }\OtherTok{\textless{}{-}}\NormalTok{ dates[}\FunctionTok{year}\NormalTok{(dates) }\SpecialCharTok{==}\NormalTok{ year]}
+\NormalTok{  locations }\OtherTok{=} \ConstantTok{NULL}
+  
+  \ControlFlowTok{for}\NormalTok{ (day }\ControlFlowTok{in}\NormalTok{ dates\_year) \{}
+\NormalTok{    incendios\_day }\OtherTok{=} \FunctionTok{filter}\NormalTok{(incendios,fecha\_inic}\SpecialCharTok{\textgreater{}=}\NormalTok{day}\DecValTok{{-}3} \SpecialCharTok{\&}\NormalTok{ fecha\_inic}\SpecialCharTok{\textless{}=}\NormalTok{day}\SpecialCharTok{+}\DecValTok{3}\NormalTok{)}
+    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{nrow}\NormalTok{(incendios\_day)}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{ }\CommentTok{\# Si no ha habido incendios en una franja de 6 días en Andalucía}
+      \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(locations)) \{}
+\NormalTok{        locations }\OtherTok{=} \FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}
+\NormalTok{      \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{        locations }\OtherTok{=} \FunctionTok{c}\NormalTok{(locations, }\FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{))}
+\NormalTok{      \}}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{ }\CommentTok{\# Si ha habido algún incendio en una franja de 6 días en Andalucía (3 antes o 3 después)}
+      \ControlFlowTok{repeat}\NormalTok{ \{}
+\NormalTok{        possible\_location }\OtherTok{=} \FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}
+        \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{st\_is\_within\_distance}\NormalTok{(possible\_location,}\FunctionTok{st\_union}\NormalTok{(incendios\_day), }\AttributeTok{dist =} \DecValTok{15000}\NormalTok{, }\AttributeTok{sparse =} \ConstantTok{FALSE}\NormalTok{)) \{}
+\NormalTok{          possible\_location }\OtherTok{=} \FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}
+          \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(locations)) \{}
+\NormalTok{            locations }\OtherTok{=}\NormalTok{ possible\_location}
+            \ControlFlowTok{break}
+\NormalTok{          \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{            locations }\OtherTok{=} \FunctionTok{c}\NormalTok{(locations, possible\_location)}
+            \ControlFlowTok{break}
+\NormalTok{          \}}
+\NormalTok{        \}}
+\NormalTok{      \}}
+\NormalTok{    \}}
+\NormalTok{  \}}
+  
+  
+\NormalTok{  points\_out\_attr }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{fire =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{length}\NormalTok{(dates\_year)),}\AttributeTok{date =}\NormalTok{ dates\_year)}
+  
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(points\_out)) \{}
+\NormalTok{    points\_out }\OtherTok{\textless{}{-}} \FunctionTok{st\_sf}\NormalTok{(points\_out\_attr,}\AttributeTok{geometry=}\NormalTok{ locations)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    points\_out }\OtherTok{\textless{}{-}}\NormalTok{ points\_out }\SpecialCharTok{|\textgreater{}} 
+      \FunctionTok{add\_row}\NormalTok{(}\FunctionTok{st\_sf}\NormalTok{(points\_out\_attr,}\AttributeTok{geometry=}\NormalTok{ locations)) }
+\NormalTok{  \}}
+  
+\NormalTok{\}}
+
+
+\NormalTok{sample }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(points\_in,points\_out) }\CommentTok{\# La muestra generada}
+
+
+\CommentTok{\# Comprobación y corrección {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\FunctionTok{summary}\NormalTok{(sample) }\CommentTok{\# Hay una fecha de un incendio errónea}
+\FunctionTok{max}\NormalTok{(sample}\SpecialCharTok{$}\NormalTok{date,}\AttributeTok{na.rm=}\NormalTok{T) }\CommentTok{\# "2033{-}08{-}15"}
+
+\CommentTok{\# Se eliminan las observaciones con fecha de incendio errónea que se han detectado}
+\NormalTok{sample }\OtherTok{\textless{}{-}}\NormalTok{ sample[}\SpecialCharTok{{-}}\FunctionTok{which}\NormalTok{(sample}\SpecialCharTok{$}\NormalTok{date}\SpecialCharTok{==}\FunctionTok{max}\NormalTok{(sample}\SpecialCharTok{$}\NormalTok{date,}\AttributeTok{na.rm=}\NormalTok{T)),]}
+\FunctionTok{summary}\NormalTok{(sample) }\CommentTok{\# Corregido}
+
+\CommentTok{\# Almacenamiento de resultados {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\FunctionTok{save}\NormalTok{(sample,}\AttributeTok{file=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"salidas\_intermedias/sample\_strat\_"}\NormalTok{,}\FunctionTok{Sys.Date}\NormalTok{(),}\StringTok{".RData"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{asignaciuxf3n-de-variables-a-localizaciones}{%
+\section{Asignación de variables a
+localizaciones}\label{asignaciuxf3n-de-variables-a-localizaciones}}
+
+A continuación se define la función \texttt{asignar\_variables} que dada
+una muestra de puntos en Andalucía con fechas comprendidas entre 2002 y
+2022 le asocia a cada observación todos los valores de las variables
+consideradas en el estudio. Esta función se usará varias veces a lo
+largo del trabajo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Librerías {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se cargan las librerías que se usarán en esta sección}
+\FunctionTok{library}\NormalTok{(nasapower) }\CommentTok{\# Para obtener la información meteorológica}
+\FunctionTok{library}\NormalTok{(raster, }\AttributeTok{include.only =} \FunctionTok{c}\NormalTok{(}\StringTok{"rasterFromXYZ"}\NormalTok{))  }\CommentTok{\# Función para construir rasters a partir de data.frames}
+\FunctionTok{library}\NormalTok{(tidyverse) }
+\FunctionTok{library}\NormalTok{(sf)}
+\FunctionTok{library}\NormalTok{(terra)}
+\FunctionTok{library}\NormalTok{(mapSpain)}
+
+\NormalTok{asignar\_variables }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(sample) \{}
+  \CommentTok{\# Argumentos:}
+  \CommentTok{\# * sample: objeto sf con una columna de geometrías de tipo POINT (dentro de los límites de Andalucía) y fechas comprendidas entre 01/01/2002 y 31/12/2022 }
+
+  
+\NormalTok{  crs\_reference }\OtherTok{=} \FunctionTok{st\_crs}\NormalTok{(sample) }\CommentTok{\# Se usa el sistema de referencia de coordenadas de la muestra}
+\NormalTok{  and }\OtherTok{=} \FunctionTok{esp\_get\_ccaa}\NormalTok{(}\AttributeTok{ccaa =} \StringTok{"Andalucía"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{st\_transform}\NormalTok{(}\FunctionTok{st\_crs}\NormalTok{(datos)) }\CommentTok{\# Polígono de Andalucía}
+  
+  \CommentTok{\# Variables meteorológicas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Asignando variables meteorológicas...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  
+  \CommentTok{\# Tranformamos los datos a WGS84}
+\NormalTok{  andalucia\_WGS84 }\OtherTok{\textless{}{-}} \FunctionTok{st\_transform}\NormalTok{(and,}\AttributeTok{crs=}\StringTok{"WGS84"}\NormalTok{)}
+  
+\NormalTok{  dataset }\OtherTok{=} \ConstantTok{NULL} \CommentTok{\# Variable en la que se almacenará el conjunto completo}
+  
+  \CommentTok{\# Se trabaja anualmente pues la API de NASA POWER solo admite consultas de hasta 366 días}
+
+  \ControlFlowTok{for}\NormalTok{ (year }\ControlFlowTok{in} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(}\FunctionTok{year}\NormalTok{(sample}\SpecialCharTok{$}\NormalTok{date)))) \{}
+    
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"YEAR "}\NormalTok{, year,}\StringTok{" : {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+    
+    \CommentTok{\# Los puntos de cada año}
+\NormalTok{    points }\OtherTok{=} \FunctionTok{filter}\NormalTok{(sample,}\FunctionTok{year}\NormalTok{(date)}\SpecialCharTok{==}\NormalTok{year)  }
+\NormalTok{    points\_WGS84 }\OtherTok{\textless{}{-}} \FunctionTok{st\_transform}\NormalTok{(points,}\AttributeTok{crs=}\StringTok{"WGS84"}\NormalTok{)}
+    
+    \CommentTok{\# Consulta a la api para obtener todo los valores del año}
+\NormalTok{    daily\_single\_ag }\OtherTok{\textless{}{-}} \FunctionTok{get\_power}\NormalTok{(}
+      \AttributeTok{community =} \StringTok{"ag"}\NormalTok{,}
+      \AttributeTok{lonlat =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{8}\NormalTok{,}\FloatTok{35.5}\NormalTok{,}\SpecialCharTok{{-}}\FloatTok{1.5}\NormalTok{,}\DecValTok{39}\NormalTok{),  }\CommentTok{\# Límites de Andalucía}
+      \AttributeTok{pars =} \FunctionTok{c}\NormalTok{(}\StringTok{"T2M"}\NormalTok{,}\StringTok{"GWETTOP"}\NormalTok{, }\StringTok{"RH2M"}\NormalTok{,}\StringTok{"WD10M"}\NormalTok{,}\StringTok{"WS10M"}\NormalTok{,}\StringTok{"PRECTOTCORR"}\NormalTok{),}
+      \AttributeTok{dates =} \FunctionTok{paste0}\NormalTok{(year,}\FunctionTok{c}\NormalTok{(}\StringTok{"{-}01{-}01"}\NormalTok{,}\StringTok{"{-}12{-}31"}\NormalTok{)),}
+      \AttributeTok{temporal\_api =} \StringTok{"daily"}\NormalTok{)}
+    
+    \CommentTok{\# Identificador}
+\NormalTok{    daily\_single\_ag}\SpecialCharTok{$}\NormalTok{clim\_id }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(daily\_single\_ag)}
+\NormalTok{    points}\SpecialCharTok{$}\NormalTok{clim\_id }\OtherTok{=} \ConstantTok{NA} \CommentTok{\# Inicializo el identificador}
+    
+    \ControlFlowTok{for}\NormalTok{ (day }\ControlFlowTok{in} \FunctionTok{unique}\NormalTok{(points}\SpecialCharTok{$}\NormalTok{date)) \{}
+      
+\NormalTok{      points\_day }\OtherTok{=}\NormalTok{ points}\SpecialCharTok{$}\NormalTok{date}\SpecialCharTok{==}\NormalTok{day}
+      
+      \CommentTok{\# Seleccionar un día}
+\NormalTok{      clim\_day  }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(daily\_single\_ag,YYYYMMDD}\SpecialCharTok{==}\NormalTok{day) }\SpecialCharTok{|\textgreater{}} 
+\NormalTok{        dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\AttributeTok{x =}\NormalTok{ LON,}\AttributeTok{y =}\NormalTok{ LAT,}\AttributeTok{clim\_id=}\NormalTok{ clim\_id)}
+      
+\NormalTok{      id\_rast\_day }\OtherTok{=} \FunctionTok{rast}\NormalTok{(}\FunctionTok{rasterFromXYZ}\NormalTok{(clim\_day,}\AttributeTok{crs=}\StringTok{"WGS84"}\NormalTok{)) }\CommentTok{\# Se crea el raster con los identificadores}
+      
+\NormalTok{      points[points\_day,]}\SpecialCharTok{$}\NormalTok{clim\_id }\OtherTok{\textless{}{-}}\NormalTok{ terra}\SpecialCharTok{::}\FunctionTok{extract}\NormalTok{(id\_rast\_day,points\_WGS84[points\_day,])}\SpecialCharTok{$}\NormalTok{clim\_id }\CommentTok{\# Se asocia a cada registro de la muestra el identificador correspondiente}
+\NormalTok{    \}}
+    
+    \CommentTok{\# Haciendo uso del identificador se asocian todas las variables meteorológicas correspondientes a cada registro}
+\NormalTok{    points }\OtherTok{\textless{}{-}}\NormalTok{ points }\SpecialCharTok{|\textgreater{}} 
+      \FunctionTok{left\_join}\NormalTok{(}\FunctionTok{select}\NormalTok{(daily\_single\_ag, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(LAT,LON,DOY,YYYYMMDD)),}
+                \AttributeTok{by=}\FunctionTok{join\_by}\NormalTok{(clim\_id)) }\SpecialCharTok{|\textgreater{}} 
+      \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{clim\_id) }
+    
+\NormalTok{    dataset }\OtherTok{=} \FunctionTok{rbind}\NormalTok{(dataset,points)}
+\NormalTok{  \}}
+  
+  \FunctionTok{rm}\NormalTok{(points,points\_WGS84,daily\_single\_ag,clim\_day,id\_rast\_day,points\_day,day,year,andalucia\_WGS84)}
+  
+  
+  \CommentTok{\# Variables topográficas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Asignando variables topográficas...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  elev }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\StringTok{"data\_raw/topograficas/elevacion.tif"}\NormalTok{)}
+\NormalTok{  pend }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\StringTok{"data\_raw/topograficas/pendiente.tif"}\NormalTok{)}
+\NormalTok{  orient }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\StringTok{"data\_raw/topograficas/orientacion.tif"}\NormalTok{)}
+\NormalTok{  curv }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\StringTok{"data\_raw/topograficas/curvatura.tif"}\NormalTok{)}
+  
+  \CommentTok{\# Es necesario pasarlas a numeric para poder trabajar con ellas y extraer los valores}
+\NormalTok{  pend }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(pend)}
+\NormalTok{  orient }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(orient)}
+\NormalTok{  curv }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(curv)}
+  
+  \CommentTok{\# Se extraen los valores de cada una de las capas}
+\NormalTok{  var\_topograficas }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{elevacion =}\NormalTok{ elev,}\AttributeTok{pendiente =}\NormalTok{ pend,}\AttributeTok{orientacion =}\NormalTok{ orient,}\AttributeTok{curvatura =}\NormalTok{ curv)}
+  
+\NormalTok{  points\_topograficas }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(var\_topograficas,}\ControlFlowTok{function}\NormalTok{(x) terra}\SpecialCharTok{::}\FunctionTok{extract}\NormalTok{(x,dataset))[}\DecValTok{2}\NormalTok{,] }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{as\_tibble}\NormalTok{()}
+  
+\NormalTok{  dataset }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(dataset,points\_topograficas)}
+  
+  \FunctionTok{rm}\NormalTok{(elev,pend,orient,curv,var\_topograficas,points\_topograficas)}
+  
+  
+  \CommentTok{\# Variables antropológicas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Asignando variables antropológicas...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  
+  \DocumentationTok{\#\# Para optimizar el cálculo evitando que se repitan cálculos si hay puntos repetidos:!!}
+\NormalTok{  dataset\_geoms }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(geometry) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_keys}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{st\_sf}\NormalTok{(}\AttributeTok{crs =} \FunctionTok{st\_crs}\NormalTok{(dataset)) }
+  
+  \DocumentationTok{\#\#\# Carreteras: {-}{-}{-}{-}}
+\NormalTok{  carreteras }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/RedCarreteras/09\_14\_RedCarreteras.shp"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_union}\NormalTok{()}
+  
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{dist\_carretera }\OtherTok{\textless{}{-}} \FunctionTok{st\_distance}\NormalTok{(dataset\_geoms,carreteras) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{as.numeric}\NormalTok{()      }\CommentTok{\# metres}
+
+  \FunctionTok{rm}\NormalTok{(carreteras)}
+  
+  \DocumentationTok{\#\#\# Poblaciones: {-}{-}{-}{-}}
+\NormalTok{  poblaciones }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/Poblaciones/07\_01\_Poblaciones.shp"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_union}\NormalTok{()}
+  
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{dist\_poblacion }\OtherTok{\textless{}{-}} \FunctionTok{st\_distance}\NormalTok{(dataset\_geoms,poblaciones) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{as.numeric}\NormalTok{()    }\CommentTok{\# metres}
+  
+  \FunctionTok{rm}\NormalTok{(poblaciones)}
+  
+  \DocumentationTok{\#\#\# Linea Eléctrica: {-}{-}{-}{-}}
+\NormalTok{  linea\_electrica }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/LineaElectrica/10\_14\_LineaElectrica.shp"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_union}\NormalTok{()}
+  
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{dist\_electr }\OtherTok{\textless{}{-}} \FunctionTok{st\_distance}\NormalTok{(dataset\_geoms,linea\_electrica) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{as.numeric}\NormalTok{() }\CommentTok{\# metres}
+  
+  \FunctionTok{rm}\NormalTok{(linea\_electrica)}
+  
+  \DocumentationTok{\#\#\# Ferrocarril: {-}{-}{-}{-}}
+\NormalTok{  ferrocarril }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/Ferrocarril/09\_21\_Ferrocarril.shp"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_union}\NormalTok{()}
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{dist\_ferrocarril }\OtherTok{\textless{}{-}} \FunctionTok{st\_distance}\NormalTok{(dataset\_geoms,ferrocarril) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{as.numeric}\NormalTok{()}
+  
+  \FunctionTok{rm}\NormalTok{(ferrocarril)}
+  
+  \DocumentationTok{\#\#\# Camino / Via: {-}{-}{-}{-}}
+\NormalTok{  camino }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/Camino/09\_19\_Camino.shp"}\NormalTok{) }
+\NormalTok{  viapec }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/Camino/09\_22\_ViasPecuarias.shp"}\NormalTok{) }
+  
+\NormalTok{  camino\_viapec }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{st\_geometry}\NormalTok{(camino),}\FunctionTok{st\_geometry}\NormalTok{(viapec))}
+  \FunctionTok{rm}\NormalTok{(camino,viapec)}
+  
+\NormalTok{  camino\_viapec }\OtherTok{\textless{}{-}} \FunctionTok{st\_union}\NormalTok{(camino\_viapec)}
+  
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{dist\_camino }\OtherTok{\textless{}{-}} \FunctionTok{st\_distance}\NormalTok{(dataset\_geoms,camino\_viapec) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{as.numeric}\NormalTok{()}
+  
+  \FunctionTok{rm}\NormalTok{(camino\_viapec)}
+  
+  \DocumentationTok{\#\#\# Sendero / Vía Verde / CarrilBici: {-}{-}{-}{-}}
+\NormalTok{  viaverde }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/Sendero\_ViaVerde/09\_24\_ViaVerde.shp"}\NormalTok{) }
+\NormalTok{  sendero }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/sendero\_ViaVerde/09\_20\_Sendero.shp"}\NormalTok{) }
+\NormalTok{  carrilbic }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/sendero\_ViaVerde/09\_23\_CarrilBici.shp"}\NormalTok{)}
+  
+\NormalTok{  sendero\_viaverde\_carrilbici }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{st\_geometry}\NormalTok{(viaverde),}\FunctionTok{st\_geometry}\NormalTok{(sendero),}\FunctionTok{st\_geometry}\NormalTok{(carrilbic)) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_union}\NormalTok{()}
+  
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{dist\_sendero }\OtherTok{\textless{}{-}} \FunctionTok{st\_distance}\NormalTok{(dataset\_geoms,sendero\_viaverde\_carrilbici) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{as.numeric}\NormalTok{()}
+  
+  \FunctionTok{rm}\NormalTok{(sendero,sendero\_viaverde\_carrilbici,viaverde,carrilbic)}
+  
+  \DocumentationTok{\#\#\# ENP: {-}{-}{-}{-}}
+\NormalTok{  enp1 }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/ENP/11\_07\_Enp\_FiguraProteccion.shp"}\NormalTok{ )}
+\NormalTok{  enp2 }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/antropologicas/ENP/11\_07\_Enp\_RegimenProteccion.shp"}\NormalTok{)}
+  
+\NormalTok{  enp }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{st\_geometry}\NormalTok{(enp1),}\FunctionTok{st\_geometry}\NormalTok{(enp2)) }\SpecialCharTok{|\textgreater{}}  \FunctionTok{st\_union}\NormalTok{()}
+\NormalTok{  enp\_sf }\OtherTok{\textless{}{-}} \FunctionTok{st\_sf}\NormalTok{(enp)}
+  
+  \CommentTok{\# Se rasteriza para aumentar la eficiencia computacional}
+\NormalTok{  enp\_rast }\OtherTok{\textless{}{-}} \FunctionTok{rasterize}\NormalTok{(enp\_sf,}
+                        \FunctionTok{rast}\NormalTok{(}\StringTok{"data\_raw/topograficas/pendiente.tif"}\NormalTok{), }\CommentTok{\# Modelo}
+                        \AttributeTok{background =} \DecValTok{0}\NormalTok{)}
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{enp}\OtherTok{=}\NormalTok{ terra}\SpecialCharTok{::}\FunctionTok{extract}\NormalTok{(enp\_rast,dataset\_geoms)[,}\DecValTok{2}\NormalTok{]}
+  
+  \FunctionTok{rm}\NormalTok{(enp,enp1,enp2,enp\_sf,enp\_rast)}
+  
+  \DocumentationTok{\#\#\# Uso Suelo: {-}{-}{-}{-}}
+  \CommentTok{\# Inicialmente se ha rasterizado para aumentar la eficiencia computacional}
+  \CommentTok{\# UsoSuelo \textless{}{-} read\_sf("data\_raw/antropologicas/UsoSuelo/06\_01\_UsoSuelo.shp")}
+  \CommentTok{\# UsoSuelo\_rast \textless{}{-} rasterize(UsoSuelo,}
+  \CommentTok{\#                            rast("data\_raw/topograficas/pendiente.tif"), \# Modelo}
+  \CommentTok{\#                            field="cod\_uso")}
+  
+\NormalTok{  UsoSuelo\_rast }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\StringTok{"data\_cleaning/uso\_suelo\_rast.tiff"}\NormalTok{)}
+  
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{uso\_suelo }\OtherTok{=}\NormalTok{ terra}\SpecialCharTok{::}\FunctionTok{extract}\NormalTok{(UsoSuelo\_rast,dataset\_geoms)[,}\DecValTok{2}\NormalTok{]}
+  
+  \CommentTok{\# Hidrográficas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Asignando variables hidrográficas...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  
+  \DocumentationTok{\#\#\# Distancia a ríos: {-}{-}{-}{-}}
+\NormalTok{  rios }\OtherTok{\textless{}{-}} \FunctionTok{read\_sf}\NormalTok{(}\StringTok{"data\_raw/hidrograficas/Rios\_Espana.shp"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_transform}\NormalTok{(}\FunctionTok{st\_crs}\NormalTok{(dataset)) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_crop}\NormalTok{(}\AttributeTok{xmin =} \FloatTok{100394.4}\NormalTok{, }\CommentTok{\# Esto se hace solo para no tener que considerar todo el file y que sea más eficiente computacionalmente}
+            \AttributeTok{ymin =} \FloatTok{3976888.6}\NormalTok{,}
+            \AttributeTok{xmax =} \FloatTok{690000.8}\NormalTok{,}
+            \AttributeTok{ymax =} \FloatTok{4350000.0}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_union}\NormalTok{()}
+  
+\NormalTok{  dataset\_geoms}\SpecialCharTok{$}\NormalTok{dist\_rios }\OtherTok{\textless{}{-}} \FunctionTok{st\_distance}\NormalTok{(dataset\_geoms,rios) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{as.numeric}\NormalTok{() }\CommentTok{\# metres}
+  
+  \FunctionTok{rm}\NormalTok{(rios)}
+  
+  \DocumentationTok{\#\#  Se vuelven a desagrupar los registros y se le asigna a cada registro los valores correspondientes calculados!!}
+\NormalTok{  dataset }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{st\_join}\NormalTok{(dataset\_geoms,}\AttributeTok{left =} \ConstantTok{TRUE}\NormalTok{) }\CommentTok{\# Es un left join espacial}
+  
+  \CommentTok{\# Demográficas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Asignando variables demográficas...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  
+  \DocumentationTok{\#\#\# Población y densidad de población: {-}{-}{-}{-}}
+  
+\NormalTok{  poblacion }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv2}\NormalTok{(}\StringTok{"data\_raw/antropologicas/Población/poblacion\_municipios.txt"}\NormalTok{,}
+                         \AttributeTok{locale=}\FunctionTok{locale}\NormalTok{(}\AttributeTok{decimal\_mark =} \StringTok{","}\NormalTok{),}
+                         \AttributeTok{col\_select =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,}\AttributeTok{col\_types =} \StringTok{"ccifn"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Valor=}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{round}\NormalTok{(Valor))) }\CommentTok{\# Por algún motivo aparecen decimales}
+  
+  
+\NormalTok{  area\_municipios }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv2}\NormalTok{(}\StringTok{"data\_raw/antropologicas/Población/extension\_municipal.txt"}\NormalTok{,}
+                               \AttributeTok{locale=}\FunctionTok{locale}\NormalTok{(}\AttributeTok{decimal\_mark =} \StringTok{","}\NormalTok{),}
+                               \AttributeTok{col\_select =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{, }\AttributeTok{col\_types =} \StringTok{"fffffn"}\NormalTok{)}
+
+\NormalTok{  area\_municipios }\OtherTok{\textless{}{-}}\NormalTok{ area\_municipios }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(CODIGO\_INE3)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(CODIGO\_INE3,Valor) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\StringTok{"Area"} \OtherTok{=} \StringTok{"Valor"}\NormalTok{)}
+  
+  \CommentTok{\# Se calcula la densidad de población anual como el cociente del número de habitantes entre la extensión del municipio}
+\NormalTok{  dens\_poblacion }\OtherTok{\textless{}{-}}\NormalTok{ poblacion }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Medida) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\StringTok{"Poblacion"} \OtherTok{=} \StringTok{"Valor"}\NormalTok{,}
+           \StringTok{"Municipio"} \OtherTok{=} \StringTok{"Lugar de residencia"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{left\_join}\NormalTok{(area\_municipios,}
+              \FunctionTok{join\_by}\NormalTok{(}\StringTok{"CODIGO\_INE3"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dens\_poblacion =}\NormalTok{ Poblacion}\SpecialCharTok{/}\NormalTok{Area) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Area)}
+  
+\NormalTok{  municipios }\OtherTok{\textless{}{-}} \FunctionTok{esp\_get\_munic}\NormalTok{(}\AttributeTok{epsg =} \DecValTok{4258}\NormalTok{,}\AttributeTok{region =} \StringTok{"Andalucía"}\NormalTok{)}
+  
+\NormalTok{  municipios }\OtherTok{\textless{}{-}}\NormalTok{ municipios }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{st\_transform}\NormalTok{(crs\_reference)}
+  
+  \CommentTok{\# Se asocia cada observacion su código de municipio correspondiente }
+  
+\NormalTok{  num\_mun }\OtherTok{=} \FunctionTok{st\_intersects}\NormalTok{(dataset,municipios) }
+  
+  \CommentTok{\# Se eliminan las observaciones que no están en ningún municipio }
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(num\_mun,}\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{length}\NormalTok{(x) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{))) \{}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Eliminamos las observaciones:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{,}\FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(num\_mun,}\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{length}\NormalTok{(x) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)))}
+\NormalTok{    dataset }\OtherTok{=}\NormalTok{ dataset[}\SpecialCharTok{{-}}\FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(num\_mun,}\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{length}\NormalTok{(x) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)),]}
+\NormalTok{  \}}
+  
+\NormalTok{  dataset}\SpecialCharTok{$}\NormalTok{cod\_municipio }\OtherTok{\textless{}{-}}\NormalTok{ municipios[}\FunctionTok{unlist}\NormalTok{(}\FunctionTok{st\_intersects}\NormalTok{(dataset,municipios)),]}\SpecialCharTok{$}\NormalTok{LAU\_CODE}
+  
+\NormalTok{  dataset }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{left\_join}\NormalTok{(dens\_poblacion,}
+              \FunctionTok{join\_by}\NormalTok{(cod\_municipio}\SpecialCharTok{==}\NormalTok{CODIGO\_INE3,YEAR}\SpecialCharTok{==}\NormalTok{Anual)) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{rename}\NormalTok{(}\StringTok{"municipio"} \OtherTok{=} \StringTok{"Municipio"}\NormalTok{,}
+           \StringTok{"poblacion"} \OtherTok{=} \StringTok{"Poblacion"}\NormalTok{)}
+  
+  \CommentTok{\# Vegetación {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Asignando variables de vegetación...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  
+  \DocumentationTok{\#\#\# NDVI {-}{-}{-}{-}}
+\NormalTok{  dataset}\SpecialCharTok{$}\NormalTok{NDVI }\OtherTok{=} \ConstantTok{NA}
+  
+  \ControlFlowTok{for}\NormalTok{ (YEAR }\ControlFlowTok{in} \DecValTok{2002}\SpecialCharTok{:}\DecValTok{2022}\NormalTok{) \{}
+    \ControlFlowTok{for}\NormalTok{ (MONTH }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{12}\NormalTok{) \{}
+\NormalTok{      MM }\OtherTok{=} \FunctionTok{str\_pad}\NormalTok{(MONTH,}\DecValTok{2}\NormalTok{,}\StringTok{"left"}\NormalTok{,}\AttributeTok{pad =} \StringTok{"0"}\NormalTok{)}
+\NormalTok{      YY }\OtherTok{=} \FunctionTok{substr}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(YEAR),}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)}
+      \CommentTok{\# if (as.numeric(YY)\textless{}=01) \{}
+      \CommentTok{\#   ruta \textless{}{-} paste0("data\_raw/vegetacion/",YEAR,"NOAAVHMEDMNDVI/InfGeografica/InfRaster/TIF/NOAAVH\_",YY,MM,"01\_Andaluz\_MEDMndvi.tif")}
+      \CommentTok{\# \} else }
+      \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{as.numeric}\NormalTok{(YY)}\SpecialCharTok{\textless{}=}\DecValTok{06}\NormalTok{) \{}
+\NormalTok{        ruta }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"data\_raw/vegetacion/"}\NormalTok{,YEAR,}\StringTok{"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/TERMOD\_"}\NormalTok{,YY,MM,}\StringTok{"01\_h17v05\_medmndvi.tif"}\NormalTok{)}
+\NormalTok{      \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{as.numeric}\NormalTok{(YY)}\SpecialCharTok{\textless{}=}\DecValTok{11}\NormalTok{) \{}
+\NormalTok{        ruta }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"data\_raw/vegetacion/"}\NormalTok{,YEAR,}\StringTok{"TERMODMEDMNDVI/InfGeografica/InfRaster/TIF/TERMOD\_"}\NormalTok{,YY,MM,}\StringTok{"01\_h17v05\_medmndvi.tif"}\NormalTok{)}
+\NormalTok{      \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{as.numeric}\NormalTok{(YY)}\SpecialCharTok{\textless{}=}\DecValTok{21}\NormalTok{) \{}
+\NormalTok{        ruta }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"data\_raw/vegetacion/"}\NormalTok{,YEAR,}\StringTok{"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/termod\_"}\NormalTok{,YY,MM,}\StringTok{"01\_h17v05\_medmndvi.tif"}\NormalTok{)}
+\NormalTok{      \}}\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{        ruta }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"data\_raw/vegetacion/"}\NormalTok{,YEAR,}\StringTok{"TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod\_"}\NormalTok{,YY,MM,}\StringTok{"01\_h17v05\_medmndvi\_COG.tif"}\NormalTok{)}
+\NormalTok{      \}}
+      
+      \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{file.exists}\NormalTok{(ruta)) \{}
+        \FunctionTok{cat}\NormalTok{(YEAR,MONTH,}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+        \CommentTok{\# Observaciones en ese mes y año}
+\NormalTok{        isMY }\OtherTok{=}\NormalTok{ dataset}\SpecialCharTok{$}\NormalTok{YEAR}\SpecialCharTok{==}\NormalTok{YEAR }\SpecialCharTok{\&}\NormalTok{ dataset}\SpecialCharTok{$}\NormalTok{MM}\SpecialCharTok{==}\NormalTok{MONTH}
+        \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(isMY)) \{}
+\NormalTok{          NDVI\_rast }\OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{rast}\NormalTok{(ruta))}
+          \ControlFlowTok{if}\NormalTok{ (MONTH}\SpecialCharTok{==}\DecValTok{4} \SpecialCharTok{\&}\NormalTok{ YEAR}\SpecialCharTok{==}\DecValTok{2011}\NormalTok{)\{}
+            \CommentTok{\# Ese archivo viene defectuoso y se le asigna el CRS de los otros archivos del mismo año (todos los demás del año tienen el mismo)}
+            \FunctionTok{crs}\NormalTok{(NDVI\_rast) }\OtherTok{=} \StringTok{"PROJCRS[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84 / UTM zone 30N}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{    BASEGEOGCRS[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{        DATUM[}\SpecialCharTok{\textbackslash{}"}\StringTok{World Geodetic System 1984}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ELLIPSOID[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84}\SpecialCharTok{\textbackslash{}"}\StringTok{,6378137,298.257223563,}\SpecialCharTok{\textbackslash{}n}\StringTok{                LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PRIMEM[}\SpecialCharTok{\textbackslash{}"}\StringTok{Greenwich}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,4326]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    CONVERSION[}\SpecialCharTok{\textbackslash{}"}\StringTok{UTM zone 30N}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{        METHOD[}\SpecialCharTok{\textbackslash{}"}\StringTok{Transverse Mercator}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,9807]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Latitude of natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8801]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Longitude of natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,{-}3,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8802]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Scale factor at natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.9996,}\SpecialCharTok{\textbackslash{}n}\StringTok{            SCALEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{unity}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8805]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{False easting}\SpecialCharTok{\textbackslash{}"}\StringTok{,500000,}\SpecialCharTok{\textbackslash{}n}\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8806]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{False northing}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8807]]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    CS[Cartesian,2],}\SpecialCharTok{\textbackslash{}n}\StringTok{        AXIS[}\SpecialCharTok{\textbackslash{}"}\StringTok{(E)}\SpecialCharTok{\textbackslash{}"}\StringTok{,east,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ORDER[1],}\SpecialCharTok{\textbackslash{}n}\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        AXIS[}\SpecialCharTok{\textbackslash{}"}\StringTok{(N)}\SpecialCharTok{\textbackslash{}"}\StringTok{,north,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ORDER[2],}\SpecialCharTok{\textbackslash{}n}\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    USAGE[}\SpecialCharTok{\textbackslash{}n}\StringTok{        SCOPE[}\SpecialCharTok{\textbackslash{}"}\StringTok{Navigation and medium accuracy spatial referencing.}\SpecialCharTok{\textbackslash{}"}\StringTok{],}\SpecialCharTok{\textbackslash{}n}\StringTok{        AREA[}\SpecialCharTok{\textbackslash{}"}\StringTok{Between 6°W and 0°W, northern hemisphere between equator and 84°N, onshore and offshore. Algeria. Burkina Faso. Côte\textquotesingle{} Ivoire (Ivory Coast). Faroe Islands {-} offshore. France. Ghana. Gibraltar. Ireland {-} offshore Irish Sea. Mali. Mauritania. Morocco. Spain. United Kingdom (UK).}\SpecialCharTok{\textbackslash{}"}\StringTok{],}\SpecialCharTok{\textbackslash{}n}\StringTok{        BBOX[0,{-}6,84,0]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,32630]]"}
+\NormalTok{          \} }
+          
+\NormalTok{          dataset[isMY,]}\SpecialCharTok{$}\NormalTok{NDVI }\OtherTok{=}\NormalTok{ terra}\SpecialCharTok{::}\FunctionTok{extract}\NormalTok{(NDVI\_rast,dataset[isMY,])[,}\DecValTok{2}\NormalTok{]}
+\NormalTok{        \}}
+\NormalTok{      \} }\ControlFlowTok{else}
+        \FunctionTok{cat}\NormalTok{(}\StringTok{"No existe: "}\NormalTok{,YEAR,}\StringTok{"{-}"}\NormalTok{,MONTH,}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{    \} }
+\NormalTok{  \}}
+  
+  
+  \CommentTok{\# Factores {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+  \CommentTok{\# Codificación de las variables categóricas como factores:}
+  
+\NormalTok{  dataset }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{enp =} \FunctionTok{as.factor}\NormalTok{(enp),}
+           \AttributeTok{orientacion =} \FunctionTok{cut}\NormalTok{(orientacion,}
+                             \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\FloatTok{22.5}\NormalTok{,}\FloatTok{67.5}\NormalTok{,}\FloatTok{112.5}\NormalTok{,}\FloatTok{157.5}\NormalTok{,}\FloatTok{202.5}\NormalTok{,}\FloatTok{247.5}\NormalTok{,}\FloatTok{292.5}\NormalTok{,}\FloatTok{337.5}\NormalTok{,}\DecValTok{360}\NormalTok{),}
+                             \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Plano"}\NormalTok{,}\StringTok{"N"}\NormalTok{,}\StringTok{"NE"}\NormalTok{,}\StringTok{"E"}\NormalTok{,}\StringTok{"SE"}\NormalTok{,}\StringTok{"S"}\NormalTok{,}\StringTok{"SW"}\NormalTok{,}\StringTok{"W"}\NormalTok{,}\StringTok{"NW"}\NormalTok{,}\StringTok{"N"}\NormalTok{)),}
+           \AttributeTok{WD10M =} \FunctionTok{cut}\NormalTok{(WD10M,}
+                       \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{22.5}\NormalTok{,}\FloatTok{67.5}\NormalTok{,}\FloatTok{112.5}\NormalTok{,}\FloatTok{157.5}\NormalTok{,}\FloatTok{202.5}\NormalTok{,}\FloatTok{247.5}\NormalTok{,}\FloatTok{292.5}\NormalTok{,}\FloatTok{337.5}\NormalTok{,}\DecValTok{360}\NormalTok{),}
+                       \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{,}\StringTok{"NE"}\NormalTok{,}\StringTok{"E"}\NormalTok{,}\StringTok{"SE"}\NormalTok{,}\StringTok{"S"}\NormalTok{,}\StringTok{"SW"}\NormalTok{,}\StringTok{"W"}\NormalTok{,}\StringTok{"NW"}\NormalTok{,}\StringTok{"N"}\NormalTok{)),}
+           \AttributeTok{uso\_suelo =}\NormalTok{ uso\_suelo }\SpecialCharTok{|\textgreater{}} \FunctionTok{as.character}\NormalTok{() }\SpecialCharTok{|\textgreater{}} \FunctionTok{str\_sub}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{) }\SpecialCharTok{|\textgreater{}} \FunctionTok{as.factor}\NormalTok{()}
+\NormalTok{           ) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(YEAR,MM,DD))}
+  
+  \FunctionTok{return}\NormalTok{(dataset)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Se usa la función definida para asignar las variables explicativas a la
+muestra generada:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Se carga la muestra generada en el paso anterior:}
+\FunctionTok{load}\NormalTok{(}\StringTok{"salidas\_intermedias/sample\_strat\_2024{-}04{-}26.RData"}\NormalTok{)}
+
+\CommentTok{\# Se eliminan las observaciones que no tienen fecha pues se pueden usar para el estudio}
+\NormalTok{sample }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(sample)}
+
+\CommentTok{\# Se aplica la función a la muestra }
+\NormalTok{dataset }\OtherTok{\textless{}{-}} \FunctionTok{asignar\_variables}\NormalTok{(sample)}
+
+\CommentTok{\# Se almacenan los resultados}
+\FunctionTok{save}\NormalTok{(dataset,}\AttributeTok{file =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"salidas\_intermedias/dataset\_strat\_completo"}\NormalTok{,}\FunctionTok{Sys.Date}\NormalTok{(),}\StringTok{".RData"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{depuraciuxf3n-de-la-muestra}{%
+\section{Depuración de la muestra}\label{depuraciuxf3n-de-la-muestra}}
+
+En la propia función usada para generar la muestra ya se ajustaron los
+tipos de las variables y se codificaron adecuadamente las variables
+\emph{WD10M} y \emph{orientacion}. A continuación se estudian los casos
+faltantes y finalmente se decide eliminarlos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Librerías {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se cargan las librerías que se usarán en esta sección}
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# Manipulación de datos }
+\FunctionTok{library}\NormalTok{(sf) }\CommentTok{\# Vector data}
+\FunctionTok{library}\NormalTok{(terra) }\CommentTok{\# Raster data}
+\FunctionTok{library}\NormalTok{(mapSpain) }\CommentTok{\# Polígonos de regiones de España}
+\FunctionTok{library}\NormalTok{(magrittr) }\CommentTok{\# Operador \%\textless{}\textgreater{}\% }
+\FunctionTok{library}\NormalTok{(skimr) }\CommentTok{\# Resumen de datos}
+
+\CommentTok{\# Carga de los datos {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se carga la muestra con todas las variables construida anteriormente}
+\FunctionTok{load}\NormalTok{(}\StringTok{"salidas\_intermedias/dataset\_strat\_completo2024{-}04{-}26.RData"}\NormalTok{)}
+
+
+\CommentTok{\# Codificación variable fire: {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{datos }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fire =} \FunctionTok{as.factor}\NormalTok{(fire))}
+
+\CommentTok{\# Análisis de valores perdidos: {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{datos }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{skimr}\NormalTok{()}
+\NormalTok{dataset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{apply}\NormalTok{(}\DecValTok{1}\NormalTok{,anyNA) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{sum}\NormalTok{() }\CommentTok{\# 200 registros con valores perdidos}
+
+\CommentTok{\# Se observan:}
+\CommentTok{\#   8 nas en uso\_suelo}
+\CommentTok{\#   32 nas en pendiente}
+\CommentTok{\#   36 nas en orientacion}
+\CommentTok{\#   32 nas en curvatura}
+\CommentTok{\#   85 nas en doblacion y en dist\_poblacion}
+\CommentTok{\#   85 nas en NDVI}
+
+\NormalTok{datos1 }\OtherTok{=}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{()}
+
+\CommentTok{\# Valores perdidos en variables topográficas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{Andalucia }\OtherTok{\textless{}{-}} \FunctionTok{esp\_get\_ccaa}\NormalTok{(}\AttributeTok{ccaa =} \StringTok{"Andalucía"}\NormalTok{) }\CommentTok{\# Se carga el mapa de Andalucía}
+\NormalTok{andalucia\_proj }\OtherTok{\textless{}{-}} \FunctionTok{st\_transform}\NormalTok{(Andalucia,}\FunctionTok{st\_crs}\NormalTok{(dataset)) }\CommentTok{\# Se proyecta al sistema de referencia de los datos}
+
+\CommentTok{\# Mapa de valores perdidos en variables topográficas:}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{st\_geometry}\NormalTok{(andalucia\_proj),}\AttributeTok{reset=}\NormalTok{F)}
+\NormalTok{datos }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(pendiente)}\SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(orientacion) }\SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(curvatura)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{st\_geometry}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{plot}\NormalTok{(}\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{col=}\StringTok{"red"}\NormalTok{,}\AttributeTok{add=}\NormalTok{T) }\CommentTok{\# Se encuentran en los límites de Andalucía}
+
+\NormalTok{datos }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(pendiente)}\SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(orientacion) }\SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(curvatura)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{count}\NormalTok{() }\CommentTok{\#53 registros con algún valor perdido entre las variables topográficas}
+
+
+\CommentTok{\# Valores perdidos en variables demográficas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se observa que los valores perdidos se deben a que los datos no estan disponibles en el conjunto de datos disponible en el INE}
+\NormalTok{datos }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(poblacion)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(Año }\OtherTok{=} \FunctionTok{year}\NormalTok{(date)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(Año,municipio,cod\_municipio)}
+
+\CommentTok{\# Ejemplo:}
+\NormalTok{pob }\OtherTok{=} \FunctionTok{read\_csv2}\NormalTok{(}\StringTok{"data\_raw/antropologicas/Población/poblacion\_municipios.txt"}\NormalTok{)[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)] }
+\NormalTok{pob }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(CODIGO\_INE3 }\SpecialCharTok{==} \StringTok{"18077"}\NormalTok{) }\CommentTok{\# Datos no disponibles}
+
+\NormalTok{datos }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(poblacion)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{count}\NormalTok{() }\CommentTok{\# 85 resgistros con valores perdidos en las variables demográficas}
+
+\CommentTok{\# Valores perdidos en uso\_suelo {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{dataset }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(uso\_suelo)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{() }\CommentTok{\# 8 registros con valores perdidos en la variable uso\_suelo}
+
+\NormalTok{dataset }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(uso\_suelo)) }\SpecialCharTok{|\textgreater{}} \FunctionTok{st\_geometry}\NormalTok{() }\SpecialCharTok{|\textgreater{}} \FunctionTok{plot}\NormalTok{(}\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{col=}\StringTok{"red"}\NormalTok{,}\AttributeTok{add=}\NormalTok{T)}
+\CommentTok{\# De nuevo se observa que se encuentran en los límites de Andalucía con la costa}
+
+\CommentTok{\# Valores perdidos en NDVI {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se muestran en el mapa}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{st\_geometry}\NormalTok{(andalucia\_proj),}\AttributeTok{reset=}\NormalTok{F)}
+\NormalTok{dataset }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(NDVI)) }\SpecialCharTok{|\textgreater{}} \FunctionTok{st\_geometry}\NormalTok{() }\SpecialCharTok{|\textgreater{}} \FunctionTok{plot}\NormalTok{(}\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{col=}\StringTok{"red"}\NormalTok{,}\AttributeTok{add=}\NormalTok{T) }
+
+
+\CommentTok{\# Gráfico de NDVI medio cada mes}
+\NormalTok{NDVI\_mes }\OtherTok{=}\NormalTok{ datos }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mes =} \FunctionTok{month}\NormalTok{(date),}
+\NormalTok{         año }\OtherTok{=} \FunctionTok{year}\NormalTok{(date)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(año,mes) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{NDVI\_mes =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{na.omit}\NormalTok{(NDVI))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{date =} \FunctionTok{dmy}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\DecValTok{01}\NormalTok{,mes,año,}\AttributeTok{sep=}\StringTok{"/"}\NormalTok{)))}
+  
+\NormalTok{NDVI\_mes }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{NDVI\_mes)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_date}\NormalTok{(}\AttributeTok{date\_breaks =} \StringTok{"6 month"}\NormalTok{,}\AttributeTok{date\_labels =} \StringTok{"\%y\%b"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{90}\NormalTok{))}
+
+\CommentTok{\# 2008 tiene un NDVI especialmente bajo, puede deberse a numerosos factores:}
+\CommentTok{\#   {-} Que efectivamente sea un año especialmente seco}
+\CommentTok{\#   {-} Las características de la muestra seleccionada ese año}
+\CommentTok{\#   {-} Errores de medición}
+\CommentTok{\#   {-} ...}
+
+\CommentTok{\# La mayor parte de los valores perdidos en la variable uso\_suelo son debidos a que el archivo tiff para ese mes no está disponible en la REDIAM. Los meses de los que no se dispone del ráster NDVI son: "2003{-}01", "2003{-}04", "2017{-}02", "2018{-}11", "2020{-}11", "2021{-}12", "2022{-}03" y "2022{-}12".}
+
+\CommentTok{\# Eliminación registros con valores perdidos {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Tras explorar otras opciones finalmente se opta por eliminar los registros}
+\CommentTok{\# que contienen valroes perdidos:}
+\NormalTok{datos }\OtherTok{=}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{()}
+
+\CommentTok{\# Almacenamiento del conjunto de datos depurados {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se guarda el conjunto de datos depurados}
+\FunctionTok{save}\NormalTok{(datos, }\AttributeTok{file =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"salidas\_intermedias/datos\_strat\_depurados\_geom\_"}\NormalTok{,}\FunctionTok{Sys.Date}\NormalTok{(),}\StringTok{".RData"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{anuxe1lisis-exploratorio}{%
+\section{Análisis exploratorio}\label{anuxe1lisis-exploratorio}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Librerías {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se cargan las librerías que se usarán en esta sección}
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# Manipulación de datos }
+\FunctionTok{library}\NormalTok{(sf) }\CommentTok{\# Vector data}
+\FunctionTok{library}\NormalTok{(terra) }\CommentTok{\# Raster data}
+\FunctionTok{library}\NormalTok{(mapSpain) }\CommentTok{\# Polígonos de regiones de España}
+\FunctionTok{library}\NormalTok{(magrittr) }\CommentTok{\# Operador \%\textless{}\textgreater{}\% }
+\FunctionTok{library}\NormalTok{(skimr) }\CommentTok{\# Resumen de datos}
+\FunctionTok{library}\NormalTok{(corrplot) }\CommentTok{\# Gráfico de coorrelaciones}
+\FunctionTok{library}\NormalTok{(GGally) }\CommentTok{\# Coordenadas paralelas}
+\FunctionTok{library}\NormalTok{(ggpubr) }\CommentTok{\# Función ggarrange}
+
+\CommentTok{\# Carga de los datos {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\FunctionTok{load}\NormalTok{(}\StringTok{"salidas\_intermedias/datos\_strat\_depurados\_geom\_2024{-}05{-}03.RData"}\NormalTok{)}
+
+\CommentTok{\# Resumen numérico {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{datos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{  st\_drop\_geometry }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{skim}\NormalTok{(}\AttributeTok{.data\_name =} \StringTok{"datos"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{variable-objetivo}{%
+\subsection{Variable objetivo:}\label{variable-objetivo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Distribución temporal {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Mensual:}
+\NormalTok{g\_mes }\OtherTok{\textless{}{-}}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# filter(fire==1) \%\textgreater{}\% }
+  \FunctionTok{count}\NormalTok{(}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\NormalTok{T),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"mes"} \OtherTok{=} \StringTok{"month(date, label = T)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mes,}\AttributeTok{y =}\NormalTok{ n,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# theme(axis.text.x = element\_text(angle = 90)) +}
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Mes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Número de observaciones"}\NormalTok{)}
+
+\NormalTok{g\_mes}
+
+\CommentTok{\# Anual}
+\NormalTok{g\_year }\OtherTok{\textless{}{-}}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# filter(fire==1) \%\textgreater{}\% }
+  \FunctionTok{count}\NormalTok{(}\FunctionTok{year}\NormalTok{(date),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"año"} \OtherTok{=} \StringTok{"year(date)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ año,}\AttributeTok{y =}\NormalTok{ n,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\DecValTok{2002}\SpecialCharTok{:}\DecValTok{2022}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{se=}\NormalTok{F,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{fire),}\AttributeTok{alpha=}\FloatTok{0.1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"darkblue"}\NormalTok{,}\StringTok{"darkred"}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{90}\NormalTok{, }\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{hjust=}\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Año"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Número de observaciones"}\NormalTok{)}
+\NormalTok{g\_year}
+
+\CommentTok{\# En 2007 no se han generado observaciones positivas}
+\CommentTok{\# Causa: En el shapefile que contiene los incendios producidos en 2007 solo hay 4 observaciones y ninguna tenía la fecha, por lo que estas no han podido utilizarse}
+
+\CommentTok{\# Valores muy bajos en 2008 y 2010, revisar}
+\CommentTok{\# 2010: correcto, en el archivo con los polígonos de incendios en 2010 solo hay 26 observaciones}
+\CommentTok{\# 2008: en el archivo relativo a ese año hay 37 observaciones, pero 11 de ellas no tienen la fecha de inicio, por lo que no se han podido utilizar}
+
+\CommentTok{\# Día de la semana}
+\NormalTok{g\_dia }\OtherTok{\textless{}{-}}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# filter(fire==1) \%\textgreater{}\% }
+  \FunctionTok{count}\NormalTok{(}\FunctionTok{weekdays}\NormalTok{(date),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"dia"} \OtherTok{=} \StringTok{"weekdays(date)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ dia,}\AttributeTok{y =}\NormalTok{ n,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\StringTok{"lunes"}\NormalTok{, }\StringTok{"martes"}\NormalTok{, }\StringTok{"miércoles"}\NormalTok{, }\StringTok{"jueves"}\NormalTok{, }\StringTok{"viernes"}\NormalTok{, }\StringTok{"sábado"}\NormalTok{, }\StringTok{"domingo"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{hjust=}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+ \CommentTok{\# geom\_smooth(se=F) +}
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Día"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Número de observaciones"}\NormalTok{)}
+\NormalTok{g\_dia}
+
+\CommentTok{\# Para mostrar los tres gráficos juntos}
+\FunctionTok{ggarrange}\NormalTok{(g\_dia,g\_mes,g\_year,}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{,}\AttributeTok{common.legend =}\NormalTok{ T,}\AttributeTok{legend =} \StringTok{"bottom"}\NormalTok{)}
+
+\CommentTok{\# Distribución temporal {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se cargan los polígonos de las provincias}
+\NormalTok{and }\OtherTok{\textless{}{-}} \FunctionTok{esp\_get\_ccaa}\NormalTok{(}\AttributeTok{ccaa =} \StringTok{"Andalucía"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{st\_transform}\NormalTok{(}\FunctionTok{st\_crs}\NormalTok{(datos))}
+\NormalTok{prov }\OtherTok{\textless{}{-}} \FunctionTok{esp\_get\_prov}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(nuts2.name}\SpecialCharTok{==}\StringTok{"Andalucía"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{st\_transform}\NormalTok{(}\FunctionTok{st\_crs}\NormalTok{(datos))}
+
+\CommentTok{\# Casos positivos}
+\NormalTok{g1 }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(fire}\SpecialCharTok{==}\DecValTok{1}\NormalTok{),}\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.4}\NormalTok{,}\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de casos positivos"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+
+\CommentTok{\# Casos negativos}
+\NormalTok{g0 }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(fire}\SpecialCharTok{==}\DecValTok{0}\NormalTok{),}\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.4}\NormalTok{,}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de casos negativos"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+
+\CommentTok{\# Ambos gráficos juntos:}
+\FunctionTok{ggarrange}\NormalTok{(g1,g0,}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{anuxe1lisis-univariantes}{%
+\subsection{Análisis univariantes}\label{anuxe1lisis-univariantes}}
+
+\hypertarget{t2m}{%
+\subsubsection{T2M}\label{t2m}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{T2M),}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de T2M por mes"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.text.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.major =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Las temperaturas más elevadas se encuentran en el interior.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\NormalTok{T),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{AVG\_T2M =} \FunctionTok{mean}\NormalTok{(T2M),}
+            \AttributeTok{Mes =} \StringTok{\textasciigrave{}}\AttributeTok{month(date, label = T)}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Mes,}\AttributeTok{y=}\NormalTok{AVG\_T2M,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()  }
+  \CommentTok{\# + theme(axis.text.x = element\_text(angle = 45, vjust = 0.5, hjust=0.5))}
+\end{Highlighting}
+\end{Shaded}
+
+En prácticamente todos los meses, la media de temperaturas en las
+observaciones positivas es mayor que en las observaciones negativas. Las
+temperaturas son más altas en los meses de verano, como cabía esperar.
+
+\hypertarget{rh2m}{%
+\subsubsection{RH2M}\label{rh2m}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{RH2M),}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{F)) }\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de RH2M por mes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.text.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.major =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+La humedad del aire es mayor en las de costa. Las zonas más secas se
+encuentran en las zonas de interior del norte de Andalucía.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\NormalTok{T),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{AVG\_RH2M =} \FunctionTok{mean}\NormalTok{(RH2M),}
+            \AttributeTok{Mes =} \StringTok{\textasciigrave{}}\AttributeTok{month(date, label = T)}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Mes,}\AttributeTok{y=}\NormalTok{AVG\_RH2M,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()  }
+  \CommentTok{\# + theme(axis.text.x = element\_text(angle = 45, vjust = 0.5, hjust=0.5))}
+\end{Highlighting}
+\end{Shaded}
+
+En prácticamente todos los meses, la humedad del aire media entre las
+observaciones positivas es menor que en las observaciones negativas. La
+humedad del aire disminuye significativamente en verano.
+
+\hypertarget{gwettop}{%
+\subsubsection{GWETTOP}\label{gwettop}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{GWETTOP),}\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{F)) }\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de GWETTOP por mes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.text.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.major =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Las zonas con mayor humedad superficial de suelo son las que se
+encuentran en la costa mediterránea. Las zonas con un suelo más seco son
+las que se encuentran al norte de la cuenca el Guadalquivir, destacando
+la provincia de Huelva (hay que tener en cuenta que también es una zona
+en la que hay muchos incendios, la mayoría de los cuales se produce en
+verano, por lo que hay una gran concentración de observaciones durante
+el periodo estival, lo que podría influir en el hecho de que se observen
+tantas observaciones con valores tan bajos de la humedad superficial de
+suelo).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\NormalTok{T),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{AVG\_GWETTOP =} \FunctionTok{mean}\NormalTok{(GWETTOP),}
+            \AttributeTok{Mes =} \StringTok{\textasciigrave{}}\AttributeTok{month(date, label = T)}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Mes,}\AttributeTok{y=}\NormalTok{AVG\_GWETTOP,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()  }
+\end{Highlighting}
+\end{Shaded}
+
+En general, la humedad superficial de suelo media entre los casos
+positivos es inferior que entre los casos negativos. Esto es
+especialmente evidendente entre los meses de primavera y otoño. En los
+meses de invierno esto no está tan claro, incluso parece revertirse la
+tendencia.
+
+\hypertarget{ws10m}{%
+\subsubsection{WS10M}\label{ws10m}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{WS10M,}\AttributeTok{alpha=}\NormalTok{WS10M,}\AttributeTok{size=}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(WS10M}\SpecialCharTok{\textless{}}\FloatTok{7.5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\FloatTok{1.2}\NormalTok{)))) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\ConstantTok{TRUE}\NormalTok{))}\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de WS10M por mes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.text.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.major =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Los valores más elevados de la velocidad del viento a 10m de altura se
+dan en las zonas costeras.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\NormalTok{T),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{AVG\_WS10M =} \FunctionTok{mean}\NormalTok{(WS10M),}
+            \AttributeTok{Mes =} \StringTok{\textasciigrave{}}\AttributeTok{month(date, label = T)}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Mes,}\AttributeTok{y=}\NormalTok{AVG\_WS10M,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()  }
+\end{Highlighting}
+\end{Shaded}
+
+En todos los meses, los valores medios de la velocidad del viento a 10m
+sobre la superficie son significativamente mayores en las observaciones
+positivas.
+
+\hypertarget{wd10m}{%
+\subsubsection{WD10M}\label{wd10m}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{WD10M),}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\ConstantTok{TRUE}\NormalTok{))}\SpecialCharTok{+} 
+  \CommentTok{\# scale\_color\_stepsn(colours = rainborainbpw(8,rev=T)) +}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de WD10M por mes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.text.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.major =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{color =} \FunctionTok{guide\_legend}\NormalTok{(}\AttributeTok{override.aes =} \FunctionTok{list}\NormalTok{(}\AttributeTok{size =} \DecValTok{5}\NormalTok{))) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_viridis\_d}\NormalTok{(}\AttributeTok{option=}\StringTok{"turbo"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Quisiera tener la dirección mayoritaria por mes y si hay incendio o no }
+\NormalTok{mode }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{ }\FunctionTok{names}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(}\FunctionTok{table}\NormalTok{(x))) \}}
+
+\NormalTok{datos\_mode\_WD10M }\OtherTok{=}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\NormalTok{T),fire) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{mode\_WD10M =} \FunctionTok{mode}\NormalTok{(WD10M)) }
+
+\FunctionTok{tibble}\NormalTok{(}\AttributeTok{mes =}\NormalTok{ datos\_mode\_WD10M[datos\_mode\_WD10M}\SpecialCharTok{$}\NormalTok{fire}\SpecialCharTok{==}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{],}
+       \AttributeTok{fire1 =}\NormalTok{ datos\_mode\_WD10M[datos\_mode\_WD10M}\SpecialCharTok{$}\NormalTok{fire}\SpecialCharTok{==}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{],}
+       \AttributeTok{fire0 =}\NormalTok{ datos\_mode\_WD10M[datos\_mode\_WD10M}\SpecialCharTok{$}\NormalTok{fire}\SpecialCharTok{==}\DecValTok{0}\NormalTok{,}\DecValTok{3}\NormalTok{]) }
+
+\CommentTok{\# No parece aportar ninguna información relevante}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{prectotcorr}{%
+\subsubsection{PRECTOTCORR}\label{prectotcorr}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{PRECTOTCORR,}\AttributeTok{size=}\NormalTok{PRECTOTCORR,}\AttributeTok{alpha=}\NormalTok{PRECTOTCORR)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{F)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de PRECTOTCORR por mes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.text.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.major =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+En la gran mayoría de las observaciones no se han observado
+precipitaciones. Se observan algunos valores positivos de
+precipitaciones distribuidos por el territorio Andaluz, alcanzándose los
+máximos en observaciones localizadas ne las coordilleras béticas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\NormalTok{T),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{AVG\_PRECTOTCORR =} \FunctionTok{mean}\NormalTok{(PRECTOTCORR),}
+            \AttributeTok{Mes =} \StringTok{\textasciigrave{}}\AttributeTok{month(date, label = T)}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Mes,}\AttributeTok{y=}\NormalTok{AVG\_PRECTOTCORR,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()  }
+\end{Highlighting}
+\end{Shaded}
+
+Se observa una clara diferencia en la media mensual de precipitaciones
+en ambas clases en todos los meses, siendo mucho mayores entre las
+observaciones negativas. En los meses de verano esto sigue siendo
+cierto, si bien las diferencias se suavizan significativamente, ya que
+en ambos clases las precipitaciones son reducidas.
+
+\hypertarget{ndvi}{%
+\subsubsection{NDVI}\label{ndvi}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{NDVI),}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de NDVI por mes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.x=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.text.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.major =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Los valores más elevados del NDVI se encuentran en el norte de la
+comunidad (Sierra Morena y Sierra de Aracena) y en la zona sur-centro.
+Los valores son especialmente elevados en la Sierra de Grazalema y en
+las marismas del Guadalquivir y especialmente bajos en el este de la
+comunidad (Almería).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{month}\NormalTok{(date,}\AttributeTok{label=}\NormalTok{T),fire) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{AVG\_NDVI =} \FunctionTok{mean}\NormalTok{(NDVI),}
+            \AttributeTok{Mes =} \StringTok{\textasciigrave{}}\AttributeTok{month(date, label = T)}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Mes,}\AttributeTok{y=}\NormalTok{AVG\_NDVI,}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()    }
+  \CommentTok{\# theme(axis.text.x = element\_text(angle = 45, vjust = 0.5, hjust=0.5))}
+\end{Highlighting}
+\end{Shaded}
+
+El valor del NDVI disminuye en los meses de verano y alcanza su máximo
+en los meses de invierno. No se observa claramente una relación entre el
+NDVI y la clase de la observación en la muestra.
+
+\hypertarget{poblacion}{%
+\subsubsection{poblacion}\label{poblacion}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{poblacion,}\AttributeTok{size =}\NormalTok{ poblacion,}\AttributeTok{alpha=}\NormalTok{poblacion}\SpecialCharTok{/}\FunctionTok{median}\NormalTok{(poblacion))) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de poblacion"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+
+\FunctionTok{by}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{poblacion,datos}\SpecialCharTok{$}\NormalTok{fire,summary)}
+\end{Highlighting}
+\end{Shaded}
+
+En la gran mayoría del territorio se observan niveles de población
+inferiores a 20.000 habitantes por municipio. Destacan las capitales de
+provincia por tener valores significativamente más elevados.
+
+\hypertarget{dens_poblacion}{%
+\subsubsection{dens\_poblacion}\label{dens_poblacion}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{dens\_poblacion, }\AttributeTok{size=}\NormalTok{ dens\_poblacion, }\AttributeTok{alpha=}\NormalTok{dens\_poblacion)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_gradient(low="blue", high="red")+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de dens\_poblacion"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+
+\FunctionTok{by}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{dens\_poblacion,datos}\SpecialCharTok{$}\NormalTok{fire,summary)}
+\end{Highlighting}
+\end{Shaded}
+
+Comentario similar a la población. Mayor densidad de población en las
+zonas de costa y en las capitales de provincia.
+
+\hypertarget{pendiente}{%
+\subsubsection{pendiente}\label{pendiente}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{pendiente, }\AttributeTok{size=}\NormalTok{ pendiente, }\AttributeTok{alpha=}\NormalTok{pendiente)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de pendiente"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{elevacion}{%
+\subsubsection{elevacion}\label{elevacion}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{elevacion, }\AttributeTok{size=}\NormalTok{ elevacion, }\AttributeTok{alpha=}\NormalTok{elevacion)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de elevacion"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{curvatura}{%
+\subsubsection{curvatura}\label{curvatura}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{curvatura, }\AttributeTok{alpha=}\NormalTok{curvatura)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de curvatura"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dist_carretera}{%
+\subsubsection{dist\_carretera}\label{dist_carretera}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{dist\_carretera, }\AttributeTok{alpha=}\NormalTok{dist\_carretera)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de dist\_carretera"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dist_electr}{%
+\subsubsection{dist\_electr}\label{dist_electr}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{dist\_electr, }\AttributeTok{alpha=}\NormalTok{dist\_electr)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de dist\_electr"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dist_camino}{%
+\subsubsection{dist\_camino}\label{dist_camino}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{dist\_camino, }\AttributeTok{alpha=}\NormalTok{dist\_camino)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de dist\_camino"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dist_sendero}{%
+\subsubsection{dist\_sendero}\label{dist_sendero}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{dist\_sendero, }\AttributeTok{alpha=}\NormalTok{dist\_sendero)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de dist\_sendero"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dist_poblacion}{%
+\subsubsection{dist\_poblacion}\label{dist_poblacion}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{dist\_poblacion, }\AttributeTok{alpha=}\NormalTok{dist\_poblacion)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de dist\_poblacion"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dist_ferrocarril}{%
+\subsubsection{dist\_ferrocarril}\label{dist_ferrocarril}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ prov) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{dist\_ferrocarril, }\AttributeTok{alpha=}\NormalTok{dist\_ferrocarril)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{rev=}\NormalTok{T)) }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{size=}\StringTok{"none"}\NormalTok{,}\AttributeTok{alpha=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribución espacial de dist\_ferrocarril"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{anuxe1lisis-multivariantes}{%
+\subsection{Análisis multivariantes}\label{anuxe1lisis-multivariantes}}
+
+\hypertarget{variables-numuxe9ricas}{%
+\subsubsection{Variables numéricas}\label{variables-numuxe9ricas}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_numeric }\OtherTok{=}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{()}
+
+\CommentTok{\# Correlaciones {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{R }\OtherTok{=} \FunctionTok{cor}\NormalTok{(datos\_numeric)}
+\FunctionTok{corrplot}\NormalTok{(R,}\AttributeTok{method =} \StringTok{"ellipse"}\NormalTok{,}\AttributeTok{type =} \StringTok{"lower"}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(R}\SpecialCharTok{{-}}\FunctionTok{diag}\NormalTok{(}\FunctionTok{diag}\NormalTok{(R)))}
+\CommentTok{\# Las variables más correlacionadas en la muestra son T2M con RH2M (negativamente, {-}0.71), T2M con GWETTOP (negativamente, {-}0.69) y GWETTOP con R2HM (positivamente, 0.68). Tiene sentido que la humedad del aire a dos metros esté correlacionada positivamente con la humedad del suelo y que ambas estén {-}egativamente correlacionadas con la temperatura del aire. También están correladas la población con la densidad de población (positivamente,0.63).}
+
+
+\CommentTok{\# Gráfico de coordenadas paralelas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{datos }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(fire,}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ggparcoord}\NormalTok{(}\AttributeTok{columns=}\DecValTok{2}\SpecialCharTok{:}\DecValTok{19}\NormalTok{,}\AttributeTok{alphaLines=}\FloatTok{0.1}\NormalTok{,}\AttributeTok{groupColumn =} \StringTok{"fire"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{colnames}\NormalTok{(datos\_numeric)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# guides(color ="none")+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Tipificación a normal estándar (por defecto)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{9}\NormalTok{),}
+        \AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{90}\NormalTok{))}
+
+\CommentTok{\# Boxplots {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{boxplots }\OtherTok{\textless{}{-}} \FunctionTok{map}\NormalTok{(}\FunctionTok{names}\NormalTok{(datos\_numeric), }\SpecialCharTok{\textasciitilde{}} \FunctionTok{ggplot}\NormalTok{(datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ fire, }\AttributeTok{y =}\NormalTok{ .data[[.x]],}\AttributeTok{fill=}\NormalTok{fire)) }\SpecialCharTok{+}
+                  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+                  \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+                  \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill=}\StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+                  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste}\NormalTok{(.x, }\StringTok{"\textasciitilde{} fire"}\NormalTok{)))}
+\FunctionTok{ggarrange}\NormalTok{(}\AttributeTok{plotlist =}\NormalTok{ boxplots,}\AttributeTok{ncol=}\DecValTok{6}\NormalTok{,}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+
+\CommentTok{\# PCA {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{pca }\OtherTok{\textless{}{-}} \FunctionTok{princomp}\NormalTok{(datos\_numeric,}\AttributeTok{cor=}\NormalTok{T)}
+\FunctionTok{summary}\NormalTok{(pca) }
+\CommentTok{\# Se necesitan al menos 11 componentes principales para explicar el 80\% de la variabilidad de las 18 variables numéricas de la muestra (tipificadas) y al menos 14 para explicar el 90\%. Esto refleja, la complejidad del conjunto de datos.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{variables-categuxf3ricas}{%
+\subsubsection{Variables categóricas}\label{variables-categuxf3ricas}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_categ }\OtherTok{\textless{}{-}}\NormalTok{ datos }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{select}\NormalTok{(WD10M,orientacion,enp,uso\_suelo) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_drop\_geometry}\NormalTok{()}
+
+\CommentTok{\# Histogramas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{histogramas }\OtherTok{\textless{}{-}} \FunctionTok{map}\NormalTok{(}\FunctionTok{names}\NormalTok{(datos\_categ), }\SpecialCharTok{\textasciitilde{}} \FunctionTok{ggplot}\NormalTok{(datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ .data[[.x]], }\AttributeTok{fill =}\NormalTok{ fire)) }\SpecialCharTok{+}
+                    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+                    \FunctionTok{scale\_fill\_hue}\NormalTok{(}\AttributeTok{direction =} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+                    \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+                    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =}\NormalTok{ .x)}\SpecialCharTok{+}\FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{7}\NormalTok{)))}
+
+\FunctionTok{ggarrange}\NormalTok{(}\AttributeTok{plotlist =}\NormalTok{ histogramas, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{nrow =} \FunctionTok{ceiling}\NormalTok{(}\FunctionTok{length}\NormalTok{(histogramas)}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{modelos}{%
+\section{Modelos}\label{modelos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Librerías {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se cargan las librerías que se usarán en esta sección}
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# Manipulación de datos }
+\FunctionTok{library}\NormalTok{(sf) }\CommentTok{\# Vector data}
+\FunctionTok{library}\NormalTok{(tidymodels) }\CommentTok{\# Ecosistema para la construcción de modelos}
+\FunctionTok{library}\NormalTok{(akima) }\CommentTok{\# Función interp}
+\FunctionTok{library}\NormalTok{(magrittr) }\CommentTok{\# Operador \%\textless{}\textgreater{}\% }
+\FunctionTok{library}\NormalTok{(ggpubr) }\CommentTok{\# Función ggarrange}
+\FunctionTok{library}\NormalTok{(knitr) }\CommentTok{\# Función kable}
+
+\CommentTok{\# Carga de datos {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\FunctionTok{load}\NormalTok{(}\StringTok{"salidas\_intermedias/datos\_strat\_depurados\_geom\_2024{-}05{-}03.RData"}\NormalTok{)}
+
+\CommentTok{\# Agrupación clases uso\_suelo {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Nos quedamos con los 7 niveles del factor más frecuentes (clases 2 y 3)}
+\NormalTok{datos }\OtherTok{\textless{}{-}}\NormalTok{ datos }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{uso\_suelo =} \FunctionTok{fct\_lump}\NormalTok{(uso\_suelo,}
+                              \AttributeTok{n =} \DecValTok{7}\NormalTok{,}
+                              \AttributeTok{other\_level=} \StringTok{"Otro"}\NormalTok{))}
+
+\CommentTok{\# Funciones para la evaluación de modelos {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Función para obtener las medidas de rendimiento de los modelos a partir de un objeto predict }
+\NormalTok{get\_metrics }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(pred) \{}
+  \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{res =} \FunctionTok{tibble}\NormalTok{(}
+      \AttributeTok{roc\_auc =}\NormalTok{ pred }\SpecialCharTok{|\textgreater{}} \FunctionTok{roc\_auc}\NormalTok{(}\AttributeTok{truth =}\NormalTok{ fire, .pred\_0) }\SpecialCharTok{|\textgreater{}} \FunctionTok{pull}\NormalTok{(.estimate),}
+      \AttributeTok{accuracy =}\NormalTok{ pred }\SpecialCharTok{|\textgreater{}} \FunctionTok{accuracy}\NormalTok{(}\AttributeTok{truth =}\NormalTok{ fire, .pred\_class) }\SpecialCharTok{|\textgreater{}} \FunctionTok{pull}\NormalTok{(.estimate),}
+      \AttributeTok{recall =}\NormalTok{ pred }\SpecialCharTok{|\textgreater{}} \FunctionTok{sensitivity}\NormalTok{(}\AttributeTok{truth =}\NormalTok{ fire, .pred\_class,}\AttributeTok{event\_level=}\StringTok{"second"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} \FunctionTok{pull}\NormalTok{(.estimate),}
+      \AttributeTok{specificity =}\NormalTok{ pred }\SpecialCharTok{|\textgreater{}} \FunctionTok{spec}\NormalTok{(}\AttributeTok{truth =}\NormalTok{ fire, .pred\_class,}\AttributeTok{event\_level=}\StringTok{"second"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} \FunctionTok{pull}\NormalTok{(.estimate),}
+      \AttributeTok{precision =}\NormalTok{ pred }\SpecialCharTok{|\textgreater{}} \FunctionTok{precision}\NormalTok{(}\AttributeTok{truth =}\NormalTok{ fire, .pred\_class,}\AttributeTok{event\_level=}\StringTok{"second"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} \FunctionTok{pull}\NormalTok{(.estimate)),}
+    \AttributeTok{conf\_mat =}\NormalTok{ pred }\SpecialCharTok{|\textgreater{}} \FunctionTok{conf\_mat}\NormalTok{(}\AttributeTok{truth =}\NormalTok{ fire, .pred\_class))}
+\NormalTok{\}}
+
+\CommentTok{\# Función para mostrar gráficamente los resultados del tuning de un modelo con dos parámetros }
+\NormalTok{tuning\_plot }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(mod\_res) \{}
+\NormalTok{  datos\_metrics }\OtherTok{=}\NormalTok{ mod\_res }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{collect\_metrics}\NormalTok{()}
+
+\NormalTok{  plots }\OtherTok{=} \FunctionTok{list}\NormalTok{()}
+  
+  \ControlFlowTok{for}\NormalTok{ (metric }\ControlFlowTok{in} \FunctionTok{unique}\NormalTok{(datos\_metrics}\SpecialCharTok{$}\NormalTok{.metric)) \{}
+    
+\NormalTok{    datos }\OtherTok{=}\NormalTok{ datos\_metrics }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{filter}\NormalTok{(.metric}\SpecialCharTok{==}\NormalTok{metric) }
+    
+    \CommentTok{\# Interpolar los datos faltantes}
+\NormalTok{    datos\_interp }\OtherTok{\textless{}{-}} \FunctionTok{interp}\NormalTok{(datos[[}\DecValTok{1}\NormalTok{]], datos[[}\DecValTok{2}\NormalTok{]], datos}\SpecialCharTok{$}\NormalTok{mean)}
+    
+    \CommentTok{\# Crear un nuevo dataframe con los datos interpolados}
+\NormalTok{    datos\_interp\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+      \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{x =}\NormalTok{ datos\_interp}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{y =}\NormalTok{ datos\_interp}\SpecialCharTok{$}\NormalTok{y), }\AttributeTok{z =} \FunctionTok{as.vector}\NormalTok{(datos\_interp}\SpecialCharTok{$}\NormalTok{z))}
+    
+    \CommentTok{\# Crear el gráfico de mapa de calor con interpolación}
+\NormalTok{    p }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(datos\_interp\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{fill =}\NormalTok{ z)) }\SpecialCharTok{+}
+      \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+      \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\AttributeTok{option =} \StringTok{"turbo"}\NormalTok{, }\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{,}\AttributeTok{na.value =} \StringTok{"transparent"}\NormalTok{)}\SpecialCharTok{+}
+      \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{""}\NormalTok{,}
+           \AttributeTok{x =} \FunctionTok{colnames}\NormalTok{(datos)[}\DecValTok{1}\NormalTok{],}
+           \AttributeTok{y =} \FunctionTok{colnames}\NormalTok{(datos)[}\DecValTok{2}\NormalTok{],}
+           \AttributeTok{fill =}\NormalTok{ metric) }\SpecialCharTok{+}
+      \FunctionTok{theme\_minimal}\NormalTok{()}
+    
+\NormalTok{    plots[[metric]] }\OtherTok{=}\NormalTok{ p}
+\NormalTok{  \}}
+  \FunctionTok{ggarrange}\NormalTok{(}\AttributeTok{plotlist =}\NormalTok{ plots,}
+            \AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Accuracy"}\NormalTok{,}\StringTok{"Specificy"}\NormalTok{,}\StringTok{"ROC{-}AUC"}\NormalTok{,}\StringTok{"Recall"}\NormalTok{),}
+            \AttributeTok{align =} \StringTok{"hv"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{particiuxf3n-temporal-entrenamiento-validaciuxf3n-test}{%
+\subsection{Partición temporal entrenamiento / validación /
+test}\label{particiuxf3n-temporal-entrenamiento-validaciuxf3n-test}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{splits }\OtherTok{=} \FunctionTok{initial\_validation\_time\_split}\NormalTok{(datos, }
+                                       \AttributeTok{prop=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{,}\FloatTok{0.2}\NormalTok{))}
+
+\NormalTok{training }\OtherTok{\textless{}{-}} \FunctionTok{training}\NormalTok{(splits) }\SpecialCharTok{\%\textgreater{}\%}  \FunctionTok{st\_drop\_geometry}\NormalTok{()}
+\NormalTok{val\_set }\OtherTok{\textless{}{-}} \FunctionTok{validation\_set}\NormalTok{(splits) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{st\_drop\_geometry}\NormalTok{()}
+\NormalTok{test  }\OtherTok{\textless{}{-}} \FunctionTok{testing}\NormalTok{(splits) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{st\_drop\_geometry}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
+\subsection{Regresión logística con
+penalización}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1º Definimos el modelo:}
+\NormalTok{lr\_mod }\OtherTok{\textless{}{-}} 
+  \FunctionTok{logistic\_reg}\NormalTok{(}\AttributeTok{penalty =} \FunctionTok{tune}\NormalTok{(), }\AttributeTok{mixture =} \FunctionTok{tune}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"glmnet"}\NormalTok{)}
+
+\CommentTok{\# 2º Creamos la receta}
+\NormalTok{lr\_recipe }\OtherTok{\textless{}{-}} 
+  \FunctionTok{recipe}\NormalTok{(fire }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_date}\NormalTok{(date,}\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{,}\StringTok{"month"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# step\_holiday(date, holidays = holidays) \%\textgreater{}\% }
+  \FunctionTok{step\_rm}\NormalTok{(date,cod\_municipio,municipio) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Se eliminan variables identificadoras}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Se crean variables dummy para los factores}
+  \FunctionTok{step\_lincomb}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Elimina variablies con dependencia lineal exacta}
+  \FunctionTok{step\_corr}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Elimina variables con correlación superior a 0.9}
+  \FunctionTok{step\_zv}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Eliminar variables con varianza nula}
+  \FunctionTok{step\_normalize}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{()) }\CommentTok{\# Se normalizan todos los predictores}
+
+\CommentTok{\# 3º Creamos el workflow}
+\NormalTok{lr\_workflow }\OtherTok{\textless{}{-}} 
+  \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_model}\NormalTok{(lr\_mod) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_recipe}\NormalTok{(lr\_recipe)}
+
+\CommentTok{\# 4º Creamos el grid para los parámetros}
+\NormalTok{lr\_reg\_grid }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{penalty =} \DecValTok{10}\SpecialCharTok{\^{}}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{10}\NormalTok{),}
+                           \AttributeTok{mixture =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\AttributeTok{length.out=}\DecValTok{10}\NormalTok{))}
+
+\CommentTok{\# 5º Ajustamos el modelo}
+\NormalTok{lr\_res }\OtherTok{\textless{}{-}} 
+\NormalTok{  lr\_workflow }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{tune\_grid}\NormalTok{(val\_set,}
+            \AttributeTok{grid =}\NormalTok{ lr\_reg\_grid,}
+            \AttributeTok{control =} \FunctionTok{control\_grid}\NormalTok{(}\AttributeTok{save\_pred =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{metrics =} \FunctionTok{metric\_set}\NormalTok{(accuracy,roc\_auc,recall,spec))}
+
+\CommentTok{\# 6º Evaluación de modelos}
+\FunctionTok{tuning\_plot}\NormalTok{(lr\_res)}
+
+\NormalTok{lr\_res }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(.metric)}\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.metric =} \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"recall"}\NormalTok{,}\StringTok{"spec"}\NormalTok{,}
+                          \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"spec"}\NormalTok{,}\StringTok{"recall"}\NormalTok{,}
+\NormalTok{                                 .metric))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max =} \FunctionTok{max}\NormalTok{(mean),}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(mean))   }
+
+
+\CommentTok{\# 7º Selección del mejor modelo}
+\NormalTok{lr\_best }\OtherTok{\textless{}{-}} 
+\NormalTok{  lr\_res }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select\_best}\NormalTok{(}\AttributeTok{metric=}\StringTok{"accuracy"}\NormalTok{)}
+\NormalTok{lr\_best}
+
+\CommentTok{\# Extraer coeficientes}
+\NormalTok{lr\_workflow }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{finalize\_workflow}\NormalTok{(lr\_best) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{fit}\NormalTok{(training) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{extract\_fit\_parsnip}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{tidy}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{n=}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n-pca}{%
+\subsection{Regresión logística con penalización +
+PCA}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n-pca}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1º Creamos el modelo}
+\NormalTok{lr\_pca\_mod }\OtherTok{\textless{}{-}} 
+  \FunctionTok{logistic\_reg}\NormalTok{(}\AttributeTok{penalty =} \FunctionTok{tune}\NormalTok{(), }\AttributeTok{mixture =} \FunctionTok{tune}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"glmnet"}\NormalTok{)}
+
+
+\CommentTok{\# 2º Creamos la receta}
+\NormalTok{lr\_pca\_recipe }\OtherTok{\textless{}{-}} 
+  \FunctionTok{recipe}\NormalTok{(fire }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_date}\NormalTok{(date,}\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{,}\StringTok{"month"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# step\_holiday(date, holidays = holidays) \%\textgreater{}\% }
+  \FunctionTok{step\_rm}\NormalTok{(date,cod\_municipio,municipio) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Se eliminan variables identificadoras}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Se crean variables dummy para los factores}
+  \FunctionTok{step\_lincomb}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Elimina variablies con dependencia lineal exacta}
+  \FunctionTok{step\_corr}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Elimina variables con correlación superior a 0.9}
+  \FunctionTok{step\_zv}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Eliminar variables con varianza nula}
+  \FunctionTok{step\_normalize}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Se normalizan todos los predictores}
+  \FunctionTok{step\_pca}\NormalTok{(}\FunctionTok{all\_numeric\_predictors}\NormalTok{(),}\AttributeTok{num\_comp =} \FunctionTok{tune}\NormalTok{())}
+
+\CommentTok{\# 3º Creamos el workflow}
+\NormalTok{lr\_pca\_workflow }\OtherTok{\textless{}{-}} 
+  \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_model}\NormalTok{(lr\_pca\_mod) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_recipe}\NormalTok{(lr\_pca\_recipe)}
+
+\CommentTok{\# 4º Creamos el grid para los parámetros}
+\NormalTok{lr\_pca\_reg\_grid }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{penalty =} \DecValTok{10}\SpecialCharTok{\^{}}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{10}\NormalTok{),}
+                               \AttributeTok{mixture =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\AttributeTok{length.out=}\DecValTok{10}\NormalTok{),}
+                               \AttributeTok{num\_comp =} \FunctionTok{c}\NormalTok{(}\DecValTok{20}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{30}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{45}\NormalTok{,}\DecValTok{50}\NormalTok{))}
+
+\CommentTok{\# 5º Ajustamos el modelo}
+\NormalTok{lr\_pca\_res }\OtherTok{\textless{}{-}} 
+\NormalTok{  lr\_pca\_workflow }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{tune\_grid}\NormalTok{(val\_set,}
+            \AttributeTok{grid =}\NormalTok{ lr\_pca\_reg\_grid,}
+            \AttributeTok{control =} \FunctionTok{control\_grid}\NormalTok{(}\AttributeTok{save\_pred =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{metrics =} \FunctionTok{metric\_set}\NormalTok{(accuracy,roc\_auc,recall,spec))}
+
+\CommentTok{\# 6º Evalación modelos}
+\NormalTok{lr\_pca\_tuning }\OtherTok{=}\NormalTok{ lr\_pca\_res }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(.metric)}\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max =} \FunctionTok{max}\NormalTok{(mean),}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(mean))}
+
+\CommentTok{\# 7º Selección del mejor modelo}
+\NormalTok{lr\_pca\_best }\OtherTok{\textless{}{-}} 
+\NormalTok{  lr\_pca\_res }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select\_best}\NormalTok{(}\AttributeTok{metric=}\StringTok{"accuracy"}\NormalTok{)}
+\NormalTok{lr\_pca\_best}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{uxe1rboles-de-decisuxf3n}{%
+\subsection{Árboles de decisón}\label{uxe1rboles-de-decisuxf3n}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1º Creamos el modelo}
+\NormalTok{dt\_mod }\OtherTok{\textless{}{-}} 
+  \FunctionTok{decision\_tree}\NormalTok{(}\AttributeTok{cost\_complexity =} \FunctionTok{tune}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"rpart"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)  }
+
+\CommentTok{\# 2º Creamos la receta}
+\NormalTok{dt\_recipe }\OtherTok{\textless{}{-}} 
+  \FunctionTok{recipe}\NormalTok{(fire }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_date}\NormalTok{(date,}\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{, }\StringTok{"month"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# step\_holiday(date) \%\textgreater{}\% }
+  \FunctionTok{step\_rm}\NormalTok{(date, cod\_municipio, municipio) }
+
+\CommentTok{\# 3º Creamos el workflow}
+\NormalTok{dt\_workflow }\OtherTok{\textless{}{-}} 
+  \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_model}\NormalTok{(dt\_mod) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_recipe}\NormalTok{(dt\_recipe)}
+
+\CommentTok{\# 4º Se ajusta el modelo }
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{345}\NormalTok{)}
+\NormalTok{dt\_res }\OtherTok{\textless{}{-}} 
+\NormalTok{  dt\_workflow }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{tune\_grid}\NormalTok{(val\_set,}
+            \AttributeTok{grid =} \DecValTok{10}\NormalTok{,}
+            \AttributeTok{control =} \FunctionTok{control\_grid}\NormalTok{(}\AttributeTok{save\_pred =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{metrics =} \FunctionTok{metric\_set}\NormalTok{(accuracy,roc\_auc,recall,spec))}
+
+\CommentTok{\# 5º Se evalúan los modelos obtenidos}
+\NormalTok{dt\_res }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(.metric)}\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.metric =} \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"recall"}\NormalTok{,}\StringTok{"spec"}\NormalTok{,}
+                          \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"spec"}\NormalTok{,}\StringTok{"recall"}\NormalTok{,}
+\NormalTok{                                 .metric))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max =} \FunctionTok{max}\NormalTok{(mean),}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(mean))}
+
+\CommentTok{\# Gráfico del ajuste}
+\NormalTok{  dt\_res }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.metric =} \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"recall"}\NormalTok{,}\StringTok{"spec"}\NormalTok{,}
+                          \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"spec"}\NormalTok{,}\StringTok{"recall"}\NormalTok{,}
+\NormalTok{                                 .metric))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ cost\_complexity, }\AttributeTok{y =}\NormalTok{ mean,}\AttributeTok{col=}\NormalTok{.metric)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_log10}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_number}\NormalTok{())}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+
+\CommentTok{\# 6º Selección del mejor modelo  }
+\NormalTok{dt\_best }\OtherTok{\textless{}{-}}\NormalTok{ dt\_res }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select\_best}\NormalTok{(}\AttributeTok{metric =} \StringTok{"accuracy"}\NormalTok{)}
+\NormalTok{dt\_best}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{bosques-aleatorios}{%
+\subsection{Bosques aleatorios}\label{bosques-aleatorios}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Detectar el número de núcleos para trabajar en paralelo}
+\NormalTok{cores }\OtherTok{\textless{}{-}}\NormalTok{ parallel}\SpecialCharTok{::}\FunctionTok{detectCores}\NormalTok{()}
+\NormalTok{cores}
+
+\CommentTok{\# Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo de forma que la computación sea más eficiente}
+
+\CommentTok{\# ETAPA 1: fijado mtry=4, se ajusta min\_n}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+
+\CommentTok{\# 1º Construir el modelo}
+\NormalTok{rf\_mod1 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{rand\_forest}\NormalTok{(}\AttributeTok{mtry =} \DecValTok{4}\NormalTok{, }\AttributeTok{min\_n =} \FunctionTok{tune}\NormalTok{(), }\AttributeTok{trees =} \DecValTok{1000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"ranger"}\NormalTok{, }\AttributeTok{num.threads =}\NormalTok{ cores) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+
+\CommentTok{\# 2º Construir la receta con el preprocesamiento}
+\NormalTok{rf\_recipe }\OtherTok{\textless{}{-}} 
+  \FunctionTok{recipe}\NormalTok{(fire }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_date}\NormalTok{(date,}\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{, }\StringTok{"month"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# step\_holiday(date) \%\textgreater{}\% }
+  \FunctionTok{step\_rm}\NormalTok{(date, cod\_municipio, municipio) }
+\CommentTok{\# No normalizamos en este caso pues no es necesario}
+
+\CommentTok{\# 3º Ensamblar todo con workflow}
+\NormalTok{rf\_workflow1 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_model}\NormalTok{(rf\_mod1) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_recipe}\NormalTok{(rf\_recipe)}
+
+\CommentTok{\# 4º Train and tune}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{345}\NormalTok{)}
+
+\NormalTok{rf\_res1 }\OtherTok{\textless{}{-}}
+\NormalTok{  rf\_workflow }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tune\_grid}\NormalTok{(val\_set,}
+            \AttributeTok{grid =} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{min\_n =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1000}\NormalTok{,}\DecValTok{2500}\NormalTok{,}\DecValTok{100}\NormalTok{)),}
+            \AttributeTok{control =} \FunctionTok{control\_grid}\NormalTok{(}\AttributeTok{save\_pred =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{metrics =} \FunctionTok{metric\_set}\NormalTok{(accuracy,roc\_auc,recall,spec))}
+
+\CommentTok{\# Resultados del tuning}
+
+\NormalTok{rf\_tuning1 }\OtherTok{\textless{}{-}}\NormalTok{ rf\_res1 }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(.metric)}\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max =} \FunctionTok{max}\NormalTok{(mean),}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(mean))}
+
+\NormalTok{rf\_tuning1}
+
+\CommentTok{\# plot}
+
+\NormalTok{rf\_plot1 }\OtherTok{\textless{}{-}} 
+\NormalTok{  rf\_res1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.metric =} \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"recall"}\NormalTok{,}\StringTok{"spec"}\NormalTok{,}
+                          \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"spec"}\NormalTok{,}\StringTok{"recall"}\NormalTok{,}
+\NormalTok{                                 .metric))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ min\_n, }\AttributeTok{y =}\NormalTok{ mean,}\AttributeTok{col=}\NormalTok{.metric)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Etapa 1}\SpecialCharTok{\textbackslash{}n}\StringTok{Fijado mtry = 4, se ajusta min\_n"}\NormalTok{)}
+
+
+\CommentTok{\# Mejor modelo}
+\NormalTok{rf\_best1 }\OtherTok{\textless{}{-}} 
+\NormalTok{  rf\_res1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select\_best}\NormalTok{(}\AttributeTok{metric =} \StringTok{"spec"}\NormalTok{)}
+
+\NormalTok{rf\_best1}
+
+\NormalTok{rf\_metrics1 }\OtherTok{\textless{}{-}}\NormalTok{ rf\_res1 }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_predictions}\NormalTok{(}\AttributeTok{parameters =}\NormalTok{ rf\_best1) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{get\_metrics}\NormalTok{()}
+
+\NormalTok{rf\_metrics1}
+
+
+\CommentTok{\# ETAPA 2: fijado min\_n de la etapa anterior, se ajusta mtry}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+
+\CommentTok{\# 1º Se construye el modelo}
+\NormalTok{rf\_mod2 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{rand\_forest}\NormalTok{(}\AttributeTok{mtry =} \FunctionTok{tune}\NormalTok{(), }\AttributeTok{min\_n =}\NormalTok{ rf\_best1}\SpecialCharTok{$}\NormalTok{min\_n, }\AttributeTok{trees =} \DecValTok{1000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"ranger"}\NormalTok{, }\AttributeTok{num.threads =}\NormalTok{ cores) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+
+\CommentTok{\# 2º Se usa la misma receta que antes}
+
+\CommentTok{\# 3º Ensamblar todo con workflow}
+\NormalTok{rf\_workflow2 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_model}\NormalTok{(rf\_mod2) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_recipe}\NormalTok{(rf\_recipe)}
+
+\CommentTok{\# 4º Train and tune}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{345}\NormalTok{)}
+
+\NormalTok{rf\_res2 }\OtherTok{\textless{}{-}}
+\NormalTok{  rf\_workflow2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tune\_grid}\NormalTok{(val\_set,}
+            \AttributeTok{grid =} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{mtry =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{),}
+            \AttributeTok{control =} \FunctionTok{control\_grid}\NormalTok{(}\AttributeTok{save\_pred =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{metrics =} \FunctionTok{metric\_set}\NormalTok{(accuracy,roc\_auc,recall,spec))}
+
+
+\CommentTok{\# Resultados del tuning}
+
+\NormalTok{rf\_tuning2 }\OtherTok{\textless{}{-}}\NormalTok{ rf\_res2 }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(.metric)}\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max =} \FunctionTok{max}\NormalTok{(mean),}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(mean))}
+
+\NormalTok{rf\_tuning2}
+
+\CommentTok{\#plot}
+\NormalTok{rf\_plot2 }\OtherTok{\textless{}{-}} 
+\NormalTok{  rf\_res2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.metric =} \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"recall"}\NormalTok{,}\StringTok{"spec"}\NormalTok{,}
+                          \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"spec"}\NormalTok{,}\StringTok{"recall"}\NormalTok{,}
+\NormalTok{                                 .metric))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mtry, }\AttributeTok{y =}\NormalTok{ mean,}\AttributeTok{col=}\NormalTok{.metric)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"Etapa 2}\SpecialCharTok{\textbackslash{}n}\StringTok{Fijado min\_n = "}\NormalTok{, rf\_best1}\SpecialCharTok{$}\NormalTok{min\_n, }\StringTok{" se ajusta mtry"}\NormalTok{))}
+
+\CommentTok{\# Mejor modelo}
+\NormalTok{rf\_best2 }\OtherTok{\textless{}{-}} 
+\NormalTok{  rf\_res2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select\_best}\NormalTok{(}\AttributeTok{metric =} \StringTok{"spec"}\NormalTok{)}
+\NormalTok{rf\_best2}
+
+\NormalTok{rf\_metrics2 }\OtherTok{\textless{}{-}}\NormalTok{ rf\_res2 }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_predictions}\NormalTok{(}\AttributeTok{parameters =}\NormalTok{ rf\_best2) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{get\_metrics}\NormalTok{()}
+
+\NormalTok{rf\_metrics2}
+
+
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}}
+
+\CommentTok{\# Plots}
+\FunctionTok{ggarrange}\NormalTok{(rf\_plot1,rf\_plot2,}\AttributeTok{nrow=}\DecValTok{1}\NormalTok{,}\AttributeTok{common.legend =}\NormalTok{ T,}\AttributeTok{legend =} \StringTok{"bottom"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{k-nearest-neighbours}{%
+\subsection{k-Nearest Neighbours}\label{k-nearest-neighbours}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1º Definimos el modelo:}
+\NormalTok{knn\_mod }\OtherTok{\textless{}{-}} 
+  \FunctionTok{nearest\_neighbor}\NormalTok{(}\AttributeTok{neighbors =} \FunctionTok{tune}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"kknn"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)  }
+
+\CommentTok{\# 2º Creamos la receta}
+\NormalTok{knn\_recipe }\OtherTok{\textless{}{-}} 
+  \FunctionTok{recipe}\NormalTok{(fire }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_date}\NormalTok{(date,}\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{,}\StringTok{"month"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# step\_holiday(date, holidays = holidays) \%\textgreater{}\% }
+  \FunctionTok{step\_rm}\NormalTok{(date,cod\_municipio,municipio) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Se eliminan variables identificadoras}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Se crean variables dummy para los factores}
+  \FunctionTok{step\_lincomb}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Elimina variablies con dependencia lineal exacta}
+  \FunctionTok{step\_corr}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Elimina variables con correlación superior a 0.9}
+  \FunctionTok{step\_zv}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Eliminar variables con varianza nula}
+  \FunctionTok{step\_normalize}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{()) }\CommentTok{\# Se normalizan todos los predictores}
+
+\CommentTok{\# 3º Creamos el workflow}
+\NormalTok{knn\_workflow }\OtherTok{\textless{}{-}} 
+  \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_model}\NormalTok{(knn\_mod) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_recipe}\NormalTok{(knn\_recipe)}
+
+\CommentTok{\# 4º Train and tune}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{345}\NormalTok{)}
+\NormalTok{knn\_res }\OtherTok{\textless{}{-}} 
+\NormalTok{  knn\_workflow }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# fit(training)}
+  \FunctionTok{tune\_grid}\NormalTok{(val\_set,}
+            \AttributeTok{grid =} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{neighbors =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{25}\NormalTok{,}\FunctionTok{seq}\NormalTok{(}\DecValTok{25}\NormalTok{,}\DecValTok{400}\NormalTok{,}\DecValTok{25}\NormalTok{))),}
+            \AttributeTok{control =} \FunctionTok{control\_grid}\NormalTok{(}\AttributeTok{save\_pred =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{metrics =} \FunctionTok{metric\_set}\NormalTok{(accuracy,roc\_auc,recall,spec))}
+
+\CommentTok{\# 5º Evaluació de los modelos}
+\NormalTok{knn\_res }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(.metric)}\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max =} \FunctionTok{max}\NormalTok{(mean),}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(mean))}
+
+\NormalTok{knn\_res }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.metric =} \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"recall"}\NormalTok{,}\StringTok{"spec"}\NormalTok{,}
+                          \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"spec"}\NormalTok{,}\StringTok{"recall"}\NormalTok{,}
+\NormalTok{                                 .metric))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# filter(.metric == "accuracy") \%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ neighbors, }\AttributeTok{y =}\NormalTok{ mean,}\AttributeTok{col=}\NormalTok{.metric)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+
+\CommentTok{\# 6º Selección del mejor modelo}
+\NormalTok{knn\_best }\OtherTok{\textless{}{-}}\NormalTok{ knn\_res }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select\_best}\NormalTok{(}\AttributeTok{metric =} \StringTok{"accuracy"}\NormalTok{)}
+\NormalTok{knn\_best}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{svm-lineal}{%
+\subsection{SVM lineal}\label{svm-lineal}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1º Construir el modelo}
+\NormalTok{svm\_mod }\OtherTok{\textless{}{-}} 
+  \FunctionTok{svm\_linear}\NormalTok{(}\AttributeTok{cost =} \FunctionTok{tune}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"kernlab"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+
+\CommentTok{\# 2º Construir la receta con el preprocesamiento}
+\NormalTok{svm\_recipe }\OtherTok{\textless{}{-}} 
+  \FunctionTok{recipe}\NormalTok{(fire }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_date}\NormalTok{(date,}\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{, }\StringTok{"month"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_rm}\NormalTok{(date, cod\_municipio, municipio) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_zv}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_normalize}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{())}
+
+\CommentTok{\# 3º Ensamblar todo con workflow}
+\NormalTok{svm\_workflow }\OtherTok{\textless{}{-}} 
+  \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_model}\NormalTok{(svm\_mod) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_recipe}\NormalTok{(svm\_recipe)}
+
+\CommentTok{\# 4º Train and tune}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{345}\NormalTok{)}
+\NormalTok{svm\_res }\OtherTok{\textless{}{-}} 
+\NormalTok{  svm\_workflow }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{tune\_grid}\NormalTok{(val\_set,}
+            \AttributeTok{grid =} \DecValTok{15}\NormalTok{,}
+            \AttributeTok{control =} \FunctionTok{control\_grid}\NormalTok{(}\AttributeTok{save\_pred =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{metrics =} \FunctionTok{metric\_set}\NormalTok{(accuracy,roc\_auc,recall,spec))}
+
+\CommentTok{\# 5º Evaluación de resultados del tuning}
+\NormalTok{svm\_res }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(.metric)}\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max =} \FunctionTok{max}\NormalTok{(mean),}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(mean))}
+
+\NormalTok{svm\_plot }\OtherTok{\textless{}{-}} 
+\NormalTok{  svm\_res }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.metric =} \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"recall"}\NormalTok{,}\StringTok{"spec"}\NormalTok{,}
+                          \FunctionTok{ifelse}\NormalTok{(.metric }\SpecialCharTok{==} \StringTok{"spec"}\NormalTok{,}\StringTok{"recall"}\NormalTok{,}
+\NormalTok{                                 .metric))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# filter(.metric == "accuracy") \%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ cost, }\AttributeTok{y =}\NormalTok{ mean,}\AttributeTok{col=}\NormalTok{.metric)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{svm\_plot}
+
+\CommentTok{\# 6º Selección del mejor modelo}
+\NormalTok{svm\_best }\OtherTok{\textless{}{-}} 
+\NormalTok{  svm\_res }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select\_best}\NormalTok{(}\AttributeTok{metric=}\StringTok{"accuracy"}\NormalTok{)}
+\NormalTok{svm\_best}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{svm-radial}{%
+\subsection{SVM radial}\label{svm-radial}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1º Construir el modelo}
+\NormalTok{svm\_rbf\_mod }\OtherTok{\textless{}{-}} 
+  \FunctionTok{svm\_rbf}\NormalTok{(}\AttributeTok{cost =} \FunctionTok{tune}\NormalTok{(),}\AttributeTok{rbf\_sigma =} \FunctionTok{tune}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"kernlab"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+
+\CommentTok{\# 2º Construir la receta con el preprocesamiento}
+\NormalTok{svm\_rbf\_recipe }\OtherTok{\textless{}{-}} 
+  \FunctionTok{recipe}\NormalTok{(fire }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_date}\NormalTok{(date,}\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{, }\StringTok{"month"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_rm}\NormalTok{(date, cod\_municipio, municipio) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_lincomb}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Elimina variablies con dependencia lineal exacta}
+  \FunctionTok{step\_corr}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Elimina variables con correlación superior a 0.9}
+  \FunctionTok{step\_zv}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{step\_normalize}\NormalTok{(}\FunctionTok{all\_predictors}\NormalTok{())}
+
+\CommentTok{\# 3º Ensamblar todo con workflow}
+\NormalTok{svm\_rbf\_workflow }\OtherTok{\textless{}{-}} 
+  \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_model}\NormalTok{(svm\_rbf\_mod) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_recipe}\NormalTok{(svm\_rbf\_recipe)}
+
+\CommentTok{\# 4º Train and tune}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{345}\NormalTok{)}
+\NormalTok{svm\_rbf\_res }\OtherTok{\textless{}{-}} 
+\NormalTok{  svm\_rbf\_workflow }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{tune\_grid}\NormalTok{(val\_set,}
+            \AttributeTok{grid =} \DecValTok{8}\NormalTok{,}
+            \AttributeTok{control =} \FunctionTok{control\_grid}\NormalTok{(}\AttributeTok{save\_pred =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{metrics =} \FunctionTok{metric\_set}\NormalTok{(accuracy,roc\_auc,recall,spec))}
+
+\CommentTok{\# 5º Evaluación de resultados del tuning}
+\NormalTok{svm\_rbf\_res }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{collect\_metrics}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(.metric)}\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max =} \FunctionTok{max}\NormalTok{(mean),}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(mean))}
+
+\CommentTok{\# 6º Selección del mejor modelo}
+\NormalTok{svm\_rbf\_best }\OtherTok{\textless{}{-}} 
+\NormalTok{  svm\_rbf\_res }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select\_best}\NormalTok{(}\AttributeTok{metric=}\StringTok{"accuracy"}\NormalTok{)}
+
+\NormalTok{svm\_rbf\_best}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{comparaciuxf3n}{%
+\subsection{Comparación}\label{comparaciuxf3n}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{models }\OtherTok{=} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{model\_name =} \FunctionTok{c}\NormalTok{(}\StringTok{"lr"}\NormalTok{,}\StringTok{"lr\_pca"}\NormalTok{,}\StringTok{"dt"}\NormalTok{,}\StringTok{"rf"}\NormalTok{,}\StringTok{"svm\_linear"}\NormalTok{,}\StringTok{"svm\_rbf"}\NormalTok{,}\StringTok{"knn"}\NormalTok{),}
+                \AttributeTok{models\_tune =} \FunctionTok{list}\NormalTok{(lr\_res,lr\_pca\_res,dt\_res,rf\_res2,svm\_res,svm\_rbf\_res,knn\_res),}
+                \AttributeTok{models\_workflow =} \FunctionTok{list}\NormalTok{(lr\_workflow,lr\_pca\_workflow,dt\_workflow,rf\_workflow2,svm\_workflow,svm\_rbf\_workflow,knn\_workflow))}
+
+\CommentTok{\# save(models, file="salidas\_intermedias/all\_models.RData")}
+
+\FunctionTok{load}\NormalTok{(}\StringTok{"salidas\_intermedias/all\_models.RData"}\NormalTok{)}
+\NormalTok{models }\OtherTok{=}\NormalTok{ models }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{best\_tuning =} \FunctionTok{map}\NormalTok{(models\_tune,}\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{select\_best}\NormalTok{(x,}\AttributeTok{metric =} \StringTok{"accuracy"}\NormalTok{)),}
+         \AttributeTok{best\_metrics =} \FunctionTok{map2}\NormalTok{(models\_tune,}
+\NormalTok{                             best\_tuning,                                               }\SpecialCharTok{\textasciitilde{}} \FunctionTok{collect\_predictions}\NormalTok{(.x,}\AttributeTok{parameters =}\NormalTok{ .y) }\SpecialCharTok{\%\textgreater{}\%}                                                  \FunctionTok{get\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}                                                  \FunctionTok{extract2}\NormalTok{(}\DecValTok{1}\NormalTok{)), }\CommentTok{\# Para extraer solo las medidas y no la matriz de confusión}
+         \AttributeTok{roc =} \FunctionTok{map2}\NormalTok{(models\_tune,}
+\NormalTok{                    best\_tuning,}
+                    \SpecialCharTok{\textasciitilde{}} \FunctionTok{collect\_predictions}\NormalTok{(.x,}\AttributeTok{parameters =}\NormalTok{ .y) }\SpecialCharTok{\%\textgreater{}\%}                                         \FunctionTok{roc\_curve}\NormalTok{(fire, .pred\_0))}
+\NormalTok{) }
+
+\CommentTok{\# metricas}
+\NormalTok{metrics }\OtherTok{=}\NormalTok{ models }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(model\_name,best\_metrics) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(best\_metrics)}
+\FunctionTok{kable}\NormalTok{(metrics,}\AttributeTok{digits=}\DecValTok{3}\NormalTok{) }
+
+\CommentTok{\# curva roc}
+\NormalTok{metrics }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(roc\_auc, accuracy, recall, specificity, precision),}
+               \AttributeTok{names\_to =} \StringTok{"metric"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ metric, }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{group =}\NormalTok{ model\_name)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{col =}\NormalTok{ model\_name),}\AttributeTok{size=}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{col =}\NormalTok{ model\_name),}\AttributeTok{size=}\FloatTok{2.3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_viridis\_d}\NormalTok{(}\AttributeTok{option=}\StringTok{"turbo"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dotted"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{col =} \StringTok{"Modelo"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Métricas sobre validación"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.line.x =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{axis.line.y =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{))}
+  
+\CommentTok{\# plot medidas}
+\NormalTok{models }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(model\_name,roc) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest}\NormalTok{(roc) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ specificity, }\AttributeTok{y =}\NormalTok{ sensitivity, }\AttributeTok{col =}\NormalTok{ model\_name)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_path}\NormalTok{(}\AttributeTok{lwd =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{lty =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{coord\_equal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_viridis\_d}\NormalTok{(}\AttributeTok{option=}\StringTok{"turbo"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{color=}\StringTok{"Modelo"}\NormalTok{)}\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_viridis\_d(option = "turbo",name="Modelo") +}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.line.x =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{axis.line.y =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Curva ROC en validación"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{test}{%
+\chapter{Test}\label{test}}
+
+Se unen los conjuntos training y validation para entrenar el modelo
+final
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{345}\NormalTok{)}
+\NormalTok{models }\OtherTok{\textless{}{-}}\NormalTok{ models }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{final\_workflow =} \FunctionTok{map2}\NormalTok{(models\_workflow, best\_tuning,finalize\_workflow),}
+         \AttributeTok{last\_fit =} \FunctionTok{map}\NormalTok{(final\_workflow, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{last\_fit}\NormalTok{(x,splits,}\AttributeTok{add\_validation\_set=}\NormalTok{T)))}
+
+\NormalTok{models }\OtherTok{=}\NormalTok{ models }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{test\_metrics =} \FunctionTok{map}\NormalTok{(last\_fit,      }
+                            \SpecialCharTok{\textasciitilde{}}\FunctionTok{collect\_predictions}\NormalTok{(.x) }\SpecialCharTok{\%\textgreater{}\%}                                                  \FunctionTok{get\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}  
+                              \FunctionTok{extract2}\NormalTok{(}\DecValTok{1}\NormalTok{)), }\CommentTok{\# Para extraer solo las medidas}
+         \AttributeTok{test\_roc =} \FunctionTok{map}\NormalTok{(last\_fit,}
+                        \SpecialCharTok{\textasciitilde{}}\FunctionTok{collect\_predictions}\NormalTok{(.x) }\SpecialCharTok{\%\textgreater{}\%}                                              \FunctionTok{roc\_curve}\NormalTok{(fire, .pred\_0))                           ) }
+
+\CommentTok{\# save(models, file="salidas\_intermedias/all\_models\_test.RData")}
+
+\CommentTok{\# metricas en test}
+\NormalTok{test\_metrics }\OtherTok{=}\NormalTok{ models }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(model\_name,test\_metrics) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest}\NormalTok{(test\_metrics)}
+\FunctionTok{kable}\NormalTok{(test\_metrics,}\AttributeTok{digits=}\DecValTok{3}\NormalTok{)}
+
+\CommentTok{\# plot}
+\NormalTok{test\_metrics }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(roc\_auc, accuracy, recall, specificity, precision),}
+               \AttributeTok{names\_to =} \StringTok{"metric"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ metric, }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{group =}\NormalTok{ model\_name)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{col =}\NormalTok{ model\_name),}\AttributeTok{size=}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{col =}\NormalTok{ model\_name),}\AttributeTok{size=}\FloatTok{2.3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_viridis\_d}\NormalTok{(}\AttributeTok{option=}\StringTok{"turbo"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dotted"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{col =} \StringTok{"Modelo"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Métricas sobre test"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.line.x =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{axis.line.y =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{))}
+  
+\CommentTok{\# roc}
+\NormalTok{models }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(model\_name,test\_roc) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest}\NormalTok{(test\_roc) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ specificity, }\AttributeTok{y =}\NormalTok{ sensitivity, }\AttributeTok{col =}\NormalTok{ model\_name)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_path}\NormalTok{(}\AttributeTok{lwd =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{lty =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{coord\_equal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_viridis\_d}\NormalTok{(}\AttributeTok{option=}\StringTok{"turbo"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{color=}\StringTok{"Modelo"}\NormalTok{)}\SpecialCharTok{+}
+  \CommentTok{\# scale\_color\_viridis\_d(option = "turbo",name="Modelo") +}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.line.x =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{axis.line.y =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Curva ROC en test"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Para calcular la medida de importancia de las variables en bosque
+aleatorio. No se hace desde el principio para que la computación sea más
+rápida.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Se hace el last\_fit manualmente:}
+\NormalTok{cores }\OtherTok{=} \DecValTok{8}
+
+\CommentTok{\# last model}
+\NormalTok{last\_rf\_mod }\OtherTok{\textless{}{-}} \FunctionTok{rand\_forest}\NormalTok{(}\AttributeTok{mtry =}\NormalTok{ rf\_best2}\SpecialCharTok{$}\NormalTok{mtry, }\AttributeTok{min\_n =}\NormalTok{ rf\_best1}\SpecialCharTok{$}\NormalTok{min\_n, }\AttributeTok{trees =} \DecValTok{1000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"ranger"}\NormalTok{, }\AttributeTok{num.threads =}\NormalTok{ cores,}\AttributeTok{importance=}\StringTok{"impurity"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+  
+\CommentTok{\# last workflow}
+\NormalTok{last\_rf\_workflow }\OtherTok{\textless{}{-}} 
+\NormalTok{  rf\_workflow2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{update\_model}\NormalTok{(last\_rf\_mod)}
+
+\CommentTok{\# last fit}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{345}\NormalTok{)}
+\NormalTok{last\_rf\_fit }\OtherTok{\textless{}{-}} 
+\NormalTok{  last\_rf\_workflow }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{last\_fit}\NormalTok{(splits,}
+           \AttributeTok{add\_validation\_set =}\NormalTok{ T)}
+\CommentTok{\# VIP}
+\NormalTok{last\_rf\_fit }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{extract\_fit\_parsnip}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{vip}\NormalTok{(}\AttributeTok{num\_features =} \DecValTok{50}\NormalTok{,}\AttributeTok{aesthetics =} \FunctionTok{list}\NormalTok{(}\AttributeTok{fill=}\StringTok{"lightblue"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{casos-de-interuxe9s}{%
+\section{Casos de interés}\label{casos-de-interuxe9s}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Librerías {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Se cargan las librerías que se usarán en esta sección}
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# Manipulación de datos }
+\FunctionTok{library}\NormalTok{(sf) }\CommentTok{\# Vector data}
+\FunctionTok{library}\NormalTok{(tidymodels) }\CommentTok{\# Ecosistema para la construcción de modelos}
+\FunctionTok{library}\NormalTok{(ggpubr) }\CommentTok{\# Función ggarrange}
+\FunctionTok{library}\NormalTok{(knitr) }\CommentTok{\# Función kable}
+\FunctionTok{library}\NormalTok{(skimr) }\CommentTok{\# Función skim}
+\FunctionTok{library}\NormalTok{(terra)}
+\end{Highlighting}
+\end{Shaded}
+
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 

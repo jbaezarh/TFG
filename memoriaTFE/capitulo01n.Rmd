@@ -94,21 +94,21 @@ source("cabecera_chunk_inicio.R")
 
 ## Objetivos
 
-El objetivo de esta investigación será construir modelos que permitan predecir el riesgo de incendio forestal en la Comunidad Autónoma de Andalucía.
+El objetivo de esta investigación será construir modelos que permitan predecir incendios forestales en la Comunidad Autónoma de Andalucía.
 
 Subobjetivos: 
 
-1. Construir un conjunto de datos que permita la realización de análisis y la posterior construcción de modelos de Machine Learning para la predicción de incendios forestales en Andalucía a partir de un estudio previo del problema. 
+1. Construir un conjunto de datos que permita la realización de análisis estadísticos y la posterior construcción de modelos de Machine Learning para la predicción de incendios forestales en Andalucía a partir de un estudio previo del problema. 
 
 2. Modelizar el riesgo de de incendio forestal usando distintos algoritmos de ML y comparar sus resultados
 
-3. Analizar potenciales casos de interés.
+3. Analizar el desempeño de los modelos en la realidad estudiando potenciales casos de interés.
 
 ## Hipótesis
 
-"Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian"
+<!-- "Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian" -->
 
-![Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian.](D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png)
+<!-- ![Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian.](D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png) -->
 
 ## Revisión bibliográfica
 <!-- "Spain on fire: A novel wildfire risk assessment model based on image satellite processing and atmospheric information, Helena Liz-López , Javier Huertas-Tato a , Jorge Pérez-Aracil, Carlos Casanova-Mateo, Julia Sanz-Justo, David Camacho" -->

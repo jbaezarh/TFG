@@ -223,7 +223,7 @@ datos |>
 datos |> 
   st_drop_geometry() |> 
   filter(is.na(poblacion)) |> 
-  count()
+  count() #85
 
 ```
     
