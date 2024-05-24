@@ -680,7 +680,7 @@ load("salidas_intermedias/datos_strat_depurados_geom_2024-05-03.RData")
 datos %>%  st_drop_geometry %>% skim(.data_name = "datos")
 ```
 
-### Variable objetivo:
+### Variable objetivo
 
 ```{r eval=FALSE}
 # Distribución temporal ---------------------------------------------------
@@ -770,7 +770,7 @@ ggarrange(g1,g0,nrow=2)
 
 ### Análisis univariantes
 
-#### T2M
+#### T2M{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -808,7 +808,7 @@ En prácticamente todos los meses, la media de temperaturas en las observaciones
 
 
 
-#### RH2M
+#### RH2M{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -843,7 +843,7 @@ datos %>%
 
 En prácticamente todos los meses, la humedad del aire media entre las observaciones positivas es menor que en las observaciones negativas. La humedad del aire disminuye significativamente en verano.
 
-#### GWETTOP
+#### GWETTOP{.unlisted .unnumbered}
 
 ```{r}
 ggplot(data = prov) + 
@@ -879,7 +879,7 @@ datos %>%
 
 En general, la humedad superficial de suelo media entre los casos positivos es inferior que entre los casos negativos. Esto es especialmente evidendente entre los meses de primavera y otoño. En los meses de invierno esto no está tan claro, incluso parece revertirse la tendencia.
 
-#### WS10M
+#### WS10M{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -915,7 +915,7 @@ datos %>%
 
 En todos los meses, los valores medios de la velocidad del viento a 10m sobre la superficie son significativamente mayores en las observaciones positivas.
 
-#### WD10M
+#### WD10M{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -953,7 +953,7 @@ tibble(mes = datos_mode_WD10M[datos_mode_WD10M$fire==1,1],
 ```
 
 
-#### PRECTOTCORR
+#### PRECTOTCORR{.unlisted .unnumbered}
 
 ```{r}
 ggplot(data = prov) + 
@@ -991,7 +991,7 @@ datos %>%
 Se observa una clara diferencia en la media mensual de precipitaciones en ambas clases en todos los meses, siendo mucho mayores entre las observaciones negativas. En los meses de verano esto sigue siendo cierto, si bien las diferencias se suavizan significativamente, ya que en ambos clases las precipitaciones son reducidas.
 
 
-#### NDVI
+#### NDVI{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1026,7 +1026,7 @@ datos %>%
 
 El valor del NDVI disminuye en los meses de verano y alcanza su máximo en los meses de invierno. No se observa claramente una relación entre el NDVI y la clase de la observación en la muestra.
 
-#### poblacion
+#### poblacion{.unlisted .unnumbered}
 
 ```{r}
 ggplot(data = prov) + 
@@ -1044,7 +1044,7 @@ by(datos$poblacion,datos$fire,summary)
 En la gran mayoría del territorio se observan niveles de población inferiores a 20.000 habitantes por municipio. Destacan las capitales de provincia por tener valores significativamente más elevados.
 
 
-#### dens_poblacion
+#### dens_poblacion{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1061,7 +1061,7 @@ by(datos$dens_poblacion,datos$fire,summary)
 
 Comentario similar a la población. Mayor densidad de población en las zonas de costa y en las capitales de provincia.
 
-#### pendiente
+#### pendiente{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1073,7 +1073,7 @@ ggplot(data = prov) +
 ```
 
 
-#### elevacion
+#### elevacion{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1084,7 +1084,7 @@ ggplot(data = prov) +
   theme_minimal()
 ```
 
-#### curvatura
+#### curvatura{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1097,7 +1097,7 @@ ggplot(data = prov) +
 
 
 
-#### dist_carretera
+#### dist_carretera{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1109,7 +1109,7 @@ ggplot(data = prov) +
 ```
 
 
-#### dist_electr
+#### dist_electr{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1120,7 +1120,7 @@ ggplot(data = prov) +
   theme_minimal()
 ```
 
-#### dist_camino
+#### dist_camino{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1131,7 +1131,7 @@ ggplot(data = prov) +
   theme_minimal()
 ```
 
-#### dist_sendero
+#### dist_sendero{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1143,7 +1143,7 @@ ggplot(data = prov) +
 ```
 
 
-#### dist_poblacion
+#### dist_poblacion{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1154,7 +1154,7 @@ ggplot(data = prov) +
   theme_minimal()
 ```
 
-#### dist_ferrocarril
+#### dist_ferrocarril{.unlisted .unnumbered}
 ```{r}
 ggplot(data = prov) + 
   geom_sf() +
@@ -1168,7 +1168,7 @@ ggplot(data = prov) +
 
 ### Análisis multivariantes
 
-#### Variables numéricas
+#### Variables numéricas{.unlisted .unnumbered}
 
 ```{r}
 datos_numeric = datos %>% 
@@ -1210,7 +1210,7 @@ summary(pca)
 # Se necesitan al menos 11 componentes principales para explicar el 80% de la variabilidad de las 18 variables numéricas de la muestra (tipificadas) y al menos 14 para explicar el 90%. Esto refleja, la complejidad del conjunto de datos.
 ```
 
-#### Variables categóricas
+#### Variables categóricas{.unlisted .unnumbered}
 ```{r}
 datos_categ <- datos %>%  
   select(WD10M,orientacion,enp,uso_suelo) %>% 
@@ -1861,7 +1861,7 @@ models %>% select(model_name,roc) %>% unnest(roc) %>%
   ggtitle("Curva ROC en validación")
 ```
 
-# Test
+### Test
 
 Se unen los conjuntos training y validation para entrenar el modelo final
 ```{r eval=FALSE}

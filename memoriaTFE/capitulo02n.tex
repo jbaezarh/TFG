@@ -558,12 +558,14 @@ El modelo de datos vectoriales se basa en puntos ubicados dentro de un
 sistema de referencia de coordenadas (CRS, por sus siglas en inglés).
 Estos puntos pueden representar características independientes o pueden
 estar conectados para formar geometrías más complejas como líneas y
-polígonos.
+polígonos. Para esta sección se han usado como referencia
+\citet{lovelace_geocomputation_2019}.
 
 \hypertarget{simple-features}{%
-\subsubsection{Simple features}\label{simple-features}}
+\subsubsection*{Simple Features}\label{simple-features}}
+\addcontentsline{toc}{subsubsection}{Simple Features}
 
-Las \emph{Simple features} son un estándar abierto ampliamente utilizado
+Las \emph{Simple Features} son un estándar abierto ampliamente utilizado
 para la representación de datos vectoriales, desarrollado y respaldado
 por el \emph{Open Geospatial Consortium} (OGC), una organización sin
 ánimo de lucro dedicada a la creación de estándares abiertos e
@@ -575,6 +577,7 @@ El paquete \emph{sf} proporciona clases para datos vectoriales
 geográficos y una interfaz de línea de comandos consistente para
 importantes bibliotecas de bajo nivel para geoprocesamiento
 (\emph{GDAL}, \emph{PROJ}, \emph{GEOS}, \emph{S2},\ldots).
+\citep{sfpackage}
 
 Los objetos \emph{sf} son fáciles de manipular ya que son dataframes o
 tibbles con dos características fundamentales. En primer lugar,
@@ -598,21 +601,22 @@ MULTIPOLYGON} y \emph{GEOMETRYCOLLECTION}.
 
 El modelo de datos ráster representa el espacio con una cuadrícula de
 celdas (o píxeles) a cada una de las cuales se le asocia un valor o
-varios, tratándose así de ráster de una o varias capas, respectivamente.
-Lo más común es trabajar con cuadrículas regulares, es decir, formadas
-por celdas rectangulares de igual tamaño. Sin embargo, existen otros
-modelos de ráster más complejos en los que se usan cuadrículas
-irregulares (rotadas, truncadas, rectilíneas o curvilíneas).
+varios, tratándose así de rásteres de una o varias capas,
+respectivamente. Lo más común es trabajar con cuadrículas regulares, es
+decir, formadas por celdas rectangulares de igual tamaño. Sin embargo,
+existen otros modelos de ráster más complejos en los que se usan
+cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas).
+\citep{lovelace_geocomputation_2019}
 
 Los datos en formato ráster constan de una cabecera y una matriz cuyos
-elementos representan celdas equipespaciadas. En la cabecera del raster
-se definen el Sistema de referencia de coordenadas, la extensión (o
+elementos representan celdas equiespaciadas. En la cabecera del ráster
+se definen el sistema de referencia de coordenadas, la extensión (o
 límites espaciales del área cubierta por el ráster), la resolución y el
 origen. El origen son las coordenadas de uno de los píxeles del ráster,
 que sirve de referencia para los demás, siendo generalmente utilizado el
-de la esquina inferior izquierda (aunque el paquete \emph{TERRA}, usado
-en este trabajo, usa por defecto el de la esquina superior izquierda).
-La resolución se calcula como:
+de la esquina inferior izquierda (aunque el paquete \emph{TERRA}
+\citep{terrapackage}, usado en este trabajo, usa por defecto el de la
+esquina superior izquierda). La resolución se calcula como:
 
 \[ resolution = \frac{x_{max}-x_{min}}{ncol},\frac{y_{max}-y_{min}}{nrow} \]
 
@@ -626,11 +630,10 @@ vectoriales.
 Se usará el paquete \emph{TERRA} para tratar los datos en formato
 ráster. Este paquete permite tratar el modelo de rásteres regulares con
 una o varias capas a través de la clase de objetos \texttt{SpatRaster}.
-Sin embargo, existen otras alternativas, como el paquete
-\href{https://cran.r-project.org/web/packages/stars/index.html}{\it stars},
-que además de ser más potente, permite trabajar con rásteres no
-regulares y ofrece una mejor integración con el paquete \emph{sf} y el
-entorno \emph{tidyverse}.
+Sin embargo, existen otras alternativas, como el paquete \emph{stars}
+\citep{starspackage}, que además de ser más potente, permite trabajar
+con rásteres no regulares y ofrece una mejor integración con el paquete
+\emph{sf} y el entorno \emph{tidyverse}.
 
 \hypertarget{sistemas-de-referencia-de-coordenadas}{%
 \subsection{Sistemas de Referencia de
@@ -641,7 +644,9 @@ Sistema de referencia de coordenadas (CRS), que establece cómo la
 geometría de los datos se relaciona con la superficie terrestre. Es
 decir, es el nexo de unión entre el modelo de datos y la realidad, por
 lo que juega un papel fundamental. Los CRS pueden ser de dos tipos:
-geográficos o proyectados.
+geográficos o proyectados. En esta sección se usan como referencia el
+Capítulo 9 de \citet{introGISGimond} y el Capítulo 2 de
+\citet{lovelace_geocomputation_2019}.
 
 \hypertarget{sistemas-de-coordenadas-geogruxe1ficas}{%
 \subsubsection{Sistemas de Coordenadas
@@ -710,23 +715,23 @@ que está asociado al meridiano central. Se trata de proyecciones
 conformales, por lo que preservan ángulos y formas en pequeñas regiones,
 pero distorsionan distancias y áreas.
 
-A lo largo de este trabajo se utilizará ampliamente el Sistema de
+A lo largo de este trabajo se utilizará ampliamente el sistema de
 coordenadas proyectadas UTM30N (es habitual especificar el hemisferio
 para evitar confusión en los valores del eje Y, ya que miden distancia
 al ecuador, de ahí la N de hemisferio norte).
 
 \hypertarget{anuxe1lisis-exploratorio-de-datos}{%
-\section{Análisis exploratorio de
-datos}\label{anuxe1lisis-exploratorio-de-datos}}
+\section{Análisis Exploratorio de
+Datos}\label{anuxe1lisis-exploratorio-de-datos}}
 
-El análisis exploratorio de datos (EDA), es una parte fundamental de
+El Análisis Exploratorio de Datos (EDA), es una parte fundamental de
 todo proyecto de \emph{Machine Learning} y en general de cualquier
 proyecto en el que se deba trabajar con datos de cualquier procedencia
 para extraer de ellos conclusiones. Antes del procesamiento de los datos
 es siempre necesario explorar, entender y evaluar la calidad de estos,
 pues como indica la expresión inglesa \emph{garbage in, garbage out}, si
 trabajamos con datos pobres, no podemos esperar obtener de ellos buenos
-resultados.
+resultados. \citep{wickham2016r}
 
 El EDA hace referencia al conjunto de técnicas estadísticas (tanto
 numéricas como gráficas) con las que se pretende explorar, describir y
@@ -754,7 +759,7 @@ finalmente a datos consistentes.
 
 }
 
-\caption{Cadena de valor estadística. Fuente: [@van2018statistical]}\label{fig:unnamed-chunk-2}
+\caption{Cadena de valor estadística. Fuente: \citet{van2018statistical}}\label{fig:unnamed-chunk-2}
 \end{figure}
 
 Entendemos que un conjunto de datos es técnicamente correcto cuando cada
@@ -784,14 +789,14 @@ definen los conceptos fundamentales del Análisis de Componentes
 Principales siguiendo el enfoque expuesto en \citet{PCAShaoDeng}.
 
 \begin{definition}
-Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las *k* componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión *p* que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
+Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las $k$ componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión $p$ que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
 \end{definition}
 
 De la propia definición se desprende que las componentes principales no
 son únicas.
 
 \begin{proposition}
-Las *p* primeras componentes principales se corresponden con los autovectores unitarios asociados a los $p$ mayores autovalores $\lambda_j$ de la matriz de covarianzas muestrales. 
+Las $p$ primeras componentes principales se corresponden con los autovectores unitarios asociados a los $p$ mayores autovalores $\lambda_j$ de la matriz de covarianzas muestrales. 
 \end{proposition}
 
 \begin{definition}
@@ -813,7 +818,9 @@ problema de clasificación binaria, ya que el objetivo es asignar cada
 observación a una de las dos clases posibles (incendio o no incendio).
 Existen numerosas técnicas de clasificación binaria supervisada, en este
 trabajo se explorarán algunas de las de uso más común en problemas
-similares.
+similares. Las principales fuentes consultadas para esta sección han
+sido \citet{hastie2009elements}, el capítulo 6 de
+\citet{MLmodelSuthaharan} y entradas del blog \citet{eight2late}.
 
 \hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
 \subsection{Regresión logística (con
@@ -882,11 +889,11 @@ en el caso de la regresión logística \emph{ridge} y
 
 en el caso de la regresión logística \emph{lasso}.
 
-En este trabajo se usará el paquete \emph{glmnet}, que implementa una
-combinación de ambos métodos (llamada \emph{elastic net}), en la que se
-añade un parámetro de mixtura \(\alpha \in \left[0,1\right]\) que
-combina ambos enfoques. El problema de optimización resultante en este
-caso será:
+En este trabajo se usará el paquete \emph{glmnet} \citep{glmnetpackage},
+que implementa una combinación de ambos métodos (llamada \emph{elastic
+net}), en la que se añade un parámetro de mixtura
+\(\alpha \in \left[0,1\right]\) que combina ambos enfoques. El problema
+de optimización resultante en este caso será:
 
 \[\min_{\underline \beta} -l(\underline \beta)  + \lambda \left[(1-\alpha)\sum \beta_i^2 + \alpha \sum |\beta_i| \right]\]
 
@@ -923,7 +930,7 @@ Dado un hiperplano de separación de una muestra linealmente separable, se defin
 \begin{proposition}
 Dado un punto $\underline x_i$ y un hiperplano $h(x) = w_1x_1 +w_2x_2+...+w_dx_d +b = \underline w^t \underline x = 0$, la distancia entre ambos viene dada por:
 $$d(h,\underline x_i) = \frac{|h(\underline x_i)|}{\|w\|} = \frac{y_i(\underline w^t \underline x_i+b)}{\|w\|}$$
-Donde $\|\cdot\|$ hace referencia a la norma euclídea.
+donde $\|\cdot\|$ hace referencia a la norma euclídea.
 \end{proposition}
 
 \begin{proposition}
@@ -1247,14 +1254,15 @@ modelos con un valor del AUC superior a 0.75.
 \section{Herramientas}\label{herramientas}}
 
 Toda la parte práctica del presente trabajo se ha llevado a cabo
-empleado el lenguaje de programación R a través del entorno de
-desarrollo integrado que ofrece RStudio. R es un lenguaje y entorno de
-programación de código abierto desarrollado dentro del proyecto GNU y
-orientado a la computación estadística. Este lenguaje puede extender sus
-funcionalidades fácilmente a través de la gran cantidad de paquetes
-disponibles dentro del repositorio de paquetes de CRAN (The
-Comprehensive R Archive Network), siendo este uno de sus puntos fuertes,
-dada la gran comunidad de usuarios y desarrolladores con la que cuenta.
+empleado el lenguaje de programación R \citep{Rproject} a través del
+entorno de desarrollo integrado que ofrece RStudio. R es un lenguaje y
+entorno de programación de código abierto desarrollado dentro del
+proyecto GNU y orientado a la computación estadística. Este lenguaje
+puede extender sus funcionalidades fácilmente a través de la gran
+cantidad de paquetes disponibles dentro del repositorio de paquetes de
+CRAN (\emph{The Comprehensive R Archive Network}), siendo este uno de
+sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores
+con la que cuenta.
 
 Los paquetes que se han utilizado han sido:
 

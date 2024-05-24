@@ -20,6 +20,26 @@
   publisher={Springer}
 }
 
+@book{MLmodelSuthaharan,
+  title={Machine Learning Models and Algorithms for Big Data Classification},
+  author={Suthaharan, Shan},
+  isbn={},
+  series={Integrated Series in Information Systems},
+  volume = {36},
+  doi={10.1007/978-1-4899-7641-3},
+  year={2016},
+  publisher={Springer New York, NY}
+}
+
+# Aquí tal vez debería especificar las entradas concretas del blog que he consultado
+@misc{eight2late,
+  author       = {Awati, Kailash},
+  title        = {Eight to Late},
+  howpublished = {\url{https://eight2late.wordpress.com/}},
+  month        = {5},
+  year         = {2024}
+}
+
 @book{lovelace_geocomputation_2019,
   title = {Geocomputation with {{R}}},
   isbn = {1-138-30451-4},
@@ -27,6 +47,46 @@
   publisher = {{CRC Press}},
   author = {Lovelace, Robin and Nowosad, Jakub and Muenchow, Jannes},
   year = {2019}
+}
+
+@misc{introGISGimond,
+  title = {Intro to GIS and Spatial Analysis},
+  howpublished= {\url{https://mgimond.github.io/Spatial/}},
+  author = {Manuel Gimond},
+  month = {12},
+  year = {2023}
+}
+# last edited 15-12-2023
+
+@article{sfpackage,
+  author = {Edzer Pebesma},
+  title = {{Simple Features for R: Standardized Support for Spatial Vector Data}},
+  year = {2018},
+  journal = {{The R Journal}},
+  doi = {10.32614/RJ-2018-009},
+  url = {https://doi.org/10.32614/RJ-2018-009},
+  pages = {439--446},
+  volume = {10},
+  number = {1},
+}
+
+@manual{terrapackage,
+  title = {terra: Spatial Data Analysis},
+  author = {Robert J. Hijmans},
+  year = {2024},
+  note = {R package version 1.7-71},
+  url = {https://CRAN.R-project.org/package=terra},
+}
+
+@book{starspackage,
+  title = {{Spatial Data Science: With applications in R}},
+  author = {Edzer Pebesma and Roger Bivand},
+  year = {2023},
+  publisher = {Chapman and Hall/CRC},
+  address = {London},
+  url = {https://r-spatial.org/book/},
+  pages = {352},
+  doi = {10.1201/9780429459016},
 }
 
 @book{wickham2016r,
@@ -44,49 +104,48 @@
   author={van der Loo, M. and de Jonge, E.},
   isbn={9781118897157},
   lccn={2017049091},
-  url={https://books.google.es/books?id=2ZRPCwAAQBAJ},
   year={2018},
-  publisher={Wiley}
+  publisher={Wiley},
+  doi = {10.1002/9781118897126}
 }
 
-  @Manual{rdflib,
-    title = {rdflib: A high level wrapper around the redland package
-      for common rdf applications},
-    author = {Carl Boettiger},
-    role = {aut},
-    role = {cre},
-    role = {cph},
-    comment = {0000-0002-1642-628X},
-    year = {2018},
-    publisher = {Zenodo},
-    doi = {10.5281/zenodo.1098478},
-    url = {https://doi.org/10.5281/zenodo.1098478},
-  }
+@manual{rdflib,
+  title = {rdflib: A high level wrapper around the redland package
+    for common rdf applications},
+  author = {Carl Boettiger},
+  role = {aut},
+  role = {cre},
+  role = {cph},
+  comment = {0000-0002-1642-628X},
+  year = {2018},
+  publisher = {Zenodo},
+  doi = {10.5281/zenodo.1098478},
+  url = {https://doi.org/10.5281/zenodo.1098478},
+}
+@manual{climate,
+  author = {Bartosz Czernecki and Arkadiusz Głogowski and Jakub Nowosad},
+  journal = {Sustainability},
+  title = {Climate: An R Package to Access Free In-Situ Meteorological and Hydrological Datasets For Environmental Assessment},
+  year = {2020},
+  pages = {394},
+  volume = {12},
+  doi = {10.3390/su12010394},
+  note = {R package version 0.9.1},
+  url = {https://github.com/bczernecki/climate/},
+}
 
-@Manual{climate,
-    author = {Bartosz Czernecki and Arkadiusz Głogowski and Jakub Nowosad},
-    journal = {Sustainability},
-    title = {Climate: An R Package to Access Free In-Situ Meteorological and Hydrological Datasets For Environmental Assessment},
-    year = {2020},
-    pages = {394},
-    volume = {12},
-    doi = {10.3390/su12010394},
-    note = {R package version 0.9.1},
-    url = {https://github.com/bczernecki/climate/},
-  }
-
-  @Article{nasapower,
-    author = {Adam H. Sparks},
-    title = {nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data Client for R},
-    doi = {10.21105/joss.01035},
-    year = {2018},
-    month = {oct},
-    publisher = {The Open Journal},
-    volume = {3},
-    number = {30},
-    pages = {1035},
-    journal = {The Journal of Open Source Software},
-  }
+@article{nasapower,
+  author = {Adam H. Sparks},
+  title = {nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data Client for R},
+  doi = {10.21105/joss.01035},
+  year = {2018},
+  month = {oct},
+  publisher = {The Open Journal},
+  volume = {3},
+  number = {30},
+  pages = {1035},
+  journal = {The Journal of Open Source Software},
+}
 
 @article{THABTAH2020429,
 title = {Data imbalance in classification: Experimental evaluation},
@@ -133,5 +192,25 @@ title = {Learning to predict forest fires with different data mining techniques}
   pages   = {278-284},
   doi     = {10.1007/s10957-014-0647-y},
   url     = {https://link.springer.com/article/10.1007/s10957-014-0647-y}
+}
+
+@article{glmnetpackage,
+  title = {Elastic Net Regularization Paths for All Generalized Linear Models},
+  author = {J. Kenneth Tay and Balasubramanian Narasimhan and Trevor Hastie},
+  journal = {Journal of Statistical Software},
+  year = {2023},
+  volume = {106},
+  number = {1},
+  pages = {1--31},
+  doi = {10.18637/jss.v106.i01},
+}
+
+@Manual{Rproject,
+  title = {R: A Language and Environment for Statistical Computing},
+  author = {{R Core Team}},
+  organization = {R Foundation for Statistical Computing},
+  address = {Vienna, Austria},
+  year = {2024},
+  url = {https://www.R-project.org/},
 }
 

@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.24)  26 APR 2024 20:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.24)  24 MAY 2024 20:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **latex_paginatitulo_modTFE.tex
 (./latex_paginatitulo_modTFE.tex
 LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-03-14>
+L3 programming layer <2024-05-08>
 
 ! LaTeX Error: Environment titlepage undefined.
 
@@ -74,8 +74,8 @@ Missing character: There is no o in font nullfont!
 ! Undefined control sequence.
 <recently read> \LARGE 
                        
-l.22 ...oble Grado en Matemáticas y Estadística}
-                                                  \\[2.5cm]
+l.23 	Matemáticas y Estadística}
+                                  \\[2.3cm]
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -85,7 +85,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <recently read> \Large 
                        
-l.31 \textsc{\Large TRABAJO FIN DE ESTUDIOS}
+l.32 \textsc{\Large TRABAJO FIN DE ESTUDIOS}
                                             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -94,7 +94,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.37 {\Huge
+l.38 {\Huge
            
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -103,7 +103,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.49 {\Large
+l.51 {\Large
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -136,7 +136,7 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no a in font nullfont!
 ! Undefined control sequence.
-l.53 {\large
+l.55 {\large
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -163,11 +163,11 @@ Missing character: There is no 0 in font nullfont!
 Missing character: There is no 2 in font nullfont!
 Missing character: There is no 4 in font nullfont!
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 57.
+(Font)              <7> on input line 59.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 57.
+(Font)              <5> on input line 59.
 
-Overfull \hbox (398.33858pt too wide) in paragraph at lines 9--58
+Overfull \hbox (398.33858pt too wide) in paragraph at lines 9--60
  []$ 
  []
 
@@ -179,7 +179,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.61 \cleardoublepage
+l.63 \cleardoublepage
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -193,7 +193,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.64 \end{titlepage}
+l.66 \end{titlepage}
                     
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -207,11 +207,11 @@ or  <return>  to continue without it.
 
  
 Here is how much of TeX's memory you used:
- 35 strings out of 476046
- 728 string characters out of 5790010
- 1927496 words of memory out of 5000000
- 22255 multiletter control sequences out of 15000+600000
+ 37 strings out of 475935
+ 748 string characters out of 5787577
+ 1927907 words of memory out of 5000000
+ 22368 multiletter control sequences out of 15000+600000
  559037 words of font info for 39 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 24i,5n,22p,198b,269s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 24i,5n,22p,198b,278s stack positions out of 10000i,1000n,20000p,200000b,200000s
 !  ==> Fatal error occurred, no output PDF file produced!

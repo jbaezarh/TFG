@@ -40,13 +40,13 @@ Todos los datos empleados en este trabajo son datos georreferenciados, lo que si
 
 ### Datos Vectoriales
 
-El modelo de datos vectoriales se basa en puntos ubicados dentro de un sistema de referencia de coordenadas (CRS, por sus siglas en inglés). Estos puntos pueden representar características independientes o pueden estar conectados para formar geometrías más complejas como líneas y polígonos.
+El modelo de datos vectoriales se basa en puntos ubicados dentro de un sistema de referencia de coordenadas (CRS, por sus siglas en inglés). Estos puntos pueden representar características independientes o pueden estar conectados para formar geometrías más complejas como líneas y polígonos. Para esta sección se han usado como referencia @lovelace_geocomputation_2019.
 
-#### Simple features
+#### Simple Features{.unlisted .unnumbered}
 
-Las *Simple features* son un estándar abierto ampliamente utilizado para la representación de datos vectoriales, desarrollado y respaldado por el *Open Geospatial Consortium* (OGC), una organización sin ánimo de lucro dedicada a la creación de estándares abiertos e interoperables a nivel global dentro del marco de los sistemas geográficos de información (GIS, por sus siglas en ingés) y de la *World Wide Web*.
+Las *Simple Features* son un estándar abierto ampliamente utilizado para la representación de datos vectoriales, desarrollado y respaldado por el *Open Geospatial Consortium* (OGC), una organización sin ánimo de lucro dedicada a la creación de estándares abiertos e interoperables a nivel global dentro del marco de los sistemas geográficos de información (GIS, por sus siglas en ingés) y de la *World Wide Web*.
 
-El paquete *sf* proporciona clases para datos vectoriales geográficos y una interfaz de línea de comandos consistente para importantes bibliotecas de bajo nivel para geoprocesamiento (*GDAL*, *PROJ*, *GEOS*, *S2*,...).
+El paquete *sf* proporciona clases para datos vectoriales geográficos y una interfaz de línea de comandos consistente para importantes bibliotecas de bajo nivel para geoprocesamiento (*GDAL*, *PROJ*, *GEOS*, *S2*,...). [@sfpackage]
 
 Los objetos *sf* son fáciles de manipular ya que son dataframes o tibbles con dos características fundamentales. En primer lugar, contienen metadatos geográficos adicionales: tipo de geometría, dimensión, *Bounding Box* (límites o extensión geográfica)  e información sobre el Sistema de referencia de coordenadas. Y además, presentan una columna de geometrías. Algunas ventajas del uso de este modelo de datos en R son que en la mayoría de operaciones los objeto *sf* se pueden tratar como data frames, los nombres de las funciones son consistentes (todos empiezan por `st_`), las funciones se pueden combinar con el operador tubería y además funcionan bien con el ecosistema de paquetes *tidyverse*.
 
@@ -55,15 +55,15 @@ El paquete *sf* de R soporta 18 tipos de geometrías para las *simple features*,
 
 ### Datos Ráster
 
-El modelo de datos ráster representa el espacio con una cuadrícula de celdas (o píxeles) a cada una de las cuales se le asocia un valor o varios, tratándose así de ráster de una o varias capas, respectivamente. Lo más común es trabajar con cuadrículas regulares, es decir, formadas por celdas rectangulares de igual tamaño. Sin embargo, existen otros modelos de ráster más complejos en los que se usan cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas).
+El modelo de datos ráster representa el espacio con una cuadrícula de celdas (o píxeles) a cada una de las cuales se le asocia un valor o varios, tratándose así de rásteres de una o varias capas, respectivamente. Lo más común es trabajar con cuadrículas regulares, es decir, formadas por celdas rectangulares de igual tamaño. Sin embargo, existen otros modelos de ráster más complejos en los que se usan cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas). [@lovelace_geocomputation_2019]
 
-Los datos en formato ráster constan de una cabecera y una matriz cuyos elementos representan celdas equipespaciadas. En la cabecera del raster se definen el Sistema de referencia de coordenadas, la extensión (o límites espaciales del área cubierta por el ráster), la resolución y el origen. El origen son las coordenadas de uno de los píxeles del ráster, que sirve de referencia para los demás, siendo generalmente utilizado el de la esquina inferior izquierda (aunque el paquete *TERRA*, usado en este trabajo, usa por defecto el de la esquina superior izquierda). La resolución se calcula como:
+Los datos en formato ráster constan de una cabecera y una matriz cuyos elementos representan celdas equiespaciadas. En la cabecera del ráster se definen el sistema de referencia de coordenadas, la extensión (o límites espaciales del área cubierta por el ráster), la resolución y el origen. El origen son las coordenadas de uno de los píxeles del ráster, que sirve de referencia para los demás, siendo generalmente utilizado el de la esquina inferior izquierda (aunque el paquete *TERRA* [@terrapackage], usado en este trabajo, usa por defecto el de la esquina superior izquierda). La resolución se calcula como:
 
 $$ resolution = \frac{x_{max}-x_{min}}{ncol},\frac{y_{max}-y_{min}}{nrow} $$
 
 La representación en forma de matriz evita tener que almacenar explícitamente las coordenadas de cada una de las cuatro esquinas de cada píxel, debiendo almacenar solamente las coordenadas de un punto (el origen). Esto, unido a las operaciones del álgebra de mapas hacen que el procesamiento de datos ráster sea mucho más eficiente que el de datos vectoriales.
 
-Se usará el paquete *TERRA* para tratar los datos en formato ráster. Este paquete permite tratar el modelo de rásteres regulares con una o varias capas a través de la clase de objetos `SpatRaster`. Sin embargo, existen otras alternativas, como el paquete \href{https://cran.r-project.org/web/packages/stars/index.html}{\it stars}, que además de ser más potente, permite trabajar con rásteres no regulares y ofrece una mejor integración con el paquete *sf* y el entorno *tidyverse*.
+Se usará el paquete *TERRA* para tratar los datos en formato ráster. Este paquete permite tratar el modelo de rásteres regulares con una o varias capas a través de la clase de objetos `SpatRaster`. Sin embargo, existen otras alternativas, como el paquete *stars* [@starspackage], que además de ser más potente, permite trabajar con rásteres no regulares y ofrece una mejor integración con el paquete *sf* y el entorno *tidyverse*.
 
 
 
@@ -72,9 +72,9 @@ Se usará el paquete *TERRA* para tratar los datos en formato ráster. Este paqu
 <!-- https://mgimond.github.io/Spatial/chp09_0.html -->
 <!-- https://r.geocompx.org/spatial-operations#map-algebra -->
 
-Intrínseco a cualquier modelo de datos espaciales está el concepto de Sistema de referencia de coordenadas (CRS), que establece cómo la geometría de los datos se relaciona con la superficie terrestre. Es decir, es el nexo de unión entre el modelo de datos y la realidad, por lo que juega un papel fundamental. Los CRS pueden ser de dos tipos: geográficos o proyectados.
+Intrínseco a cualquier modelo de datos espaciales está el concepto de Sistema de referencia de coordenadas (CRS), que establece cómo la geometría de los datos se relaciona con la superficie terrestre. Es decir, es el nexo de unión entre el modelo de datos y la realidad, por lo que juega un papel fundamental. Los CRS pueden ser de dos tipos: geográficos o proyectados. En esta sección se usan como referencia el Capítulo 9 de @introGISGimond y el Capítulo 2 de @lovelace_geocomputation_2019.
 
-#### Sistemas de Coordenadas Geográficas
+#### Sistemas de Coordenadas Geográficas {.unlisted .unnumbered}
 
 Los sistemas de coordenadas geográficas (GCS) identifican cada punto de la superficie terrestre utilizando la longitud y la latitud. La longitud es la distancia angular al Meridiano de Greenwich medida en la dirección Este-Oeste. La latitud es la distancia angular al Ecuador medida en la dirección Sur-Norte.
 
@@ -86,7 +86,7 @@ Cualquier sistema de coordenadas geográficas se compone de tres elementos: el e
 - *World Geodetic System 1984* (WGS84), usado a nivel global.
 
 
-#### Sistemas de Coordenadas Proyectadas
+#### Sistemas de Coordenadas Proyectadas {.unlisted .unnumbered}
 
 Un Sistema de Coordenadas Proyectadas (PCS) es un sistema de referencia que permite identificar localizaciones terrestres y realizar mediciones en una superficie plana, es decir, en un mapa. Estos sistemas de coordenadas se basan en las coordenadas cartesianas, por lo que tienen un origen, un eje X y un eje Y y usan una unidad lineal de medida (en este trabajo se usará el metro). Pasar de una superficie elíptica (GCR) a una superficie plana (PCS) requiere de transformaciones matemáticas apropiadas y siempre induce deformaciones en los datos.
 
@@ -94,16 +94,16 @@ Al proyectar la superficie terrestre en una superficie plana siempre se modifica
 
 Un caso particular y ampliamente usado de PCS cilíndrico son los *Universe Transverse Mercator* (UTM), en los que se proyecta el elipsoide sobre un cilindro tangente a este por las líneas de longitud (los meridianos). De esta forma, se divide el globo en 60 zonas de 6º de longitud, para cada una de las cuales existe un PCS UTM correspondiente que está asociado al meridiano central. Se trata de proyecciones conformales, por lo que preservan ángulos y formas en pequeñas regiones, pero distorsionan distancias y áreas. 
 
-A lo largo de este trabajo se utilizará ampliamente el Sistema de coordenadas proyectadas UTM30N (es habitual especificar el hemisferio para evitar confusión en los valores del eje Y, ya que miden distancia al ecuador, de ahí la N de hemisferio norte).  
+A lo largo de este trabajo se utilizará ampliamente el sistema de coordenadas proyectadas UTM30N (es habitual especificar el hemisferio para evitar confusión en los valores del eje Y, ya que miden distancia al ecuador, de ahí la N de hemisferio norte).  
 
 
 
-## Análisis exploratorio de datos
+## Análisis Exploratorio de Datos
 
 <!-- https://datos.gob.es/es/documentacion/guia-practica-de-introduccion-al-analisis-exploratorio-de-datos -->
 <!-- https://r4ds.hadley.nz/eda#introduction -->
 
-El análisis exploratorio de datos (EDA), es una parte fundamental de todo proyecto de *Machine Learning* y en general de cualquier proyecto en el que se deba trabajar con datos de cualquier procedencia para extraer de ellos conclusiones. Antes del procesamiento de los datos es siempre necesario explorar, entender y evaluar la calidad de estos, pues como indica la expresión inglesa *garbage in, garbage out*, si trabajamos con datos pobres, no podemos esperar obtener de ellos buenos resultados.
+El Análisis Exploratorio de Datos (EDA), es una parte fundamental de todo proyecto de *Machine Learning* y en general de cualquier proyecto en el que se deba trabajar con datos de cualquier procedencia para extraer de ellos conclusiones. Antes del procesamiento de los datos es siempre necesario explorar, entender y evaluar la calidad de estos, pues como indica la expresión inglesa *garbage in, garbage out*, si trabajamos con datos pobres, no podemos esperar obtener de ellos buenos resultados. [@wickham2016r]
 
 
 El EDA hace referencia al conjunto de técnicas estadísticas (tanto numéricas como gráficas) con las que se pretende explorar, describir y resumir la naturaleza de los datos, comprender las relaciones existentes entre las distintas variables presentes, identificar posibles errores o revelar posibles valores atípicos. Todo esto con el objetivo de maximizar nuestra compresión sobre el conjunto de datos.
@@ -127,9 +127,10 @@ Puede entenderse que el *data cleaning* es el proceso de pasar de *raw data* o d
 <!-- \label{fig:statistical_value_chain} -->
 <!-- \end{figure} -->
 
-```{r, echo = FALSE, fig.cap = "Cadena de valor estadística. Fuente: [@van2018statistical]"}
+```{r, echo = FALSE, fig.cap = "Cadena de valor estadística. Fuente: \\citet{van2018statistical}"}
 knitr::include_graphics("graficos/statistical_value_chain.png")
 ```
+
 <!-- CUIDADO!! TENGO QUE VER COMO CITARLO BIEN -->
 
 Entendemos que un conjunto de datos es técnicamente correcto cuando cada valor pertenece a una variable y está almacenado en el tipo que que le corresponde en base al conocimiento del dominio del problema. Para ello se debe reajustar el tipo de cada variable al que le corresponda en base al conocimiento que se tenga sobre esta, codificando los valores en las clases adecuadas si fuese necesario.
@@ -142,13 +143,13 @@ Decimos que un conjunto de datos es consistente cuando es técnicamente correcto
 El Análisis de Componentes Principales (PCA) es una técnica de reducción de la dimensionalidad ampliamente usada en el análisis de datos multivariante. Al emplear técnicas de reducción de dimensionalidad como PCA, se persiguen diversos objetivos: eliminar correlaciones redundantes, reducir el ruido presente en los datos y facilitar el uso de algoritmos cuya eficiencia computacional está fuertemente influenciada por la dimensionalidad de los datos. A continuación, se definen los conceptos fundamentales del Análisis de Componentes Principales siguiendo el enfoque expuesto en @PCAShaoDeng.
 
 \begin{definition}
-Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las *k* componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión *p* que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
+Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las $k$ componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión $p$ que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
 \end{definition}
 
 De la propia definición se desprende que las componentes principales no son únicas.
 
 \begin{proposition}
-Las *p* primeras componentes principales se corresponden con los autovectores unitarios asociados a los $p$ mayores autovalores $\lambda_j$ de la matriz de covarianzas muestrales. 
+Las $p$ primeras componentes principales se corresponden con los autovectores unitarios asociados a los $p$ mayores autovalores $\lambda_j$ de la matriz de covarianzas muestrales. 
 \end{proposition}
 
 \begin{definition}
@@ -175,7 +176,7 @@ El número de componentes principales necesarias para explicar un porcentaje dad
 <!-- https://eight2late.wordpress.com/?s=decision+tree -->
 <!-- https://eight2late.wordpress.com/?s=support+vector+machine -->
 
-El problema que se aborda en este trabajo se engloba dentro de lo que se conoce como aprendizaje supervisado, ya que para cada observación del conjunto de entrenamiento se conoce el valor de la variable objetivo (en este caso si ha habido incendio o no). Más concretamente, se trata de un problema de clasificación binaria, ya que el objetivo es asignar cada observación a una de las dos clases posibles (incendio o no incendio). Existen numerosas técnicas de clasificación binaria supervisada, en este trabajo se explorarán algunas de las de uso más común en problemas similares.
+El problema que se aborda en este trabajo se engloba dentro de lo que se conoce como aprendizaje supervisado, ya que para cada observación del conjunto de entrenamiento se conoce el valor de la variable objetivo (en este caso si ha habido incendio o no). Más concretamente, se trata de un problema de clasificación binaria, ya que el objetivo es asignar cada observación a una de las dos clases posibles (incendio o no incendio). Existen numerosas técnicas de clasificación binaria supervisada, en este trabajo se explorarán algunas de las de uso más común en problemas similares. Las principales fuentes consultadas para esta sección han sido @hastie2009elements, el capítulo 6 de @MLmodelSuthaharan y entradas del blog @eight2late.
 
 ### Regresión logística (con penalización)
 La regresión logística es un caso particular de modelo lineal generalizado basado en las siguientes hipótesis:
@@ -217,7 +218,7 @@ $$\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum |\beta_i|$$
 
 en el caso de la regresión logística *lasso*.
 
-En este trabajo se usará el paquete *glmnet*, que implementa una combinación de ambos métodos (llamada *elastic net*), en la que se añade un parámetro de mixtura $\alpha \in \left[0,1\right]$ que combina ambos enfoques. El problema de optimización resultante en este caso será:
+En este trabajo se usará el paquete *glmnet* [@glmnetpackage], que implementa una combinación de ambos métodos (llamada *elastic net*), en la que se añade un parámetro de mixtura $\alpha \in \left[0,1\right]$ que combina ambos enfoques. El problema de optimización resultante en este caso será:
 
 $$\min_{\underline \beta} -l(\underline \beta)  + \lambda \left[(1-\alpha)\sum \beta_i^2 + \alpha \sum |\beta_i| \right]$$ 
 
@@ -254,7 +255,7 @@ Dado un hiperplano de separación de una muestra linealmente separable, se defin
 \begin{proposition}
 Dado un punto $\underline x_i$ y un hiperplano $h(x) = w_1x_1 +w_2x_2+...+w_dx_d +b = \underline w^t \underline x = 0$, la distancia entre ambos viene dada por:
 $$d(h,\underline x_i) = \frac{|h(\underline x_i)|}{\|w\|} = \frac{y_i(\underline w^t \underline x_i+b)}{\|w\|}$$
-Donde $\|\cdot\|$ hace referencia a la norma euclídea.
+donde $\|\cdot\|$ hace referencia a la norma euclídea.
 \end{proposition}
 
 <!-- prop -->
@@ -444,7 +445,7 @@ Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Caracter�
 ## Herramientas
 
 <!-- https://www.r-project.org/ -->
-Toda la parte práctica del presente trabajo se ha llevado a cabo empleado el lenguaje de programación R a través del entorno de desarrollo integrado que ofrece RStudio. R es un lenguaje y entorno de programación de código abierto desarrollado dentro del proyecto GNU y orientado a la computación estadística. Este lenguaje puede extender sus funcionalidades fácilmente a través de la gran cantidad de paquetes disponibles dentro del repositorio de paquetes de CRAN (The Comprehensive R Archive Network), siendo este uno de sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores con la que cuenta.
+Toda la parte práctica del presente trabajo se ha llevado a cabo empleado el lenguaje de programación R [@Rproject] a través del entorno de desarrollo integrado que ofrece RStudio. R es un lenguaje y entorno de programación de código abierto desarrollado dentro del proyecto GNU y orientado a la computación estadística. Este lenguaje puede extender sus funcionalidades fácilmente a través de la gran cantidad de paquetes disponibles dentro del repositorio de paquetes de CRAN (*The Comprehensive R Archive Network*), siendo este uno de sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores con la que cuenta.
 
 Los paquetes que se han utilizado han sido:
 

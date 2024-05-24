@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.15)  22 MAY 2024 21:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.15)  24 MAY 2024 20:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1061,18 +1061,16 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
-
-
-{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}])
+))
 \tf@toc=\write6
 \openout6 = `apendice02n.toc'.
 
-LaTeX Info: Redefining \. on input line 585.
-LaTeX Info: Redefining \% on input line 585.
-LaTeX Info: Redefining \. on input line 585.
-LaTeX Info: Redefining \% on input line 585.
-[2]
+[1
+
+
+{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}] [2
+
+]
 Cap\'{\i }tulo 1.
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 591.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
@@ -1087,9 +1085,7 @@ LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <12> not available
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 650.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [3
-
-]
+) [3]
 Underfull \vbox (badness 10000) detected at line 757
  []
 
@@ -1364,26 +1360,52 @@ LaTeX Info: Redefining \% on input line 2597.
 LaTeX Info: Redefining \. on input line 2597.
 LaTeX Info: Redefining \% on input line 2597.
 [41]
-LaTeX Info: Redefining \. on input line 2600.
-LaTeX Info: Redefining \% on input line 2600.
-LaTeX Info: Redefining \. on input line 2600.
-LaTeX Info: Redefining \% on input line 2600.
+LaTeX Info: Redefining \. on input line 2653.
+LaTeX Info: Redefining \% on input line 2653.
+LaTeX Info: Redefining \. on input line 2653.
+LaTeX Info: Redefining \% on input line 2653.
 [42]
-Cap\'{\i }tulo 2.
-[43
-
-]
-LaTeX Info: Redefining \. on input line 2703.
-LaTeX Info: Redefining \% on input line 2703.
-LaTeX Info: Redefining \. on input line 2703.
-LaTeX Info: Redefining \% on input line 2703.
+LaTeX Info: Redefining \. on input line 2709.
+LaTeX Info: Redefining \% on input line 2709.
+LaTeX Info: Redefining \. on input line 2709.
+LaTeX Info: Redefining \% on input line 2709.
+[43]
+LaTeX Info: Redefining \. on input line 2767.
+LaTeX Info: Redefining \% on input line 2767.
+LaTeX Info: Redefining \. on input line 2767.
+LaTeX Info: Redefining \% on input line 2767.
 [44]
+LaTeX Info: Redefining \. on input line 2825.
+LaTeX Info: Redefining \% on input line 2825.
+LaTeX Info: Redefining \. on input line 2825.
+LaTeX Info: Redefining \% on input line 2825.
+[45]
+LaTeX Info: Redefining \. on input line 2875.
+LaTeX Info: Redefining \% on input line 2875.
+LaTeX Info: Redefining \. on input line 2875.
+LaTeX Info: Redefining \% on input line 2875.
+[46]
+LaTeX Info: Redefining \. on input line 2949.
+LaTeX Info: Redefining \% on input line 2949.
+LaTeX Info: Redefining \. on input line 2949.
+LaTeX Info: Redefining \% on input line 2949.
+[47]
+LaTeX Info: Redefining \. on input line 2982.
+LaTeX Info: Redefining \% on input line 2982.
+LaTeX Info: Redefining \. on input line 2982.
+LaTeX Info: Redefining \% on input line 2982.
+[48]
+LaTeX Info: Redefining \. on input line 3057.
+LaTeX Info: Redefining \% on input line 3057.
+LaTeX Info: Redefining \. on input line 3057.
+LaTeX Info: Redefining \% on input line 3057.
+[49]
 No file apendice02n.bbl.
-LaTeX Info: Redefining \. on input line 2712.
-LaTeX Info: Redefining \% on input line 2712.
-LaTeX Info: Redefining \. on input line 2712.
-LaTeX Info: Redefining \% on input line 2712.
-[45] (./apendice02n.aux
+LaTeX Info: Redefining \. on input line 3066.
+LaTeX Info: Redefining \% on input line 3066.
+LaTeX Info: Redefining \. on input line 3066.
+LaTeX Info: Redefining \% on input line 3066.
+[50] (./apendice02n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
@@ -1392,21 +1414,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-04-11>
  ***********
 Package rerunfilecheck Info: File `apendice02n.out' has not changed.
-(rerunfilecheck)             Checksum: 98195EEA96105E2410FCB28E1A249A95;5996.
+(rerunfilecheck)             Checksum: 3ACC059C6F8510A2080A8972F8FB5274;3958.
  ) 
 Here is how much of TeX's memory you used:
- 31290 strings out of 475992
- 595327 string characters out of 5788806
+ 31283 strings out of 475992
+ 594898 string characters out of 5788806
  1967754 words of memory out of 5000000
- 52739 multiletter control sequences out of 15000+600000
+ 52723 multiletter control sequences out of 15000+600000
  609914 words of font info for 72 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,12n,93p,6407b,728s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,12n,93p,6407b,501s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on apendice02n.pdf (45 pages, 384583 bytes).
+Output written on apendice02n.pdf (50 pages, 396165 bytes).
 PDF statistics:
- 532 PDF objects out of 1000 (max. 8388607)
- 458 compressed objects within 5 object streams
- 127 named destinations out of 1000 (max. 500000)
- 333 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 486 PDF objects out of 1000 (max. 8388607)
+ 407 compressed objects within 5 object streams
+ 136 named destinations out of 1000 (max. 500000)
+ 189 words of extra memory for PDF output out of 10000 (max. 10000000)
 

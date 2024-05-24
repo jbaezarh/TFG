@@ -36,7 +36,7 @@ En esta sección se aplicarán distintos métodos numéricos y gráficos de aná
 3. Analizar las características de las distintas variables, de cara a usar posteriormente técnicas de preprocesamiento adecuadas para cada modelo.
 
 
-Antes de abordar el estudio detallado de cada una de las variables y las relaciones entre estas, en la Figura \ref{fig:skim_datos} se recoge un resumen de todo el conjunto de datos, sin incluir la columna de geometría.  En este resumen se puede observar que en el conjunto de datos hay 4 tipos de variables (además de la variable *geometry* que es de tipo *simple feature column POINT*, abreviado como sfc_POINT): cadenas de caracteres, fechas, factores y variables numéricas.
+Antes de abordar el estudio detallado de cada una de las variables y las relaciones entre estas, en la Figura \ref{fig:skim_datos} se recoge un resumen de todo el conjunto de datos, sin incluir la columna de geometría.  En este resumen se puede observar que en el conjunto de datos hay 4 tipos de variables (además de la variable *geometry* que es de tipo *simple feature column POINT*, abreviado como *sfc_POINT*): cadenas de caracteres, fechas, factores y variables numéricas.
 
 Se puede observar que hay registros en 749 municipios diferentes (de los 785 municipios de que hay en Andalucía). Probablemente el hecho de que en algunos municipios no haya habido observaciones sea debido a los datos faltantes. Las variables *municipio* y *cod_municipio* no se incorporarán a los modelos. De la misma forma, se puede ver que hay observaciones en 3691 días diferentes.
 <!-- https://www.ine.es/daco/daco42/codmun/cod_num_muni_provincia_ccaa.htm -->
