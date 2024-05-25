@@ -28,7 +28,7 @@ knitr::opts_chunk$set(eval = FALSE)
 
 ## Generación de la muestra
 ```{r eval=FALSE}
-# Librerías ---------------------------------------------------------------
+# Librerías ------------------------------------------------------------------  
 # Se cargan las librerías que se usarán en esta sección
 
 library(terra) # Raster data

@@ -626,13 +626,13 @@ de España en formato TURTLE\footnote{TURTLE es una sintaxis para RDF con
   un estándar de semántica web utilizado para el intercambiar de datos
   en la Web.} y esto conllevó numerosas dificultades. Se exploraron
 distintas librerías de R (y alguna de Python) para el manejo de datos en
-este formato como \emph{RDFlib}. Sin embargo, al tratarse de una base de
-datos de un tamaño considerable (aproximadamente 1GB y con más de una
-decena de millones de tripletas), esta librería no era suficientemente
-eficiente para poder realizar consultas en un tiempo razonable al
-conjunto de datos. Tras explorar otras alternativas, se valoró la
-posibilidad de usar un \emph{triplestore}, es decir, una base de datos
-especialmente diseñada para el almacenamiento y recuperación de
+este formato, como \emph{RDFlib} \citep{rdflib}. Sin embargo, al
+tratarse de una base de datos de un tamaño considerable (aproximadamente
+1GB y con más de una decena de millones de tripletas), esta librería no
+era suficientemente eficiente para poder realizar consultas en un tiempo
+razonable al conjunto de datos. Tras explorar otras alternativas, se
+valoró la posibilidad de usar un \emph{triplestore}, es decir, una base
+de datos especialmente diseñada para el almacenamiento y recuperación de
 tripletas a través de consultas semánticas. En este caso se usó
 \emph{Apache Jena Fuseki}, ya que cuenta con una interfaz que facilita
 su uso. Sin embargo, aunque esto supuso una mejora considerable en la
@@ -647,9 +647,9 @@ será complicado y costoso en tiempo y en recursos computacionales. Al no
 disponer de ninguno de estos, finalmente se optó por buscar una
 alternativa más abarcable dada las limitaciones con las que cuenta un
 Trabajo de Fin de Estudios, aunque queda abierta la posibilidad de
-explorar esta base de datos en futuros estudios, la cual aportar nuevas
-dimensiones al estudio de los incendios forestales en España gracias a
-la enorme cantidad de información que ofrece.
+explorar esta base de datos en futuros estudios, la cual podrá aportar
+nuevas dimensiones al estudio de los incendios forestales en España
+gracias a la enorme cantidad de información que ofrece.
 
 Ante esta situación, la solución planteada fue limitar el área en
 estudio a la Comunidad Autónoma de Andalucía, aprovechando la enorme
@@ -672,16 +672,16 @@ de inicio de cada uno de ellos (Figura \ref{fig:area_fuego}).
 \begin{figure}[thb]
 \centering
 \includegraphics[width=0.5\textwidth]{graficos/areas_fuego.png}
-\caption{Áreas recorridas por el fuego entre 2002 y 2024 en incendios mayores de 100 hectáreas en Andalucía.}
+\caption[Áreas recorridas por el fuego entre 2002 y 2022 en incendios mayores de 100 hectáreas en Andalucía]{Áreas recorridas por el fuego entre 2002 y 2022 en incendios mayores de 100 hectáreas en Andalucía. Fuente: Elaboración propia a partir de las áreas recorridas por el suelo disponibles en la REDIAM.}
 \label{fig:area_fuego}
 \end{figure}
 
 \hypertarget{variables-predictoras}{%
 \subsection{Variables predictoras}\label{variables-predictoras}}
 
-Una vez limitada la extensión territorial del estudio el siguiente paso
+Una vez limitada la extensión territorial del estudio, el siguiente paso
 era acotar la franja temporal que abarcaría el estudio en base a la
-disponibilidad de datos adecuados para explicar el fenómeno en cuestión
+disponibilidad de datos adecuados para explicar el fenómeno en cuestión,
 desagregando espacial y temporalmente.
 
 Los incendios forestales son un proceso sumamente complejo, en el que
@@ -744,7 +744,7 @@ forestales mayores de 100 ha en Andalucía entre 1975 y 2020 disponibles
 la REDIAM. De cada incendio registrado se dispone de su fecha de inicio
 y del polígono del área recorrida por el fuego, así como de otras
 variables que dependen del año de la campaña y que no serán relevantes
-de cara al estudio.
+de cara al presente estudio.
 
 Tomando como base estudios similares (\ldots) y partiendo de las 6
 categorías ya mencionadas se han recopilado 23 conjuntos de datos de
@@ -777,16 +777,16 @@ la dificultad de disponer de datos consistentes y continuos en el tiempo
 a lo largo del periodo de estudio de las variables meteorológicas
 seleccionadas ha hecho que este enfoque no sea viable. En esta dirección
 se ha explorado la API de la AEMET y algunos paquetes de R como
-\texttt{climate}, sin llegar a resultados satisfactorios. Por otro lado,
-el paquete \texttt{nasapower} permite la descarga de una gran cantidad
-de variables meteorológicas con frecuencia diaria y con una resolución
-de aproximadamente \(0.5 \times 0.625\) grados de latitud y longitud
-(unos 50km). Si bien es cierto que no es lo ideal, es la única opción
-que se ha considerado viable y, de cara a la construcción de unos
-primeros modelos aproximativos podría ser suficiente. Si quisiese
-extenderse el estudio, sería conveniente profundizar en la búsqueda de
-alternativas que permitan obtener información meteorológica de una mayor
-calidad y detalle.
+\emph{climate} \citep{climate}, sin llegar a resultados satisfactorios.
+Por otro lado, el paquete \emph{nasapower}\citep{nasapower} permite la
+descarga de una gran cantidad de variables meteorológicas con frecuencia
+diaria y con una resolución de aproximadamente \(0.5 \times 0.625\)
+grados de latitud y longitud (unos 50km). Si bien es cierto que no es lo
+ideal, es la única opción que se ha considerado viable y, de cara a la
+construcción de unos primeros modelos aproximativos podría ser
+suficiente. Si quisiese extenderse el estudio, sería conveniente
+profundizar en la búsqueda de alternativas que permitan obtener
+información meteorológica de una mayor calidad y detalle.
 
 \begin{table}
 \begin{threeparttable}[]
@@ -825,7 +825,7 @@ Hidrográficas                   & Principales Ríos                            
 \item[d] {\footnotesize Ministerio de Agricultura, Alimentación y Medio Ambiente (MAGRAMA)}
 \item[e] {\footnotesize \href{https://power.larc.nasa.gov/#resources}{NASA Prediction Of Worlwide Energy Resources (NASA POWER)}}
 \end{tablenotes}
-\caption{Datos brutos}
+\caption{Conjuntos de datos brutos, tipos de datos y fuentes.}
 \label{tab:fuentes}
 \end{threeparttable}
 \end{table}
@@ -855,7 +855,10 @@ forestal. Es imporante tener en cuenta que dado que solo se dispone de
 los incendios con una extensión mayor a 100 ha, la muestra cuenta con un
 importante sesgo, ya que los casos positivos están infrarepresentados.
 Por ello, no podremos hacer inferencia a todos los incendios forestales,
-si no solo a los de una extensión superior a 100ha.
+si no solo a los de una extensión superior a 100ha. Un comentario
+relevante es que al usar información meteorológica basada en modelos, la
+presencia de un incendio forestal no altera los valores meteorológicos
+de esa zona.
 
 A continuación se detalla el proceso seguido para generar el conjunto de
 datos depurado sobre el que desarrollar el estudio a partir de los
@@ -880,7 +883,7 @@ Para poder construir cualquier modelo de clasificación binaria se
 necesita disponer de una muestra que cuente con un número suficiente de
 casos positivos y negativo. Además, es aconsejable trabajar con
 conjuntos de datos balanceados para evitar sesgos en los modelos de
-clasificación {[}ARTICULO{]}.
+clasificación \citep{THABTAH2020429}.
 
 Como ya se ha comentado, se considerarán observaciones positivas
 aquellas que se hayan visto afectadas por un incendio forestal en el día
@@ -888,40 +891,40 @@ y lugar de la observación. En cambio, serán observaciones negativas
 aquellas que no se hayan visto afectadas por un incendio forestal en el
 día y lugar de la observación. Estas observaciones deberán generarse a
 partir de los polígonos de incendios disponibles. Para ello, se usará un
-enfoque similar al utilizado en
-{[}\url{https://www.researchgate.net/publication/228527438_Learning_to_predict_forest_fires_with_different_data_mining_techniques}{]},
-con algunas diferencias importantes. En {[}cita al paper{]} usan los
-puntos de ignición como muestras positivas y su objetivo es predecir los
-puntos de origen de los incendios forestales. En cambio, en el presente
-trabajo no se disponen de los puntos de ignición de los incendios, por
-lo que el enfoque adoptado es ligeramente diferente; el objetivo es
-predecir las zonas que pueden verse afectadas por un incendio forestal
-(superior a 100ha) bajo unas circunstancias concretas. De esta forma,
-para construir la muestra de casos positivos se han generado 10 puntos
-aleatorios dentro de cada polígono de incendio y se les ha asignado la
-fecha del día de incio del incendio. Los casos negativos se generarán
-igual que en {[}cita paper{]}: se toman fechas aleatorias dentro del
-periodo de estudio y a cada una de ellas se le asocia una localización
-aleatoria dentro del área de estudio satisfaciendo que deben estar a al
-menos 15km de de cualquier incendio detectado en un margen de ± 3 días.
-Esta forma de tomar los casos negativos asegura que estén lo
-suficientemente alejados de los incendios forestales para representar
-condiciones no influidas por estos, dando prioridad así a las áreas con
-una menor prioridad de ocurrencia de incendio en un período definido.
-Sin embargo, sería conveniente en estudios futuros plantearse si esos
-parámetros (franja de ± 3 días y distancia superior a 15km) son
-adecuados o tal vez sería más adecuado tomar otros valores, basados, por
-ejemplo, en la duración media de los incendios en Andalucía y otras
-características propias de los incendios en la región.
+enfoque similar al utilizado en \citep{tojanova2006}, con algunas
+diferencias importantes. En el estudio citado se usan los puntos de
+ignición como muestras positivas, con el objetivo de predecir los puntos
+de origen de los incendios forestales. En cambio, en el presente trabajo
+no se disponen de los puntos de ignición de los incendios, por lo que el
+enfoque adoptado es ligeramente diferente; el objetivo es predecir las
+zonas que pueden verse afectadas por un incendio forestal (superior a
+100ha) bajo unas circunstancias concretas. De esta forma, para construir
+la muestra de casos positivos se han generado 10 puntos aleatorios
+dentro de cada polígono de incendio y se les ha asignado la fecha del
+día de incio del incendio. En \citet{tojanova2006} la muestra de casos
+negativos se genera de la siguiente manera: se toman fechas aleatorias
+dentro del periodo de estudio y a cada una de ellas se le asocia una
+localización aleatoria dentro del área de estudio satisfaciendo que
+deben estar a al menos 15km de de cualquier incendio detectado en un
+margen de ± 3 días. Esta forma de tomar los casos negativos asegura que
+estén lo suficientemente alejados de los incendios forestales para
+representar condiciones no influidas por estos, dando prioridad así a
+las áreas con una menor prioridad de ocurrencia de incendio en un
+período definido. En el presente trabajo se utilizarán los mismos
+parámetros (franja de ± 3 días y distancia superior a 15km), sin
+embargo, sería conveniente en estudios futuros plantearse si esos
+parámetros son adecuados o tal vez sería más adecuado tomar otros
+valores, basados, por ejemplo, en la duración media de los incendios en
+Andalucía y otras características propias de los incendios en la región.
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{graficos/incendios_mes.png}
-\caption{Incendios durante el periodo de estudio}
+\caption[Número total de incendios por mes durante el periodo de estudio]{Número total de incendios por mes durante el periodo de estudio. \it Fuente: Elaboración propia.}
 \label{fig:incendios_mes}
 \end{figure}
 
-Tanto en (cita paper anterior) como en otros estudios consultados se
+Tanto en \citet{tojanova2006} como en otros estudios consultados se
 generan los casos negativos tomando fechas completamente aleatorias
 dentro de la franja temporal del estudio. Sin embargo, esto induce un
 claro sesgo en los datos, ya que las observaciones positivas no se
@@ -1044,7 +1047,7 @@ Superficies de agua                                         & Aguas continentale
                                                             & Aguas marinas                                            & 52     \\ \bottomrule
 \end{tabular}%
 }
-\caption{Códigos de uso de suelo}
+\caption[Códigos de uso de suelo]{Códigos de uso de suelo. \it Fuente: Elaboración propia a partir de \url{https://land.copernicus.eu/content/corine-land-cover-nomenclature-guidelines/html/}}
 \label{tab:codigos_uso_suelo}
 \end{table}
 
@@ -1112,7 +1115,7 @@ desconocidos, se opta simplemente por eliminar estos registros.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{graficos/nas_topograficas.png}
-\caption{Observaciones para los que no está disponible alguna de las variables topográficas}
+\caption[Observaciones para los que no está disponible alguna de las variables topográficas]{Observaciones para los que no está disponible alguna de las variables topográficas. \it Fuente: Elaboración propia.}
 \label{fig:nas_topograficas}
 \end{figure}
 
@@ -1157,7 +1160,7 @@ Identificadoras   & date             & Fecha de la observación                 
                   & geometry         & Geometría de los puntos                                                                & sfc       
 \end{tabular}%
 }
-\caption{Conjunto de datos depurados}
+\caption[Variables del conjunto de datos depurados]{Variables del conjunto de datos depurados. \it Fuente: Elaboración propia.}
 \label{tab:variables}
 \end{table}
 

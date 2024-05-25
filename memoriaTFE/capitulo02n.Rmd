@@ -127,7 +127,7 @@ Puede entenderse que el *data cleaning* es el proceso de pasar de *raw data* o d
 <!-- \label{fig:statistical_value_chain} -->
 <!-- \end{figure} -->
 
-```{r, echo = FALSE, fig.cap = "Cadena de valor estadística. Fuente: \\citet{van2018statistical}"}
+```{r, echo = FALSE, fig.cap = "Cadena de valor estadística. \\it Fuente: \\citet{van2018statistical}"}
 knitr::include_graphics("graficos/statistical_value_chain.png")
 ```
 

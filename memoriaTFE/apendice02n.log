@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.15)  24 MAY 2024 20:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.24)  25 MAY 2024 17:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **apendice02n.tex
 (./apendice02n.tex
 LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-04-11>
+L3 programming layer <2024-05-08>
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2023/05/17 v1.4n Standard LaTeX document class
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk12.clo
@@ -313,7 +313,7 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \FrameRule=\dimen164
 \FrameSep=\dimen165
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2024/04/20 v24.4 The Babel package
+Package: babel 2024/05/18 v24.5 The Babel package
 \babel@savecnt=\count294
 \U@D=\dimen166
 \l@unhyphenated=\language6
@@ -609,13 +609,13 @@ File: here_the_logos 2004/09/21 KTH logo Swedish, colour
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/emptypage/emptypage.sty
 Package: emptypage 2010/05/30 v1.2 Suppress page numbers and headings on empty pages
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lipsum/lipsum.sty (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2024-04-11 L3 programming layer (loader) 
+Package: expl3 2024-05-08 L3 programming layer (loader) 
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2024-04-11 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count326
 \l__pdf_internal_box=\box69
 ))
-Package: l3keys2e 2024-03-14 LaTeX2e option processing using LaTeX3 keys
+Package: l3keys2e 2024-05-08 LaTeX2e option processing using LaTeX3 keys
 )
 Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
 \g__lipsum_par_int=\count327
@@ -642,7 +642,7 @@ Package: amsthm 2020/05/29 v2.20.6
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mdframed/mdframed.sty
 Package: mdframed 2013/07/01 1.9b: mdframed
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2024-03-14 L3 Experimental document command parser
+Package: xparse 2024-05-08 L3 Experimental document command parser
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/zref/zref-abspage.sty
 Package: zref-abspage 2023-09-14 v2.35 Module abspage for zref (HO)
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/zref/zref-base.sty
@@ -1411,16 +1411,16 @@ LaTeX Info: Redefining \% on input line 9.
 )
  ***********
 LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-04-11>
+L3 programming layer <2024-05-08>
  ***********
 Package rerunfilecheck Info: File `apendice02n.out' has not changed.
 (rerunfilecheck)             Checksum: 3ACC059C6F8510A2080A8972F8FB5274;3958.
  ) 
 Here is how much of TeX's memory you used:
- 31283 strings out of 475992
- 594898 string characters out of 5788806
- 1967754 words of memory out of 5000000
- 52723 multiletter control sequences out of 15000+600000
+ 31283 strings out of 475935
+ 594898 string characters out of 5787577
+ 1967907 words of memory out of 5000000
+ 52780 multiletter control sequences out of 15000+600000
  609914 words of font info for 72 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,12n,93p,6407b,501s stack positions out of 10000i,1000n,20000p,200000b,200000s

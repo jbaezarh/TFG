@@ -65,7 +65,7 @@ De esta forma, se han recopilado los polígonos de 1090 incendios forestales ocu
 \begin{figure}[thb]
 \centering
 \includegraphics[width=0.5\textwidth]{graficos/areas_fuego.png}
-\caption{Áreas recorridas por el fuego entre 2002 y 2024 en incendios mayores de 100 hectáreas en Andalucía.}
+\caption[Áreas recorridas por el fuego entre 2002 y 2022 en incendios mayores de 100 hectáreas en Andalucía]{Áreas recorridas por el fuego entre 2002 y 2022 en incendios mayores de 100 hectáreas en Andalucía. Fuente: Elaboración propia a partir de las áreas recorridas por el suelo disponibles en la REDIAM.}
 \label{fig:area_fuego}
 \end{figure}
 
@@ -145,7 +145,7 @@ Hidrográficas                   & Principales Ríos                            
 \item[d] {\footnotesize Ministerio de Agricultura, Alimentación y Medio Ambiente (MAGRAMA)}
 \item[e] {\footnotesize \href{https://power.larc.nasa.gov/#resources}{NASA Prediction Of Worlwide Energy Resources (NASA POWER)}}
 \end{tablenotes}
-\caption{Datos brutos}
+\caption{Conjuntos de datos brutos, tipos de datos y fuentes.}
 \label{tab:fuentes}
 \end{threeparttable}
 \end{table}
@@ -192,7 +192,7 @@ Como ya se ha comentado, se considerarán observaciones positivas aquellas que s
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{graficos/incendios_mes.png}
-\caption{Incendios durante el periodo de estudio}
+\caption[Número total de incendios por mes durante el periodo de estudio]{Número total de incendios por mes durante el periodo de estudio. \it Fuente: Elaboración propia.}
 \label{fig:incendios_mes}
 \end{figure}
 
@@ -241,7 +241,7 @@ Superficies de agua                                         & Aguas continentale
                                                             & Aguas marinas                                            & 52     \\ \bottomrule
 \end{tabular}%
 }
-\caption{Códigos de uso de suelo}
+\caption[Códigos de uso de suelo]{Códigos de uso de suelo. \it Fuente: Elaboración propia a partir de \url{https://land.copernicus.eu/content/corine-land-cover-nomenclature-guidelines/html/}}
 \label{tab:codigos_uso_suelo}
 \end{table}    
     
@@ -269,7 +269,7 @@ Tras explorar otras alternativas y teniendo en cuenta tanto el reducido número 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{graficos/nas_topograficas.png}
-\caption{Observaciones para los que no está disponible alguna de las variables topográficas}
+\caption[Observaciones para los que no está disponible alguna de las variables topográficas]{Observaciones para los que no está disponible alguna de las variables topográficas. \it Fuente: Elaboración propia.}
 \label{fig:nas_topograficas}
 \end{figure}
 
@@ -314,6 +314,6 @@ Identificadoras   & date             & Fecha de la observación                 
                   & geometry         & Geometría de los puntos                                                                & sfc       
 \end{tabular}%
 }
-\caption{Conjunto de datos depurados}
+\caption[Variables del conjunto de datos depurados]{Variables del conjunto de datos depurados. \it Fuente: Elaboración propia.}
 \label{tab:variables}
 \end{table}

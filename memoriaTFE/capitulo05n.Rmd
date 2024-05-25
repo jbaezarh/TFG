@@ -34,7 +34,7 @@ En primer lugar, se ha construido una malla de puntos con una resolución de 10k
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{graficos/mallapuntos10.png}
-\caption{Malla de puntos con una resolución de 10km por 10km.}
+\caption[Malla de puntos con una resolución de 10km por 10km.]{Malla de puntos con una resolución de 10km por 10km. \it Fuente: Elaboración propia.}
 \label{fig:mallapuntos10}
 \end{figure}
 
@@ -45,21 +45,21 @@ A continuación, se ha asociado a cada uno de los puntos de la malla el valor de
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{graficos/fire_prob_and22_lr.png}
-\caption{Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de regresión logística con penalización. Los triángulos indican los incendios de más de 100ha registrados en ese mes.}
+\caption[Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de regresión logística con penalización]{Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de regresión logística con penalización. Los triángulos indican los incendios de más de 100ha registrados en ese mes. \it Fuente: Elaboración propia.}
 \label{fig:fire_prob_and22_lr}
 \end{figure}
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{graficos/fire_prob_and22_svm_linear.png}
-\caption{Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de SVM lineal.Los triángulos indican los incendios de más de 100ha registrados en ese mes.}
+\caption[Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de SVM lineal]{Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de SVM lineal.Los triángulos indican los incendios de más de 100ha registrados en ese mes. \it Fuente: Elaboración propia.}
 \label{fig:fire_prob_and22_svm_linear}
 \end{figure}
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{graficos/fire_prob_and22_rf.png}
-\caption{Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de random forest.Los triángulos indican los incendios de más de 100ha registrados en ese mes.}
+\caption[Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de Random Forest]{Probabilidades de incendios estimadas el día 15 de cada mes de 2022 con el modelo de Random Forest.Los triángulos indican los incendios de más de 100ha registrados en ese mes. \it Fuente: Elaboración propia.}
 \label{fig:fire_prob_and22_rf}
 \end{figure}
 
@@ -79,7 +79,7 @@ A continuación, se pondrá a prueba el modelo de regresión logística construi
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{graficos/caso_estudio.png}
-\caption{Área recorrida  por el fuego en el incendio de Sierra Bermeja.}
+\caption[Área recorrida  por el fuego en el incendio de Sierra Bermeja]{Área recorrida  por el fuego en el incendio de Sierra Bermeja. \it Fuente: Elaboración propia.}
 \label{fig:caso_estudio}
 \end{figure}
 
@@ -89,7 +89,7 @@ Para analizar la capacidad de predicción del modelo para este incendio, se ha l
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{graficos/fire_prob_sierra_bermeja.png}
-\caption{Mapa con las probabilidades de incendio estimadas en los días en torno al origen del incendio de Sierra Bermeja. El área total recorrida por el fuego se muestra en rojo.}
+\caption[Aplicación del modelo de regresión logística con penalización al incendio de Sierra Bermeja]{Mapa con las probabilidades de incendio estimadas en los días en torno al origen del incendio de Sierra Bermeja. El área total recorrida por el fuego se muestra en rojo. \it Fuente: Elaboración propia.}
 \label{fig:fire_prob_sierra_bermeja}
 \end{figure}
 

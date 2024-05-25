@@ -52,7 +52,7 @@ El conjunto cuenta con 5 variables de tipo factor: *fire* (la variable objetivo)
 \begin{figure}[htb]
 \centering
 \includegraphics[width = \textwidth]{graficos/skim_datos.png}
-\caption{Incendios durante el periodo de estudio}
+\caption[Resumen numérico del conjunto de datos depurados]{Resumen numérico del conjunto de datos depurados. \it Fuente: Elaboración propia.}
 \label{fig:skim_datos}
 \end{figure}
 
@@ -62,8 +62,8 @@ En primer lugar, se estudiará la distribución de la *fire* espacial y temporal
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width = 0.5\textwidth]{graficos/distribucion_temporal_fire.png}
-\caption{Distribución temporal de las observaciones en función de la variable objetivo.}
+\includegraphics[width = 0.75\textwidth]{graficos/distribucion_temporal_fire.png}
+\caption[Distribución temporal de la variable objetivo]{Distribución temporal de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:dist_temp_fire}
 \end{figure}
 
@@ -76,7 +76,7 @@ Dada la clara influencia el mes y la aparente influencia del día de la semana e
 \begin{figure}[h]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/distribucion_espacial_fire.png}
-\caption{Distribución espacial de las observaciones en función de la variable objetivo.}
+\caption[Distribución espacial de la variable objetivo]{Distribución espacial de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:dist_spat_fire}
 \end{figure}
 
@@ -94,8 +94,8 @@ El análisis univariante de las variables numéricas se lleva a cabo desde 3 enf
 
 \begin{figure}[]
 \centering
-\includegraphics[width =0.5\textwidth]{graficos/boxplots.png}
-\caption{Boxplot de cada variable numérica en función de la variable objetivo.}
+\includegraphics[width =\textwidth]{graficos/boxplots.png}
+\caption[Boxplot de cada variable numérica en función de la variable objetivo]{Boxplot de cada variable numérica en función de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:boxplots}
 \end{figure}
 
@@ -106,7 +106,7 @@ Dada la naturaleza temporal de algunas variables, el análisis gráfico de los *
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/T2M_mes.png}
-\caption{Media mensual de la temperatura en función de fire.}
+\caption[Media mensual de $T2M$ en función de $fire$]{Media mensual de $T2M$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:T2M_mes}
 \end{figure}
 
@@ -117,7 +117,7 @@ En la Figura \ref{fig:T2M_mes} se puede observar como en casi todos los meses, l
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/RH2M_mes.png}
-\caption{Media mensual de la humedad relativa en función de fire.}
+\caption[Media mensual de $RH2M$ en función de  $fire$]{Media mensual de $RH2M$ en función de  $fire$. \it Fuente: Elaboración propia.}
 \label{fig:RH2M_mes}
 \end{figure}
 
@@ -126,7 +126,7 @@ En la Figura \ref{fig:RH2M_mes} se puede observar que en todos los meses la medi
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/PRECTOTCORR_mes.png}
-\caption{Media mensual de la precipitaciones en función de fire.}
+\caption[Media mensual de $PRECTOTCORR$ en función de $fire$]{Media mensual de $PRECTOTCORR$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:PRECTOTCORR_mes}
 \end{figure}
 
@@ -135,7 +135,7 @@ En la Figura \ref{fig:PRECTOTCORR_mes} se observa una clara diferencia en la med
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/GWETTOP_mes.png}
-\caption{Media mensual de la humedad del suelo en función de fire.}
+\caption[Media mensual de $GWETTOP$ en función de $fire$]{Media mensual de $GWETTOP$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:GWETTOP_mes}
 \end{figure}
 
@@ -144,7 +144,7 @@ En la Figura \ref{fig:GWETTOP_mes} se observa un gráfico similar al de la humed
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/WS10M_mes.png}
-\caption{Media mensual de la humedad del suelo en función de fire.}
+\caption[Media mensual de $WS10M$ en función de $fire$]{Media mensual de $WS10M$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:WS10M_mes}
 \end{figure}
 
@@ -154,7 +154,7 @@ En la Figura \ref{fig:WS10M_mes} se observa como durante todos los meses, la med
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/NDVI_mes.png}
-\caption{Media mensual de la humedad del suelo en función de fire.}
+\caption[Media mensual de $NDVI$ en función de $fire$]{Media mensual de $NDVI$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:NDVI_mes}
 \end{figure}
 
@@ -165,18 +165,12 @@ En el [Apéndice: Gráficos espaciales EDA] se recogen los gráficos espaciales 
 
 ### Análisis multivariantes de las variables numéricas
 
-En la Figura \ref{fig:corrplot} se muestra un gráfico con las correlaciones entre las variables. La interpretación es sencilla, cuanto más intenso sea el color y cuanto mayor sea la excentricidad de la elipse, mayor será la correlación (en valor absoluto) para ese par de variables. El color de la elipse indica el signo del coeficiente de  correlación. De esta forma, se observa que las variables más correlacionadas en la muestra son:
-
-- *T2M* con *RH2M* (negativamente, -0.71) 
-- *T2M* con *GWETTOP* (negativamente, -0.69)  
-- *GWETTOP* con *R2HM* (positivamente, 0.68)
-- *poblacion* con *dens_poblacion* (positivamente,0.63)
-
+En la Figura \ref{fig:corrplot} se muestra un gráfico con las correlaciones entre las variables. La interpretación es sencilla, cuanto más intenso sea el color y cuanto mayor sea la excentricidad de la elipse, mayor será la correlación (en valor absoluto) para ese par de variables. El color de la elipse indica el signo del coeficiente de  correlación. De esta forma, se observa que las variables más correlacionadas en la muestra son: *T2M* con *RH2M* (negativamente, -0.71), *T2M* con *GWETTOP* (negativamente, -0.69), *GWETTOP* con *R2HM* (positivamente, 0.68) y *poblacion* con *dens_poblacion* (positivamente,0.63).
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/corrplot.png}
-\caption{Correlaciones entre variables numéricas}
+\caption[Correlaciones entre variables numéricas]{Correlaciones entre variables numéricas. \it Fuente: Elaboración propia.}
 \label{fig:corrplot}
 \end{figure}
 
@@ -190,7 +184,7 @@ Además, puede verse que todas las variables tienen una marcada asimetría posit
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/parcoord.png}
-\caption{Gráfico de coordenadas paralelas.}
+\caption[Gráfico de coordenadas paralelas de las variables numéricas tipificadas]{Gráfico de coordenadas paralelas de las variables numéricas tipificadas. \it Fuente: Elaboración propia.}
 \label{fig:parcoord}
 \end{figure}
 
@@ -199,7 +193,7 @@ Los resultados de aplicar análisis de componentes principales sobre la matriz d
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/pca.png}
-\caption{PCA sobre la matriz de correlaciones de las variables numéricas}
+\caption[PCA sobre la matriz de correlaciones de las variables numéricas]{PCA sobre la matriz de correlaciones de las variables numéricas. \it Fuente: Elaboración propia.}
 \label{fig:PCA}
 \end{figure}
 
@@ -214,13 +208,13 @@ En el caso de la variable *orientación*, la relación tampoco está clara, aunq
 
 En términos de la variable *enp* por si sola no se observan diferencias significativas entre ambas clases.
 
-La variable *uso_suelo* sí que muestra una distribución marcadamente diferenciada entre ambas clases. La mayoría de las observaciones positivas se dan en espacios de vegetación arbustiva y/o herbácea, clase en la que hay casi el doble de observaciones positivas que negativas. En tierras de labor y cultivos permanentes la proporción de observaciones negativas es mucho mayor, mientras que en zonas agrícolas heterogéneas y en espacios abiertos con poca o sin vegetación hay una mayor presencia de observaciones positivas. También es relevante el hecho de que casi la totalidad de las observaciones se encuentran en zonas agrícolas y en zonas forestales, mientras que en las demás clases la proporción de observaciones es mucho menor ($3.5%$ de total). Es por ello que antes de construir los modelos, todas las categorías categorías de uso de suelo que no se corresponden con zonas agrícolas o forestales (es decir, todas cuyo código no comience por 2 o 3) se agruparán en el nivel *Otro*. En \ref{fig:uso_suelo} puede observarse la distribución espacial de esta variable.
+La variable *uso_suelo* sí que muestra una distribución marcadamente diferenciada entre ambas clases. La mayoría de las observaciones positivas se dan en espacios de vegetación arbustiva y/o herbácea, clase en la que hay casi el doble de observaciones positivas que negativas. En tierras de labor y cultivos permanentes la proporción de observaciones negativas es mucho mayor, mientras que en zonas agrícolas heterogéneas y en espacios abiertos con poca o sin vegetación hay una mayor presencia de observaciones positivas. También es relevante el hecho de que casi la totalidad de las observaciones se encuentran en zonas agrícolas y en zonas forestales, mientras que en las demás clases la proporción de observaciones es mucho menor ($3.5\%$ de total). Es por ello que antes de construir los modelos, todas las categorías de uso de suelo que no se corresponden con zonas agrícolas o forestales (es decir, todas cuyo código no comienza por 2 o 3) se agruparán en el nivel *Otro*. En \ref{fig:uso_suelo_spat} puede observarse la distribución espacial de esta variable.
 
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/histogramas.png}
-\caption{Histogramas de las variables categóricas en función de fire.}
+\caption[Histogramas de las variables categóricas en función de $fire$]{Histogramas de las variables categóricas en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:histogramas}
 \end{figure}
 
@@ -260,7 +254,7 @@ Las métricas obtenidas por cada combinación de parámetro sobre los datos de v
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/lr_tuningplot.png}
-\caption{Métricas de rendimiento de los modelos de regresión logística con penalización.}
+\caption[Métricas de rendimiento de los modelos de regresión logística con penalización]{Métricas de rendimiento de los modelos de regresión logística con penalización.  \it Fuente: Elaboración propia.}
 \label{fig:lr_tuningplot}
 \end{figure}
 
@@ -274,12 +268,12 @@ A continuación se considera el mismo modelo de regresión logística con penali
 
 ### Árboles de decisión
 
-Se construirán los árboles de decisón usando el índice de Gini como función de impureza y se elegirá el parámetro de coste-complejidad ($\alpha$) que maximice la tasa de acierto. Se considera un *grid* con 10 valores del parámetro de coste-complejidad que oscilan entre $1.28e-10$ y $3.02e- 2$. La mejor tasa de acierto en el conjunto de validación se obtiene con $\alpha = 0.00182$. En la Figura \ref{fig:dt_tuningplot} se muestran las distintas métricas de rendimiento sobre los datos de validación para cada uno de los valores del parámetro a ajustar.
+Se construirán los árboles de decisión usando el índice de Gini como función de impureza y se elegirá el parámetro de coste-complejidad ($\alpha$) que maximice la tasa de acierto. Se considera un *grid* con 10 valores del parámetro de coste-complejidad que oscilan entre $1.28e-10$ y $3.02e- 2$. La mejor tasa de acierto en el conjunto de validación se obtiene con $\alpha = 0.00182$. En la Figura \ref{fig:dt_tuningplot} se muestran las distintas métricas de rendimiento sobre los datos de validación para cada uno de los valores del parámetro a ajustar.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/dt_tuningplot.png}
-\caption{Métricas de rendimiento del árbol de decisión en función de el parámetro de coste\-complejidad.}
+\caption[Métricas de rendimiento del árbol de decisión en función de $\alpha$]{Métricas de rendimiento del árbol de decisión en función de el parámetro de coste\-complejidad. \it Fuente: Elaboración propia.}
 \label{fig:dt_tuningplot}
 \end{figure}
 
@@ -294,7 +288,7 @@ De esta forma, la estimación de parámetros se ha hecho en dos etapas. En una p
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/rf_tuningplot.png}
-\caption{Métricas de rendimiento de Random Forest en función de los parámetros.}
+\caption[Métricas de rendimiento de Random Forest en función de los parámetros]{Métricas de rendimiento de Random Forest en función de los parámetros.  \it Fuente: Elaboración propia.}
 \label{fig:rf_tuningplot}
 \end{figure}
 
@@ -306,7 +300,7 @@ Para aplicar el modelo, primero se han transformado las variables categóricas e
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/knn_tuningplot.png}
-\caption{Métricas de rendimiento de KNN en función del número de vecinos.}
+\caption[Métricas de rendimiento de KNN en función de $k$]{Métricas de rendimiento de KNN en función del número de vecinos. \it Fuente: Elaboración propia.}
 \label{fig:knn_tuningplot}
 \end{figure}
 
@@ -318,7 +312,7 @@ Antes de construir el modelo, se han transformado las variables categóricas usa
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/svm_tuningplot.png}
-\caption{Métricas de rendimiento de svm en función del coste.}
+\caption[Métricas de rendimiento de SVM en función del parámetro $coste$]{Métricas de rendimiento de SVM en función del parámetro $C$. \it Fuente: Elaboración propia.}
 \label{fig:svm_tuningplot}
 \end{figure}
 
@@ -347,7 +341,7 @@ svm\_rbf    & 0.777    & 0.710    & 0.692  & 0.728       & 0.717     \\
 knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomrule
 \end{tabular}%
 }
-\caption{Métricas de los modelos seleccionados sobre el conjunto de validación.}
+\caption[Métricas de los modelos seleccionados sobre el conjunto de validación]{Métricas de los modelos seleccionados sobre el conjunto de validación.  \it Fuente: Elaboración propia.}
 \label{tab:metricas_val}
 \end{table}
 
@@ -356,14 +350,14 @@ knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomr
 \begin{figure}[h]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/validation_metrics.png}
-\caption{Métricas obtenidas sobre el conjunto de validación por cada uno de los modelos seleccionados.}
+\caption[Gráfico de métricas obtenidas sobre el conjunto de validación]{Gráfico de métricas obtenidas sobre el conjunto de validación por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
 \label{fig:validation_metrics}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/roc_validation.png}
-\caption{Curvas ROC sobre el conjunto de validación.}
+\caption[Curvas ROC sobre el conjunto de validación]{Curvas ROC sobre el conjunto de validación. \it Fuente: Elaboración propia.}
 \label{fig:roc_validation}
 \end{figure}
 
@@ -389,21 +383,22 @@ svm\_rbf    & 0.789    & 0.706    & 0.727  & 0.683       & 0.712     \\
 knn         & 0.744    & 0.673    & 0.719  & 0.624       & 0.673     \\ \bottomrule
 \end{tabular}%
 }
-\caption{Métricas sobre el conjunto test.}
+\caption[Métricas sobre el conjunto test]{Métricas sobre el conjunto test. \it Fuente: Elaboración propia.}
 \label{tab:metricas_test}
 \end{table}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/test_metrics.png}
-\caption{Métricas obtenidas sobre el conjunto test por cada uno de los modelos seleccionados.}
+\caption[Gráfico de métricas obtenidas sobre el conjunto test]{Métricas obtenidas sobre el conjunto test por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
 \label{fig:test_metrics}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/roc_test.png}
-\caption{Curvas ROC sobre test.}
+\raggedright
+\caption[Curvas ROC sobre test]{Curvas ROC sobre test. \it Fuente: Elaboración propia.}
 \label{fig:roc_test}
 \end{figure}
 

@@ -21,7 +21,7 @@ source("cabecera_chunk_inicio.R")
 ```
 
 
-# Apéndice 1
+# Apéndice: Salidas
 
 ## Gráficos espaciales EDA
 
@@ -30,42 +30,42 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/T2M_spat.png}
-\caption{Distribución espacial de T2M por mes.}
+\caption[Distribución espacial de \textit{T2M} por mes]{Distribución espacial de \textit{T2M} por mes. \it Fuente: Elaboración propia.}
 \label{fig:T2M_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/RH2M_spat.png}
-\caption{Distribución espacial de RH2M por mes.}
+\caption[Distribución espacial de \textit{RH2M} por mes]{Distribución espacial de \textit{RH2M} por mes. \it Fuente: Elaboración propia.}
 \label{fig:RH2M_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/GWETTOP_spat.png}
-\caption{Distribución espacial de GWETTOP por mes.}
+\caption[Distribución espacial de \textit{GWETTOP} por mes]{Distribución espacial de \textit{GWETTOP} por mes. \it Fuente: Elaboración propia.}
 \label{fig:GWETTOP_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/WS10M_spat.png}
-\caption{Distribución espacial de WS10M por mes.}
+\caption[Distribución espacial de \textit{WS10M} por mes]{Distribución espacial de \textit{WS10M} por mes. \it Fuente: Elaboración propia.}
 \label{fig:WS10M_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/PRECTOTCORR_spat.png}
-\caption{Distribución espacial de PRECTOTCORR por mes.}
+\caption[Distribución espacial de \textit{PRECTOTCORR} por mes]{Distribución espacial de \textit{PRECTOTCORR} por mes. \it Fuente: Elaboración propia.}
 \label{fig:PRECTOTCORR_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/WD10M_spat.png}
-\caption{Distribución espacial de WD10M por mes.}
+\caption[Distribución espacial de \textit{WD10M} por mes]{Distribución espacial de \textit{WD10M} por mes. \it Fuente: Elaboración propia.}
 \label{fig:WD10M_spat}
 \end{figure}
 
@@ -80,7 +80,7 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/poblacion_spat.png}
-\caption{Distribución espacial de poblacion.}
+\caption[Distribución espacial de \textit{poblacion}]{Distribución espacial de \textit{poblacion}. \it Fuente: Elaboración propia.}
 \label{fig:poblacion_spat}
 \end{figure}
 
@@ -88,7 +88,7 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/dens_poblacion_spat.png}
-\caption{Distribución espacial de dens\_poblacion.}
+\caption[Distribución espacial de \textit{dens\_poblacion}]{Distribución espacial de \textit{dens\_poblacion}. \it Fuente: Elaboración propia.}
 \label{fig:dens_poblacion_spat}
 \end{figure}
 
@@ -98,7 +98,7 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/NDVI_spat.png}
-\caption{Distribución espacial de NDVI por mes.}
+\caption[Distribución espacial de \textit{NDVI} por mes]{Distribución espacial de \textit{NDVI} por mes. \it Fuente: Elaboración propia.}
 \label{fig:NDVI_spat}
 \end{figure}
 
@@ -107,21 +107,21 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/elevacion_spat.png}
-\caption{Distribución espacial de elevacion.}
+\caption[Distribución espacial de \textit{elevacion}]{Distribución espacial de \textit{elevacion}. \it Fuente: Elaboración propia.}
 \label{fig:elevacion_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/pendiente_spat.png}
-\caption{Distribución espacial de pendiente.}
+\caption[Distribución espacial de \textit{pendiente}]{Distribución espacial de \textit{pendiente}. \it Fuente: Elaboración propia.}
 \label{fig:pendiente_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/curvatura_spat.png}
-\caption{Distribución espacial de curvatura.}
+\caption[Distribución espacial de \textit{curvatura}]{Distribución espacial de \textit{curvatura}. \it Fuente: Elaboración propia.}
 \label{fig:curvatura_spat}
 \end{figure}
 
@@ -132,7 +132,7 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/dist_carretera_spat.png}
-\caption{Distribución espacial de dist\_carretera.}
+\caption[Distribución espacial de \textit{dist\_carretera}]{Distribución espacial de \textit{dist\_carretera}. \it Fuente: Elaboración propia.}
 \label{fig:dist_carretera_spat}
 \end{figure}
 
@@ -140,7 +140,7 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/dist_sendero_spat.png}
-\caption{Distribución espacial de dist\_sendero.}
+\caption[Distribución espacial de \textit{dist\_sendero}]{Distribución espacial de \textit{dist\_sendero}. \it Fuente: Elaboración propia.}
 \label{fig:dist_sendero_spat}
 \end{figure}
 
@@ -148,14 +148,14 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/dist_camino_spat.png}
-\caption{Distribución espacial de dist\_camino.}
+\caption[Distribución espacial de \textit{dist\_camino}]{Distribución espacial de \textit{dist\_camino}. \it Fuente: Elaboración propia.}
 \label{fig:dist_camino_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/dist_poblacion_spat.png}
-\caption{Distribución espacial de dist\_poblacion.}
+\caption[Distribución espacial de \textit{dist\_poblacion}]{Distribución espacial de \textit{dist\_poblacion}. \it Fuente: Elaboración propia.}
 \label{fig:dist_poblacion_spat}
 \end{figure}
 
@@ -163,7 +163,7 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/dist_electr_spat.png}
-\caption{Distribución espacial de dist\_electr.}
+\caption[Distribución espacial de \textit{dist\_electr}]{Distribución espacial de \textit{dist\_electr}. \it Fuente: Elaboración propia.}
 \label{fig:dist_electr_spat}
 \end{figure}
 
@@ -171,14 +171,14 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/dist_ferrocarril_spat.png}
-\caption{Distribución espacial de dist\_ferrocarril.}
+\caption[Distribución espacial de \textit{dist\_ferrocarril}]{Distribución espacial de \textit{dist\_ferrocarril}. \it Fuente: Elaboración propia.}
 \label{fig:dist_ferrocarril_spat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/uso_suelo_spat.png}
-\caption{Distribución espacial de uso\_suelo.}
+\caption[Distribución espacial de \textit{uso\_suelo}]{Distribución espacial de \textit{uso\_suelo}. \it Fuente: Elaboración propia.}
 \label{fig:uso_suelo_spat}
 \end{figure}
 
@@ -191,16 +191,16 @@ source("cabecera_chunk_inicio.R")
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{graficos/lr_coef.png}
-\caption{Coeficientes del modelos de regresión logística lasso seleccionado.}
+\caption[Coeficientes del modelos de regresión logística lasso seleccionado]{Coeficientes del modelos de regresión logística lasso seleccionado. \it Fuente: Elaboración propia.}
 \label{fig:lr_coef}
 \end{figure}
 
-### VIP bosque aletorio
+### VIP Bosque Aleatorio
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth,keepaspectratio]{graficos/rf_vip_final.png}
-\caption{Importancia de las variables en el bosque aleatorio final.}
+\caption[Importancia de las variables en el bosque aleatorio final]{Importancia de las variables en el Bosque Aleatorio final. \it Fuente: Elaboración propia.}
 \label{fig:rf_vip_final}
 \end{figure}
 

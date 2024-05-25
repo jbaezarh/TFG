@@ -575,8 +575,9 @@ relaciones entre estas, en la Figura \ref{fig:skim_datos} se recoge un
 resumen de todo el conjunto de datos, sin incluir la columna de
 geometría. En este resumen se puede observar que en el conjunto de datos
 hay 4 tipos de variables (además de la variable \emph{geometry} que es
-de tipo \emph{simple feature column POINT}, abreviado como sfc\_POINT):
-cadenas de caracteres, fechas, factores y variables numéricas.
+de tipo \emph{simple feature column POINT}, abreviado como
+\emph{sfc\_POINT}): cadenas de caracteres, fechas, factores y variables
+numéricas.
 
 Se puede observar que hay registros en 749 municipios diferentes (de los
 785 municipios de que hay en Andalucía). Probablemente el hecho de que
@@ -615,7 +616,7 @@ continuación con detalle, ya cabe hacer algunos comentarios:
 \begin{figure}[htb]
 \centering
 \includegraphics[width = \textwidth]{graficos/skim_datos.png}
-\caption{Incendios durante el periodo de estudio}
+\caption{Resumen numérico del conjunto de datos depurados. \it Fuente: Elaboración propia.}
 \label{fig:skim_datos}
 \end{figure}
 
@@ -628,8 +629,8 @@ y temporalmente.
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width = 0.5\textwidth]{graficos/distribucion_temporal_fire.png}
-\caption{Distribución temporal de las observaciones en función de la variable objetivo.}
+\includegraphics[width = 0.75\textwidth]{graficos/distribucion_temporal_fire.png}
+\caption{Distribución temporal de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:dist_temp_fire}
 \end{figure}
 
@@ -660,7 +661,7 @@ los modelos a través del procesamiento de la variable \emph{date}.
 \begin{figure}[h]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/distribucion_espacial_fire.png}
-\caption{Distribución espacial de las observaciones en función de la variable objetivo.}
+\caption{Distribución espacial de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:dist_spat_fire}
 \end{figure}
 
@@ -695,8 +696,8 @@ El análisis univariante de las variables numéricas se lleva a cabo desde
 
 \begin{figure}[]
 \centering
-\includegraphics[width =0.5\textwidth]{graficos/boxplots.png}
-\caption{Boxplot de cada variable numérica en función de la variable objetivo.}
+\includegraphics[width =\textwidth]{graficos/boxplots.png}
+\caption{Boxplot de cada variable numérica en función de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:boxplots}
 \end{figure}
 
@@ -729,7 +730,7 @@ variables función de la variable objetivo.
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/T2M_mes.png}
-\caption{Media mensual de la temperatura en función de fire.}
+\caption{Media mensual de $T2M$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:T2M_mes}
 \end{figure}
 
@@ -740,7 +741,7 @@ las que se ha registrado un incendio forestal.
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/RH2M_mes.png}
-\caption{Media mensual de la humedad relativa en función de fire.}
+\caption{Media mensual de $RH2M$ en función de  $fire$. \it Fuente: Elaboración propia.}
 \label{fig:RH2M_mes}
 \end{figure}
 
@@ -754,7 +755,7 @@ clases.
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/PRECTOTCORR_mes.png}
-\caption{Media mensual de la precipitaciones en función de fire.}
+\caption{Media mensual de $PRECTOTCORR$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:PRECTOTCORR_mes}
 \end{figure}
 
@@ -766,7 +767,7 @@ significativamente mayor en este último caso.
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/GWETTOP_mes.png}
-\caption{Media mensual de la humedad del suelo en función de fire.}
+\caption{Media mensual de $GWETTOP$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:GWETTOP_mes}
 \end{figure}
 
@@ -779,7 +780,7 @@ estación estival.
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/WS10M_mes.png}
-\caption{Media mensual de la humedad del suelo en función de fire.}
+\caption{Media mensual de $WS10M$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:WS10M_mes}
 \end{figure}
 
@@ -791,7 +792,7 @@ forestal.
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/NDVI_mes.png}
-\caption{Media mensual de la humedad del suelo en función de fire.}
+\caption{Media mensual de $NDVI$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:NDVI_mes}
 \end{figure}
 
@@ -817,24 +818,15 @@ más intenso sea el color y cuanto mayor sea la excentricidad de la
 elipse, mayor será la correlación (en valor absoluto) para ese par de
 variables. El color de la elipse indica el signo del coeficiente de
 correlación. De esta forma, se observa que las variables más
-correlacionadas en la muestra son:
-
-\begin{itemize}
-\tightlist
-\item
-  \emph{T2M} con \emph{RH2M} (negativamente, -0.71)
-\item
-  \emph{T2M} con \emph{GWETTOP} (negativamente, -0.69)\\
-\item
-  \emph{GWETTOP} con \emph{R2HM} (positivamente, 0.68)
-\item
-  \emph{poblacion} con \emph{dens\_poblacion} (positivamente,0.63)
-\end{itemize}
+correlacionadas en la muestra son: \emph{T2M} con \emph{RH2M}
+(negativamente, -0.71), \emph{T2M} con \emph{GWETTOP} (negativamente,
+-0.69), \emph{GWETTOP} con \emph{R2HM} (positivamente, 0.68) y
+\emph{poblacion} con \emph{dens\_poblacion} (positivamente,0.63).
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/corrplot.png}
-\caption{Correlaciones entre variables numéricas}
+\caption{Correlaciones entre variables numéricas. \it Fuente: Elaboración propia.}
 \label{fig:corrplot}
 \end{figure}
 
@@ -866,7 +858,7 @@ observaciones positivas, mientras que en \emph{PRECTOTCORR},
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/parcoord.png}
-\caption{Gráfico de coordenadas paralelas.}
+\caption{Gráfico de coordenadas paralelas de las variables numéricas tipificadas. \it Fuente: Elaboración propia.}
 \label{fig:parcoord}
 \end{figure}
 
@@ -882,7 +874,7 @@ complejo en cuanto a la dimensión real de estos.
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/pca.png}
-\caption{PCA sobre la matriz de correlaciones de las variables numéricas}
+\caption{PCA sobre la matriz de correlaciones de las variables numéricas. \it Fuente: Elaboración propia.}
 \label{fig:PCA}
 \end{figure}
 
@@ -919,17 +911,17 @@ agrícolas heterogéneas y en espacios abiertos con poca o sin vegetación
 hay una mayor presencia de observaciones positivas. También es relevante
 el hecho de que casi la totalidad de las observaciones se encuentran en
 zonas agrícolas y en zonas forestales, mientras que en las demás clases
-la proporción de observaciones es mucho menor (\(3.5%
-\) de total). Es por ello que antes de construir los modelos, todas las
-categorías categorías de uso de suelo que no se corresponden con zonas
-agrícolas o forestales (es decir, todas cuyo código no comience por 2 o
-3) se agruparán en el nivel \emph{Otro}. En \ref{fig:uso_suelo} puede
-observarse la distribución espacial de esta variable.
+la proporción de observaciones es mucho menor (\(3.5\%\) de total). Es
+por ello que antes de construir los modelos, todas las categorías de uso
+de suelo que no se corresponden con zonas agrícolas o forestales (es
+decir, todas cuyo código no comienza por 2 o 3) se agruparán en el nivel
+\emph{Otro}. En \ref{fig:uso_suelo_spat} puede observarse la
+distribución espacial de esta variable.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/histogramas.png}
-\caption{Histogramas de las variables categóricas en función de fire.}
+\caption{Histogramas de las variables categóricas en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:histogramas}
 \end{figure}
 
@@ -1018,7 +1010,7 @@ de validación se representan en la Figura \ref{fig:lr_tuningplot}
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/lr_tuningplot.png}
-\caption{Métricas de rendimiento de los modelos de regresión logística con penalización.}
+\caption{Métricas de rendimiento de los modelos de regresión logística con penalización.  \it Fuente: Elaboración propia.}
 \label{fig:lr_tuningplot}
 \end{figure}
 
@@ -1046,7 +1038,7 @@ acierto es el que tiene 40 componentes principales, \(\alpha= 0.333\) y
 \hypertarget{uxe1rboles-de-decisiuxf3n}{%
 \subsection{Árboles de decisión}\label{uxe1rboles-de-decisiuxf3n}}
 
-Se construirán los árboles de decisón usando el índice de Gini como
+Se construirán los árboles de decisión usando el índice de Gini como
 función de impureza y se elegirá el parámetro de coste-complejidad
 (\(\alpha\)) que maximice la tasa de acierto. Se considera un
 \emph{grid} con 10 valores del parámetro de coste-complejidad que
@@ -1059,7 +1051,7 @@ del parámetro a ajustar.
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/dt_tuningplot.png}
-\caption{Métricas de rendimiento del árbol de decisión en función de el parámetro de coste\-complejidad.}
+\caption{Métricas de rendimiento del árbol de decisión en función de el parámetro de coste\-complejidad. \it Fuente: Elaboración propia.}
 \label{fig:dt_tuningplot}
 \end{figure}
 
@@ -1093,7 +1085,7 @@ estapas de \emph{tuning}. El modelo final elegido tiene
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/rf_tuningplot.png}
-\caption{Métricas de rendimiento de Random Forest en función de los parámetros.}
+\caption{Métricas de rendimiento de Random Forest en función de los parámetros.  \it Fuente: Elaboración propia.}
 \label{fig:rf_tuningplot}
 \end{figure}
 
@@ -1112,7 +1104,7 @@ resultados del \emph{tuning} se muestran en la Figura
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/knn_tuningplot.png}
-\caption{Métricas de rendimiento de KNN en función del número de vecinos.}
+\caption{Métricas de rendimiento de KNN en función del número de vecinos. \it Fuente: Elaboración propia.}
 \label{fig:knn_tuningplot}
 \end{figure}
 
@@ -1129,7 +1121,7 @@ muestran en la Figura \ref{fig:svm_tuningplot}
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/svm_tuningplot.png}
-\caption{Métricas de rendimiento de svm en función del coste.}
+\caption{Métricas de rendimiento de svm en función del coste. \it Fuente: Elaboración propia.}
 \label{fig:svm_tuningplot}
 \end{figure}
 
@@ -1153,6 +1145,16 @@ seleccionados en los datos de validación en la Tabla
 curvas ROC de todos los modelos se muestran en la Figura
 \ref{fig:roc_validation}.
 
+Puede observarse que los resultados obtenidos por todos los modelos son
+bastante similares. Destacan el modelo de bosque aleatorio y el de
+regresión logística con penalización, el primero por ser el que tiene la
+tasa de acierto y la sensitividad más elevadas, y el segundo por dar los
+mejores resultado en cuanto a precisión y especificidad. Las curvas ROC
+de los modelos de bosque aleatorio, regresión logística con
+penalización, SVM lineal y SVM radial son prácticamente iguales. Los
+modelos más pobres son la regresión logística aplicando PCA, KNN y el
+árbol de decisión.
+
 \begin{table}[]
 \centering
 \resizebox{0.5\columnwidth}{!}{%
@@ -1168,21 +1170,21 @@ svm\_rbf    & 0.777    & 0.710    & 0.692  & 0.728       & 0.717     \\
 knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomrule
 \end{tabular}%
 }
-\caption{Métricas de los modelos seleccionados sobre el conjunto de validación.}
+\caption{Métricas de los modelos seleccionados sobre el conjunto de validación.  \it Fuente: Elaboración propia.}
 \label{tab:metricas_val}
 \end{table}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/validation_metrics.png}
-\caption{Métricas obtenidas sobre el conjunto de validación por cada uno de los modelos seleccionados.}
+\caption{Métricas obtenidas sobre el conjunto de validación por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
 \label{fig:validation_metrics}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/roc_validation.png}
-\caption{Curvas ROC sobre el conjunto de validación.}
+\caption{Curvas ROC sobre el conjunto de validación. \it Fuente: Elaboración propia.}
 \label{fig:roc_validation}
 \end{figure}
 
@@ -1203,6 +1205,16 @@ la Tabla \ref{tab:metricas_test} y el la Figura \ref{fig:test_metrics}.
 Las curvas ROC de los distintos modelos sobre el conjunto de datos test
 se muestra en la Figura \ref{fig:roc_test}.
 
+En este caso, los mejores resultados en todas las medidas los da el
+modelo de regresión logística con penalización. Los modelos de SVM
+muestran resultados bastante similares entre ellos y prácticamente
+iguales al modelo de regresión logística. Sobre los datos test, el
+modelo de bosque aleatorio ha dado un rendimiento peor que el obtenido
+en validación, quedando por detrás de los tres modelos ya comentados,
+aunque la sensitividad de todos estos modelos es prácticamente igual. De
+nuevo, los peores resultados los dan los modelos de regresión logística
+aplicando PCA y el árbol de decisión, seguidos del KNN.
+
 \begin{table}[]
 \centering
 \resizebox{0.5\columnwidth}{!}{%
@@ -1218,21 +1230,22 @@ svm\_rbf    & 0.789    & 0.706    & 0.727  & 0.683       & 0.712     \\
 knn         & 0.744    & 0.673    & 0.719  & 0.624       & 0.673     \\ \bottomrule
 \end{tabular}%
 }
-\caption{Métricas sobre el conjunto test.}
+\caption{Métricas sobre el conjunto test. \it Fuente: Elaboración propia.}
 \label{tab:metricas_test}
 \end{table}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/test_metrics.png}
-\caption{Métricas obtenidas sobre el conjunto test por cada uno de los modelos seleccionados.}
+\caption{Métricas obtenidas sobre el conjunto test por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
 \label{fig:test_metrics}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/roc_test.png}
-\caption{Curvas ROC sobre test.}
+\raggedright
+\caption[Curvas ROC sobre test.]{Curvas ROC sobre test. \it Fuente: Elaboración propia.}
 \label{fig:roc_test}
 \end{figure}
 
