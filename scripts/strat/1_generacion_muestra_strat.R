@@ -6,7 +6,7 @@ library(terra) # Raster data
 library(sf) # Vector data
 library(mapSpain) # Polígonos de las regiones de España
 library(tidyverse) # Manipulación de datos
-
+library(lubridate) # Manipulación de fechas
 
 
 # CRS de referencia -------------------------------------------------------

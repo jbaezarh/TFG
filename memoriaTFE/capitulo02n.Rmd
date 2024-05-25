@@ -445,36 +445,22 @@ Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Caracter�
 ## Herramientas
 
 <!-- https://www.r-project.org/ -->
-Toda la parte práctica del presente trabajo se ha llevado a cabo empleado el lenguaje de programación R [@Rproject] a través del entorno de desarrollo integrado que ofrece RStudio. R es un lenguaje y entorno de programación de código abierto desarrollado dentro del proyecto GNU y orientado a la computación estadística. Este lenguaje puede extender sus funcionalidades fácilmente a través de la gran cantidad de paquetes disponibles dentro del repositorio de paquetes de CRAN (*The Comprehensive R Archive Network*), siendo este uno de sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores con la que cuenta.
+Toda la parte práctica del presente trabajo se ha llevado a cabo empleado el lenguaje de programación R [@Rproject] a través del entorno de desarrollo integrado que ofrece RStudio. R es un lenguaje y entorno de programación de código abierto desarrollado dentro del proyecto GNU y orientado a la computación estadística. Este lenguaje puede extender sus funcionalidades fácilmente a través de la gran cantidad de paquetes disponibles dentro del repositorio de paquetes de CRAN (*The Comprehensive R Archive Network*), siendo este uno de sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores con la que cuenta. A continuación se mencionan los principales paquetes utilizados en el trabajo.
 
-Los paquetes que se han utilizado han sido:
+A lo largo de todo el trabajo, se ha utilizado de forma central el ecosistema de paquetes *tidyverse* [@tidyversepackage]. Se trata de una colección de paquetes de R que comparten las mismas estructuras de datos y la misma filosofía de programación, orientados a facilitar las tareas centrales de cualquier proyecto de *data science* (Figura \ref{fig:tidiverse_workflow}). Cuenta con numerosos paquetes, entre los que destacan: *readr* para la importación de datos tabulares; *tidyr* para la ordenación; *dplyr* para la manipulación; *lubridate* para las fechas; *forcats* para los factores; *ggplot2* para la visualización; *purr* para la programación funcional; y *tibble* que proporciona la estructura tabular de datos sobre la que trabajar. 
 
-- tidyverse:
-    
-    - ggplot2, para la visualización.
-    - dplyr, para la manipulación.
-    - tidyr, para la ordenación.
-    - readr, para la importación.
-    - purrr, para la programación funcional
+```{r tidiverse_workflow, echo = FALSE, fig.cap = "Flujo de trabajo en un proyecto de \textit{data science}. \\it Fuente: \\citet{tidyversepackage}"}
+knitr::include_graphics("graficos/tidyverse_workflow.png")
+```
 
 
-- tidymodels
+Para la modelización se ha utilizado *tidymodels* [@tidymodelspackage]. Se trata de un conjunto de paquetes de R orientados a facilitar el flujo de trabajo en el modelado estadístico de datos, siguiendo la filosofía "tidy data" de *tidyverse*. Integra herramientas para preprocesamiento de datos (*recipes*), ajuste de modelos (*parsnip*), combinación de flujos de trabajo (*workflows*), partición de datos y validación cruzada (*rsample*), cálculo de métricas de rendimiento (*yardstick*), optimización de hiperparámetros (*tune*) y conversión de resultados de modelos a formatos ordenados (*broom*). Los paquetes que componen *tidymodels* no implementan los modelos estadísticos por sí mismos, si no que los importan de librerías específicas. En su lugar, se enfocan en facilitar el flujo de trabajo del modelado, mejorando la cohesión y la eficiencia, y permitiendo la integración natural con otros paquetes del *tidiverse*.
 
-    - parsnip
-    -...
-    
-- sf
-    
-    - GDAL 
-    - ...
+Como se detalló en la Sección [Datos georreferenciados], para el tratamiento de datos vectoriales se ha utilizado el paquete de R *sf* [@sfpackage], que proporciona una forma estandarizada de codificar y manipular datos espaciales vectoriales a través de las *simple features*, integrándose dentro del ecosistema *tidyverse*. Para la manipulación de datos de tipo ráster se ha recurrido al paquete *terra* [@terrapackage]. 
 
-- terra
+La descarga de información meteorológica satelital se ha realizado a través del paquete *nasapower* [@nasapower], que facilita el acceso a información meteorológica global de forma reproducible a través de R. El paquete *mapSpain*[@R-mapspain] ha facilitado el acceso a las fronteras administrativas de España a distintos niveles de desagregación (comunidad autónoma, provincia y municipio). Se basa en el *GISCO Eurostat database* (\url{https://ec.europa.eu/eurostat/web/gisco}) y en el *CartoBase SIANE* del Instituto Geográfico Nacional (\url{https://www.ign.es/}).
 
-- nasapower: obtención de información climática satelital
 
-- mapSpain: 
-
-...
 
 <!-- library(tidyverse) -->
 <!-- library(skimr) -->

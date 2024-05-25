@@ -1261,54 +1261,65 @@ puede extender sus funcionalidades fácilmente a través de la gran
 cantidad de paquetes disponibles dentro del repositorio de paquetes de
 CRAN (\emph{The Comprehensive R Archive Network}), siendo este uno de
 sus puntos fuertes, dada la gran comunidad de usuarios y desarrolladores
-con la que cuenta.
+con la que cuenta. A continuación se mencionan los principales paquetes
+utilizados en el trabajo.
 
-Los paquetes que se han utilizado han sido:
+A lo largo de todo el trabajo, se ha utilizado de forma central el
+ecosistema de paquetes \emph{tidyverse} \citep{tidyversepackage}. Se
+trata de una colección de paquetes de R que comparten las mismas
+estructuras de datos y la misma filosofía de programación, orientados a
+facilitar las tareas centrales de cualquier proyecto de \emph{data
+science} (Figura \ref{fig:tidiverse_workflow}). Cuenta con numerosos
+paquetes, entre los que destacan: \emph{readr} para la importación de
+datos tabulares; \emph{tidyr} para la ordenación; \emph{dplyr} para la
+manipulación; \emph{lubridate} para las fechas; \emph{forcats} para los
+factores; \emph{ggplot2} para la visualización; \emph{purr} para la
+programación funcional; y \emph{tibble} que proporciona la estructura
+tabular de datos sobre la que trabajar.
 
-\begin{itemize}
-\item
-  tidyverse:
+\begin{figure}[H]
 
-  \begin{itemize}
-  \tightlist
-  \item
-    ggplot2, para la visualización.
-  \item
-    dplyr, para la manipulación.
-  \item
-    tidyr, para la ordenación.
-  \item
-    readr, para la importación.
-  \item
-    purrr, para la programación funcional
-  \end{itemize}
-\item
-  tidymodels
+{\centering \includegraphics[width=0.95\linewidth]{graficos/tidyverse_workflow} 
 
-  \begin{itemize}
-  \tightlist
-  \item
-    parsnip -\ldots{}
-  \end{itemize}
-\item
-  sf
+}
 
-  \begin{itemize}
-  \tightlist
-  \item
-    GDAL
-  \item
-    \ldots{}
-  \end{itemize}
-\item
-  terra
-\item
-  nasapower: obtención de información climática satelital
-\item
-  mapSpain:
-\end{itemize}
+\caption{Flujo de trabajo en un proyecto de     extit{data science}. \it Fuente: \citet{tidyversepackage}}\label{fig:tidiverse_workflow}
+\end{figure}
 
-\ldots{}
+Para la modelización se ha utilizado \emph{tidymodels}
+\citep{tidymodelspackage}. Se trata de un conjunto de paquetes de R
+orientados a facilitar el flujo de trabajo en el modelado estadístico de
+datos, siguiendo la filosofía ``tidy data'' de \emph{tidyverse}. Integra
+herramientas para preprocesamiento de datos (\emph{recipes}), ajuste de
+modelos (\emph{parsnip}), combinación de flujos de trabajo
+(\emph{workflows}), partición de datos y validación cruzada
+(\emph{rsample}), cálculo de métricas de rendimiento (\emph{yardstick}),
+optimización de hiperparámetros (\emph{tune}) y conversión de resultados
+de modelos a formatos ordenados (\emph{broom}). Los paquetes que
+componen \emph{tidymodels} no implementan los modelos estadísticos por
+sí mismos, si no que los importan de librerías específicas. En su lugar,
+se enfocan en facilitar el flujo de trabajo del modelado, mejorando la
+cohesión y la eficiencia, y permitiendo la integración natural con otros
+paquetes del \emph{tidiverse}.
+
+Como se detalló en la Sección
+\protect\hyperlink{datos-georreferenciados}{Datos georreferenciados},
+para el tratamiento de datos vectoriales se ha utilizado el paquete de R
+\emph{sf} \citep{sfpackage}, que proporciona una forma estandarizada de
+codificar y manipular datos espaciales vectoriales a través de las
+\emph{simple features}, integrándose dentro del ecosistema
+\emph{tidyverse}. Para la manipulación de datos de tipo ráster se ha
+recurrido al paquete \emph{terra} \citep{terrapackage}.
+
+La descarga de información meteorológica satelital se ha realizado a
+través del paquete \emph{nasapower} \citep{nasapower}, que facilita el
+acceso a información meteorológica global de forma reproducible a través
+de R. El paquete \emph{mapSpain}\citep{R-mapspain} ha facilitado el
+acceso a las fronteras administrativas de España a distintos niveles de
+desagregación (comunidad autónoma, provincia y municipio). Se basa en el
+\emph{GISCO Eurostat database}
+(\url{https://ec.europa.eu/eurostat/web/gisco}) y en el \emph{CartoBase
+SIANE} del Instituto Geográfico Nacional (\url{https://www.ign.es/}).
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.24)  25 MAY 2024 17:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.24)  25 MAY 2024 18:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -145,7 +145,11 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks23
 \inpenc@posthook=\toks24
-) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
+(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
@@ -950,30 +954,79 @@ Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen325
 \c@nlinenum=\count377
 \TeXr@lab=\toks61
+) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fvextra/fvextra.sty
+Package: fvextra 2024/05/16 v1.7.0 fvextra - extensions and patches for fancyvrb
+(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2023/05/20 line numbers on paragraphs v5.3
+\linenopenalty=\count378
+\output=\toks62
+\linenoprevgraf=\count379
+\linenumbersep=\dimen326
+\linenumberwidth=\dimen327
+\c@linenumber=\count380
+\c@pagewiselinenumber=\count381
+\c@LN@truepage=\count382
+\c@internallinenumber=\count383
+\c@internallinenumbers=\count384
+\quotelinenumbersep=\dimen328
+\bframerule=\dimen329
+\bframesep=\dimen330
+\bframebox=\box103
+\linenoamsmath@ams@eqpen=\count385
+LaTeX Info: Redefining \\ on input line 3180.
+)
+\c@FancyVerbWriteLine=\count386
+\c@FancyVerbBufferIndex=\count387
+\c@FancyVerbBufferLength=\count388
+\c@FancyVerbBufferLine=\count389
+\c@FV@oldbufferlength=\count390
+\c@FV@TrueTabGroupLevel=\count391
+\c@FV@TrueTabCounter=\count392
+\FV@TabBox@Group=\box104
+\FV@TmpLength=\skip169
+\c@FV@HighlightLinesStart=\count393
+\c@FV@HighlightLinesStop=\count394
+\FV@LoopCount=\count395
+\FV@NCharsBox=\box105
+\FV@BreakIndent=\dimen331
+\FV@BreakIndentNChars=\count396
+\FV@BreakSymbolSepLeft=\dimen332
+\FV@BreakSymbolSepLeftNChars=\count397
+\FV@BreakSymbolSepRight=\dimen333
+\FV@BreakSymbolSepRightNChars=\count398
+\FV@BreakSymbolIndentLeft=\dimen334
+\FV@BreakSymbolIndentLeftNChars=\count399
+\FV@BreakSymbolIndentRight=\dimen335
+\FV@BreakSymbolIndentRightNChars=\count400
+\c@FancyVerbLineBreakLast=\count401
+\FV@LineBox=\box106
+\FV@LineIndentBox=\box107
+\c@FV@BreakBufferDepth=\count402
+\FV@LineWidth=\dimen336
 ) (./apendice02n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
 \openout1 = `apendice02n.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 550.
-LaTeX Font Info:    ... okay on input line 550.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 552.
+LaTeX Font Info:    ... okay on input line 552.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -1008,7 +1061,7 @@ LaTeX Font Info:    ... okay on input line 550.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 550.
+Package hyperref Info: Link coloring OFF on input line 552.
 (./apendice02n.out) (./apendice02n.out)
 \@outlinefile=\write5
 \openout5 = `apendice02n.out'.
@@ -1019,8 +1072,8 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Info: Redefining \. on input line 550.
-LaTeX Info: Redefining \% on input line 550.
+LaTeX Info: Redefining \. on input line 552.
+LaTeX Info: Redefining \% on input line 552.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: longtable package is loaded.
@@ -1072,340 +1125,614 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 Cap\'{\i }tulo 1.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 591.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 593.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 595.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 597.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 613.
 
 LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 623.
+(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 625.
 
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 650.
+
+Overfull \hbox (58.90594pt too wide) in paragraph at lines 638--638
+[]\T1/lmtt/b/n/12 st_read[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"./data_raw/incendios_2000-2022/incendios_"[],|  
+ []
+
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 653.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [3]
-Underfull \vbox (badness 10000) detected at line 757
+)
+Underfull \vbox (badness 6063) detected at line 764
  []
 
 
-Overfull \vbox (0.5782pt too high) detected at line 757
+Overfull \vbox (17.39986pt too high) detected at line 764
  []
 
-LaTeX Info: Redefining \. on input line 757.
-LaTeX Info: Redefining \% on input line 757.
-LaTeX Info: Redefining \. on input line 757.
-LaTeX Info: Redefining \% on input line 757.
+[3{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+Underfull \vbox (badness 10000) detected at line 764
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 764
+ []
+
+LaTeX Info: Redefining \. on input line 764.
+LaTeX Info: Redefining \% on input line 764.
+LaTeX Info: Redefining \. on input line 764.
+LaTeX Info: Redefining \% on input line 764.
 [4{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-Underfull \vbox (badness 10000) detected at line 757
+Underfull \vbox (badness 10000) detected at line 764
  []
 
 
-Underfull \vbox (badness 10000) detected at line 757
+Underfull \vbox (badness 10000) detected at line 764
  []
 
-LaTeX Info: Redefining \. on input line 757.
-LaTeX Info: Redefining \% on input line 757.
-LaTeX Info: Redefining \. on input line 757.
-LaTeX Info: Redefining \% on input line 757.
+LaTeX Info: Redefining \. on input line 764.
+LaTeX Info: Redefining \% on input line 764.
+LaTeX Info: Redefining \. on input line 764.
+LaTeX Info: Redefining \% on input line 764.
 [5]
-LaTeX Info: Redefining \. on input line 769.
-LaTeX Info: Redefining \% on input line 769.
-LaTeX Info: Redefining \. on input line 769.
-LaTeX Info: Redefining \% on input line 769.
+Underfull \vbox (badness 10000) detected at line 764
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 764
+ []
+
+LaTeX Info: Redefining \. on input line 764.
+LaTeX Info: Redefining \% on input line 764.
+LaTeX Info: Redefining \. on input line 764.
+LaTeX Info: Redefining \% on input line 764.
 [6]
-Underfull \vbox (badness 10000) detected at line 1097
+Overfull \hbox (174.85617pt too wide) in paragraph at lines 847--847
+[]\T1/lmtt/b/n/12 rm[]\T1/lmtt/m/n/12 (points,points_WGS84,daily_single_ag,clim_day,id_rast_day,points_day,day,year,andalucia_WGS84)|  
  []
 
 
-Overfull \vbox (0.57216pt too high) detected at line 1097
+Overfull \hbox (14.92401pt too wide) in paragraph at lines 883--883
+[]\T1/lmtt/b/n/12 read_sf[]\T1/lmtt/m/n/12 ([]"data_raw/antropologicas/RedCarreteras/09_14_RedCarreteras.shp"[]) 
  []
 
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
+
+Overfull \hbox (27.28102pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/b/n/12 read_sf[]\T1/lmtt/m/n/12 ([]"data_raw/antropologicas/LineaElectrica/10_14_LineaElectrica.shp"[]) 
+ []
+
+
+Overfull \hbox (2.574pt too wide) in paragraph at lines 932--932
+[]\T1/lmtt/b/n/12 read_sf[]\T1/lmtt/m/n/12 ([]"data_raw/antropologicas/Sendero_ViaVerde/09_24_ViaVerde.shp"[]) 
+ []
+
+
+Overfull \hbox (14.92401pt too wide) in paragraph at lines 934--934
+[]\T1/lmtt/b/n/12 read_sf[]\T1/lmtt/m/n/12 ([]"data_raw/antropologicas/sendero_ViaVerde/09_23_CarrilBici.shp"[])|  
+ []
+
+
+Overfull \hbox (2.58101pt too wide) in paragraph at lines 946--946
+[]\T1/lmtt/b/n/12 read_sf[]\T1/lmtt/m/n/12 ([]"data_raw/antropologicas/ENP/11_07_Enp_RegimenProteccion.shp"[])|  
+ []
+
+
+Overfull \hbox (9.00598pt too wide) in paragraph at lines 996--996
+[]\T1/lmtt/b/n/12 read_csv2[]\T1/lmtt/m/n/12 ([]"data_raw/antropologicas/Población/poblacion_municipios.txt"[],|  
+ []
+
+
+Overfull \hbox (2.83098pt too wide) in paragraph at lines 1002--1002
+[]\T1/lmtt/b/n/12 read_csv2[]\T1/lmtt/m/n/12 ([]"data_raw/antropologicas/Población/extension_municipal.txt"[],|  
+ []
+
+
+Overfull \hbox (364.58778pt too wide) in paragraph at lines 1055--1055
+\T1/lmtt/m/it/12 paste0("data_raw/vegetacion/",YEAR,"NOAAVHMEDMNDVI/InfGeografica/InfRaster/TIF/NOAAVH_",YY,MM,"01_Andaluz_MEDMndvi.tif")[]|  
+ []
+
+
+Overfull \hbox (311.20618pt too wide) in paragraph at lines 1058--1058
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"data_raw/vegetacion/"[],YEAR,[]"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/TERMOD_"[],YY,MM,[]"01_h17v05_medmndvi.tif"[])|  
+ []
+
+
+Overfull \hbox (305.03117pt too wide) in paragraph at lines 1060--1060
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"data_raw/vegetacion/"[],YEAR,[]"TERMODMEDMNDVI/InfGeografica/InfRaster/TIF/TERMOD_"[],YY,MM,[]"01_h17v05_medmndvi.tif"[])|  
+ []
+
+
+Overfull \hbox (311.20618pt too wide) in paragraph at lines 1062--1062
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"data_raw/vegetacion/"[],YEAR,[]"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/termod_"[],YY,MM,[]"01_h17v05_medmndvi.tif"[])|  
+ []
+
+
+Overfull \hbox (329.73119pt too wide) in paragraph at lines 1064--1064
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"data_raw/vegetacion/"[],YEAR,[]"TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod_"[],YY,MM,[]"01_h17v05_medmndvi_COG.tif"[])|  
+ []
+
+
+Overfull \hbox (125.56012pt too wide) in paragraph at lines 1126--1126
+[]\T1/lmtt/b/n/12 c[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 -[][]\T1/lmtt/m/n/12 Inf[],[]\T1/lmtt/b/n/12 -[][]\T1/lmtt/m/n/12 1[],[]22.5[],[]67.5[],[]112.5[],[]157.5[],[]202.5[],[]247.5[],[]292.5[],[]337.5[],[]360[]),|  
+ []
+
+
+Overfull \hbox (69.75613pt too wide) in paragraph at lines 1127--1127
+[]\T1/lmtt/b/n/12 c[]\T1/lmtt/m/n/12 ([]"Plano"[],[]"N"[],[]"NE"[],[]"E"[],[]"SE"[],[]"S"[],[]"SW"[],[]"W"[],[]"NW"[],[]"N"[])),|  
+ []
+
+
+Overfull \hbox (51.21011pt too wide) in paragraph at lines 1129--1129
+[]\T1/lmtt/b/n/12 c[]\T1/lmtt/m/n/12 ([]0[],[]22.5[],[]67.5[],[]112.5[],[]157.5[],[]202.5[],[]247.5[],[]292.5[],[]337.5[],[]360[]),|  
+ []
+
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [7]
-Underfull \vbox (badness 10000) detected at line 1097
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1097
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [8]
-Underfull \vbox (badness 10000) detected at line 1097
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
 
-Overfull \vbox (1.63605pt too high) detected at line 1097
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [9]
-Underfull \vbox (badness 10000) detected at line 1097
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1097
+Overfull \vbox (19.71634pt too high) detected at line 1138
  []
 
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [10]
-Underfull \vbox (badness 10000) detected at line 1097
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
 
-Overfull \vbox (0.50409pt too high) detected at line 1097
+Overfull \vbox (5.21638pt too high) detected at line 1138
  []
 
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [11]
-Underfull \vbox (badness 10000) detected at line 1097
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1097
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
-LaTeX Info: Redefining \. on input line 1097.
-LaTeX Info: Redefining \% on input line 1097.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [12]
-LaTeX Info: Redefining \. on input line 1116.
-LaTeX Info: Redefining \% on input line 1116.
-LaTeX Info: Redefining \. on input line 1116.
-LaTeX Info: Redefining \% on input line 1116.
+Underfull \vbox (badness 10000) detected at line 1138
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1138
+ []
+
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [13]
-LaTeX Info: Redefining \. on input line 1239.
-LaTeX Info: Redefining \% on input line 1239.
-LaTeX Info: Redefining \. on input line 1239.
-LaTeX Info: Redefining \% on input line 1239.
+Underfull \vbox (badness 10000) detected at line 1138
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1138
+ []
+
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [14]
-Underfull \vbox (badness 10000) detected at line 1239
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
 
-Overfull \vbox (1.36938pt too high) detected at line 1239
+Underfull \vbox (badness 10000) detected at line 1138
  []
 
-LaTeX Info: Redefining \. on input line 1239.
-LaTeX Info: Redefining \% on input line 1239.
-LaTeX Info: Redefining \. on input line 1239.
-LaTeX Info: Redefining \% on input line 1239.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [15]
-LaTeX Info: Redefining \. on input line 1269.
-LaTeX Info: Redefining \% on input line 1269.
-LaTeX Info: Redefining \. on input line 1269.
-LaTeX Info: Redefining \% on input line 1269.
+Underfull \vbox (badness 10000) detected at line 1138
+ []
+
+
+Overfull \vbox (5.21637pt too high) detected at line 1138
+ []
+
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
 [16]
-LaTeX Info: Redefining \. on input line 1355.
-LaTeX Info: Redefining \% on input line 1355.
-LaTeX Info: Redefining \. on input line 1355.
-LaTeX Info: Redefining \% on input line 1355.
+Overfull \hbox (21.98091pt too wide) in paragraph at lines 1155--1155
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"salidas_intermedias/dataset_strat_completo"[],[]\T1/lmtt/b/n/12 Sys.Date[]\T1/lmtt/m/n/12 (),[]".RData"[]))|  
+ []
+
+
+Overfull \hbox (64.83098pt too wide) in paragraph at lines 1227--1227
+[]\T1/lmtt/b/n/12 read_csv2[]\T1/lmtt/m/n/12 ([]"data_raw/antropologicas/Población/poblacion_municipios.txt"[])[,[]\T1/lmtt/b/n/12 c[]\T1/lmtt/m/n/12 ([]1[][]\T1/lmtt/b/n/12 :[][]\T1/lmtt/m/n/12 5[])] 
+ []
+
+
+Overfull \hbox (52.85593pt too wide) in paragraph at lines 1278--1278
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"salidas_intermedias/datos_strat_depurados_geom_"[],[]\T1/lmtt/b/n/12 Sys.Date[]\T1/lmtt/m/n/12 (),[]".RData"[]))|  
+ []
+
+LaTeX Info: Redefining \. on input line 1280.
+LaTeX Info: Redefining \% on input line 1280.
+LaTeX Info: Redefining \. on input line 1280.
+LaTeX Info: Redefining \% on input line 1280.
 [17]
-LaTeX Info: Redefining \. on input line 1380.
-LaTeX Info: Redefining \% on input line 1380.
-LaTeX Info: Redefining \. on input line 1380.
-LaTeX Info: Redefining \% on input line 1380.
+Underfull \vbox (badness 10000) detected at line 1280
+ []
+
+
+Overfull \vbox (5.21634pt too high) detected at line 1280
+ []
+
+LaTeX Info: Redefining \. on input line 1280.
+LaTeX Info: Redefining \% on input line 1280.
+LaTeX Info: Redefining \. on input line 1280.
+LaTeX Info: Redefining \% on input line 1280.
 [18]
-LaTeX Info: Redefining \. on input line 1428.
-LaTeX Info: Redefining \% on input line 1428.
-LaTeX Info: Redefining \. on input line 1428.
-LaTeX Info: Redefining \% on input line 1428.
+Underfull \vbox (badness 10000) detected at line 1280
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1280
+ []
+
+LaTeX Info: Redefining \. on input line 1280.
+LaTeX Info: Redefining \% on input line 1280.
+LaTeX Info: Redefining \. on input line 1280.
+LaTeX Info: Redefining \% on input line 1280.
 [19]
-LaTeX Info: Redefining \. on input line 1491.
-LaTeX Info: Redefining \% on input line 1491.
-LaTeX Info: Redefining \. on input line 1491.
-LaTeX Info: Redefining \% on input line 1491.
+LaTeX Info: Redefining \. on input line 1305.
+LaTeX Info: Redefining \% on input line 1305.
+LaTeX Info: Redefining \. on input line 1305.
+LaTeX Info: Redefining \% on input line 1305.
 [20]
-LaTeX Info: Redefining \. on input line 1546.
-LaTeX Info: Redefining \% on input line 1546.
-LaTeX Info: Redefining \. on input line 1546.
-LaTeX Info: Redefining \% on input line 1546.
+LaTeX Info: Redefining \. on input line 1396.
+LaTeX Info: Redefining \% on input line 1396.
+LaTeX Info: Redefining \. on input line 1396.
+LaTeX Info: Redefining \% on input line 1396.
 [21]
-LaTeX Info: Redefining \. on input line 1607.
-LaTeX Info: Redefining \% on input line 1607.
-LaTeX Info: Redefining \. on input line 1607.
-LaTeX Info: Redefining \% on input line 1607.
+Underfull \vbox (badness 10000) detected at line 1396
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1396
+ []
+
+LaTeX Info: Redefining \. on input line 1396.
+LaTeX Info: Redefining \% on input line 1396.
+LaTeX Info: Redefining \. on input line 1396.
+LaTeX Info: Redefining \% on input line 1396.
 [22]
-LaTeX Info: Redefining \. on input line 1662.
-LaTeX Info: Redefining \% on input line 1662.
-LaTeX Info: Redefining \. on input line 1662.
-LaTeX Info: Redefining \% on input line 1662.
+Overfull \vbox (4.88133pt too high) detected at line 1438
+ []
+
+LaTeX Info: Redefining \. on input line 1438.
+LaTeX Info: Redefining \% on input line 1438.
+LaTeX Info: Redefining \. on input line 1438.
+LaTeX Info: Redefining \% on input line 1438.
 [23]
-LaTeX Info: Redefining \. on input line 1719.
-LaTeX Info: Redefining \% on input line 1719.
-LaTeX Info: Redefining \. on input line 1719.
-LaTeX Info: Redefining \% on input line 1719.
+LaTeX Info: Redefining \. on input line 1508.
+LaTeX Info: Redefining \% on input line 1508.
+LaTeX Info: Redefining \. on input line 1508.
+LaTeX Info: Redefining \% on input line 1508.
 [24]
-LaTeX Info: Redefining \. on input line 1782.
-LaTeX Info: Redefining \% on input line 1782.
-LaTeX Info: Redefining \. on input line 1782.
-LaTeX Info: Redefining \% on input line 1782.
+Overfull \hbox (16.55582pt too wide) in paragraph at lines 1547--1547
+[]\T1/lmtt/b/n/12 aes[]\T1/lmtt/m/n/12 ([]color=[]WS10M,[]alpha=[]WS10M,[]size=[][]\T1/lmtt/b/n/12 as.numeric[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 ifelse[]\T1/lmtt/m/n/12 (WS10M[]\T1/lmtt/b/n/12 <[][]\T1/lmtt/m/n/12 7.5[],[]1[],[]1.2[])))) 
+ []
+
+LaTeX Info: Redefining \. on input line 1561.
+LaTeX Info: Redefining \% on input line 1561.
+LaTeX Info: Redefining \. on input line 1561.
+LaTeX Info: Redefining \% on input line 1561.
 [25]
-LaTeX Info: Redefining \. on input line 1842.
-LaTeX Info: Redefining \% on input line 1842.
-LaTeX Info: Redefining \. on input line 1842.
-LaTeX Info: Redefining \% on input line 1842.
+LaTeX Info: Redefining \. on input line 1606.
+LaTeX Info: Redefining \% on input line 1606.
+LaTeX Info: Redefining \. on input line 1606.
+LaTeX Info: Redefining \% on input line 1606.
 [26]
-LaTeX Info: Redefining \. on input line 1905.
-LaTeX Info: Redefining \% on input line 1905.
-LaTeX Info: Redefining \. on input line 1905.
-LaTeX Info: Redefining \% on input line 1905.
+LaTeX Info: Redefining \. on input line 1667.
+LaTeX Info: Redefining \% on input line 1667.
+LaTeX Info: Redefining \. on input line 1667.
+LaTeX Info: Redefining \% on input line 1667.
 [27]
-LaTeX Info: Redefining \. on input line 2001.
-LaTeX Info: Redefining \% on input line 2001.
-LaTeX Info: Redefining \. on input line 2001.
-LaTeX Info: Redefining \% on input line 2001.
+LaTeX Info: Redefining \. on input line 1721.
+LaTeX Info: Redefining \% on input line 1721.
+LaTeX Info: Redefining \. on input line 1721.
+LaTeX Info: Redefining \% on input line 1721.
 [28]
-Underfull \vbox (badness 10000) detected at line 2001
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2001
- []
-
-LaTeX Info: Redefining \. on input line 2001.
-LaTeX Info: Redefining \% on input line 2001.
-LaTeX Info: Redefining \. on input line 2001.
-LaTeX Info: Redefining \% on input line 2001.
+LaTeX Info: Redefining \. on input line 1778.
+LaTeX Info: Redefining \% on input line 1778.
+LaTeX Info: Redefining \. on input line 1778.
+LaTeX Info: Redefining \% on input line 1778.
 [29]
-LaTeX Info: Redefining \. on input line 2087.
-LaTeX Info: Redefining \% on input line 2087.
-LaTeX Info: Redefining \. on input line 2087.
-LaTeX Info: Redefining \% on input line 2087.
+LaTeX Info: Redefining \. on input line 1828.
+LaTeX Info: Redefining \% on input line 1828.
+LaTeX Info: Redefining \. on input line 1828.
+LaTeX Info: Redefining \% on input line 1828.
 [30]
-LaTeX Info: Redefining \. on input line 2145.
-LaTeX Info: Redefining \% on input line 2145.
-LaTeX Info: Redefining \. on input line 2145.
-LaTeX Info: Redefining \% on input line 2145.
+LaTeX Info: Redefining \. on input line 1888.
+LaTeX Info: Redefining \% on input line 1888.
+LaTeX Info: Redefining \. on input line 1888.
+LaTeX Info: Redefining \% on input line 1888.
 [31]
-LaTeX Info: Redefining \. on input line 2150.
-LaTeX Info: Redefining \% on input line 2150.
-LaTeX Info: Redefining \. on input line 2150.
-LaTeX Info: Redefining \% on input line 2150.
+LaTeX Info: Redefining \. on input line 1946.
+LaTeX Info: Redefining \% on input line 1946.
+LaTeX Info: Redefining \. on input line 1946.
+LaTeX Info: Redefining \% on input line 1946.
 [32]
-LaTeX Info: Redefining \. on input line 2207.
-LaTeX Info: Redefining \% on input line 2207.
-LaTeX Info: Redefining \. on input line 2207.
-LaTeX Info: Redefining \% on input line 2207.
+LaTeX Info: Redefining \. on input line 1971.
+LaTeX Info: Redefining \% on input line 1971.
+LaTeX Info: Redefining \. on input line 1971.
+LaTeX Info: Redefining \% on input line 1971.
 [33]
-LaTeX Info: Redefining \. on input line 2361.
-LaTeX Info: Redefining \% on input line 2361.
-LaTeX Info: Redefining \. on input line 2361.
-LaTeX Info: Redefining \% on input line 2361.
+Overfull \vbox (12.79973pt too high) detected at line 2042
+ []
+
+LaTeX Info: Redefining \. on input line 2042.
+LaTeX Info: Redefining \% on input line 2042.
+LaTeX Info: Redefining \. on input line 2042.
+LaTeX Info: Redefining \% on input line 2042.
 [34]
-Underfull \vbox (badness 10000) detected at line 2361
- []
-
-
-Overfull \vbox (1.63608pt too high) detected at line 2361
- []
-
-LaTeX Info: Redefining \. on input line 2361.
-LaTeX Info: Redefining \% on input line 2361.
-LaTeX Info: Redefining \. on input line 2361.
-LaTeX Info: Redefining \% on input line 2361.
+LaTeX Info: Redefining \. on input line 2059.
+LaTeX Info: Redefining \% on input line 2059.
+LaTeX Info: Redefining \. on input line 2059.
+LaTeX Info: Redefining \% on input line 2059.
 [35]
-Underfull \vbox (badness 10000) detected at line 2361
- []
-
-
-Overfull \vbox (0.8001pt too high) detected at line 2361
- []
-
-LaTeX Info: Redefining \. on input line 2361.
-LaTeX Info: Redefining \% on input line 2361.
-LaTeX Info: Redefining \. on input line 2361.
-LaTeX Info: Redefining \% on input line 2361.
+LaTeX Info: Redefining \. on input line 2128.
+LaTeX Info: Redefining \% on input line 2128.
+LaTeX Info: Redefining \. on input line 2128.
+LaTeX Info: Redefining \% on input line 2128.
 [36]
-LaTeX Info: Redefining \. on input line 2425.
-LaTeX Info: Redefining \% on input line 2425.
-LaTeX Info: Redefining \. on input line 2425.
-LaTeX Info: Redefining \% on input line 2425.
+Overfull \vbox (4.33131pt too high) detected at line 2186
+ []
+
+LaTeX Info: Redefining \. on input line 2186.
+LaTeX Info: Redefining \% on input line 2186.
+LaTeX Info: Redefining \. on input line 2186.
+LaTeX Info: Redefining \% on input line 2186.
 [37]
-LaTeX Info: Redefining \. on input line 2488.
-LaTeX Info: Redefining \% on input line 2488.
-LaTeX Info: Redefining \. on input line 2488.
-LaTeX Info: Redefining \% on input line 2488.
+LaTeX Info: Redefining \. on input line 2248.
+LaTeX Info: Redefining \% on input line 2248.
+LaTeX Info: Redefining \. on input line 2248.
+LaTeX Info: Redefining \% on input line 2248.
 [38]
-LaTeX Info: Redefining \. on input line 2540.
-LaTeX Info: Redefining \% on input line 2540.
-LaTeX Info: Redefining \. on input line 2540.
-LaTeX Info: Redefining \% on input line 2540.
+LaTeX Info: Redefining \. on input line 2253.
+LaTeX Info: Redefining \% on input line 2253.
+LaTeX Info: Redefining \. on input line 2253.
+LaTeX Info: Redefining \% on input line 2253.
 [39]
-LaTeX Info: Redefining \. on input line 2545.
-LaTeX Info: Redefining \% on input line 2545.
-LaTeX Info: Redefining \. on input line 2545.
-LaTeX Info: Redefining \% on input line 2545.
+LaTeX Info: Redefining \. on input line 2402.
+LaTeX Info: Redefining \% on input line 2402.
+LaTeX Info: Redefining \. on input line 2402.
+LaTeX Info: Redefining \% on input line 2402.
 [40]
-LaTeX Info: Redefining \. on input line 2597.
-LaTeX Info: Redefining \% on input line 2597.
-LaTeX Info: Redefining \. on input line 2597.
-LaTeX Info: Redefining \% on input line 2597.
+Underfull \vbox (badness 10000) detected at line 2402
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2402
+ []
+
+LaTeX Info: Redefining \. on input line 2402.
+LaTeX Info: Redefining \% on input line 2402.
+LaTeX Info: Redefining \. on input line 2402.
+LaTeX Info: Redefining \% on input line 2402.
 [41]
-LaTeX Info: Redefining \. on input line 2653.
-LaTeX Info: Redefining \% on input line 2653.
-LaTeX Info: Redefining \. on input line 2653.
-LaTeX Info: Redefining \% on input line 2653.
+Underfull \vbox (badness 10000) detected at line 2402
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2402
+ []
+
+LaTeX Info: Redefining \. on input line 2402.
+LaTeX Info: Redefining \% on input line 2402.
+LaTeX Info: Redefining \. on input line 2402.
+LaTeX Info: Redefining \% on input line 2402.
 [42]
-LaTeX Info: Redefining \. on input line 2709.
-LaTeX Info: Redefining \% on input line 2709.
-LaTeX Info: Redefining \. on input line 2709.
-LaTeX Info: Redefining \% on input line 2709.
+LaTeX Info: Redefining \. on input line 2466.
+LaTeX Info: Redefining \% on input line 2466.
+LaTeX Info: Redefining \. on input line 2466.
+LaTeX Info: Redefining \% on input line 2466.
 [43]
-LaTeX Info: Redefining \. on input line 2767.
-LaTeX Info: Redefining \% on input line 2767.
-LaTeX Info: Redefining \. on input line 2767.
-LaTeX Info: Redefining \% on input line 2767.
+LaTeX Info: Redefining \. on input line 2529.
+LaTeX Info: Redefining \% on input line 2529.
+LaTeX Info: Redefining \. on input line 2529.
+LaTeX Info: Redefining \% on input line 2529.
 [44]
-LaTeX Info: Redefining \. on input line 2825.
-LaTeX Info: Redefining \% on input line 2825.
-LaTeX Info: Redefining \. on input line 2825.
-LaTeX Info: Redefining \% on input line 2825.
+LaTeX Info: Redefining \. on input line 2581.
+LaTeX Info: Redefining \% on input line 2581.
+LaTeX Info: Redefining \. on input line 2581.
+LaTeX Info: Redefining \% on input line 2581.
 [45]
-LaTeX Info: Redefining \. on input line 2875.
-LaTeX Info: Redefining \% on input line 2875.
-LaTeX Info: Redefining \. on input line 2875.
-LaTeX Info: Redefining \% on input line 2875.
+Overfull \hbox (82.4811pt too wide) in paragraph at lines 2589--2589
+[]\T1/lmtt/b/n/12 list[]\T1/lmtt/m/n/12 (lr_res,lr_pca_res,dt_res,rf_res2,svm_res,svm_rbf_res,knn_res),|  
+ []
+
+
+Overfull \hbox (298.6062pt too wide) in paragraph at lines 2590--2590
+[]\T1/lmtt/b/n/12 list[]\T1/lmtt/m/n/12 (lr_workflow,lr_pca_workflow,dt_workflow,rf_workflow2,svm_workflow,svm_rbf_workflow,knn_workflow))|  
+ []
+
+LaTeX Info: Redefining \. on input line 2638.
+LaTeX Info: Redefining \% on input line 2638.
+LaTeX Info: Redefining \. on input line 2638.
+LaTeX Info: Redefining \% on input line 2638.
 [46]
-LaTeX Info: Redefining \. on input line 2949.
-LaTeX Info: Redefining \% on input line 2949.
-LaTeX Info: Redefining \. on input line 2949.
-LaTeX Info: Redefining \% on input line 2949.
+Underfull \vbox (badness 10000) detected at line 2638
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2638
+ []
+
+LaTeX Info: Redefining \. on input line 2638.
+LaTeX Info: Redefining \% on input line 2638.
+LaTeX Info: Redefining \. on input line 2638.
+LaTeX Info: Redefining \% on input line 2638.
 [47]
-LaTeX Info: Redefining \. on input line 2982.
-LaTeX Info: Redefining \% on input line 2982.
-LaTeX Info: Redefining \. on input line 2982.
-LaTeX Info: Redefining \% on input line 2982.
+LaTeX Info: Redefining \. on input line 2694.
+LaTeX Info: Redefining \% on input line 2694.
+LaTeX Info: Redefining \. on input line 2694.
+LaTeX Info: Redefining \% on input line 2694.
 [48]
-LaTeX Info: Redefining \. on input line 3057.
-LaTeX Info: Redefining \% on input line 3057.
-LaTeX Info: Redefining \. on input line 3057.
-LaTeX Info: Redefining \% on input line 3057.
+LaTeX Info: Redefining \. on input line 2727.
+LaTeX Info: Redefining \% on input line 2727.
+LaTeX Info: Redefining \. on input line 2727.
+LaTeX Info: Redefining \% on input line 2727.
 [49]
+LaTeX Info: Redefining \. on input line 2778.
+LaTeX Info: Redefining \% on input line 2778.
+LaTeX Info: Redefining \. on input line 2778.
+LaTeX Info: Redefining \% on input line 2778.
+[50]
+Overfull \hbox (311.20618pt too wide) in paragraph at lines 2816--2816
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"data_raw/vegetacion/"[],YYYY,[]"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/TERMOD_"[],YY,MM,[]"01_h17v05_medmndvi.tif"[])|  
+ []
+
+
+Overfull \hbox (305.03117pt too wide) in paragraph at lines 2818--2818
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"data_raw/vegetacion/"[],YYYY,[]"TERMODMEDMNDVI/InfGeografica/InfRaster/TIF/TERMOD_"[],YY,MM,[]"01_h17v05_medmndvi.tif"[])|  
+ []
+
+
+Overfull \hbox (311.20618pt too wide) in paragraph at lines 2820--2820
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"data_raw/vegetacion/"[],YYYY,[]"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/termod_"[],YY,MM,[]"01_h17v05_medmndvi.tif"[])|  
+ []
+
+
+Overfull \hbox (329.73119pt too wide) in paragraph at lines 2822--2822
+[]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"data_raw/vegetacion/"[],YYYY,[]"TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod_"[],YY,MM,[]"01_h17v05_medmndvi_COG.tif"[])|  
+ []
+
+
+Overfull \hbox (72.38081pt too wide) in paragraph at lines 2852--2852
+[]\T1/lmtt/b/n/12 ifelse[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 is.na[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 unlist[]\T1/lmtt/m/n/12 (NDVI_rast)),[]\T1/lmtt/b/n/12 map2[]\T1/lmtt/m/n/12 (month,year[]\T1/lmtt/b/n/12 +[][]\T1/lmtt/m/n/12 1[],read_NDVI),NDVI_rast), 
+ []
+
+
+Overfull \hbox (92.53062pt too wide) in paragraph at lines 2858--2858
+\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 paste[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 year[]\T1/lmtt/m/n/12 (full_grid[]\T1/lmtt/b/n/12 $[]\T1/lmtt/m/n/12 date),[]\T1/lmtt/b/n/12 str_pad[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 as.character[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 month[]\T1/lmtt/m/n/12 (full_grid[]\T1/lmtt/b/n/12 $[]\T1/lmtt/m/n/12 date)),[]2[],[]"left"[],[]pad 
+ []
+
+LaTeX Info: Redefining \. on input line 2866.
+LaTeX Info: Redefining \% on input line 2866.
+LaTeX Info: Redefining \. on input line 2866.
+LaTeX Info: Redefining \% on input line 2866.
+[51]
+Underfull \vbox (badness 10000) detected at line 2866
+ []
+
+
+Overfull \vbox (19.71638pt too high) detected at line 2866
+ []
+
+LaTeX Info: Redefining \. on input line 2866.
+LaTeX Info: Redefining \% on input line 2866.
+LaTeX Info: Redefining \. on input line 2866.
+LaTeX Info: Redefining \% on input line 2866.
+[52]
+Overfull \hbox (15.68092pt too wide) in paragraph at lines 2907--2907
+[]\T1/lmtt/b/n/12 st_read[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"./data_raw/incendios_2000-2022/incendios_"[],[]2022[],[]".shp"[])) 
+ []
+
+LaTeX Info: Redefining \. on input line 2917.
+LaTeX Info: Redefining \% on input line 2917.
+LaTeX Info: Redefining \. on input line 2917.
+LaTeX Info: Redefining \% on input line 2917.
+[53]
+Overfull \hbox (15.68092pt too wide) in paragraph at lines 2950--2950
+[]\T1/lmtt/b/n/12 st_read[]\T1/lmtt/m/n/12 ([]\T1/lmtt/b/n/12 paste0[]\T1/lmtt/m/n/12 ([]"./data_raw/incendios_2000-2022/incendios_"[],[]2021[],[]".shp"[])) 
+ []
+
+LaTeX Info: Redefining \. on input line 2990.
+LaTeX Info: Redefining \% on input line 2990.
+LaTeX Info: Redefining \. on input line 2990.
+LaTeX Info: Redefining \% on input line 2990.
+[54]
+Overfull \hbox (27.78096pt too wide) in paragraph at lines 3011--3011
+[]\T1/lmtt/b/n/12 rep[]\T1/lmtt/m/n/12 (incendio_estudio[]\T1/lmtt/b/n/12 $[]\T1/lmtt/m/n/12 FECHA_INIC[]\T1/lmtt/b/n/12 +[][]\T1/lmtt/m/n/12 15[],[]\T1/lmtt/b/n/12 length[]\T1/lmtt/m/n/12 (grid)),[]geometry 
+ []
+
+
+Overfull \hbox (27.78096pt too wide) in paragraph at lines 3012--3012
+[]\T1/lmtt/b/n/12 rep[]\T1/lmtt/m/n/12 (incendio_estudio[]\T1/lmtt/b/n/12 $[]\T1/lmtt/m/n/12 FECHA_INIC[]\T1/lmtt/b/n/12 +[][]\T1/lmtt/m/n/12 30[],[]\T1/lmtt/b/n/12 length[]\T1/lmtt/m/n/12 (grid)),[]geometry 
+ []
+
+
+Overfull \hbox (27.78096pt too wide) in paragraph at lines 3013--3013
+[]\T1/lmtt/b/n/12 rep[]\T1/lmtt/m/n/12 (incendio_estudio[]\T1/lmtt/b/n/12 $[]\T1/lmtt/m/n/12 FECHA_INIC[]\T1/lmtt/b/n/12 +[][]\T1/lmtt/m/n/12 45[],[]\T1/lmtt/b/n/12 length[]\T1/lmtt/m/n/12 (grid)),[]geometry 
+ []
+
+
+Overfull \hbox (27.65598pt too wide) in paragraph at lines 3015--3015
+[]\T1/lmtt/b/n/12 rep[]\T1/lmtt/m/n/12 (incendio_estudio[]\T1/lmtt/b/n/12 $[]\T1/lmtt/m/n/12 FECHA_INIC[]-30[],[]\T1/lmtt/b/n/12 length[]\T1/lmtt/m/n/12 (grid)),[]geometry 
+ []
+
+
+Underfull \vbox (badness 3009) detected at line 3018
+ []
+
+LaTeX Info: Redefining \. on input line 3018.
+LaTeX Info: Redefining \% on input line 3018.
+LaTeX Info: Redefining \. on input line 3018.
+LaTeX Info: Redefining \% on input line 3018.
+[55]
+LaTeX Info: Redefining \. on input line 3070.
+LaTeX Info: Redefining \% on input line 3070.
+LaTeX Info: Redefining \. on input line 3070.
+LaTeX Info: Redefining \% on input line 3070.
+[56]
 No file apendice02n.bbl.
-LaTeX Info: Redefining \. on input line 3066.
-LaTeX Info: Redefining \% on input line 3066.
-LaTeX Info: Redefining \. on input line 3066.
-LaTeX Info: Redefining \% on input line 3066.
-[50] (./apendice02n.aux
+LaTeX Info: Redefining \. on input line 3107.
+LaTeX Info: Redefining \% on input line 3107.
+LaTeX Info: Redefining \. on input line 3107.
+LaTeX Info: Redefining \% on input line 3107.
+[57] (./apendice02n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
@@ -1417,18 +1744,18 @@ Package rerunfilecheck Info: File `apendice02n.out' has not changed.
 (rerunfilecheck)             Checksum: 3ACC059C6F8510A2080A8972F8FB5274;3958.
  ) 
 Here is how much of TeX's memory you used:
- 31283 strings out of 475935
- 594898 string characters out of 5787577
- 1967907 words of memory out of 5000000
- 52780 multiletter control sequences out of 15000+600000
- 609914 words of font info for 72 fonts, out of 8000000 for 9000
+ 32337 strings out of 475935
+ 615987 string characters out of 5787577
+ 2014907 words of memory out of 5000000
+ 53803 multiletter control sequences out of 15000+600000
+ 617222 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,12n,93p,6407b,501s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on apendice02n.pdf (50 pages, 396165 bytes).
+ 84i,12n,93p,985b,529s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on apendice02n.pdf (57 pages, 413562 bytes).
 PDF statistics:
- 486 PDF objects out of 1000 (max. 8388607)
- 407 compressed objects within 5 object streams
- 136 named destinations out of 1000 (max. 500000)
+ 528 PDF objects out of 1000 (max. 8388607)
+ 438 compressed objects within 5 object streams
+ 143 named destinations out of 1000 (max. 500000)
  189 words of extra memory for PDF output out of 10000 (max. 10000000)
 

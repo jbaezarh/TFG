@@ -546,6 +546,8 @@ linewidth=4pt]{mBox}
 
 %%%%%%% fin: latex_preambulo.tex PLLC
 
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 
 \begin{document}
 
@@ -589,7 +591,7 @@ linewidth=4pt]{mBox}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Librerías {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}  }
+\CommentTok{\# Librerías {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}  }
 \CommentTok{\# Se cargan las librerías que se usarán en esta sección}
 
 \FunctionTok{library}\NormalTok{(terra) }\CommentTok{\# Raster data}
@@ -599,7 +601,7 @@ linewidth=4pt]{mBox}
 
 
 
-\CommentTok{\# CRS de referencia {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# CRS de referencia {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \CommentTok{\# Será el CRS que se use en todo el proyecto}
 
 \NormalTok{pend }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\StringTok{"data\_raw/topograficas/pendiente.tif"}\NormalTok{)}
@@ -607,7 +609,7 @@ linewidth=4pt]{mBox}
 \FunctionTok{rm}\NormalTok{(pend) }\CommentTok{\# Se elimina de la memoria para liberar espacio}
 
 
-\CommentTok{\# Polígono de Andalucía {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Polígono de Andalucía {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \NormalTok{Andalucia }\OtherTok{\textless{}{-}} \FunctionTok{esp\_get\_ccaa}\NormalTok{(}\AttributeTok{ccaa =} \StringTok{"Andalucía"}\NormalTok{) }\CommentTok{\# Se obtiene el polígono de la comunidad autónoma de Andalucía}
 \NormalTok{andalucia\_proj }\OtherTok{\textless{}{-}} \FunctionTok{st\_transform}\NormalTok{(Andalucia,crs\_reference) }\CommentTok{\# Se transforma al sistema de referencia usado en el proyecto}
 
@@ -616,24 +618,25 @@ linewidth=4pt]{mBox}
 \CommentTok{\# Dado que no hay un mapa que indique claramente cuales son las zonas que se consideran "monte" en Andalucía y dado que los polígonos de incendios también cubren zonas agrícolas y urbanas (aunque menores en número que las zonas forestales), se considerará "monte" toda Andalucía, sin distinción. El sentido de esta variable es, precisamente, que pueda modificarse en futuros estudios}
 \NormalTok{area\_monte }\OtherTok{\textless{}{-}}\NormalTok{ andalucia\_proj}
 
-\CommentTok{\# Generación de la muestra {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Generación de la muestra {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 
 \CommentTok{\# Generación de la muestra estratificando por mes de forma que la proporción de observaciones positivas y negativas por mes (en todo el periodo) sea la misma}
 
-\DocumentationTok{\#\#  Tamaño muestral {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\#  Tamaño muestral {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \CommentTok{\# Se dispone de 1089 incencios correctamente registrados entre 2002 y 2022}
 
 \NormalTok{n\_in}\OtherTok{=}\DecValTok{10} \CommentTok{\# Número de puntos a muestrear dentro de cada poligono}
 \NormalTok{n\_out}\OtherTok{=}\DecValTok{1089}\SpecialCharTok{*}\DecValTok{10} \CommentTok{\# Número de muestras negativas}
 
-\DocumentationTok{\#\#  Generación aleatoria de fechas para las muestras negativas {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\#  Generación aleatoria de fechas para las muestras negativas {-}{-}{-}}
 
 \CommentTok{\# Primero se leen todos los datos de todos los archivos de incendios y se almacenan en la variable incendios}
 \NormalTok{incendios }\OtherTok{=} \ConstantTok{NULL}
 
 \ControlFlowTok{for}\NormalTok{ (year }\ControlFlowTok{in} \DecValTok{2002}\SpecialCharTok{:}\DecValTok{2022}\NormalTok{) \{}
 \NormalTok{  incendios }\OtherTok{=} \FunctionTok{rbind}\NormalTok{(incendios, }
-                    \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./data\_raw/incendios\_2000{-}2022/incendios\_"}\NormalTok{,year,}\StringTok{".shp"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+                    \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./data\_raw/incendios\_2000{-}2022/incendios\_"}\NormalTok{,}
+\NormalTok{                                   year,}\StringTok{".shp"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
                       \FunctionTok{select}\NormalTok{(}\StringTok{"FECHA\_INIC"} \OtherTok{=} \FunctionTok{matches}\NormalTok{(}\StringTok{"(?i)\^{}FECHA\_INIC$|\^{}fecha\_inic.$"}\NormalTok{))) }
 \NormalTok{\}}
 
@@ -661,7 +664,7 @@ linewidth=4pt]{mBox}
 
 \FunctionTok{rm}\NormalTok{(incendios, possible\_dates) }\CommentTok{\# Se borran para liberar memoria}
 
-\DocumentationTok{\#\#  Selección de localizaciones aleatorias {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\#  Selección de localizaciones aleatorias {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \CommentTok{\# Para la selección de la muestra se seguirá el siguiente procedimiento:}
 \CommentTok{\# 1. Para las muestra positivas: Se tomarán n\_in puntos aleatorios dentro de cada polígono de incendio y se le asociará a cada uno de ellos la fecha de inicio del incendio.}
 \CommentTok{\# 2. Para la muestras negativas: Se le asociará una localización aleatoria dentro de area\_monte a cada una de las fechas aleatorias generadas dentro del periodo de estudio (dates). Se tendrá en cuenta que no pueden haber muestras negativas a menos de 15km de una zona en la que haya habido un incendio en una franja de 6 días alrededor de la fecha de la observación (3 días antes a 3 días después).}
@@ -673,7 +676,8 @@ linewidth=4pt]{mBox}
   
   \FunctionTok{cat}\NormalTok{(}\StringTok{"YEAR "}\NormalTok{, year,}\StringTok{" : {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
   \FunctionTok{cat}\NormalTok{(}\StringTok{"  Generando muestras positivas...}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{  incendios }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./data\_raw/incendios\_2000{-}2022/incendios\_"}\NormalTok{,year,}\StringTok{".shp"}\NormalTok{),}\AttributeTok{quiet=}\NormalTok{T) }\SpecialCharTok{|\textgreater{}} 
+\NormalTok{  incendios }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./data\_raw/incendios\_2000{-}2022/incendios\_"}\NormalTok{,year,}
+                              \StringTok{".shp"}\NormalTok{),}\AttributeTok{quiet=}\NormalTok{T) }\SpecialCharTok{|\textgreater{}} 
     \FunctionTok{st\_transform}\NormalTok{(}\AttributeTok{crs =}\NormalTok{ crs\_reference) }\SpecialCharTok{|\textgreater{}} 
     \FunctionTok{rename\_with}\NormalTok{(}\AttributeTok{.fn=}\NormalTok{tolower) }\SpecialCharTok{|\textgreater{}} 
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fecha\_inic=}\FunctionTok{ymd}\NormalTok{(fecha\_inic),geometry,}\AttributeTok{.keep=}\StringTok{"none"}\NormalTok{)}
@@ -713,7 +717,9 @@ linewidth=4pt]{mBox}
 \NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{ }\CommentTok{\# Si ha habido algún incendio en una franja de 6 días en Andalucía (3 antes o 3 después)}
       \ControlFlowTok{repeat}\NormalTok{ \{}
 \NormalTok{        possible\_location }\OtherTok{=} \FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}
-        \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{st\_is\_within\_distance}\NormalTok{(possible\_location,}\FunctionTok{st\_union}\NormalTok{(incendios\_day), }\AttributeTok{dist =} \DecValTok{15000}\NormalTok{, }\AttributeTok{sparse =} \ConstantTok{FALSE}\NormalTok{)) \{}
+        \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{st\_is\_within\_distance}\NormalTok{(possible\_location, }
+                                   \FunctionTok{st\_union}\NormalTok{(incendios\_day), }
+                                   \AttributeTok{dist =} \DecValTok{15000}\NormalTok{, }\AttributeTok{sparse =} \ConstantTok{FALSE}\NormalTok{)) \{}
 \NormalTok{          possible\_location }\OtherTok{=} \FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}
           \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(locations)) \{}
 \NormalTok{            locations }\OtherTok{=}\NormalTok{ possible\_location}
@@ -743,7 +749,7 @@ linewidth=4pt]{mBox}
 \NormalTok{sample }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(points\_in,points\_out) }\CommentTok{\# La muestra generada}
 
 
-\CommentTok{\# Comprobación y corrección {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Comprobación y corrección {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \FunctionTok{summary}\NormalTok{(sample) }\CommentTok{\# Hay una fecha de un incendio errónea}
 \FunctionTok{max}\NormalTok{(sample}\SpecialCharTok{$}\NormalTok{date,}\AttributeTok{na.rm=}\NormalTok{T) }\CommentTok{\# "2033{-}08{-}15"}
 
@@ -751,8 +757,9 @@ linewidth=4pt]{mBox}
 \NormalTok{sample }\OtherTok{\textless{}{-}}\NormalTok{ sample[}\SpecialCharTok{{-}}\FunctionTok{which}\NormalTok{(sample}\SpecialCharTok{$}\NormalTok{date}\SpecialCharTok{==}\FunctionTok{max}\NormalTok{(sample}\SpecialCharTok{$}\NormalTok{date,}\AttributeTok{na.rm=}\NormalTok{T)),]}
 \FunctionTok{summary}\NormalTok{(sample) }\CommentTok{\# Corregido}
 
-\CommentTok{\# Almacenamiento de resultados {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\FunctionTok{save}\NormalTok{(sample,}\AttributeTok{file=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"salidas\_intermedias/sample\_strat\_"}\NormalTok{,}\FunctionTok{Sys.Date}\NormalTok{(),}\StringTok{".RData"}\NormalTok{))}
+\CommentTok{\# Almacenamiento de resultados {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\FunctionTok{save}\NormalTok{(sample,}\AttributeTok{file=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"salidas\_intermedias/sample\_strat\_"}\NormalTok{,}
+                        \FunctionTok{Sys.Date}\NormalTok{(),}\StringTok{".RData"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1065,7 +1072,41 @@ largo del trabajo.
 \NormalTok{          NDVI\_rast }\OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{rast}\NormalTok{(ruta))}
           \ControlFlowTok{if}\NormalTok{ (MONTH}\SpecialCharTok{==}\DecValTok{4} \SpecialCharTok{\&}\NormalTok{ YEAR}\SpecialCharTok{==}\DecValTok{2011}\NormalTok{)\{}
             \CommentTok{\# Ese archivo viene defectuoso y se le asigna el CRS de los otros archivos del mismo año (todos los demás del año tienen el mismo)}
-            \FunctionTok{crs}\NormalTok{(NDVI\_rast) }\OtherTok{=} \StringTok{"PROJCRS[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84 / UTM zone 30N}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{    BASEGEOGCRS[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{        DATUM[}\SpecialCharTok{\textbackslash{}"}\StringTok{World Geodetic System 1984}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ELLIPSOID[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84}\SpecialCharTok{\textbackslash{}"}\StringTok{,6378137,298.257223563,}\SpecialCharTok{\textbackslash{}n}\StringTok{                LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PRIMEM[}\SpecialCharTok{\textbackslash{}"}\StringTok{Greenwich}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,4326]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    CONVERSION[}\SpecialCharTok{\textbackslash{}"}\StringTok{UTM zone 30N}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{        METHOD[}\SpecialCharTok{\textbackslash{}"}\StringTok{Transverse Mercator}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,9807]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Latitude of natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8801]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Longitude of natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,{-}3,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8802]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Scale factor at natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.9996,}\SpecialCharTok{\textbackslash{}n}\StringTok{            SCALEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{unity}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8805]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{False easting}\SpecialCharTok{\textbackslash{}"}\StringTok{,500000,}\SpecialCharTok{\textbackslash{}n}\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8806]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{False northing}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8807]]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    CS[Cartesian,2],}\SpecialCharTok{\textbackslash{}n}\StringTok{        AXIS[}\SpecialCharTok{\textbackslash{}"}\StringTok{(E)}\SpecialCharTok{\textbackslash{}"}\StringTok{,east,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ORDER[1],}\SpecialCharTok{\textbackslash{}n}\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]],}\SpecialCharTok{\textbackslash{}n}\StringTok{        AXIS[}\SpecialCharTok{\textbackslash{}"}\StringTok{(N)}\SpecialCharTok{\textbackslash{}"}\StringTok{,north,}\SpecialCharTok{\textbackslash{}n}\StringTok{            ORDER[2],}\SpecialCharTok{\textbackslash{}n}\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    USAGE[}\SpecialCharTok{\textbackslash{}n}\StringTok{        SCOPE[}\SpecialCharTok{\textbackslash{}"}\StringTok{Navigation and medium accuracy spatial referencing.}\SpecialCharTok{\textbackslash{}"}\StringTok{],}\SpecialCharTok{\textbackslash{}n}\StringTok{        AREA[}\SpecialCharTok{\textbackslash{}"}\StringTok{Between 6°W and 0°W, northern hemisphere between equator and 84°N, onshore and offshore. Algeria. Burkina Faso. Côte\textquotesingle{} Ivoire (Ivory Coast). Faroe Islands {-} offshore. France. Ghana. Gibraltar. Ireland {-} offshore Irish Sea. Mali. Mauritania. Morocco. Spain. United Kingdom (UK).}\SpecialCharTok{\textbackslash{}"}\StringTok{],}\SpecialCharTok{\textbackslash{}n}\StringTok{        BBOX[0,{-}6,84,0]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,32630]]"}
+            \FunctionTok{crs}\NormalTok{(NDVI\_rast) }\OtherTok{=} 
+              \StringTok{"PROJCRS[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84 / UTM zone 30N}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{    }
+\StringTok{            BASEGEOGCRS[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            DATUM[}\SpecialCharTok{\textbackslash{}"}\StringTok{World Geodetic System 1984}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}\StringTok{            }
+\StringTok{            ELLIPSOID[}\SpecialCharTok{\textbackslash{}"}\StringTok{WGS 84}\SpecialCharTok{\textbackslash{}"}\StringTok{,6378137,298.257223563,}\SpecialCharTok{\textbackslash{}n}\StringTok{     }
+\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            PRIMEM[}\SpecialCharTok{\textbackslash{}"}\StringTok{Greenwich}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}\StringTok{  }
+\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,4326]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            CONVERSION[}\SpecialCharTok{\textbackslash{}"}\StringTok{UTM zone 30N}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            METHOD[}\SpecialCharTok{\textbackslash{}"}\StringTok{Transverse Mercator}\SpecialCharTok{\textbackslash{}"}\StringTok{,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,9807]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Latitude of natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8801]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Longitude of natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,{-}3,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ANGLEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{degree}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.0174532925199433],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8802]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{Scale factor at natural origin}\SpecialCharTok{\textbackslash{}"}\StringTok{,0.9996,}\SpecialCharTok{\textbackslash{}n}\StringTok{ }
+\StringTok{            SCALEUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{unity}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8805]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{False easting}\SpecialCharTok{\textbackslash{}"}\StringTok{,500000,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8806]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            PARAMETER[}\SpecialCharTok{\textbackslash{}"}\StringTok{False northing}\SpecialCharTok{\textbackslash{}"}\StringTok{,0,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,8807]]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            CS[Cartesian,2],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            AXIS[}\SpecialCharTok{\textbackslash{}"}\StringTok{(E)}\SpecialCharTok{\textbackslash{}"}\StringTok{,east,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ORDER[1],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            AXIS[}\SpecialCharTok{\textbackslash{}"}\StringTok{(N)}\SpecialCharTok{\textbackslash{}"}\StringTok{,north,}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            ORDER[2],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            LENGTHUNIT[}\SpecialCharTok{\textbackslash{}"}\StringTok{metre}\SpecialCharTok{\textbackslash{}"}\StringTok{,1]],}\SpecialCharTok{\textbackslash{}n}
+\StringTok{            USAGE[}\SpecialCharTok{\textbackslash{}n}\StringTok{        SCOPE[}\SpecialCharTok{\textbackslash{}"}\StringTok{Navigation and medium accuracy spatial referencing.}\SpecialCharTok{\textbackslash{}"}\StringTok{],}\SpecialCharTok{\textbackslash{}n}\StringTok{        AREA[}\SpecialCharTok{\textbackslash{}"}\StringTok{Between 6°W and 0°W, northern hemisphere between equator and 84°N, onshore and offshore. Algeria. Burkina Faso. Côte\textquotesingle{} Ivoire (Ivory Coast). Faroe Islands {-} offshore. France. Ghana. Gibraltar. Ireland {-} offshore Irish Sea. Mali. Mauritania. Morocco. Spain. United Kingdom (UK).}\SpecialCharTok{\textbackslash{}"}\StringTok{],}\SpecialCharTok{\textbackslash{}n}\StringTok{        BBOX[0,{-}6,84,0]],}\SpecialCharTok{\textbackslash{}n}\StringTok{    ID[}\SpecialCharTok{\textbackslash{}"}\StringTok{EPSG}\SpecialCharTok{\textbackslash{}"}\StringTok{,32630]]"}
 \NormalTok{          \} }
           
 \NormalTok{          dataset[isMY,]}\SpecialCharTok{$}\NormalTok{NDVI }\OtherTok{=}\NormalTok{ terra}\SpecialCharTok{::}\FunctionTok{extract}\NormalTok{(NDVI\_rast,dataset[isMY,])[,}\DecValTok{2}\NormalTok{]}

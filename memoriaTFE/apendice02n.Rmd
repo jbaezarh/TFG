@@ -6,6 +6,8 @@ output:
     citation_package: natbib  # comentado usa: pandoc-citeproc
     template: latex/templateMemoriaTFE.tex
     pandoc_args: ["--metadata-file=cabecera_capitulos.yaml"]
+    includes:
+       in_header: "wrap-code.tex"
   html_document: default
 #bibliography: bib/library.bib # descomentar si: editor visual RStudio  
 ---
@@ -28,17 +30,17 @@ knitr::opts_chunk$set(eval = FALSE)
 
 ## Generación de la muestra
 ```{r eval=FALSE}
-# Librerías ------------------------------------------------------------------  
+# Librerías --------------------------------------------------------  
 # Se cargan las librerías que se usarán en esta sección
 
 library(terra) # Raster data
 library(sf) # Vector data
 library(mapSpain) # Polígonos de las regiones de España
 library(tidyverse) # Manipulación de datos
+library(lubridate) # Manipulación de fechas
 
 
-
-# CRS de referencia -------------------------------------------------------
+# CRS de referencia -----------------------------------------------
 # Será el CRS que se use en todo el proyecto
 
 pend <- rast("data_raw/topograficas/pendiente.tif")
@@ -46,7 +48,7 @@ crs_reference = crs(pend)
 rm(pend) # Se elimina de la memoria para liberar espacio
 
 
-# Polígono de Andalucía ---------------------------------------------------
+# Polígono de Andalucía -------------------------------------------
 Andalucia <- esp_get_ccaa(ccaa = "Andalucía") # Se obtiene el polígono de la comunidad autónoma de Andalucía
 andalucia_proj <- st_transform(Andalucia,crs_reference) # Se transforma al sistema de referencia usado en el proyecto
 
@@ -55,24 +57,25 @@ andalucia_proj <- st_transform(Andalucia,crs_reference) # Se transforma al siste
 # Dado que no hay un mapa que indique claramente cuales son las zonas que se consideran "monte" en Andalucía y dado que los polígonos de incendios también cubren zonas agrícolas y urbanas (aunque menores en número que las zonas forestales), se considerará "monte" toda Andalucía, sin distinción. El sentido de esta variable es, precisamente, que pueda modificarse en futuros estudios
 area_monte <- andalucia_proj
 
-# Generación de la muestra ------------------------------------------------
+# Generación de la muestra ------------------------------------
 
 # Generación de la muestra estratificando por mes de forma que la proporción de observaciones positivas y negativas por mes (en todo el periodo) sea la misma
 
-##  Tamaño muestral -----------------------------------------------------
+##  Tamaño muestral --------------------------------------------
 # Se dispone de 1089 incencios correctamente registrados entre 2002 y 2022
 
 n_in=10 # Número de puntos a muestrear dentro de cada poligono
 n_out=1089*10 # Número de muestras negativas
 
-##  Generación aleatoria de fechas para las muestras negativas ----------
+##  Generación aleatoria de fechas para las muestras negativas ---
 
 # Primero se leen todos los datos de todos los archivos de incendios y se almacenan en la variable incendios
 incendios = NULL
 
 for (year in 2002:2022) {
   incendios = rbind(incendios, 
-                    st_read(paste0("./data_raw/incendios_2000-2022/incendios_",year,".shp")) %>% 
+                    st_read(paste0("./data_raw/incendios_2000-2022/incendios_",
+                                   year,".shp")) %>% 
                       select("FECHA_INIC" = matches("(?i)^FECHA_INIC$|^fecha_inic.$"))) 
 }
 
@@ -100,7 +103,7 @@ dates = sample(possible_dates$date,
 
 rm(incendios, possible_dates) # Se borran para liberar memoria
 
-##  Selección de localizaciones aleatorias ------------------------------
+##  Selección de localizaciones aleatorias ------------------------
 # Para la selección de la muestra se seguirá el siguiente procedimiento:
 # 1. Para las muestra positivas: Se tomarán n_in puntos aleatorios dentro de cada polígono de incendio y se le asociará a cada uno de ellos la fecha de inicio del incendio.
 # 2. Para la muestras negativas: Se le asociará una localización aleatoria dentro de area_monte a cada una de las fechas aleatorias generadas dentro del periodo de estudio (dates). Se tendrá en cuenta que no pueden haber muestras negativas a menos de 15km de una zona en la que haya habido un incendio en una franja de 6 días alrededor de la fecha de la observación (3 días antes a 3 días después).
@@ -112,7 +115,8 @@ for (year in 2002:2022) {
   
   cat("YEAR ", year," : -------------------------------------\n")
   cat("  Generando muestras positivas...\n")
-  incendios <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",year,".shp"),quiet=T) |> 
+  incendios <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",year,
+                              ".shp"),quiet=T) |> 
     st_transform(crs = crs_reference) |> 
     rename_with(.fn=tolower) |> 
     mutate(fecha_inic=ymd(fecha_inic),geometry,.keep="none")
@@ -152,7 +156,9 @@ for (year in 2002:2022) {
     } else { # Si ha habido algún incendio en una franja de 6 días en Andalucía (3 antes o 3 después)
       repeat {
         possible_location = st_sample(area_monte,size=1)
-        if (!st_is_within_distance(possible_location,st_union(incendios_day), dist = 15000, sparse = FALSE)) {
+        if (!st_is_within_distance(possible_location, 
+                                   st_union(incendios_day), 
+                                   dist = 15000, sparse = FALSE)) {
           possible_location = st_sample(area_monte,size=1)
           if (is.null(locations)) {
             locations = possible_location
@@ -182,7 +188,7 @@ for (year in 2002:2022) {
 sample <- rbind(points_in,points_out) # La muestra generada
 
 
-# Comprobación y corrección -----------------------------------------------
+# Comprobación y corrección -----------------------------------
 summary(sample) # Hay una fecha de un incendio errónea
 max(sample$date,na.rm=T) # "2033-08-15"
 
@@ -190,8 +196,9 @@ max(sample$date,na.rm=T) # "2033-08-15"
 sample <- sample[-which(sample$date==max(sample$date,na.rm=T)),]
 summary(sample) # Corregido
 
-# Almacenamiento de resultados --------------------------------------------
-save(sample,file=paste0("salidas_intermedias/sample_strat_",Sys.Date(),".RData"))
+# Almacenamiento de resultados ----------------------------------
+save(sample,file=paste0("salidas_intermedias/sample_strat_",
+                        Sys.Date(),".RData"))
 ```
 
 ## Asignación de variables a localizaciones
@@ -199,14 +206,15 @@ save(sample,file=paste0("salidas_intermedias/sample_strat_",Sys.Date(),".RData")
 A continuación se define la función `asignar_variables` que dada una muestra de puntos en Andalucía con fechas comprendidas entre 2002 y 2022 le asocia a cada observación todos los valores de las variables consideradas en el estudio. Esta función se usará varias veces a lo largo del trabajo.
 
 ```{r eval=FALSE}
-# Librerías ---------------------------------------------------------------
+# Librerías -----------------------------------------
 # Se cargan las librerías que se usarán en esta sección
 library(nasapower) # Para obtener la información meteorológica
 library(raster, include.only = c("rasterFromXYZ"))  # Función para construir rasters a partir de data.frames
-library(tidyverse) 
-library(sf)
-library(terra)
-library(mapSpain)
+library(tidyverse) # Manipulación de datos
+library(sf) # Vector data
+library(terra) # Raster data
+library(mapSpain) # Polígonos de las regiones de España
+library(lubridate) # Manipulación de fechas
 
 asignar_variables = function(sample) {
   # Argumentos:
@@ -216,7 +224,7 @@ asignar_variables = function(sample) {
   crs_reference = st_crs(sample) # Se usa el sistema de referencia de coordenadas de la muestra
   and = esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos)) # Polígono de Andalucía
   
-  # Variables meteorológicas ------------------------------------------------
+  # Variables meteorológicas ----------------------------
   cat("Asignando variables meteorológicas...\n")
   
   # Tranformamos los datos a WGS84
@@ -268,10 +276,11 @@ asignar_variables = function(sample) {
     dataset = rbind(dataset,points)
   }
   
-  rm(points,points_WGS84,daily_single_ag,clim_day,id_rast_day,points_day,day,year,andalucia_WGS84)
+  rm(points,points_WGS84,daily_single_ag,clim_day,
+     id_rast_day,points_day,day,year,andalucia_WGS84)
   
   
-  # Variables topográficas --------------------------------------------------
+  # Variables topográficas -----------------------------
   cat("Asignando variables topográficas...\n")
   elev <- rast("data_raw/topograficas/elevacion.tif")
   pend <- rast("data_raw/topograficas/pendiente.tif")
@@ -284,7 +293,8 @@ asignar_variables = function(sample) {
   curv <- as.numeric(curv)
   
   # Se extraen los valores de cada una de las capas
-  var_topograficas <- list(elevacion = elev,pendiente = pend,orientacion = orient,curvatura = curv)
+  var_topograficas <- list(elevacion = elev,pendiente = pend,
+                           orientacion = orient,curvatura = curv)
   
   points_topograficas <- sapply(var_topograficas,function(x) terra::extract(x,dataset))[2,] |> 
     as_tibble()
@@ -294,7 +304,7 @@ asignar_variables = function(sample) {
   rm(elev,pend,orient,curv,var_topograficas,points_topograficas)
   
   
-  # Variables antropológicas ------------------------------------------------
+  # Variables antropológicas -------------------------------
   cat("Asignando variables antropológicas...\n")
   
   ## Para optimizar el cálculo evitando que se repitan cálculos si hay puntos repetidos:!!
@@ -391,7 +401,7 @@ asignar_variables = function(sample) {
   
   dataset_geoms$uso_suelo = terra::extract(UsoSuelo_rast,dataset_geoms)[,2]
   
-  # Hidrográficas -----------------------------------------------------------
+  # Hidrográficas -------------------------------------
   cat("Asignando variables hidrográficas...\n")
   
   ### Distancia a ríos: ----
@@ -412,7 +422,7 @@ asignar_variables = function(sample) {
   dataset <- dataset %>% 
     st_join(dataset_geoms,left = TRUE) # Es un left join espacial
   
-  # Demográficas -----------------------------------------------------------
+  # Demográficas --------------------------------------
   cat("Asignando variables demográficas...\n")
   
   ### Población y densidad de población: ----
@@ -465,7 +475,7 @@ asignar_variables = function(sample) {
     rename("municipio" = "Municipio",
            "poblacion" = "Poblacion")
   
-  # Vegetación --------------------------------------------------------------
+  # Vegetación ----------------------------------------
   cat("Asignando variables de vegetación...\n")
   
   ### NDVI ----
@@ -496,7 +506,8 @@ asignar_variables = function(sample) {
           NDVI_rast = as.numeric(rast(ruta))
           if (MONTH==4 & YEAR==2011){
             # Ese archivo viene defectuoso y se le asigna el CRS de los otros archivos del mismo año (todos los demás del año tienen el mismo)
-            crs(NDVI_rast) = "PROJCRS[\"WGS 84 / UTM zone 30N\",\n    BASEGEOGCRS[\"WGS 84\",\n        DATUM[\"World Geodetic System 1984\",\n            ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4326]],\n    CONVERSION[\"UTM zone 30N\",\n        METHOD[\"Transverse Mercator\",\n            ID[\"EPSG\",9807]],\n        PARAMETER[\"Latitude of natural origin\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",-3,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9996,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",500000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",0,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"(E)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"(N)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Navigation and medium accuracy spatial referencing.\"],\n        AREA[\"Between 6°W and 0°W, northern hemisphere between equator and 84°N, onshore and offshore. Algeria. Burkina Faso. Côte' Ivoire (Ivory Coast). Faroe Islands - offshore. France. Ghana. Gibraltar. Ireland - offshore Irish Sea. Mali. Mauritania. Morocco. Spain. United Kingdom (UK).\"],\n        BBOX[0,-6,84,0]],\n    ID[\"EPSG\",32630]]"
+            crs(NDVI_rast) = 
+              "PROJCRS[\"WGS 84 / UTM zone 30N\",\n    BASEGEOGCRS[\"WGS 84\",\n        DATUM[\"World Geodetic System 1984\",\n            ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4326]],\n    CONVERSION[\"UTM zone 30N\",\n        METHOD[\"Transverse Mercator\",\n            ID[\"EPSG\",9807]],\n        PARAMETER[\"Latitude of natural origin\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",-3,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9996,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",500000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",0,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"(E)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"(N)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Navigation and medium accuracy spatial referencing.\"],\n        AREA[\"Between 6°W and 0°W, northern hemisphere between equator and 84°N, onshore and offshore. Algeria. Burkina Faso. Côte' Ivoire (Ivory Coast). Faroe Islands - offshore. France. Ghana. Gibraltar. Ireland - offshore Irish Sea. Mali. Mauritania. Morocco. Spain. United Kingdom (UK).\"],\n        BBOX[0,-6,84,0]],\n    ID[\"EPSG\",32630]]"
           } 
           
           dataset[isMY,]$NDVI = terra::extract(NDVI_rast,dataset[isMY,])[,2]
@@ -507,7 +518,7 @@ asignar_variables = function(sample) {
   }
   
   
-  # Factores -------------------------------------------------------------
+  # Factores ------------------------------------------
   # Codificación de las variables categóricas como factores:
   
   dataset <- dataset |> 
@@ -538,7 +549,9 @@ sample <- na.omit(sample)
 dataset <- asignar_variables(sample)
 
 # Se almacenan los resultados
-save(dataset,file = paste0("salidas_intermedias/dataset_strat_completo",Sys.Date(),".RData"))
+save(dataset,
+     file = paste0("salidas_intermedias/dataset_strat_completo",
+                   Sys.Date(),".RData"))
 ```
 
 ## Depuración de la muestra
@@ -546,7 +559,7 @@ save(dataset,file = paste0("salidas_intermedias/dataset_strat_completo",Sys.Date
 En la propia función usada para generar la muestra ya se ajustaron los tipos de las variables y se codificaron adecuadamente las variables *WD10M* y *orientacion*. A continuación se estudian los casos faltantes y finalmente se decide eliminarlos.
 
 ```{r eval=FALSE}
-# Librerías ---------------------------------------------------------------
+# Librerías --------------------------------------------
 # Se cargan las librerías que se usarán en esta sección
 library(tidyverse) # Manipulación de datos 
 library(sf) # Vector data
@@ -555,16 +568,16 @@ library(mapSpain) # Polígonos de regiones de España
 library(magrittr) # Operador %<>% 
 library(skimr) # Resumen de datos
 
-# Carga de los datos ------------------------------------------------------
+# Carga de los datos -----------------------------------
 # Se carga la muestra con todas las variables construida anteriormente
 load("salidas_intermedias/dataset_strat_completo2024-04-26.RData")
 
 
-# Codificación variable fire: ---------------------------------------------
+# Codificación variable fire: --------------------------
 datos <- dataset |> 
   mutate(fire = as.factor(fire))
 
-# Análisis de valores perdidos: -------------------------------------------
+# Análisis de valores perdidos: ------------------------
 datos %>% skimr()
 dataset %>% apply(1,anyNA) %>% sum() # 200 registros con valores perdidos
 
@@ -578,7 +591,7 @@ dataset %>% apply(1,anyNA) %>% sum() # 200 registros con valores perdidos
 
 datos1 = datos %>% drop_na()
 
-# Valores perdidos en variables topográficas ------------------------------
+# Valores perdidos en variables topográficas -----------
 Andalucia <- esp_get_ccaa(ccaa = "Andalucía") # Se carga el mapa de Andalucía
 andalucia_proj <- st_transform(Andalucia,st_crs(dataset)) # Se proyecta al sistema de referencia de los datos
 
@@ -595,8 +608,8 @@ datos |>
   count() #53 registros con algún valor perdido entre las variables topográficas
 
 
-# Valores perdidos en variables demográficas ------------------------------
-# Se observa que los valores perdidos se deben a que los datos no estan disponibles en el conjunto de datos disponible en el INE
+# Valores perdidos en variables demográficas -------------------
+# Se observa que los valores perdidos se deben a que los datos no están disponibles en el conjunto de datos disponible en el INE
 datos |> 
   st_drop_geometry() |> 
   filter(is.na(poblacion)) |> 
@@ -612,13 +625,13 @@ datos |>
   filter(is.na(poblacion)) |> 
   count() # 85 resgistros con valores perdidos en las variables demográficas
 
-# Valores perdidos en uso_suelo -------------------------------------------
+# Valores perdidos en uso_suelo -----------------------------
 dataset |> filter(is.na(uso_suelo)) %>% count() # 8 registros con valores perdidos en la variable uso_suelo
 
 dataset |> filter(is.na(uso_suelo)) |> st_geometry() |> plot(pch=16,col="red",add=T)
 # De nuevo se observa que se encuentran en los límites de Andalucía con la costa
 
-# Valores perdidos en NDVI ------------------------------------------------
+# Valores perdidos en NDVI -----------------------------------
 # Se muestran en el mapa
 plot(st_geometry(andalucia_proj),reset=F)
 dataset |> filter(is.na(NDVI)) |> st_geometry() |> plot(pch=16,col="red",add=T) 
@@ -648,20 +661,22 @@ NDVI_mes |>
 
 # La mayor parte de los valores perdidos en la variable uso_suelo son debidos a que el archivo tiff para ese mes no está disponible en la REDIAM. Los meses de los que no se dispone del ráster NDVI son: "2003-01", "2003-04", "2017-02", "2018-11", "2020-11", "2021-12", "2022-03" y "2022-12".
 
-# Eliminación registros con valores perdidos ------------------------------
+# Eliminación registros con valores perdidos -----------------
 # Tras explorar otras opciones finalmente se opta por eliminar los registros
 # que contienen valroes perdidos:
 datos = datos %>% drop_na()
 
-# Almacenamiento del conjunto de datos depurados --------------------------
+# Almacenamiento del conjunto de datos depurados -------------
 # Se guarda el conjunto de datos depurados
-save(datos, file = paste0("salidas_intermedias/datos_strat_depurados_geom_",Sys.Date(),".RData"))
+save(datos, 
+     file = paste0("salidas_intermedias/datos_strat_depurados_geom_",
+                   Sys.Date(),".RData"))
 
 ```
 
 ## Análisis exploratorio
 ```{r eval=FALSE}
-# Librerías ---------------------------------------------------------------
+# Librerías -------------------------------------------------
 # Se cargan las librerías que se usarán en esta sección
 library(tidyverse) # Manipulación de datos 
 library(sf) # Vector data
@@ -673,17 +688,17 @@ library(corrplot) # Gráfico de coorrelaciones
 library(GGally) # Coordenadas paralelas
 library(ggpubr) # Función ggarrange
 
-# Carga de los datos ------------------------------------------------------
+# Carga de los datos --------------------------------------
 load("salidas_intermedias/datos_strat_depurados_geom_2024-05-03.RData")
 
-# Resumen numérico --------------------------------------------------------
+# Resumen numérico ----------------------------------------
 datos %>%  st_drop_geometry %>% skim(.data_name = "datos")
 ```
 
 ### Variable objetivo
 
 ```{r eval=FALSE}
-# Distribución temporal ---------------------------------------------------
+# Distribución temporal -----------------------------------
 # Mensual:
 g_mes <- datos %>% 
   st_drop_geometry() %>% 
@@ -745,7 +760,7 @@ g_dia
 # Para mostrar los tres gráficos juntos
 ggarrange(g_dia,g_mes,g_year,ncol=1,common.legend = T,legend = "bottom")
 
-# Distribución temporal ---------------------------------------------------
+# Distribución temporal -----------------------------------
 # Se cargan los polígonos de las provincias
 and <- esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos))
 prov <- esp_get_prov() %>% filter(nuts2.name=="Andalucía") %>% st_transform(st_crs(datos))
@@ -1175,14 +1190,14 @@ datos_numeric = datos %>%
   select(where(is.numeric)) %>% 
   st_drop_geometry()
 
-# Correlaciones ----------------------------------------------------------
+# Correlaciones -------------------------------------------
 R = cor(datos_numeric)
 corrplot(R,method = "ellipse",type = "lower")
 summary(R-diag(diag(R)))
 # Las variables más correlacionadas en la muestra son T2M con RH2M (negativamente, -0.71), T2M con GWETTOP (negativamente, -0.69) y GWETTOP con R2HM (positivamente, 0.68). Tiene sentido que la humedad del aire a dos metros esté correlacionada positivamente con la humedad del suelo y que ambas estén -egativamente correlacionadas con la temperatura del aire. También están correladas la población con la densidad de población (positivamente,0.63).
 
 
-# Gráfico de coordenadas paralelas ---------------------------------------
+# Gráfico de coordenadas paralelas ------------------------
 datos |> 
   select(fire,where(is.numeric)) |> 
   ggparcoord(columns=2:19,alphaLines=0.1,groupColumn = "fire") +
@@ -1196,7 +1211,7 @@ datos |>
   theme(plot.title = element_text(size = 9),
         axis.text.x = element_text(angle = 90))
 
-# Boxplots ---------------------------------------------------------------
+# Boxplots ------------------------------------------------
 boxplots <- map(names(datos_numeric), ~ ggplot(datos, aes(x = fire, y = .data[[.x]],fill=fire)) +
                   geom_boxplot() +
                   scale_fill_hue(direction = -1) +
@@ -1204,7 +1219,7 @@ boxplots <- map(names(datos_numeric), ~ ggplot(datos, aes(x = fire, y = .data[[.
                   labs(title = paste(.x, "~ fire")))
 ggarrange(plotlist = boxplots,ncol=6,nrow=3)
 
-# PCA --------------------------------------------------------------------
+# PCA -----------------------------------------------------
 pca <- princomp(datos_numeric,cor=T)
 summary(pca) 
 # Se necesitan al menos 11 componentes principales para explicar el 80% de la variabilidad de las 18 variables numéricas de la muestra (tipificadas) y al menos 14 para explicar el 90%. Esto refleja, la complejidad del conjunto de datos.
@@ -1216,12 +1231,15 @@ datos_categ <- datos %>%
   select(WD10M,orientacion,enp,uso_suelo) %>% 
   st_drop_geometry()
 
-# Histogramas ------------------------------------------------------------
-histogramas <- map(names(datos_categ), ~ ggplot(datos, aes(x = .data[[.x]], fill = fire)) +
+# Histogramas ---------------------------------------------
+histogramas <- map(names(datos_categ), 
+                   ~ ggplot(datos, aes(x = .data[[.x]], 
+                                       fill = fire)) +
                     geom_bar(position = "dodge", alpha = 0.8) +
                     scale_fill_hue(direction = - 1) +
                     theme_minimal() +
-                    labs(title = .x)+theme(axis.text.x = element_text(size=7)))
+                    labs(title = .x)+
+                    theme(axis.text.x = element_text(size=7)))
 
 ggarrange(plotlist = histogramas, ncol = 2, nrow = ceiling(length(histogramas)/2))
 ```
@@ -1230,7 +1248,7 @@ ggarrange(plotlist = histogramas, ncol = 2, nrow = ceiling(length(histogramas)/2
 
 ## Modelos
 ```{r}
-# Librerías --------------------------------------------------------------
+# Librerías -----------------------------------------
 # Se cargan las librerías que se usarán en esta sección
 library(tidyverse) # Manipulación de datos 
 library(sf) # Vector data
@@ -1240,17 +1258,17 @@ library(magrittr) # Operador %<>%
 library(ggpubr) # Función ggarrange
 library(knitr) # Función kable
 
-# Carga de datos --------------------------------------------------------- 
+# Carga de datos ------------------------------------ 
 load("salidas_intermedias/datos_strat_depurados_geom_2024-05-03.RData")
 
-# Agrupación clases uso_suelo --------------------------------------------
+# Agrupación clases uso_suelo -----------------------
 # Nos quedamos con los 7 niveles del factor más frecuentes (clases 2 y 3)
 datos <- datos |> 
   mutate(uso_suelo = fct_lump(uso_suelo,
                               n = 7,
                               other_level= "Otro"))
 
-# Funciones para la evaluación de modelos --------------------------------
+# Funciones para la evaluación de modelos ------------
 # Función para obtener las medidas de rendimiento de los modelos a partir de un objeto predict 
 get_metrics <- function(pred) {
   list(
@@ -1811,14 +1829,15 @@ svm_rbf_best
 ### Comparación 
 ```{r eval=FALSE}
 models = tibble(model_name = c("lr","lr_pca","dt","rf","svm_linear","svm_rbf","knn"),
-                models_tune = list(lr_res,lr_pca_res,dt_res,rf_res2,svm_res,svm_rbf_res,knn_res),
-                models_workflow = list(lr_workflow,lr_pca_workflow,dt_workflow,rf_workflow2,svm_workflow,svm_rbf_workflow,knn_workflow))
+                models_tune = list(lr_res, lr_pca_res, dt_res, rf_res2, svm_res, svm_rbf_res, knn_res),
+                models_workflow = list(lr_workflow, lr_pca_workflow, dt_workflow, rf_workflow2, svm_workflow, svm_rbf_workflow, knn_workflow))
 
 # save(models, file="salidas_intermedias/all_models.RData")
 
 load("salidas_intermedias/all_models.RData")
 models = models %>% 
-  mutate(best_tuning = map(models_tune,function(x) select_best(x,metric = "accuracy")),
+  mutate(best_tuning = map(models_tune,
+                           function(x) select_best(x, metric = "accuracy")),
          best_metrics = map2(models_tune,
                              best_tuning,                                               ~ collect_predictions(.x,parameters = .y) %>%                                                  get_metrics() %>%                                                  extract2(1)), # Para extraer solo las medidas y no la matriz de confusión
          roc = map2(models_tune,
@@ -1867,7 +1886,7 @@ Se unen los conjuntos training y validation para entrenar el modelo final
 ```{r eval=FALSE}
 set.seed(345)
 models <- models %>% 
-  mutate(final_workflow = map2(models_workflow, best_tuning,finalize_workflow),
+  mutate(final_workflow = map2(models_workflow, best_tuning, finalize_workflow),
          last_fit = map(final_workflow, function(x) last_fit(x,splits,add_validation_set=T)))
 
 models = models %>% 
@@ -1880,7 +1899,7 @@ models = models %>%
 # save(models, file="salidas_intermedias/all_models_test.RData")
 
 # metricas en test
-test_metrics = models %>% select(model_name,test_metrics) %>% unnest(test_metrics)
+test_metrics = models %>% select(model_name, test_metrics) %>% unnest(test_metrics)
 kable(test_metrics,digits=3)
 
 # plot
@@ -1943,7 +1962,7 @@ last_rf_fit %>%
 
 ## Aplicación de los modelos
 ```{r eval=FALSE}
-# Librerías --------------------------------------------------------------
+# Librerías -------------------------------------------
 # Se cargan las librerías que se usarán en esta sección
 library(tidyverse) # Manipulación de datos 
 library(sf) # Vector data
@@ -1953,11 +1972,12 @@ library(knitr) # Función kable
 library(skimr) # Función skim
 library(terra)
 
-# Carga de datos ---------------------------------------------------------
+# Carga de datos ----------------------------------------
 load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData") 
 
-# Polígono de Andalucía --------------------------------------------------
-and <- esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos))
+# Polígono de Andalucía ---------------------------------
+and <- esp_get_ccaa(ccaa = "Andalucía") %>% 
+  st_transform(st_crs(datos))
 
 ```
 
@@ -1986,10 +2006,12 @@ sample = NULL
 
 for (m in 1:12) {
   if (is.null(sample)){
-    sample <- tibble(date = rep(ymd(paste("2022",m,"15",sep="/"))),geometry = grid) %>% st_sf()
+    sample <- tibble(date = rep(ymd(paste("2022",m,"15",sep="/"))),
+                     geometry = grid) %>% st_sf()
   } else
   sample <- sample %>% 
-    bind_rows(tibble(date = rep(ymd(paste("2022",m,"15",sep="/"))),geometry = grid))
+    bind_rows(tibble(date = rep(ymd(paste("2022",m,"15",sep="/"))),
+                     geometry = grid))
 }
 
 ```

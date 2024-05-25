@@ -44,10 +44,11 @@ output:
       # before_body: portadas/latex_paginatitulo_modTFE.tex
      # before_body: portadas/latex_paginatitulo_modTFGE.tex
 #      before_body: portadas/latex_paginatitulo_modTFGM.tex
-     before_body: portadas/latex_paginatitulo_modTFDGME.tex
+      before_body: portadas/latex_paginatitulo_modTFDGME.tex
 #      before_body: portadas/latex_paginatitulo_modTFMDS.tex
 #      before_body: portadas/latex_paginatitulo_mod_OV01.tex
       #in_header: latex/latex_preambulo.tex
+      in_header: "wrap-code.tex"
       #after_body: latex/latex_antes_enddoc.tex
 ---
 
