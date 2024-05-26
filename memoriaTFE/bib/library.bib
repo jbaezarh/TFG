@@ -1,14 +1,5 @@
 # Fichero de bibliografía (escribir en UTF-8)
 
-@misc{lizlópez2023spain,
-      title={Spain on Fire: A novel wildfire risk assessment model based on image satellite processing and atmospheric information}, 
-      author={Helena Liz-López and Javier Huertas-Tato and Jorge Pérez-Aracil and Carlos Casanova-Mateo and Julia Sanz-Justo and David Camacho},
-      year={2023},
-      eprint={2306.05045},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
-
 @book{hastie2009elements,
   title={The Elements of Statistical Learning: Data Mining, Inference, and Prediction},
   author={Hastie, T. and Tibshirani, R. and Friedman, J.H.},
@@ -162,13 +153,6 @@ abstract = {The advent of Big Data has ushered a new era of scientific breakthro
 }
 
 
-@article{Stojanova2006,
-author = {Stojanova, Daniela and Panov, Pance and Kobler, Andrej and Džeroski, Sašo and Taškova, Katerina},
-year = {2006},
-month = {01},
-pages = {},
-title = {Learning to predict forest fires with different data mining techniques}
-}
 
 
 
@@ -233,13 +217,71 @@ title = {Learning to predict forest fires with different data mining techniques}
 }
 
 @Manual{R-mapspain,
-    title = {{mapSpain}: Administrative Boundaries of Spain},
-    year = {2024},
-    version = {0.9.0},
-    author = {Diego Hernangómez},
-    doi = {10.5281/zenodo.5366622},
-    url = {https://ropenspain.github.io/mapSpain/},
-    abstract = {Administrative Boundaries of Spain at several levels (Autonomous Communities, Provinces, Municipalities) based on the GISCO Eurostat database <https://ec.europa.eu/eurostat/web/gisco> and CartoBase SIANE from Instituto Geografico Nacional <https://www.ign.es/>. It also provides a leaflet plugin and the ability of downloading and processing static tiles.},
-  }
+  title = {{mapSpain}: Administrative Boundaries of Spain},
+  year = {2024},
+  version = {0.9.0},
+  author = {Diego Hernangómez},
+  doi = {10.5281/zenodo.5366622},
+  url = {https://ropenspain.github.io/mapSpain/},
+  abstract = {Administrative Boundaries of Spain at several levels (Autonomous Communities, Provinces, Municipalities) based on the GISCO Eurostat database <https://ec.europa.eu/eurostat/web/gisco> and CartoBase SIANE from Instituto Geografico Nacional <https://www.ign.es/>. It also provides a leaflet plugin and the ability of downloading and processing static tiles.},
+}
 
-  
+
+# Artículos WILD FIRES
+
+@article{ReviewMLApplicationsWF,
+author = {Jain, Piyush and Coogan, Sean C.P. and Subramanian, Sriram Ganapathi and Crowley, Mark and Taylor, Steve and Flannigan, Mike D.},
+title = {A review of machine learning applications in wildfire science and management},
+journal = {Environmental Reviews},
+volume = {28},
+number = {4},
+pages = {478-505},
+year = {2020},
+doi = {10.1139/er-2020-0019},
+URL = {https://doi.org/10.1139/er-2020-0019},
+abstract = { Artificial intelligence has been applied in wildfire science and management since the 1990s, with early applications including neural networks and expert systems. Since then, the field has rapidly progressed congruently with the wide adoption of machine learning (ML) methods in the environmental sciences. Here, we present a scoping review of ML applications in wildfire science and management. Our overall objective is to improve awareness of ML methods among wildfire researchers and managers, as well as illustrate the diverse and challenging range of problems in wildfire science available to ML data scientists. To that end, we first present an overview of popular ML approaches used in wildfire science to date and then review the use of ML in wildfire science as broadly categorized into six problem domains, including (i) fuels characterization, fire detection, and mapping; (ii) fire weather and climate change; (iii) fire occurrence, susceptibility, and risk; (iv) fire behavior prediction; (v) fire effects; and (vi) fire management. Furthermore, we discuss the advantages and limitations of various ML approaches relating to data size, computational requirements, generalizability, and interpretability, as well as identify opportunities for future advances in the science and management of wildfires within a data science context. In total, to the end of 2019, we identified 300 relevant publications in which the most frequently used ML methods across problem domains included random forests, MaxEnt, artificial neural networks, decision trees, support vector machines, and genetic algorithms. As such, there exists opportunities to apply more current ML methods — including deep learning and agent-based learning — in the wildfire sciences, especially in instances involving very large multivariate datasets. We must recognize, however, that despite the ability of ML models to learn on their own, expertise in wildfire science is necessary to ensure realistic modelling of fire processes across multiple scales, while the complexity of some ML methods such as deep learning requires a dedicated and sophisticated knowledge of their application. Finally, we stress that the wildfire research and management communities play an active role in providing relevant, high-quality, and freely available wildfire data for use by practitioners of ML methods. }
+}
+
+@article{CortezMorais,
+  title = {A data mining approach to predict forest fires using meteorological data},
+  author = {Cortez, Paulo and Morais, Aníbal de Jesus Raimundo},
+  year = {2007},
+  url={https://hdl.handle.net/1822/8039},
+  isbn = {978-989-95618-0-9},
+  publisher ={Associação Portuguesa para a Inteligência Artificial (APPIA)}
+}
+
+
+@article{stojanova2012estimating,
+  title={Estimating the risk of fire outbreaks in the natural environment},
+  author={Stojanova, Daniela and Kobler, Andrej and Ogrinc, Peter and {\v{Z}}enko, Bernard and D{\v{z}}eroski, Sa{\v{s}}o},
+  journal={Data mining and knowledge discovery},
+  volume={24},
+  pages={411--442},
+  year={2012},
+  publisher={Springer}
+}
+
+@article{logreg_hcwf,
+  title = {Logistic regression models for human-caused wildfire risk estimation: analysing the effect of the spatial accuracy in fire occurrence data},
+  author = {Vilar del Hoyo, L., Martín Isabel, M.P. & Martínez Vega, F.J.},
+  doi={10.1007/s10342-011-0488-2},
+  journal = {European Journal of Forest Research},
+  volume = {130},
+  pages = {983-996},
+  year={2011}
+}
+
+@article{SpainOnFire,
+title = {Spain on fire: A novel wildfire risk assessment model based on image satellite processing and atmospheric information},
+journal = {Knowledge-Based Systems},
+volume = {283},
+pages = {111198},
+year = {2024},
+issn = {0950-7051},
+doi = {https://doi.org/10.1016/j.knosys.2023.111198},
+url = {https://www.sciencedirect.com/science/article/pii/S0950705123009486},
+author = {Helena Liz-López and Javier Huertas-Tato and Jorge Pérez-Aracil and Carlos Casanova-Mateo and Julia Sanz-Justo and David Camacho},
+keywords = {Wildfire risk assessment, Deep Learning, Autoencoder, Regression model, Fusion, Atmospheric variables, Few-shot learning},
+abstract = {Each year, wildfires destroy larger areas of Spain, threatening numerous ecosystems. Humans cause 90% of them (negligence or provoked) and the behaviour of individuals is unpredictable. However, atmospheric and environmental variables affect the spread of wildfires, and they can be analysed by using deep learning. In order to mitigate the damage of these events, we proposed the novel Wildfire Assessment Model (WAM). Our aim is to anticipate the economic and ecological impact of a wildfire, assisting managers in resource allocation and decision-making for dangerous regions in Spain, Castilla y León and Andalucía. The WAM uses a residual-style convolutional network architecture to perform regression over atmospheric variables and the greenness index, computing necessary resources, the control and extinction time, and the expected burnt surface area. It is first pre-trained with self-supervision over 100,000 examples of unlabelled data with a masked patch prediction objective and fine-tuned using a very small dataset, composed of 445 samples. The pretraining allows the model to understand situations, outclassing baselines with a 1,4%, 3,7% and 9% improvement estimating human, heavy and aerial resources; 21% and 10,2% in expected extinction and control time; and 18,8% in expected burnt area. Using the WAM we provide an example assessment map of Castilla y León, visualizing the expected resources over an entire region.}
+}

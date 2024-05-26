@@ -24,10 +24,30 @@ source("cabecera_chunk_inicio.R")
 # Conclusión y Trabajo futuro
 
 ## Aportaciones
+METODOLOGÍA COMPLETAMENTE REPRODUCIBLE Y ADAPTABLE!
+
+- Metodología para construir conjuntos de datos útiles para la predicción de incendios forestales
+- Amplio estudio de las variables predictivas consideradas en la Comunidad de Andalucía.
+- Modelos "dinámicos" de predicción de riesgo de incendios
+- Incluir el factor humano, todas las dimensiones 
+- Estratificación por mes en el muestreo y uso de una partición temporal. Evitar estimaciones de la capacidad de generalización de los modelos excesivamente optimistas, como ocurre en la mayoría de estudios considerados.
+
 
 ## Conclusiones
 <!-- Comentar las limitaciones -->
+
+
 ## Trabajo futuro
+- Base de datos exhaustiva, que incluya todos los incendios, no solo los mayores de 100ha. Explorar el uso de la EGIF
+
+- Datos de estaciones meteorológicas en lugar de datos satelitares: Mayor detalle, calidad y sensibilidad
+
+- Explorar el uso de modelos de Deep Learning como Redes Convolucionales (CNN), que permitirían considerar la estructura espacial de los datos.
+
+- Estudiar el método de muestreo que mejor pueda adecuarse al problema que se pretende abordar
+
+- Área quemada
+
 <!-- Future work: -->
 <!-- - EGIF -->
 <!-- - Datos meteorologicos AEMET -->
