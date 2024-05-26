@@ -21,21 +21,47 @@ source("cabecera_chunk_inicio.R")
 ```
 
 
-# Conclusión y Trabajo futuro
+# Conclusiones, aportaciones y trabajo futuro
+
+En este último capítulo se va a realizar una recapitulación de las conclusiones extraídas en cada una de las secciones del presente trabajo de fin de estudios. En primer lugar, se presentarán de forma resumida las conclusiones obtenidas a lo largo del trabajo. A continuación, se detallarán las aportaciones realizadas en el campo de la predicción de incendios forestales. Por último, se indicarán algunas lineas de investigación, dentro del campo de la predicción de incendios forestales y la inteligencia artificial, que permitirían profundizar en el desarrollo de la metodología presentada de cara a obtener mejores modelos con utilidad práctica.
+
+
+## Conclusiones
+<!-- Comentar las limitaciones -->
+Los incendios forestales suponen un gran riesgo para las personas, las infraestructuras, la biodiversidad y el medio natural. Sin embargo, estos también juegan un papel fundamental en la regeneración de los bosques mediterráneos, su flora y su fauna. Es por ello que encontrar regímenes de incendios sostenibles es uno de los principales objetivos de cualquier política de gestión forestal. 
+
+
+
+El control y extinción de los incendios forestales requiere del desplazamiento de un gran número de efectivos, y el éxito en la operación depende en muchos casos de la velocidad en la respuesta. En el presente trabajo se ha desarrollado una metodología completa para dotar de herramientas que permitan predecir eficazmente las zonas en riesgo de verse afectadas por un incendio forestal en la Comunidad Autónoma de Andalucía, facilitando así la toma de decisiones y permitiendo una asignación de los recursos más eficiente.
+
+<!-- Se ha adoptado un enfoque innovador, al abordar el problema desde una perspectiva global y dinámica; global pues se consideran todas las dimensiones del -->
+
+En el primer capítulo se ha presentado el problema, justificando su importancia y las dificultades que conlleva. Se ha explicado el enfoque adoptado en este trabajo y se han comentado trabajos anteriores similares. 
+<!-- , acotando el estudio a la Comunidad Autónoma de Andalucía y al periodo comprendido entre 2002 y 2002, -->
+
+En el segundo capítulo se han introducido los principales conceptos y las principales herramientas utilizadas a lo largo del trabajo. Se han explicado brevemente todos los modelos empleados, indicando referencias en las que poder ahondar en los detalles de estos. 
+
+<!-- Justificar en la sección 3 el por qué del método de muestreo elegido -->
+En el tercer capítulo se han procesado los conjuntos geoespaciales recopilados para producir un conjunto de datos adecuado para el análisis estadístico. Esto se ha llevado a cabo en tres etapas: generación de la muestra, asignación de variables a localizaciones y depuración de los datos. 
+
+Dado que para poder entrenar los modelos considerados es necesario disponer de 
+
+En primer lugar se ha generado una muestra balanceada de 20000 observaciones usando el mes de año como variable de estratificación y considerando en cada estrato un tamaño muestral proporcional a la cantidad de incendios registrados en cada mes del año durante el periodo de estudio. Se trata de un enfoque innovador, ya que en todos los trabajos consultados las muestras negativas se
+
+
+
+espUna correcta gestión de los mismos es fundamental para asegurar 
 
 ## Aportaciones
-METODOLOGÍA COMPLETAMENTE REPRODUCIBLE Y ADAPTABLE!
+
+Enfoque dinámico y global
+METODOLOGÍA COMPLETAMENTE REPRODUCIBLE Y ADAPTABLE (a otras regiones, más variables,..)!
 
 - Metodología para construir conjuntos de datos útiles para la predicción de incendios forestales
 - Amplio estudio de las variables predictivas consideradas en la Comunidad de Andalucía.
 - Modelos "dinámicos" de predicción de riesgo de incendios
 - Incluir el factor humano, todas las dimensiones 
 - Estratificación por mes en el muestreo y uso de una partición temporal. Evitar estimaciones de la capacidad de generalización de los modelos excesivamente optimistas, como ocurre en la mayoría de estudios considerados.
-
-
-## Conclusiones
-<!-- Comentar las limitaciones -->
-
 
 ## Trabajo futuro
 - Base de datos exhaustiva, que incluya todos los incendios, no solo los mayores de 100ha. Explorar el uso de la EGIF

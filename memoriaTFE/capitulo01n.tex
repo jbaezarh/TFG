@@ -36,15 +36,6 @@
 \urlstyle{same}  % don't use monospace font for urls
 %
 \usepackage[usenames,dvipsnames]{xcolor}  %new PLLC
-\usepackage{graphicx,grffile}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 \IfFileExists{parskip.sty}{%
 \usepackage{parskip}
 }{% else
@@ -546,109 +537,15 @@ linewidth=4pt]{mBox}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
-\hypertarget{capuxedtulo-1-introducciuxf3n}{%
-\chapter{Capítulo 1: Introducción}\label{capuxedtulo-1-introducciuxf3n}}
-
 \hypertarget{introducciuxf3n}{%
-\section{Introducción}\label{introducciuxf3n}}
-
-Posible estructura de la introducción obtenida de ``Spatial Prediction
-of Wildfire Susceptibility Using Field Survey GPS Data and Machine
-Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas
-Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu
-Bian''
-
-Superficie forestal en Andalucía. Principales usos de los bosques
-Biodiversidad Andalucía es la segunda comunidad de España con más
-terreno forestal, con 4.325.378 ha de suelo forestal que suponen el
-49.37\% de su superficie.
-
-(\url{https://www.miteco.gob.es/es/biodiversidad/temas/inventarios-nacionales/inventario-forestal-nacional/superficie_por_uso.html})
-
-En 2022, 15.786,64 hectarias fueron afectadas por el fuego en Andalucía,
-practicamente el doble de la media anual de los 10 años anteriores,
-8873,68 hectarias {[}Memoria Plan INFOCA 2022{]}.
-
-Riesgo para la biodiversidad vegetal y animal. Daño a la infraestructura
-y riesgo para la vida de las personas. Costes incendios forestales
-{[}Barómetro de las catastrofes Naturales en España 2022{]}
-
-En el Plan Estratégico Estatal del Patrimonio Natural y de la
-Biodiversidad a 2030 {[}Cita{]} ``identifica las principales presiones y
-amenazas, entre las cuales destaca el aumento de la superficie forestal
-afectada por incendios forestales en 2022''.
-
-Incendios forestales (\textgreater1ha) vs conatos (\textless=1ha).
-
-Incendios forestales: ocurren en monte (parte incendio).
-
-Las causas de los incendios de pueden agregar en dos grupos: causas
-naturales o causas antropogénicas. Las últimas se dividen en accidentes,
-neglicencias o intencionados. {[}\ldots{} Explicación breve cada una{]}.
-En 2022, solo el 2.23\% de los incendios fueron debidos a causas
-naturales, mientras que un 35.01\% fue debido a negligencias, un 40.91\%
-fue intencionado y un 6.47\% fue debido a causas accidentales.
-
-Estas cifras muestran la importancia del factor humano en el estudio de
-los incendios forestales. En {[}Human-caused wildfire risk rating for
-prevention planning in Spain,Jesús Martínez, Cristina Vega-Garcia,
-Emilio Chuvieco,2008{]} se ha estudiado el factor humano en la causa de
-incendios forestales en España, detectando las variables más
-significativas en los modelos de predicción construidos (alcanzando una
-tasa de acierto del 76\% en los datos test).
-
-En el presente trabajo se pretende estudiar el riesgo de que los
-distintos puntos del territorio Andaluz se vean afectados por un
-incendio forestal en un momento concreto a través de {[}26{]} variables
-explicativas (antropogénicas, hidrográficas, topográficas,
-meteorológicas y vegetación). A diferencia de la mayoría de estudios
-similares realizados, se aborda el problema desde una perspectiva
-dinámica. Esto significa que no se pretende obtener un valor
-estacionario o estático del riesgo de incendio forestal en cada punto,
-si no que se busca estimar el riesgo de que una zona concreta se vea
-afectada por un incendio forestal en un momento concreto. Para ello, se
-consideran los valores de las variables correspondiente al momento
-concreto de la observación (usando la información más desagregada
-temporal y especialmente de la que se ha podido disponer).
-
-Si bien las variables topográficas, hidrográfica y las ligadas a la
-infraestructura se han considerado constantes en los 20 años del periodo
-en estudio (por considerarse estructurales), las variables ligadas a las
-condiciones climáticas, al número de habitantes del municipio y al
-estado de la vegetación se consideran relativas al momento concreto de
-cada observación.
-
-Población: variaciones en las tendencias demográficas tienen un impacto
-importante sobre los regímenes de incendios que se producen {[}Añadir
-fuente{]}
-
-Variables climáticas y del estado de la vegetación: Variables con una
-gran variabilidad temporal que tienen un impacto directo en la aparición
-y propagación de los incendios forestales.
-
-Este enfoque hace posible que se tengan en cuenta las variaciones que se
-producen en las variables a lo largo del tiempo (cambios en el número de
-habitantes, en las condiciones climáticas y en el estado de la
-vegetación), añadiendo así una nueva dimensión al problema.
-
-La po
-
-en la que se consideran los valores de las variables correspondientes al
-momento concreto de la observación
-
-Spain could be considered as a key area for wildfire modeling since it
-is, by far, the most fire-affected territory within the European Union
--\textgreater{} Alguna característica relevante de Andalucía
-¿Biodiversidad?
-
-INFOCA
+\chapter{Introducción}\label{introducciuxf3n}}
 
 \hypertarget{objetivos}{%
 \section{Objetivos}\label{objetivos}}
 
-El objetivo de esta investigación será construir modelos que permitan
-predecir el riesgo de incendio forestal en la Comunidad Autónoma de
-Andalucía.
+El objetivo de esta investigación es construir modelos de \emph{Machine
+Learning} que permitan predecir incendios forestales en la Comunidad
+Autónoma de Andalucía.
 
 Subobjetivos:
 
@@ -656,61 +553,72 @@ Subobjetivos:
 \def\labelenumi{\arabic{enumi}.}
 \item
   Construir un conjunto de datos que permita la realización de análisis
-  y la posterior construcción de modelos de Machine Learning para la
-  predicción del riesgo de incendio forestal en Andalucía a partir de un
-  estudio previo del problema.
+  estadísticos y la posterior construcción de modelos de Machine
+  Learning para la predicción de incendios forestales en Andalucía a
+  partir de un estudio previo del problema.
 \item
-  Modelizar el riesgo de de incendio forestal usando distintos
-  algoritmos de ML y comparar sus resultados
+  Modelizar el riesgo de incendio forestal usando distintos algoritmos
+  de ML y comparar sus resultados
 \item
-  Analizar potenciales casos de interés.
+  Analizar el desempeño de los modelos en la realidad estudiando
+  potenciales casos de interés.
 \end{enumerate}
 
 \hypertarget{hipuxf3tesis}{%
 \section{Hipótesis}\label{hipuxf3tesis}}
 
-``Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS
-Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil
-Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh,
-Jamshid Einali and Jinhu Bian''
-
-\begin{figure}
-\centering
-\includegraphics{D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png}
-\caption{Spatial Prediction of Wildfire Susceptibility Using Field
-Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh,
-Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin
-Naboureh, Jamshid Einali and Jinhu Bian.}
-\end{figure}
-
 \hypertarget{revisiuxf3n-bibliogruxe1fica}{%
 \section{Revisión bibliográfica}\label{revisiuxf3n-bibliogruxe1fica}}
 
-``Spain on fire: A novel wildfire risk assessment model based on image
-satellite processing and atmospheric information, Helena Liz-López ,
-Javier Huertas-Tato a , Jorge Pérez-Aracil, Carlos Casanova-Mateo, Julia
-Sanz-Justo, David Camacho''
+\citet{CortezMorais}: SVM, DT, Regresión Lineal Múltiple, Naive Bayes,
+RF and NN para predecir el área quemada por los incendios forestales en
+el parque natural de Montesinho (norte portugal) a partir de información
+meteorológica.
 
-``A review of machine learning applications in wildfire science and
-management Piyush Jain, Sean C.P. Coogan, Sriram Ganapathi Subramanian,
-Mark Crowley, Steve Taylor, and Mike D. Flannigan''
+\citet{ReviewMLApplicationsWF}: El artículo revisa las aplicaciones del
+machine learning (ML) en la ciencia y gestión de incendios forestales,
+destacando su uso en seis dominios clave: caracterización de
+combustibles, detección y mapeo de incendios; clima y cambio climático;
+ocurrencia, susceptibilidad y riesgo de incendios; predicción del
+comportamiento del fuego; efectos del fuego; y gestión de incendios. Se
+identifican 300 publicaciones hasta finales de 2019, mostrando el uso
+frecuente de algoritmos de ML como random forests, MaxEnt, redes
+neuronales artificiales, árboles de decisión, máquinas de vectores de
+soporte y algoritmos genéticos. La revisión enfatiza las ventajas y
+limitaciones de estos métodos y subraya la necesidad de combinar la
+experiencia en ciencia de incendios con técnicas avanzadas de ML para
+modelar procesos de fuego de manera realista.
 
-``Los incendios forestales en Andalucía: investigación exploratoria y
-modelos explicativos'' Oliver Gutiérrez-Hernández (1*), José María
-Senciales-González (2), Luis V. García (1)
+\citet{logreg_hcwf}: Se aplica regresión logística en una cuadrícula de
+1 × 1 km en la Comunidad Autónoma de Madrid, utilizando datos
+socioeconómicos como variables predictoras para representar los factores
+antropogénicos relacionados con el riesgo de incendio. También se evalúa
+otro enfoque basado en la predicción de la densidad de puntos de
+ignición en una cuadrícula de 10 × 10 km, utilizando funciones Kernel.
+La ocurrencia histórica de incendios de 2000 a 2005 se utiliza como
+variable de respuesta. El rendimiento de los modelos se evalúa con los
+incendios ocurridos en 2006 y 2007, obteniendo un AUC de 0.70 y 0.67
+para ambos modelos, respectivamente.
 
-\hypertarget{anuxe1lisis-del-problema}{%
-\section{Análisis del problema}\label{anuxe1lisis-del-problema}}
+\citet{SpainOnFire}: En este artículo se presenta un nuevo modelo de
+evalucaión de incendios forestales (WAM, Wildfire Assessment Model) que
+utiliza deep learning para anticipar el impacto de los incendios a
+partir de información meteorológica satelital y el NDVI en Castilla y
+León y Andalucía. Las variables respuestas que considera son el área
+quemada, el tiempo de control y extensión y el número de recursos
+humanos, recursos aéreos y recursos pesados que se usarán en la
+extinción del incendio. El modelo emplea una red convolucional residual
+que realiza regresiones sobre variables atmosféricas e índice de verdor.
 
-El área de estudio (Figura 1) abarca el conjunto de la comunidad
-autónoma de Andalucía (España), la región más meridional de la península
-Ibérica, un territorio de 87.268 km2, donde el 50,8 \% de la superficie
-está ocupada por usos y cubiertas forestales.
+El Modelo de Evaluación de Incendios Forestales (WAM) utiliza deep
+learning para anticipar el impacto económico y ecológico de incendios en
+regiones peligrosas de España, como Castilla y León y Andalucía. El
+modelo emplea una red convolucional residual que realiza regresiones
+sobre variables atmosféricas e índice de verdor. Se preentrena con
+100,000 ejemplos de datos sin etiquetar y se ajusta con un conjunto
+pequeño de 445 muestras.
 
--\textgreater{} MAPA
-
-2002-2022 Razones: - Disponibilidad datos - Cambios en los regímenes de
-incendios
+\citet{incendiosAndalucia}
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 

@@ -264,7 +264,7 @@ abstract = { Artificial intelligence has been applied in wildfire science and ma
 
 @article{logreg_hcwf,
   title = {Logistic regression models for human-caused wildfire risk estimation: analysing the effect of the spatial accuracy in fire occurrence data},
-  author = {Vilar del Hoyo, L., Martín Isabel, M.P. & Martínez Vega, F.J.},
+  author = {Vilar del Hoyo, L. and Martín Isabel and M.P. and Martínez Vega, F.J.},
   doi={10.1007/s10342-011-0488-2},
   journal = {European Journal of Forest Research},
   volume = {130},
@@ -279,9 +279,42 @@ volume = {283},
 pages = {111198},
 year = {2024},
 issn = {0950-7051},
-doi = {https://doi.org/10.1016/j.knosys.2023.111198},
+doi = {10.1016/j.knosys.2023.111198},
 url = {https://www.sciencedirect.com/science/article/pii/S0950705123009486},
-author = {Helena Liz-López and Javier Huertas-Tato and Jorge Pérez-Aracil and Carlos Casanova-Mateo and Julia Sanz-Justo and David Camacho},
-keywords = {Wildfire risk assessment, Deep Learning, Autoencoder, Regression model, Fusion, Atmospheric variables, Few-shot learning},
-abstract = {Each year, wildfires destroy larger areas of Spain, threatening numerous ecosystems. Humans cause 90% of them (negligence or provoked) and the behaviour of individuals is unpredictable. However, atmospheric and environmental variables affect the spread of wildfires, and they can be analysed by using deep learning. In order to mitigate the damage of these events, we proposed the novel Wildfire Assessment Model (WAM). Our aim is to anticipate the economic and ecological impact of a wildfire, assisting managers in resource allocation and decision-making for dangerous regions in Spain, Castilla y León and Andalucía. The WAM uses a residual-style convolutional network architecture to perform regression over atmospheric variables and the greenness index, computing necessary resources, the control and extinction time, and the expected burnt surface area. It is first pre-trained with self-supervision over 100,000 examples of unlabelled data with a masked patch prediction objective and fine-tuned using a very small dataset, composed of 445 samples. The pretraining allows the model to understand situations, outclassing baselines with a 1,4%, 3,7% and 9% improvement estimating human, heavy and aerial resources; 21% and 10,2% in expected extinction and control time; and 18,8% in expected burnt area. Using the WAM we provide an example assessment map of Castilla y León, visualizing the expected resources over an entire region.}
+author = {Helena Liz-López and Javier Huertas-Tato and Jorge Pérez-Aracil and Carlos Casanova-Mateo and Julia Sanz-Justo and David Camacho}
+}
+
+@article{incendiosAndalucia,
+	author = {Oliver Gutiérrez-Hernández and J. M. Senciales-González and Luis V. García},
+	title = {Los incendios forestales en Andalucía: investigación exploratoria y modelos explicativos},
+	year = {2015},
+	abstract = {[ES] En la presente comunicación exponemos una investigación exploratoria donde analizamos la superficie calcinada por los incendios forestales ocurridos desde 1975 a 2013 en la Comunidad Autónoma de Andalucía en relación con las variables explicativas y las características territoriales. Comenzamos, elaborando una base de datos espacial donde registramos la superficie quemada anualmente en el conjunto de la región. Realizamos una revisión de la literatura científica buscando los principales factores explicativos que intervienen en la distribución de los incendios forestales. Seleccionamos un conjunto de variables ambientales codificadas como coberturas cartográficas. Abordamos un análisis mediante tabulación cruzada relacionando la superficie quemada y las características territoriales, socioeconómicas y medioambientales. Finalmente, comparamos dos modelos causales para predecir la ocurrencia de incendios en el territorio andaluz: Mínimos Cuadrados Ordinarios (OLS) y Regresión Geográficamente Ponderada (GWR). Los resultados muestran que la mayor parte de los incendios incontrolados se produjeron en áreas forestales con matorral esclerófilo y formaciones boscosas de transición, zonas de baja-media montaña y pendientes moderadas-altas. Las provincias con la mayor superficie calcinada, tanto en distribución como en frecuencia, fueron},
+	abstract = {[EN] In this communication, we present an exploratory research analysing the characteristics of the areas burnt by wildfires in Andalusia from 1975 to 2013, in relation to different explanatory variables. Firstly, we developed a spatial database by recording the burnt areas in the whole region on an annual basis. Secondly, based on previous studies, we identified the main factors potentially involved in the distribution of forest fires. To do this, we selected a set of environmental variables that were coded as cartographic layers. Then, we performed a cross-tabulation analysis by relating the burnt areas to the environmental and territorial factors. Finally, we compared the ability of two different model-fitting approaches for predicting wildfire occurrence: Ordinary Least Squares (OLS) and Geographically Weighted Regression (GWR). The results showed that most of wildfires in Andalusia occurred in shrublands and forests transitions, in low and middle mountain areas, and in areas with moderate to high slope. The provinces with the largest average burnt areas were Huelva and Malaga, which were also the provinces with the highest frequency of burnt areas. Regarding the model performance, GWR greatly improved model fit compared to OLS.},
+}
+
+@article{HumanCauseWildFiresSpain,
+	author = {Jesús Martínez-Fernández and Cristina Vega-García and Emilio Chuvieco},
+	title = {Human-caused wildfire risk rating for prevention planning in Spain},
+	year = {2009},
+	abstract = {This paper identifies human factors associated with high forest fire risk in Spain and analyses the spatial distribution of fire occurrence in the country. The spatial units were 6,066 municipalities of the Spanish peninsular territory and Balearic Islands. The study covered a 13-year series of fire occurrence data. One hundred and eight variables were generated and input to a dedicated Geographic Information System (GIS) to model different factors related to fire ignition. After exploratory analysis, 29 were selected to build a predictive model of human fire ignition using logistic regression analysis. The binary model estimated the probability of high or low occurrence of forest fires, as defined by an ignition danger index that is currently used by the Spanish forest service (number of fires divided by forest area in each municipality). Thirteen explanatory variables were identified by the model. They were related to agricultural landscape fragmentation, agricultural abandonment and development processes. The prediction agreement found between the model binary outputs and the historical fire data was 85.3% for the model building dataset (60% of municipalities). A slightly lower predictive power (76.2%) was found for the validation data (the remaining 40%). The probabilistic output of the logistic was significantly related to the raw ignition index (Spearman correlation of 0.710) used by the Spanish Forest Service. Therefore, the model can be considered a good predictor of human-caused fire risk, aiding spatial decisions related to prevention planning in Spanish municipalities.},
+	doi = {10.1016/j.jenvman.2008.07.005},	
+	organization ={This work was funded by the EC project ‘Forest Fire Spread and Mitigation (SPREAD), EC-Contract Nr. EVG1-CT-2001-00027, the Spanish project FIRERISK (AGL2000-0842-C04-01) and by a fellowship of the Spanish Ministry of Education and Science. The authors would like to thank the Spanish Forest Service, which provided the forest fires report database.}
+}
+
+
+# Creo que no tiene sentido ni mencionarlo, porque es ridículo que si pretendes predecir
+# incendios forestales uses como variables explicativa basicamente el incendio forestal
+# Thermal Anomalies (MODIS)
+@article{SAYAD2019130,
+title = {Predictive modeling of wildfires: A new dataset and machine learning approach},
+journal = {Fire Safety Journal},
+volume = {104},
+pages = {130-146},
+year = {2019},
+issn = {0379-7112},
+doi = {https://doi.org/10.1016/j.firesaf.2019.01.006},
+url = {https://www.sciencedirect.com/science/article/pii/S0379711218303941},
+author = {Younes Oulad Sayad and Hajar Mousannif and Hassan {Al Moatassime}},
+keywords = {Big data, Remote sensing, Machine learning, Wildfire prediction, Data mining, Artificial intelligence},
+abstract = {Wildfires, whether natural or caused by humans, are considered among the most dangerous and devastating disasters around the world. Their complexity comes from the fact that they are hard to predict, hard to extinguish and cause enormous financial losses. To address this issue, many research efforts have been conducted in order to monitor, predict and prevent wildfires using several Artificial Intelligence techniques and strategies such as Big Data, Machine Learning, and Remote Sensing. The latter offers a rich source of satellite images, from which we can retrieve a huge amount of data that can be used to monitor wildfires. The method used in this paper combines Big Data, Remote Sensing and Data Mining algorithms (Artificial Neural Network and SVM) to process data collected from satellite images over large areas and extract insights from them to predict the occurrence of wildfires and avoid such disasters. For this reason, we implemented a methodology that serves this purpose by building a dataset based on Remote Sensing data related to the state of the crops (NDVI), meteorological conditions (LST), as well as the fire indicator “Thermal Anomalies”, these data, were acquired from “MODIS” (Moderate Resolution Imaging Spectroradiometer), a key instrument aboard the Terra and Aqua satellites. This dataset is available on GitHub via this link (https://github.com/ouladsayadyounes/Wildfires). Experiments were made using the big data platform “Databricks”. Experimental results gave high prediction accuracy (98.32%). These results were assessed using several validation strategies (e.g., classification metrics, cross-validation, and regularization) as well as a comparison with some wildfire early warning systems.}
 }
