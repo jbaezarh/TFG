@@ -910,20 +910,20 @@ puntos de origen de los incendios forestales. En cambio, en el presente
 trabajo no se disponen de los puntos de ignición de los incendios, por
 lo que el enfoque adoptado es ligeramente diferente; el objetivo es
 predecir las zonas que pueden verse afectadas por un incendio forestal
-(superior a 100ha) bajo unas circunstancias concretas. De esta forma,
+(superior a 100 ha) bajo unas circunstancias concretas. De esta forma,
 para construir la muestra de casos positivos se han generado 10 puntos
 aleatorios dentro de cada polígono de incendio y se les ha asignado la
-fecha del día de incio del incendio. En \citet{stojanova2012estimating}
+fecha del día de inicio del incendio. En \citet{stojanova2012estimating}
 la muestra de casos negativos se genera de la siguiente manera: se toman
 fechas aleatorias dentro del periodo de estudio y a cada una de ellas se
 le asocia una localización aleatoria dentro del área de estudio
-satisfaciendo que deben estar a al menos 15km de de cualquier incendio
+satisfaciendo que deben estar a al menos 15 km de de cualquier incendio
 detectado en un margen de ± 3 días. Esta forma de tomar los casos
 negativos asegura que estén lo suficientemente alejados de los incendios
 forestales para representar condiciones no influidas por estos, dando
 prioridad así a las áreas con una menor prioridad de ocurrencia de
 incendio en un período definido. En el presente trabajo se utilizarán
-los mismos parámetros (franja de ± 3 días y distancia superior a 15km),
+los mismos parámetros (franja de ± 3 días y distancia superior a 15 km),
 sin embargo, sería conveniente en estudios futuros plantearse si esos
 parámetros son adecuados o tal vez sería más adecuado tomar otros
 valores, basados, por ejemplo, en la duración media de los incendios en
@@ -949,22 +949,31 @@ al verdadero proceso latente de aparición de incendios forestales sino
 al proceso de selección de la muestra, pudiendo provocar un marcado
 sesgo positivo en las medidas de evaluación de los modelos que en
 realidad no estarían reflejando la realidad si no los sesgos
-introducidos en los conjuntos de datos. Por ello, en el presente
-trabajo, para generar aleatoriamente los días de las muestras negativas
-se seguirá una distribución de probabilidad proporcional a la cantidad
-de incendios observados a lo largo del periodo de estudio en cada mes.
-Mediante este enfoque se espera obtener una muestra balanceada y
-estratificada por mes que permita construir modelos de clasificación
-capaces de captar los patrones latentes de aparición de incendios
-forestales. Además, este enfoque permite centrar el esfuerzo
-computacional en los periodos en los que más incendios se producen.
+introducidos en los conjuntos de datos. O dicho de otro modo, los
+modelos acabarían dando la mayor parte del peso a las variables
+meteorológicas y acabarían limitándose a identificar el mes y no las
+demás causas antropológicas que son las que verdaderamente desencadenan
+la gran mayoría de los incendios. Por ello, en el presente trabajo, para
+generar aleatoriamente los días de las muestras negativas se seguirá una
+distribución de probabilidad proporcional a la cantidad de incendios
+observados a lo largo del periodo de estudio en cada mes (véase la
+Figura \ref{fig:distribucion_temporal_fire}). Mediante este enfoque se
+espera obtener una muestra balanceada y estratificada por mes que
+permita construir modelos de clasificación capaces de captar los
+patrones latentes de aparición de incendios forestales. Además, este
+enfoque permite centrar el esfuerzo computacional en los periodos en los
+que más incendios se producen.
+
+Pueden observarse todos los detalles del procedimiento seguido para
+generar la muestra en el código usado para ello, que se adjunta en la
+primera sección del {[}Apéndice: Código{]}.
 
 \hypertarget{asignaciuxf3n-de-las-variables-descriptivas-a-cada-observaciuxf3n}{%
 \subsection{Asignación de las variables descriptivas a cada
 observación}\label{asignaciuxf3n-de-las-variables-descriptivas-a-cada-observaciuxf3n}}
 
-Una vez generada una muestra balanceada de 22170 observaciones dentro de
-Andalucía entre el 1 de enero de 2002 y el 31 de diciembre de 2022
+Una vez generada una muestra balanceada de 22.170 observaciones dentro
+de Andalucía entre el 1 de enero de 2002 y el 31 de diciembre de 2022
 siguiendo el enfoque apenas descrito, el siguiente paso es asignar a
 cada una de ellas los valores correspondientes a ese día y a esa
 localización concreta de todas las variables predictoras a partir de los
@@ -975,17 +984,18 @@ muestra. En particular se usa una variante del UTM30N por ser el que
 traen los archivos \emph{raster} de las variables topográficas (es
 conveniente, siempre que sea posible, no transformar el crs de los datos
 \emph{raster} pues al hacerlo se deben interpolar los valores de los
-píxeles, produciendo pérdida de información).
+píxeles, produciendo una pérdida de información).
 
 A continuación se detalla el proceso seguido para manipular construir
 cada variable:
 
 \begin{itemize}
 \item
-  Variables topográficas: Simplemente se extrae el dato del píxel en el
-  que cae cada observación para cada uno de los conjuntos de datos.
+  \textbf{Variables topográficas}: Simplemente se extrae el dato del
+  píxel correspondiente a las coordenadas del punto de cada observación
+  para cada uno de los conjuntos de datos.
 \item
-  Variables antropológicas:
+  \textbf{Variables antropológicas}:
 
   \begin{itemize}
   \item
@@ -1010,16 +1020,16 @@ cada variable:
     indica 1 si el centro de este está dentro del polígono de un ENP o 0
     si no) y posteriormente se ha extraído el valor del píxel que
     contiene a cada observación. En la rasterización se ha usado como
-    modelo el ráster de eleviaciones con una resolución de
-    \(100m \times 100m\). Proceder de este modo hace que se pierda algo
-    de resolución pero resulta muchísimo más eficiente
+    modelo el ráster de eleviaciones con una resolución de 100 m
+    \(\times\) 100 m. Proceder de este modo hace que se pierda algo de
+    resolución pero resulta significativamente más eficiente
     computacionalmente que comprobar para cada observación la relación
-    espacial ``estar dentro del polígono de algún ENP'' (este enfoque
+    espacial \emph{estar dentro del polígono de algún ENP} (este enfoque
     resultaba computacionalmente inviable dado el equipo disponible).
   \item
     Para construir la variable \emph{uso\_suelo} se ha procedido de
     manera similar. Primero se ha rasterizado, usando como modelo el
-    mapa de elevaciones con una resolución de \(100m \times 100m\),
+    mapa de elevaciones con una resolución de 100 m \(\times\) 100 m,
     asignando a cada píxel la categoría de uso de suelo del polígono que
     cubriese el centro del píxel. Y posteriormente, para cada
     observación se ha extraído el valor del píxel sobre el que
@@ -1097,12 +1107,13 @@ cárdinales y sus bisectrices, generando así 8 clases (``N'', ``NW'',
 orientación se añade también la clase ``plano'', si la pendiente en ese
 punto es 0.
 
-El conjunto de datos construido tiene \(200\) registros incompletos, lo
-cual supone un \(0.1\%\) del total de registros. De estos, el \(68\%\)
-son casos negativos y el \(32\%\) son casos positivos. Los valores
-perdidos se encuentran en las variables demográficas (85), en
-\emph{uso\_suelo} (8), en NDVI (85) y en las variables topográficas
-(53). Las causas de los datos faltantes son:
+El conjunto de datos construido (formado por \(21.746\) observaciones de
+\(27\) variables) tiene \(200\) registros incompletos, lo cual supone un
+\(0.1\%\) del total de registros. De estos, el \(68\%\) son casos
+negativos y el \(32\%\) son casos positivos. Los valores perdidos se
+encuentran en las variables demográficas (85), en \emph{uso\_suelo} (8),
+en NDVI (85) y en las variables topográficas (53). Las causas de los
+datos faltantes son:
 
 \begin{itemize}
 \item
@@ -1113,11 +1124,11 @@ perdidos se encuentran en las variables demográficas (85), en
 \item
   En el caso de las variables topográficas los valores perdidos se
   encuentran todos en los límites de la comunidad (Figura
-  \ref{fig:nas_topograficas}). Al proceder de datos en formato
-  \emph{raster}, los píxeles con información no se ajustan exactamente a
-  los límites de Andalucía (ya que son cuadrados). Esto provoca que para
-  algunos puntos situados en los bordes del polígono no esté disponible
-  la información de las variables topográficas.
+  \ref{fig:nas_topograficas}). Al proceder de datos en formato ráster,
+  los píxeles con información no se ajustan exactamente a los límites de
+  Andalucía (ya que son cuadrados). Esto provoca que para algunos puntos
+  situados en los bordes del polígono no esté disponible la información
+  de las variables topográficas.
 \end{itemize}
 
 Tras explorar otras alternativas y teniendo en cuenta tanto el reducido
@@ -1131,9 +1142,9 @@ desconocidos, se opta simplemente por eliminar estos registros.
 \label{fig:nas_topograficas}
 \end{figure}
 
-El resultado de todo este proceso es un conjunto de datos con 21546
-registros y 27 variables, las cuales se detallan en la Tabla
-\ref{tab:variables}.
+El resultado de todo este proceso es un conjunto de datos con
+\textbf{21.546 registros} y \textbf{27 variables}, las cuales se
+detallan en la Tabla \ref{tab:variables}.
 
 \begin{table}[]
 \resizebox{\columnwidth}{!}{%

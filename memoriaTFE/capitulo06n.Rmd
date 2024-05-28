@@ -28,7 +28,8 @@ En este último capítulo se va a realizar una recapitulación de las conclusion
 
 ## Conclusiones
 <!-- Comentar las limitaciones -->
-Los incendios forestales suponen un gran riesgo para las personas, las infraestructuras, la biodiversidad y el medio natural. Sin embargo, estos también juegan un papel fundamental en la regeneración de los bosques mediterráneos, su flora y su fauna. Es por ello que encontrar regímenes de incendios sostenibles es uno de los principales objetivos de cualquier política de gestión forestal. 
+
+<!-- Los incendios forestales suponen un gran riesgo para las personas, las infraestructuras, la biodiversidad y el medio natural. Sin embargo, estos también juegan un papel fundamental en la regeneración de los bosques mediterráneos, su flora y su fauna. Es por ello que encontrar regímenes de incendios sostenibles es uno de los principales objetivos de cualquier política de gestión forestal.  -->
 
 
 
@@ -36,23 +37,33 @@ El control y extinción de los incendios forestales requiere del desplazamiento 
 
 <!-- Se ha adoptado un enfoque innovador, al abordar el problema desde una perspectiva global y dinámica; global pues se consideran todas las dimensiones del -->
 
-En el primer capítulo se ha presentado el problema, justificando su importancia y las dificultades que conlleva. Se ha explicado el enfoque adoptado en este trabajo y se han comentado trabajos anteriores similares. 
+En el primer capítulo se ha presentado el problema, justificando su importancia y las dificultades que conlleva. Se ha explicado el enfoque adoptado en este trabajo, se han detallado los objetivos del proyecto y se han comentado trabajos anteriores similares. 
 
 <!-- , acotando el estudio a la Comunidad Autónoma de Andalucía y al periodo comprendido entre 2002 y 2002, -->
+
+<!-- En el segundo capítulo se han introducido los principales conceptos y técnicas usados, dotando así al trabajo de su fundamento teórico. Se han comentado los dos tipos fundamentales de datos espaciales, sus características y las herramientas empleadas para trabajar con ellos en este trabajo. Se ha explicado en qué consiste en Análisis Exploratorio de datos y se ha justificado su importancia. Se han explicado todos los modelos utilizados. -->
 
 En el segundo capítulo se han introducido los principales conceptos y herramientas utilizados a lo largo del trabajo. Se han explicado brevemente todos los modelos empleados, indicando referencias en las que poder ahondar en los detalles de estos. 
 
 <!-- Justificar en la sección 3 el por qué del método de muestreo elegido -->
-En el tercer capítulo se han procesado los conjuntos geoespaciales recopilados para producir un conjunto de datos adecuado para el análisis estadístico. Esto se ha llevado a cabo en tres etapas: generación de la muestra, asignación de variables a localizaciones y depuración de los datos. En el proceso de generación de la muestra de casos negativos, necesaria para poder entrenar cualquier algoritmo de clasificación binaria, se ha adoptado un enfoque diferente a otros estudios similares. Tras valorar distintas alternativas, se ha optado por generar la muestra de fechas de los negativos siguiendo una distribución de probabilidad proporcional a la cantidad mensual de incendios observados en todo el periodo. De esta forma, 
+
+<!-- En el tercer capítulo se han procesado los conjuntos geoespaciales recopilados para producir un conjunto de datos adecuado para el análisis estadístico. Esto se ha llevado a cabo en tres etapas: generación de la muestra, asignación de variables a localizaciones y depuración de los datos. En el proceso de generación de la muestra de casos negativos, necesaria para poder entrenar cualquier algoritmo de clasificación binaria, se ha adoptado un enfoque diferente a otros estudios similares. Tras valorar distintas alternativas, se ha optado por generar la muestra de fechas de los negativos siguiendo una distribución de probabilidad proporcional a la cantidad mensual de incendios observados en todo el periodo. De esta forma,  -->
+
+En el tercer capítulo se han procesado los conjuntos de datos espaciales recopilados para generar un conjunto de datos adecuado para el análisis estadístico y la construcción de modelos. Esto se ha hecho en tres etapas: generación de la muestra, asignación de variables a localizaciones y depuración de los datos. 
+
+En el cuarto capítulo se han entrenado todos los modelos presentados anteriormente, ajustando los parámetros utilizando una partición en entrenamiento-validación-test. Los mejores resultados en validación los dio
 
 
 
 
-En primer lugar se ha generado una muestra balanceada de 20000 observaciones usando el mes de año como variable de estratificación y considerando en cada estrato un tamaño muestral proporcional a la cantidad de incendios registrados en cada mes del año durante el periodo de estudio. Se trata de un enfoque innovador, ya que en todos los trabajos consultados las muestras negativas se
 
 
 
-espUna correcta gestión de los mismos es fundamental para asegurar 
+
+
+
+
+
 
 ## Aportaciones
 

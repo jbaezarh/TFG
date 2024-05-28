@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.26)  28 MAY 2024 00:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.26)  28 MAY 2024 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1108,66 +1108,69 @@ Package mdframed Info: mdframed works in twoside mode on input line 801.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 801.
-LaTeX Info: Redefining \. on input line 834.
-LaTeX Info: Redefining \% on input line 834.
-LaTeX Info: Redefining \. on input line 834.
-LaTeX Info: Redefining \% on input line 834.
+LaTeX Info: Redefining \. on input line 835.
+LaTeX Info: Redefining \% on input line 835.
+LaTeX Info: Redefining \. on input line 835.
+LaTeX Info: Redefining \% on input line 835.
 [7]
-LaTeX Info: Redefining \. on input line 897.
-LaTeX Info: Redefining \% on input line 897.
-LaTeX Info: Redefining \. on input line 897.
-LaTeX Info: Redefining \% on input line 897.
+LaTeX Info: Redefining \. on input line 898.
+LaTeX Info: Redefining \% on input line 898.
+LaTeX Info: Redefining \. on input line 898.
+LaTeX Info: Redefining \% on input line 898.
 [8]
-Package mdframed Info: mdframed works in twoside mode on input line 921.
+Package mdframed Info: mdframed works in twoside mode on input line 922.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 921.
-Package mdframed Info: mdframed works in twoside mode on input line 927.
+(mdframed)              on input line 922.
+Package mdframed Info: mdframed works in twoside mode on input line 928.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 927.
-LaTeX Info: Redefining \. on input line 939.
-LaTeX Info: Redefining \% on input line 939.
-LaTeX Info: Redefining \. on input line 939.
-LaTeX Info: Redefining \% on input line 939.
+(mdframed)              on input line 928.
+LaTeX Info: Redefining \. on input line 940.
+LaTeX Info: Redefining \% on input line 940.
+LaTeX Info: Redefining \. on input line 940.
+LaTeX Info: Redefining \% on input line 940.
 [9]
-LaTeX Info: Redefining \. on input line 1003.
-LaTeX Info: Redefining \% on input line 1003.
-LaTeX Info: Redefining \. on input line 1003.
-LaTeX Info: Redefining \% on input line 1003.
+LaTeX Info: Redefining \. on input line 1004.
+LaTeX Info: Redefining \% on input line 1004.
+LaTeX Info: Redefining \. on input line 1004.
+LaTeX Info: Redefining \% on input line 1004.
 [10]
-LaTeX Info: Redefining \. on input line 1075.
-LaTeX Info: Redefining \% on input line 1075.
-LaTeX Info: Redefining \. on input line 1075.
-LaTeX Info: Redefining \% on input line 1075.
+LaTeX Info: Redefining \. on input line 1076.
+LaTeX Info: Redefining \% on input line 1076.
+LaTeX Info: Redefining \. on input line 1076.
+LaTeX Info: Redefining \% on input line 1076.
 [11]
-LaTeX Info: Redefining \. on input line 1146.
-LaTeX Info: Redefining \% on input line 1146.
-LaTeX Info: Redefining \. on input line 1146.
-LaTeX Info: Redefining \% on input line 1146.
+LaTeX Info: Redefining \. on input line 1147.
+LaTeX Info: Redefining \% on input line 1147.
+LaTeX Info: Redefining \. on input line 1147.
+LaTeX Info: Redefining \% on input line 1147.
 [12]
-LaTeX Info: Redefining \. on input line 1213.
-LaTeX Info: Redefining \% on input line 1213.
-LaTeX Info: Redefining \. on input line 1213.
-LaTeX Info: Redefining \% on input line 1213.
+LaTeX Info: Redefining \. on input line 1214.
+LaTeX Info: Redefining \% on input line 1214.
+LaTeX Info: Redefining \. on input line 1214.
+LaTeX Info: Redefining \% on input line 1214.
 [13]
 
-LaTeX Warning: Command \' invalid in math mode on input line 1237.
+LaTeX Warning: Command \' invalid in math mode on input line 1238.
 
-LaTeX Info: Redefining \. on input line 1271.
-LaTeX Info: Redefining \% on input line 1271.
-LaTeX Info: Redefining \. on input line 1271.
-LaTeX Info: Redefining \% on input line 1271.
+
+LaTeX Warning: Reference `fig:roc_validation' on page 14 undefined on input line 1257.
+
+LaTeX Info: Redefining \. on input line 1273.
+LaTeX Info: Redefining \% on input line 1273.
+LaTeX Info: Redefining \. on input line 1273.
+LaTeX Info: Redefining \% on input line 1273.
 [14]
 <graficos/tidyverse_workflow.png, id=283, 537.50812pt x 200.24812pt>
 File: graficos/tidyverse_workflow.png Graphic file (type png)
 <use graficos/tidyverse_workflow.png>
-Package pdftex.def Info: graficos/tidyverse_workflow.png  used on input line 1287.
+Package pdftex.def Info: graficos/tidyverse_workflow.png  used on input line 1289.
 (pdftex.def)             Requested size: 432.48051pt x 161.12149pt.
-LaTeX Info: Redefining \. on input line 1319.
-LaTeX Info: Redefining \% on input line 1319.
-LaTeX Info: Redefining \. on input line 1319.
-LaTeX Info: Redefining \% on input line 1319.
+LaTeX Info: Redefining \. on input line 1330.
+LaTeX Info: Redefining \% on input line 1330.
+LaTeX Info: Redefining \. on input line 1330.
+LaTeX Info: Redefining \% on input line 1330.
 [15 <./graficos/tidyverse_workflow.png>] (./capitulo02n.bbl
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -1181,10 +1184,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--31
 [17
 
 ])
-LaTeX Info: Redefining \. on input line 1335.
-LaTeX Info: Redefining \% on input line 1335.
-LaTeX Info: Redefining \. on input line 1335.
-LaTeX Info: Redefining \% on input line 1335.
+LaTeX Info: Redefining \. on input line 1337.
+LaTeX Info: Redefining \% on input line 1337.
+LaTeX Info: Redefining \. on input line 1337.
+LaTeX Info: Redefining \% on input line 1337.
 [18] (./capitulo02n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
@@ -1193,19 +1196,22 @@ LaTeX Info: Redefining \% on input line 9.
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-05-08>
  ***********
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `capitulo02n.out' has not changed.
 (rerunfilecheck)             Checksum: 4CC4E12745CEC1AB0E9D67BF90EC33D2;3493.
  ) 
 Here is how much of TeX's memory you used:
- 31151 strings out of 475935
- 595420 string characters out of 5787577
+ 31152 strings out of 475935
+ 595440 string characters out of 5787577
  1941907 words of memory out of 5000000
- 52647 multiletter control sequences out of 15000+600000
+ 52648 multiletter control sequences out of 15000+600000
  651083 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,13n,93p,1595b,734s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on capitulo02n.pdf (18 pages, 463579 bytes).
+Output written on capitulo02n.pdf (18 pages, 463906 bytes).
 PDF statistics:
  455 PDF objects out of 1000 (max. 8388607)
  382 compressed objects within 4 object streams

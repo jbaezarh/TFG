@@ -27,6 +27,12 @@ source("cabecera_chunk_inicio.R")
 <!-- A constant and controlled level of emission of carbon and other gases into the atmosphere is a pre-condition for preventing global warming and an essential issue for a sustainable world. Fires in the natural environment are phenomena that extensively increase the level of greenhouse emissions and disturb the normal functioning of natural ecosystems. -->
 
 
+
+
+
+
+
+
 destrucción de vastas áreas de bosque, la degradación del suelo 
 pérdida de biodiversidad
 s

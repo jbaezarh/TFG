@@ -818,8 +818,9 @@ observación a una de las dos clases posibles (incendio o no incendio).
 Existen numerosas técnicas de clasificación binaria supervisada, y en
 este trabajo se explorarán algunas de las de uso más común en problemas
 similares. Las principales fuentes consultadas para esta sección han
-sido \citet{hastie2009elements}, el capítulo 6 de
-\citet{MLmodelSuthaharan} y entradas del blog \citet{eight2late}.
+sido \citet{hastie2009elements} y el capítulo 6 de
+\citet{MLmodelSuthaharan}. Para entender la intuición detrás de los
+modelos puede ser útil el blog \citet{eight2late}.
 
 \hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
 \subsection{Regresión logística (con
@@ -1169,7 +1170,7 @@ observaciones del conjunto de entrenamiento más cercanas a estas en el
 espacio muestral aplicando la regla de la clase más votada. Es decir,
 dado un espacio muestral \(\Theta\) con una distancia \(d\) definida
 sobre él, dado un conjunto de entrenamiento \(T \subset Y\) y dado
-\(k \in \mathbb{N^+}\)* la función calculada por el algoritmo para
+\(k \in \mathbb{N^+}\), la función calculada por el algoritmo para
 estimar la clase de \(\underline x \in \Theta\) es:
 
 \[f(\underline x) = mayority\; vote\;\{ y_i \,| \, \underline x_i \in N_k(\underline x)\}\]
@@ -1183,7 +1184,7 @@ El parámetro \emph{k} permite controlar el sobreajuste del modelo.
 \section{Validación del ajuste}\label{validaciuxf3n-del-ajuste}}
 
 Para validar el ajuste de los modelos comentados en los datos, se
-utilizará una partición temporal en entrenamiento/ validación/ test. Es
+utilizará una partición temporal en entrenamiento-validación-test. Es
 decir, se asignará el primer 60\% de los datos (de acuerdo al día de la
 observación) a entrenamiento, el 20\% siguiente a validación y el último
 20\% a test. Este enfoque permite evitar el sesgo positivo debido al
@@ -1252,7 +1253,8 @@ clasificación. Representa la sensibilidad frente a la proporción de
 falsos positivos para cada posible umbral de clasificación. El AUC está
 comprendido entre 0 y 1, entendiéndose que el rendimiento del es mejor
 cuanto mayor sea su valor. En general, se suelen considerar aceptables
-modelos con un valor del AUC superior a 0.75.
+modelos con un valor del AUC superior a 0.75. Obsérvese por ejemplo la
+Figura \ref{fig:roc_validation}.
 
 \hypertarget{herramientas}{%
 \section{Herramientas}\label{herramientas}}
@@ -1288,7 +1290,7 @@ tabular de datos sobre la que trabajar.
 
 }
 
-\caption{Flujo de trabajo en un proyecto de     extit{data science}. \it Fuente: \citet{tidyversepackage}}\label{fig:tidiverse_workflow}
+\caption{Flujo de trabajo en un proyecto de \textit{data science}. \it Fuente: \citet{tidyversepackage}}\label{fig:tidiverse_workflow}
 \end{figure}
 
 Para la modelización se ha utilizado \emph{tidymodels}

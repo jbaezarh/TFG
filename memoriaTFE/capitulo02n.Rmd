@@ -450,7 +450,7 @@ Toda la parte práctica del presente trabajo se ha llevado a cabo empleado el le
 
 A lo largo de todo el trabajo, se ha utilizado de forma central el ecosistema de paquetes *tidyverse* [@tidyversepackage]. Se trata de una colección de paquetes de R que comparten las mismas estructuras de datos y la misma filosofía de programación, orientados a facilitar las tareas centrales de cualquier proyecto de *data science* (Figura \ref{fig:tidiverse_workflow}). Cuenta con numerosos paquetes, entre los que destacan: *readr* para la importación de datos tabulares; *tidyr* para la ordenación; *dplyr* para la manipulación; *lubridate* para las fechas; *forcats* para los factores; *ggplot2* para la visualización; *purr* para la programación funcional; y *tibble* que proporciona la estructura tabular de datos sobre la que trabajar. 
 
-```{r tidiverse_workflow, echo = FALSE, fig.cap = "Flujo de trabajo en un proyecto de \textit{data science}. \\it Fuente: \\citet{tidyversepackage}"}
+```{r tidiverse_workflow, echo = FALSE, fig.cap = "Flujo de trabajo en un proyecto de \\textit{data science}. \\it Fuente: \\citet{tidyversepackage}"}
 knitr::include_graphics("graficos/tidyverse_workflow.png")
 ```
 
