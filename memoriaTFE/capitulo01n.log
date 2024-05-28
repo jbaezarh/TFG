@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.26)  26 MAY 2024 17:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.26)  28 MAY 2024 11:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1063,15 +1063,22 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ]
 Cap\'{\i }tulo 1.
 [3]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 593.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 614.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) (./capitulo01n.bbl
+)
+LaTeX Info: Redefining \. on input line 649.
+LaTeX Info: Redefining \% on input line 649.
+LaTeX Info: Redefining \. on input line 649.
+LaTeX Info: Redefining \% on input line 649.
+[4{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] (./capitulo01n.bbl
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-[4{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+[5] [6
+
+]
 Underfull \hbox (badness 1701) in paragraph at lines 15--18
 []\T1/lmr/m/sc/12 Gutiérrez-Hernández\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Oli-ver\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Senciales-González\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 J. M. \T1/lmr/m/n/12 y \T1/lmr/m/sc/12 Gar-cía\T1/lmr/m/n/12 ,
  []
@@ -1081,9 +1088,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 28--34
 []\T1/lmr/m/sc/12 Liz-López\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 He-le-na\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Huertas-Tato\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Ja-vier\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Pérez-Aracil\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Jor-ge\T1/lmr/m/n/12 ;
  []
 
-) [5
-
-] (./capitulo01n.aux
+) [7] (./capitulo01n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
@@ -1095,18 +1100,18 @@ Package rerunfilecheck Info: File `capitulo01n.out' has not changed.
 (rerunfilecheck)             Checksum: EDAA884B1A6ECBA97B23212A9EFBF4DB;587.
  ) 
 Here is how much of TeX's memory you used:
- 30803 strings out of 475935
- 588547 string characters out of 5787577
- 1934907 words of memory out of 5000000
- 52411 multiletter control sequences out of 15000+600000
+ 30808 strings out of 475935
+ 588643 string characters out of 5787577
+ 1938907 words of memory out of 5000000
+ 52413 multiletter control sequences out of 15000+600000
  605199 words of font info for 66 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,12n,93p,2476b,495s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,13n,93p,2476b,497s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb>
-Output written on capitulo01n.pdf (5 pages, 187196 bytes).
+Output written on capitulo01n.pdf (7 pages, 197489 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 100 compressed objects within 1 object stream
- 24 named destinations out of 1000 (max. 500000)
+ 137 PDF objects out of 1000 (max. 8388607)
+ 111 compressed objects within 2 object streams
+ 27 named destinations out of 1000 (max. 500000)
  53 words of extra memory for PDF output out of 10000 (max. 10000000)
 

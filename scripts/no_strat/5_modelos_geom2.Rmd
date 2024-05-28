@@ -1,0 +1,1193 @@
+---
+title: "Modelos"
+author: "Juan Baeza Ruiz-Henestrosa"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "D:/usuario/Documents/Universidad/5º/TFG - organizado") # Para que haga knitr desde el directorio del proyecto
+
+```
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(sf)
+library(ggplot2)
+library(akima) # interp
+library(magrittr)
+library(ggpubr)
+library(forcats)
+
+```
+
+## Carga de datos
+
+Se cargan los datos depurados obtenidos a partir de la selección de casos estratificando según el mes.
+
+```{r}
+# load("salidas_intermedias/datos_strat_depurados_geom_2024-05-03.RData")
+# load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData")
+load("salidas_intermedias/datos_depurados_geom_2024-04-23.RData")
+datos = datos |> rename(dist_ferrocarril =dist_ferocarril)
+# load("salidas_intermedias/datos_depurados_geom_2024-04-26.RData")
+
+datos<- datos |> 
+  mutate(uso_suelo = fct_other(uso_suelo,
+                               keep = c("21","22","23","24","31","32","33"),
+                               other_level= "Otro"))
+
+
+table(datos$uso_suelo,datos$fire)
+```
+
+## Funciones para la evaluación de modelos
+
+Las siguientes funciones se utilizarán para evaluar el rendimiento de los modelos.
+
+```{r}
+# Función para obtener las medidas de rendimiento de los modelos a partir de un objeto predict 
+
+get_metrics <- function(pred) {
+  list(
+    res = tibble(
+      roc_auc = pred |> roc_auc(truth = fire, .pred_0) |> pull(.estimate),
+      accuracy = pred |> accuracy(truth = fire, .pred_class) |> pull(.estimate),
+      recall = pred |> sensitivity(truth = fire, .pred_class,event_level="second") |> pull(.estimate),
+      specificity = pred |> spec(truth = fire, .pred_class,event_level="second") |> pull(.estimate),
+      precision = pred |> precision(truth = fire, .pred_class,event_level="second") |> pull(.estimate)),
+    conf_mat = pred |> conf_mat(truth = fire, .pred_class))
+}
+
+
+# Función para mostrar gráficamente los resultados del tuning de un modelo con dos parámetros
+tuning_plot = function(mod_res) {
+  datos_metrics = mod_res %>% 
+    collect_metrics()
+  
+  # min = min(datos_metrics$mean)
+  # max = max(datos_metrics$mean)
+  
+  plots = list()
+  
+  for (metric in unique(datos_metrics$.metric)) {
+    
+    datos = datos_metrics %>% 
+      filter(.metric==metric) 
+    
+    # Interpolar los datos faltantes
+    datos_interp <- interp(datos[[1]], datos[[2]], datos$mean)
+    
+    # Crear un nuevo dataframe con los datos interpolados
+    datos_interp_df <- data.frame(
+      expand.grid(x = datos_interp$x, y = datos_interp$y), z = as.vector(datos_interp$z))
+    
+    # Crear el gráfico de mapa de calor con interpolación
+    p = ggplot(datos_interp_df, aes(x = x, y = y, fill = z)) +
+      geom_tile() +
+      # scale_fill_viridis_c(option = "turbo", limits = c(min,max), name = NULL)+
+      scale_fill_viridis_c(option = "turbo", name = NULL,na.value = "transparent")+
+      labs(title = "",
+           x = colnames(datos)[1],
+           y = colnames(datos)[2],
+           fill = metric) +
+      theme_minimal()
+    
+    plots[[metric]] = p
+    
+  }
+  
+  # ggarrange(plotlist = plots,
+  #           legend = "right",
+  #           common.legend = T)
+  
+  ggarrange(plotlist = plots,
+            labels=c("Accuracy","Specificy","ROC-AUC","Recall"),
+            align = "hv")
+  
+  
+}
+
+```
+
+
+## Partición temporal entrenamiento / validación / test
+
+Se crea una partición temporal en entrenamiento / validación / test, para evitar el sesgo look-ahead (mirar al futuro). Ordenando los casos según su fecha, se toman el primer 60% para entrenar los modelos, el 20% siguiente para la validación y el último 20% para la evaluación del rendimiento.
+
+```{r}
+set.seed(123)
+
+splits = initial_validation_time_split(datos, 
+                                       prop=c(0.6,0.2))
+
+training <- training(splits) %>%  st_drop_geometry()
+val_set <- validation_set(splits) %>% st_drop_geometry()
+test  <- testing(splits) %>% st_drop_geometry()
+```
+
+
+## Modelos
+
+### 1. Logistic regression with penalty
+
+<!-- https://glmnet.stanford.edu/articles/glmnet.html -->
+<!-- mixture = 1 : pure lasso regression -->
+<!-- mixture = 0 : pure ridge regression -->
+<!-- penalty: parámetro de regularización -->
+
+En primer lugar se usa un modelo de regresión logística con término de penalización. En función de si el término de regularización es de grado 1 o 2, se le da el nombre de lasso o ridge (logistic) regression. Se ajusta el grado del término de penalización así como su coeficiente usando para ello el conjunto de validación.
+
+```{r}
+# 1º Definimos el modelo:
+
+lr_mod <- 
+  logistic_reg(penalty = tune(), mixture = tune()) %>% 
+  set_engine("glmnet")
+
+
+# 2º Creamos la receta
+
+lr_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) # Se normalizan todos los predictores
+
+
+# 3º Creamos el workflow
+
+lr_workflow <- 
+  workflow() %>% 
+  add_model(lr_mod) %>% 
+  add_recipe(lr_recipe)
+
+
+# 4º Creamos el grid para los parámetros
+lr_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 10),
+                           mixture = seq(0,1,length.out=10))
+
+
+# 5º Ajustamos el modelo
+lr_res <- 
+  lr_workflow %>% 
+  tune_grid(val_set,
+            grid = lr_reg_grid,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+# 6º Evaluación de modelos
+# Se muestran las medidas de rendimiento en función del parámetro de penalización y de mixtura
+# lr_plot <- 
+#   lr_res %>% 
+#   collect_metrics() %>% 
+#   # filter(.metric == "accuracy") %>%
+#   ggplot(aes(x = penalty, y = mean,col=.metric,linetype=as.factor(mixture))) + 
+#   geom_point() + 
+#   geom_line() + 
+#   ylab("Medidas de rendimiento") +
+#   scale_x_log10(labels = scales::label_number())
+# lr_plot
+
+tuning_plot(lr_res)
+
+lr_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) |> 
+  summarise(max = max(mean),min=min(mean))   
+
+
+lr_res %>% 
+  show_best(metric = "accuracy", n = 15) %>% 
+  arrange(desc(mean),penalty)
+
+
+# 7º Selección del mejor modelo
+
+lr_best <- 
+  lr_res %>% 
+  select_best(metric="accuracy")
+
+lr_best
+
+
+# 8º Se evalúa el modelo:
+
+# Curva ROC
+lr_auc <- 
+  lr_res %>% 
+  collect_predictions(parameters = lr_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lr_auc)
+
+
+#   Medidas de rendimiento
+lr_metrics <- lr_res |> 
+  collect_predictions(parameters = lr_best) |> 
+  get_metrics()
+
+lr_metrics
+```
+
+#### Análisis gráfico de los "residuos" / errores:
+
+```{r}
+lr_errors = lr_res %>%
+  collect_predictions(parameters = lr_best) %>% 
+  mutate(residual = fire !=.pred_class,
+         geometry = st_geometry(validation(splits))) %>% 
+  st_as_sf(sf_column_name ="geometry")
+
+ggplot(lr_errors,aes(col=residual)) + 
+  geom_sf(alpha=0.6) +
+  labs(col = "Predicción") + 
+  scale_colour_manual(values = c("grey","red"),labels = c("Correcta","Errónea"))
+```
+
+Los errores se concentran en las zonas con más incendios (al norte y al sur del Guadalquivir).
+
+#### Interpretación coeficientes
+
+```{r}
+# Cómo obtengo los p_valores de los contrastes individuales?
+
+lr_workflow %>% 
+  finalize_workflow(lr_best) %>%
+  fit(training) %>% 
+  extract_fit_parsnip() %>% 
+  tidy() %>% print(n=100)
+```
+
+
+### 1.a Logistic regression 
+<!-- No aporta nada, salvo si acaso la significación de los coeficientes -->
+Regresión logística sin parámetro de regularización.
+
+```{r lr}
+# 1º definimos el modelo 
+# lrs: logistic regression simple
+
+lrs_mod <- 
+  logistic_reg(penalty = tune(), mixture = tune()) %>% 
+  set_engine("glm")
+
+# 2º Creamos la receta
+
+lrs_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) # Se normalizan todos los predictores
+
+
+# 3º Creamos el workflow
+lrs_workflow <- 
+  workflow() %>% 
+  add_model(lrs_mod) %>% 
+  add_recipe(lrs_recipe)
+
+
+# 4º Ajustamos el modelo.
+lr_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 5),
+                           mixture = seq(0,1,length.out=5),
+                           num_comp = seq(15,21,2))
+lrs_res <- 
+  lrs_workflow %>% 
+  fit(training)
+
+# 5º Se evalúa su rendimiento en los datos de validación.
+lrs_pred = cbind(predict(lrs_res,new_data = validation(splits),type="prob"),
+             predict(lrs_res,new_data = validation(splits),type="class"),
+             fire = validation(splits)$fire)
+
+# 6º Se evalúa el modelo:
+#   Curva ROC
+lrs_auc <- lrs_pred %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lrs_auc)
+
+
+#   Medidas de rendimiento
+lrs_metrics <- lrs_pred |> 
+  get_metrics()
+
+lrs_metrics
+```
+
+#### Coeficientes
+```{r}
+lrs_res %>% extract_fit_engine() %>% summary()
+```
+ 
+GWETTOP WD10M, orientacion, date_dow no significativas, dist_rios
+
+
+### 1.b. Logistic regression with feature selection
+<!-- No aporta nada -->
+```{r}
+# 1º definimos el modelo 
+# lrs2: logistic regression simple
+
+lrs2_mod <- 
+  logistic_reg(penalty = NULL, mixture = NULL) %>% 
+  set_engine("glm")
+
+# 2º Creamos la receta
+
+lrs2_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio, GWETTOP, WD10M, orientacion) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Creamos el workflow
+lrs2_workflow <- 
+  workflow() %>% 
+  add_model(lrs2_mod) %>% 
+  add_recipe(lrs2_recipe)
+
+# 4º Ajustamos el modelo.
+lrs2_res <- 
+  lrs2_workflow %>% 
+  fit(training)
+
+# 5º Se evalúa su rendimiento en los datos de validación.
+lrs2_pred = cbind(predict(lrs2_res,new_data = validation(splits),type="prob"),
+             predict(lrs2_res,new_data = validation(splits),type="class"),
+             fire = validation(splits)$fire)
+
+# 6º Se evalúa el modelo:
+#   Curva ROC
+lrs2_auc <- lrs2_pred %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lrs2_auc)
+
+
+#   Medidas de rendimiento
+lrs2_metrics <- lrs2_pred |> 
+  get_metrics()
+
+```
+
+
+### 2. Logistic regression (with penalty) + PCA
+
+```{r}
+# 1º Creamos el modelo
+
+lr_pca_mod <- 
+  logistic_reg(penalty = tune(), mixture = tune()) %>% 
+  set_engine("glmnet")
+
+
+# 2º Creamos la receta
+
+lr_pca_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) %>% # Se normalizan todos los predictores
+  step_pca(all_numeric_predictors(),num_comp = tune())
+
+
+# 3º Creamos el workflow
+lr_pca_workflow <- 
+  workflow() %>% 
+  add_model(lr_pca_mod) %>% 
+  add_recipe(lr_pca_recipe)
+
+# 4º Creamos el grid para los parámetros
+lr_pca_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 10),
+                               mixture = seq(0,1,length.out=10),
+                               num_comp = c(20,25,30,35,40,45,50))
+
+
+# 5º Ajustamos el modelo
+lr_pca_res <- 
+  lr_pca_workflow %>% 
+  tune_grid(val_set,
+            grid = lr_pca_reg_grid,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+lr_pca_tuning = lr_pca_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+lr_pca_res %>% 
+  show_best(metric = "accuracy", n = 15) %>% 
+  arrange(desc(mean))
+
+
+# 7º Selección del mejor modelo
+
+lr_pca_best <- 
+  lr_pca_res %>% 
+  select_best(metric="accuracy")
+
+lr_pca_best
+
+
+# 8º Se evalúa el modelo:
+
+# Curva ROC
+lr_pca_auc <- 
+  lr_pca_res %>% 
+  collect_predictions(parameters = lr_pca_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Logistic Regression")
+
+autoplot(lr_pca_auc)
+
+
+#   Medidas de rendimiento
+lr_pca_metrics <- lr_pca_res |> 
+  collect_predictions(parameters = lr_pca_best) |> 
+  get_metrics()
+
+lr_pca_metrics
+
+```
+
+No parece aportar ninguna mejora, el mejor resultado se da con 40 componentes principales.
+
+## 3. Decision Trees
+```{r}
+dt_mod <- 
+  decision_tree(cost_complexity = tune()) %>% 
+  set_engine("rpart") %>% 
+  set_mode("classification")  
+
+
+dt_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  # step_holiday(date) %>% 
+  step_rm(date, cod_municipio, municipio) 
+
+
+dt_workflow <- 
+  workflow() %>% 
+  add_model(dt_mod) %>% 
+  add_recipe(dt_recipe)
+
+# 4º Train and tune
+set.seed(345)
+dt_res <- 
+  dt_workflow %>% 
+  tune_grid(val_set,
+            grid = 10,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# plot(dt_res |> extract_fit_engine())
+
+dt_tuning = dt_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) |> 
+  summarise(max = max(mean),min=min(mean))
+dt_tuning
+
+dt_plot <- 
+  dt_res %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) |> 
+  # filter(.metric == "accuracy") %>%
+  ggplot(aes(x = cost_complexity, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  scale_x_log10(labels = scales::label_number())+
+  theme_minimal()
+dt_plot
+
+dt_best <- dt_res |> 
+  select_best(metric = "accuracy")
+dt_best
+
+dt_metrics <- dt_res |> 
+  collect_predictions(parameters = dt_best) |> 
+  get_metrics()
+dt_metrics
+
+```
+
+```{r}
+# library(rpart.plot)
+# library(rattle)
+# library(RColorBrewer)
+# 
+# arbol = dt_workflow %>% 
+#   finalize_workflow(dt_best) %>%
+#   fit(training) %>% 
+#   extract_fit_engine() 
+# 
+# fancyRpartPlot(arbol,cex=0.6)
+# rpart.plot(arbol,cex=0.6)
+# 
+# plot(arbol,main="Arbol de clasificación: datos spam",margin=0.1,compress=T,branch=0.8)
+# text(arbol,col="blue",cex=0.6)
+
+```
+
+
+### 4. Random Forest
+
+```{r }
+
+# Detectar el número de núcleos para trabajar en paralelo
+cores <- parallel::detectCores()
+cores
+
+# Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo de forma que la computación sea más eficiente
+
+# ETAPA 1: fijado mtry=4, se ajusta min_n
+# -----------------
+
+# 1º Construir el modelo
+rf_mod1 <- 
+  rand_forest(mtry = 4, min_n = tune(), trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+rf_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  # step_holiday(date) %>% 
+  step_rm(date, cod_municipio, municipio) 
+# No normalizamos en este caso pues no es necesario
+
+# 3º Ensamblar todo con workflow
+rf_workflow1 <- 
+  workflow() %>% 
+  add_model(rf_mod1) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res1 <-
+  rf_workflow1 %>%
+  tune_grid(val_set,
+            grid = expand_grid(min_n = seq(500,2500,100)),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+# Resultados del tuning
+
+rf_tuning1 <- rf_res1 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning1
+
+# plot
+
+rf_plot1 <- 
+  rf_res1 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = min_n, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = "Etapa 1\nFijado mtry = 4, se ajusta min_n")
+
+
+# Mejor modelo
+rf_best1 <- 
+  rf_res1 %>% 
+  select_best(metric = "spec")
+
+rf_best1
+
+rf_metrics1 <- rf_res1 |> 
+  collect_predictions(parameters = rf_best1) |> 
+  get_metrics()
+
+rf_metrics1
+
+
+# ETAPA 2: fijado min_n de la etapa anterior, se ajusta mtry
+# -----------------
+
+# 1º Se construye el modelo
+rf_mod2 <- 
+  rand_forest(mtry = tune(), min_n = rf_best1$min_n, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Se usa la misma receta que antes
+
+# 3º Ensamblar todo con workflow
+rf_workflow2 <- 
+  workflow() %>% 
+  add_model(rf_mod2) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res2 <-
+  rf_workflow2 %>%
+  tune_grid(val_set,
+            grid = expand_grid(mtry = 1:10),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# Resultados del tuning
+
+rf_tuning2 <- rf_res2 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning2
+
+#plot
+rf_plot2 <- 
+  rf_res2 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = mtry, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = paste0("Etapa 2\nFijado min_n = ", rf_best1$min_n, " se ajusta mtry"))
+rf_plot2
+
+# Mejor modelo
+rf_best2 <- 
+  rf_res2 %>% 
+  select_best(metric = "spec")
+rf_best2
+
+rf_metrics2 <- rf_res2 |> 
+  collect_predictions(parameters = rf_best2) |> 
+  get_metrics()
+
+rf_metrics2
+
+
+# ---------
+
+# Plots
+ggarrange(rf_plot1,rf_plot2,nrow=1,common.legend = T,legend = "bottom")
+
+```
+
+
+### 5. k-Nearest Neighbours
+```{r}
+knn_mod <- 
+  nearest_neighbor(neighbors = tune()) %>% 
+  set_engine("kknn") %>% 
+  set_mode("classification")  
+
+
+knn_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow","month")) %>% 
+  # step_holiday(date, holidays = holidays) %>% 
+  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
+  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
+  step_normalize(all_predictors()) # Se normalizan todos los predictores
+
+
+knn_workflow <- 
+  workflow() %>% 
+  add_model(knn_mod) %>% 
+  add_recipe(knn_recipe)
+
+# 4º Train and tune
+set.seed(345)
+knn_res <- 
+  knn_workflow %>% 
+  # fit(training)
+  tune_grid(val_set,
+            grid = expand_grid(neighbors = c(1,10,25,seq(25,400,25))),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+
+knn_tuning <- knn_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+knn_plot <- 
+  knn_res %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  # filter(.metric == "accuracy") %>%
+  ggplot(aes(x = neighbors, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()
+knn_plot
+
+knn_best <- knn_res |> 
+  select_best(metric = "accuracy")
+knn_best
+
+knn_metrics <- knn_res |> 
+  collect_predictions(parameters = knn_best) |> 
+  get_metrics()
+knn_metrics
+```
+
+```{r}
+# save(lr_res,rf_res,knn_res,lrs_res,lr_pca_res,lrs2_res,dt_res,
+# file = "salidas_intermedias/trained_models_strat_faltasvm_2024_05_03.RData")
+```
+
+
+<!-- ## 5. Neuronal Networks -->
+
+<!-- ```{r} -->
+<!-- # Con brulee se puede hacer un perceptron multicapas con tidymodels -->
+<!-- ``` -->
+
+
+### 6. SVM lineal
+
+```{r}
+# 1º Construir el modelo
+svm_mod <- 
+  svm_linear(cost = tune()) %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+svm_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  step_rm(date, cod_municipio, municipio) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Ensamblar todo con workflow
+svm_workflow <- 
+  workflow() %>% 
+  add_model(svm_mod) %>% 
+  add_recipe(svm_recipe)
+
+# 4º Train and tune
+set.seed(345)
+svm_res <- 
+  svm_workflow %>% 
+  tune_grid(val_set,
+            grid = 15,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+
+# 5º Evaluación de resultados del tuning
+svm_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+svm_plot <- 
+  svm_res %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  # filter(.metric == "accuracy") %>%
+  ggplot(aes(x = cost, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()
+svm_plot
+# Se observa que hay muy poca variabilidad en los resultados de cada combinación de parámetros, menos de un 2.5% para cada medida de rendimiento. Ante este resultado, de nuevo, se opta por maximizar la tasa de acierto
+
+
+# Mejor modelo
+svm_best <- 
+  svm_res %>% 
+  select_best(metric="accuracy")
+
+svm_best
+
+# Curva ROC
+svm_auc <- 
+  svm_res %>% 
+  collect_predictions(parameters = svm_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Support Vector Machine")
+
+autoplot(svm_auc)
+
+
+svm_metrics <- svm_res |> 
+  collect_predictions(parameters = svm_best) |> 
+  get_metrics()
+svm_metrics
+
+# save(svm_res,file = "salidas_intermedias/trained_models_svm_2024_05_04.RData")
+```
+
+
+### 7. SVM radial
+```{r}
+# 1º Construir el modelo
+svm_rbf_mod <- 
+  svm_rbf(cost = tune(),rbf_sigma = tune()) %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+svm_rbf_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  step_rm(date, cod_municipio, municipio) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Ensamblar todo con workflow
+svm_rbf_workflow <- 
+  workflow() %>% 
+  add_model(svm_rbf_mod) %>% 
+  add_recipe(svm_rbf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+svm_rbf_res <- 
+  svm_rbf_workflow %>% 
+  tune_grid(val_set,
+            grid = 8,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+
+# 5º Evaluación de resultados del tuning
+svm_rbf_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+tuning_plot(svm_rbf_res) # No puede hacerse el gráfico
+
+
+# Mejor modelo
+svm_rbf_best <- 
+  svm_rbf_res %>% 
+  select_best(metric="accuracy")
+
+svm_rbf_best
+
+# Curva ROC
+svm_rbf_auc <- 
+  svm_rbf_res %>% 
+  collect_predictions(parameters = svm_rbf_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Support Vector Machine")
+
+autoplot(svm_rbf_auc)
+
+
+svm_rbf_metrics <- svm_rbf_res |> 
+  collect_predictions(parameters = svm_rbf_best) |> 
+  get_metrics()
+svm_rbf_metrics
+
+# save(svm_rbf_res,file = "salidas_intermedias/trained_models_svm_rbf_2024_05_04.RData")
+```
+
+### 8. ANN
+
+```{r}
+# 1º Construir el modelo
+mlp <- 
+  mlp(hidden_units = c(30,15,5)) %>% 
+  set_engine("brulee") %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+mlp_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  step_rm(date, cod_municipio, municipio) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
+  step_corr() %>% # Elimina variables con correlación superior a 0.9
+  step_zv(all_predictors()) %>% 
+  step_normalize(all_predictors())
+
+# 3º Ensamblar todo con workflow
+mlp_workflow <- 
+  workflow() %>% 
+  add_model(mlp) %>% 
+  add_recipe(mlp_recipe)
+
+# 4º Train and tune
+set.seed(345)
+mlp_res <- 
+  mlp_workflow %>% 
+  fit(training)
+
+
+
+# 5º Evaluación de resultados del tuning
+svm_rbf_res |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+tuning_plot(svm_rbf_res) # No puede hacerse el gráfico
+
+
+# Mejor modelo
+svm_rbf_best <- 
+  svm_rbf_res %>% 
+  select_best(metric="accuracy")
+
+svm_rbf_best
+
+# Curva ROC
+svm_rbf_auc <- 
+  svm_rbf_res %>% 
+  collect_predictions(parameters = svm_rbf_best) %>% 
+  roc_curve(fire, .pred_0) %>% 
+  mutate(model = "Support Vector Machine")
+
+autoplot(svm_rbf_auc)
+
+
+svm_rbf_metrics <- svm_rbf_res |> 
+  collect_predictions(parameters = svm_rbf_best) |> 
+  get_metrics()
+svm_rbf_metrics
+
+```
+
+
+# Comparación
+
+```{r}
+load("salidas_intermedias/trained_models_svm_rbf_2024_05_04.RData")
+load("salidas_intermedias/trained_models_svm_2024_05_04.RData")
+load("salidas_intermedias/trained_models_strat_faltasvm_2024_05_03.RData")
+load("salidas_intermedias/trained_models_rf_2024_05_05.RData")
+ 
+models = tibble(model_name = c("lr","rf"),
+                models_tune = list(lr_res,rf_res2),
+                models_workflow = list(lr_workflow,rf_workflow2))
+models = tibble(model_name = c("lr","lr_pca","dt","rf","svm_linear","svm_rbf","knn"),
+                models_tune = list(lr_res,lr_pca_res,dt_res,rf_res2,svm_res,svm_rbf_res,knn_res),
+                models_workflow = list(lr_workflow,lr_pca_workflow,dt_workflow,rf_workflow2,svm_workflow,svm_rbf_workflow,knn_workflow))
+
+# save(models, file="salidas_intermedias/all_models.RData")
+
+load("salidas_intermedias/all_models.RData")
+models = models %>% mutate(best_tuning = map(models_tune,function(x) select_best(x,metric = "accuracy")),
+                           best_metrics = map2(models_tune,
+                                               best_tuning,
+                                               ~ collect_predictions(.x,parameters = .y) %>% 
+                                                 get_metrics() %>% 
+                                                 extract2(1)), # Para extraer solo las medidas y no la matriz de confusión
+                           roc = map2(models_tune,
+                                      best_tuning,
+                                      ~ collect_predictions(.x,parameters = .y) %>% 
+                                        roc_curve(fire, .pred_0))
+                           ) 
+
+
+metrics = models %>% select(model_name,best_metrics) %>% unnest(best_metrics)
+metrics
+
+
+# curva roc
+metrics %>% 
+  pivot_longer(cols = c(roc_auc, accuracy, recall, specificity, precision),
+               names_to = "metric") %>% 
+  ggplot(aes(x = metric, y = value, group = model_name)) +
+  geom_line(aes(col = model_name),size=1) +
+  geom_point(aes(col = model_name),size=2.3) +
+  scale_color_viridis_d(option="turbo") +
+  geom_vline(xintercept=1:5, linetype="dotted") +
+  labs(col = "Modelo", title = "Métricas sobre validación") +
+  theme_minimal() +
+  theme(axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1))
+  
+# plot medidas
+models %>% select(model_name,roc) %>% unnest(roc) %>% 
+  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model_name)) + 
+  geom_path(lwd = 1, alpha = 0.7) +
+  geom_abline(lty = 3) + 
+  coord_equal() + 
+  scale_color_viridis_d(option="turbo") +
+  labs(color="Modelo")+
+  # scale_color_viridis_d(option = "turbo",name="Modelo") +
+  theme_minimal() + 
+  theme(axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1))+
+  ggtitle("Curva ROC en validación")
+
+library(knitr)
+
+kable(metrics,digits=3)
+```
+
+
+# Test
+
+Se unen los conjuntos training y validation para entrenar el modelo final
+
+```{r}
+
+cores = 8
+
+set.seed(345)
+models <- models %>% mutate(final_workflow = map2(models_workflow,best_tuning,finalize_workflow),
+                           last_fit = map(final_workflow,function(x) last_fit(x,splits,add_validation_set=T)))
+
+models = models %>% mutate(test_metrics = map(last_fit,
+                                              ~collect_predictions(.x) %>% 
+                                                 get_metrics() %>% 
+                                                 extract2(1)), # Para extraer solo las medidas 
+                           test_roc = map(last_fit,
+                                          ~collect_predictions(.x) %>% 
+                                             roc_curve(fire, .pred_0))
+                           ) 
+
+# save(models, file="salidas_intermedias/all_models_test.RData")
+
+
+test_metrics = models %>% select(model_name,test_metrics) %>% unnest(test_metrics)
+test_metrics
+
+
+# plot
+test_metrics %>% 
+  pivot_longer(cols = c(roc_auc, accuracy, recall, specificity, precision),
+               names_to = "metric") %>% 
+  ggplot(aes(x = metric, y = value, group = model_name)) +
+  geom_line(aes(col = model_name),size=1) +
+  geom_point(aes(col = model_name),size=2.3) +
+  scale_color_viridis_d(option="turbo") +
+  geom_vline(xintercept=1:5, linetype="dotted") +
+  labs(col = "Modelo", title = "Métricas sobre test") +
+  theme_minimal() +
+  theme(axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1))
+  
+
+models %>% select(model_name,test_roc) %>% unnest(test_roc) %>% 
+  ggplot(aes(x = 1 - specificity, y = sensitivity, col = model_name)) + 
+  geom_path(lwd = 1, alpha = 0.7) +
+  geom_abline(lty = 3) + 
+  coord_equal() + 
+  scale_color_viridis_d(option="turbo") +
+  labs(color="Modelo")+
+  # scale_color_viridis_d(option = "turbo",name="Modelo") +
+  theme_minimal() + 
+  theme(axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1))+
+  ggtitle("Curva ROC en test")
+
+library(knitr)
+
+kable(test_metrics,digits=3)
+
+```
+
+### RF - VIP
+```{r}
+# Calcular VIP
+# No se hace desde el principio para que la computación sea más rápida
+
+# Se hace el last_fit manualmente:
+
+# the last model
+last_rf_mod <- 
+  rand_forest(mtry = rf_best2$mtry, min_n = rf_best1$min_n, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores,importance="impurity") %>% 
+  set_mode("classification")
+  
+# the last workflow
+last_rf_workflow <- 
+  rf_workflow2 %>% 
+  update_model(last_rf_mod)
+
+# the last fit
+set.seed(345)
+last_rf_fit <- 
+  last_rf_workflow %>% 
+  last_fit(splits,
+           add_validation_set = T)
+
+
+library(vip)
+last_rf_fit %>% 
+  extract_fit_parsnip() %>% 
+  vip(num_features = 50,aesthetics = list(fill="lightblue")) +
+  theme_minimal()
+```
+
+

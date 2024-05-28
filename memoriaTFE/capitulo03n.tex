@@ -567,7 +567,7 @@ explorado, debido fundamentalmente a dos factores:
 \tightlist
 \item
   La dificultad de disponer de información fiable y de calidad
-  desagregada espacio-temporalmente
+  desagregada espacio-temporalmente.
 \item
   La dificultad de trabajar con datos de estas características de cara
   al análisis y principalmente a la modelización, ya que son datos
@@ -576,19 +576,20 @@ explorado, debido fundamentalmente a dos factores:
 
 Queda claro, por tanto, que se trata de un problema complejo que
 requiere de simplificaciones para poder ser abordado, más aun dadas las
-limitaciones en los recursos computacionales disponibles y la enorme
-cantidad de de datos que se están considerando y que requieren de un
-procesamiento sumamente costoso desde un punto de vista computacional.
+limitaciones en los recursos disponibles y la enorme cantidad de de
+datos que se están considerando y que requieren de un procesamiento
+sumamente costoso desde un punto de vista computacional.
 
 Por todo ello, esta sección es probablemente la de mayor importancia y
-dificultad de todo el trabajo, ya que implica la toma de decisiones que
-serán determinantes de cara al correcto desempeño de los modelos que se
-construirán más adelante, requiere de un vasto conocimiento del problema
-que permita un enfoque adecuado que haga posible la consecución de los
-objetivos que se esperan conseguir, necesita del uso de técnicas
-específicas de procesamiento de datos espaciales que no han sido
-tratadas durante el grado y se ve fuertemente limitada por los escasos
-recursos computacionales disponibles.
+dificultad de todo el trabajo. Por un lado, debido a que implica la toma
+de decisiones que serán determinantes de cara al correcto desempeño de
+los modelos que se construirán más adelante. Además, porque requiere de
+un vasto conocimiento del problema que permita un enfoque adecuado que
+posibilite la consecución de los objetivos que se esperan conseguir y
+necesita del uso de técnicas específicas de procesamiento de datos
+espaciales que no han sido tratadas durante el grado. Y por último, por
+la enorme demanda computacional que requiere el procesamiento de datos
+espaciales.
 
 \hypertarget{determinaciuxf3n-del-marco-del-estudio}{%
 \section{Determinación del marco del
@@ -617,39 +618,41 @@ incendio forestal que ha tenido lugar en España desde 1983 hasta 2015,
 incluyendo su información espacial con sus coordenadas de origen. Se ha
 explorado extensamente el uso de esta base de datos para el proyecto,
 dada su exhaustividad y completitud. Sin embargo, lamentablemente no ha
-sido posible en este caso incorporarla al trabajo por diversas razones.
+sido posible en este caso incorporarla al trabajo por diversas razones
+que se detallarán a continuación.
 
 La principal de ellas fue que hasta marzo de 2024 la base de datos de la
 EGIF solo se encontraba disponible en el Catálogo de Datos del Gobierno
-de España en formato TURTLE\footnote{TURTLE es una sintaxis para RDF con
+de España en formato TURTLE\footnote{TURTLE es una sintaxis para RDF
   compatible con SPARQL. RDF (\emph{Resource Description Framework}) es
   un estándar de semántica web utilizado para el intercambiar de datos
   en la Web.} y esto conllevó numerosas dificultades. Se exploraron
 distintas librerías de R (y alguna de Python) para el manejo de datos en
 este formato, como \emph{RDFlib} \citep{rdflib}. Sin embargo, al
-tratarse de una base de datos de un tamaño considerable (aproximadamente
-1GB y con más de una decena de millones de tripletas), esta librería no
-era suficientemente eficiente para poder realizar consultas en un tiempo
-razonable al conjunto de datos. Tras explorar otras alternativas, se
-valoró la posibilidad de usar un \emph{triplestore}, es decir, una base
-de datos especialmente diseñada para el almacenamiento y recuperación de
-tripletas a través de consultas semánticas. En este caso se usó
-\emph{Apache Jena Fuseki}, ya que cuenta con una interfaz que facilita
-su uso. Sin embargo, aunque esto supuso una mejora considerable en la
-eficiencia y permitió realizar consultas sencillas a la base de datos,
-en este caso fue la complejidad del gráfico de datos (ontología) y la
-escasa documentación disponible sobre esta, la que impidió que se
-pudiesen realizar las consultas más complejas requeridas para llevar a
-cabo el proyecto. Además, se debe tener en cuenta que se trata de una
-base de datos muy heterogénea y con numerosos datos faltantes debida su
-naturaleza, por lo que requiere de un preprocesamiento que probablemente
-será complicado y costoso en tiempo y en recursos computacionales. Al no
-disponer de ninguno de estos, finalmente se optó por buscar una
-alternativa más abarcable dada las limitaciones con las que cuenta un
-Trabajo de Fin de Estudios, aunque queda abierta la posibilidad de
-explorar esta base de datos en futuros estudios, la cual podrá aportar
-nuevas dimensiones al estudio de los incendios forestales en España
-gracias a la enorme cantidad de información que ofrece.
+tratarse de una base de datos de un tamaño considerable
+(\textbf{aproximadamente 1GB y con más de una decena de millones de
+tripletas}), esta librería no era suficientemente eficiente para poder
+realizar consultas en un tiempo razonable al conjunto de datos. Tras
+explorar otras alternativas, se valoró la posibilidad de usar un
+\emph{triplestore}, es decir, una base de datos especialmente diseñada
+para el almacenamiento y recuperación de tripletas a través de consultas
+semánticas. En este caso se usó \emph{Apache Jena Fuseki}, ya que cuenta
+con una interfaz que facilita su uso. Sin embargo, aunque esto supuso
+una mejora considerable en la eficiencia y permitió realizar consultas
+sencillas a la base de datos, en este caso fue la complejidad del
+gráfico de datos (ontología) y la escasa documentación disponible sobre
+esta, la que impidió que se pudiesen realizar las consultas más
+complejas requeridas para llevar a cabo el proyecto. Además, se debe
+tener en cuenta que se trata de una base de datos muy heterogénea y con
+numerosos datos faltantes debida su naturaleza, por lo que requiere de
+un preprocesamiento que probablemente será complicado y costoso en
+tiempo y en recursos computacionales. Al no disponer de ninguno de
+estos, finalmente se optó por buscar una alternativa más abarcable dada
+las limitaciones con las que cuenta un Trabajo de Fin de Estudios,
+aunque queda abierta la posibilidad de explorar esta base de datos en
+futuros estudios, la cual podrá aportar nuevas dimensiones al estudio de
+los incendios forestales en España gracias a la enorme cantidad de
+información que ofrece.
 
 Ante esta situación, la solución planteada fue limitar el área en
 estudio a la Comunidad Autónoma de Andalucía, aprovechando la enorme
@@ -660,19 +663,21 @@ incendios forestales entre 1975 y 2022. Esta contiene los perímetros de
 incendios forestales mayores de 100 ha en Andalucía obtenidos a partir
 de imágenes de satélite y datos de campo. Se trata por tanto de una
 información que no es exhaustiva, pues los incendios con una extensión
-inferior a 100ha no han sido considerados. Sin embargo, frente a no
+inferior a 100 ha no han sido considerados. Sin embargo, frente a no
 disponer de otra información operativa de mayor calidad, se utilizará
 esta teniendo en cuenta que tendrá un efecto sobre las conclusiones que
 se puedan sacar de los modelos que se construyan.
 
 De esta forma, se han recopilado los polígonos de 1090 incendios
 forestales ocurridos en Andalucía entre 2002 y 2022, junto con la fecha
-de inicio de cada uno de ellos (Figura \ref{fig:area_fuego}).
+de inicio de cada uno de ellos (Figura \ref{fig:area_fuego}). El motivo
+por el que se ha decidido limitar el estudio a solo 20 años se detalla
+en la siguiente sección.
 
 \begin{figure}[thb]
 \centering
 \includegraphics[width=0.5\textwidth]{graficos/areas_fuego.png}
-\caption[Áreas recorridas por el fuego entre 2002 y 2022 en incendios mayores de 100 hectáreas en Andalucía]{Áreas recorridas por el fuego entre 2002 y 2022 en incendios mayores de 100 hectáreas en Andalucía. Fuente: Elaboración propia a partir de las áreas recorridas por el suelo disponibles en la REDIAM.}
+\caption[Áreas recorridas por el fuego entre 2002 y 2022 en incendios mayores de 100 hectáreas en Andalucía]{Áreas recorridas por el fuego entre 2002 y 2022 en incendios forestales mayores de 100 hectáreas en Andalucía. \it Fuente: Elaboración propia a partir de las áreas recorridas por el fuego disponibles en la REDIAM.}
 \label{fig:area_fuego}
 \end{figure}
 
@@ -685,30 +690,31 @@ disponibilidad de datos adecuados para explicar el fenómeno en cuestión,
 desagregando espacial y temporalmente.
 
 Los incendios forestales son un proceso sumamente complejo, en el que
-actúan numerosos factores de muy distinta índole (citar estudio\ldots).
-Además, dentro de un incendio forestal se pueden distinguir distintas
-fases que presentan características muy diversas y sobre las que actúan
-distintos agentes: ignición, propagación y extinción. Dada la
-información sobre incendios forestales disponible, se está obligado a
-adoptar un enfoque global, pues no se dispone de los puntos de ignición
-u origen de los incendios forestales. El enfoque será, por tanto,
-intentar predecir si una determinada localización se verá afectada por
-un incendio forestal (de más de 100 ha) en un momento concreto.
+actúan numerosos factores de muy distinta índole
+(\citet{causalidadIncendios},\citet{incendioCamCLim}). Además, dentro de
+un incendio forestal se pueden distinguir distintas fases que presentan
+características muy diversas y sobre las que actúan distintos agentes:
+ignición, propagación y extinción. Dada la información sobre incendios
+forestales disponible, se está obligado a adoptar un enfoque global,
+pues no se dispone de los puntos de ignición u origen de los incendios
+forestales. El enfoque será, por tanto, intentar predecir si una
+determinada localización se verá afectada por un incendio forestal (de
+más de 100 ha) en un momento concreto.
 
 Además, es importante tener en cuenta que existen factores estructurales
 que tienen una influencia directa sobre los regímenes de incendios
 forestales como son las tendencias de uso y explotación de los bosques,
-la presencia de interfaz urbano forestal, los tipos y técnicas de
-agricultura que se llevan a cabo, la presencia e intensidad del
-pastoreo, los cambios en los usos de suelo e incluso conductas sociales
-y tendencias demográficas diversas. Se trata de variables que cambian a
-lo largo de periodos relativamente largos de tiempo y que muy
-difícilmente pueden ser incluidos en los modelos, dada la falta de datos
-sobre ellas, así como su carácter transversal. Por ello, se ha
-considerado conveniente no extender en exceso el periodo de estudio,
-reconocida la imposibilidad de incluir en el modelo todas las variables
-que tienen un impacto relevante en la aparición de incendios y que son
-cambiantes en el tiempo.
+la presencia de interfaz urbano forestal (terreno forestal entremezclado
+con las viviendas), los tipos y técnicas de agricultura que se llevan a
+cabo, la presencia e intensidad del pastoreo, los cambios en los usos de
+suelo e incluso conductas sociales y tendencias demográficas diversas.
+Se trata de variables que cambian a lo largo de periodos relativamente
+largos de tiempo y que muy difícilmente pueden ser incluidos en los
+modelos, dada la falta de datos sobre ellas, así como su carácter
+transversal. Por ello, se ha considerado conveniente no extender en
+exceso el periodo de estudio, reconocida la imposibilidad de incluir en
+el modelo todas las variables que tienen un impacto relevante en la
+aparición de incendios y que son cambiantes en el tiempo.
 
 Todo ello hace necesario que el conjunto de datos utilizado contenga
 información sobre todas las dimensiones (o al menos las principales) que
@@ -746,8 +752,9 @@ y del polígono del área recorrida por el fuego, así como de otras
 variables que dependen del año de la campaña y que no serán relevantes
 de cara al presente estudio.
 
-Tomando como base estudios similares (\ldots) y partiendo de las 6
-categorías ya mencionadas se han recopilado 23 conjuntos de datos de
+Tomando como base estudios similares \citep[\citet{SAYAD2019130},
+\citet{stojanova2012estimating}]{incendiosAndalucia} y partiendo de las
+6 categorías ya mencionadas se han recopilado 23 conjuntos de datos de
 distinto tipo que se usarán para explicar y predecir los incendios
 forestales en Andalucía. Estos conjuntos se recogen en la Tabla
 \ref{tab:fuentes}, donde también se indica la fuente de la que ha sido
@@ -759,7 +766,7 @@ es mucho mayor, ya que, por ejemplo, para la variable \emph{NDVI} se
 dispone de un archivo \emph{tiff} para cada mes del periodo de estudio,
 resultando en un total de unos 240 archivos ráster diferentes solo para
 esta variable. Inevitablemente, esto añade cierta complejidad al manejo
-de los datos.
+de los datos, al tener que combinarlos para poder emplearlos.
 
 Es relevante la heterogeneidad de los datos recopilados, pues se dispone
 tanto de datos tabulares como de datos espaciales y dentro de estos
@@ -778,15 +785,19 @@ a lo largo del periodo de estudio de las variables meteorológicas
 seleccionadas ha hecho que este enfoque no sea viable. En esta dirección
 se ha explorado la API de la AEMET y algunos paquetes de R como
 \emph{climate} \citep{climate}, sin llegar a resultados satisfactorios.
-Por otro lado, el paquete \emph{nasapower}\citep{nasapower} permite la
+Por otro lado, el paquete \emph{nasapower} \citep{nasapower} permite la
 descarga de una gran cantidad de variables meteorológicas con frecuencia
 diaria y con una resolución de aproximadamente \(0.5 \times 0.625\)
-grados de latitud y longitud (unos 50km). Si bien es cierto que no es lo
-ideal, es la única opción que se ha considerado viable y, de cara a la
-construcción de unos primeros modelos aproximativos podría ser
-suficiente. Si quisiese extenderse el estudio, sería conveniente
-profundizar en la búsqueda de alternativas que permitan obtener
-información meteorológica de una mayor calidad y detalle.
+grados de latitud y longitud (unos 50 km). Se trata de información
+meteorológica basada en modelos y obtenida a partir de observaciones
+satelitares, por lo que no se recomienda su uso para trabajar a escalas
+pequeñas y a un gran nivel de detalle. Teniendo esto en cuenta, y tras
+explorar en profundidad todas las alternativas mencionadas, se ha
+decidido trabajar con esta fuente de información meteorológica al ser la
+única viable en estos momentos. Si quisiese extenderse el estudio, sería
+conveniente profundizar en la búsqueda de fuentes que permitan obtener
+información meteorológica de una mayor calidad y detalle, probablemente
+obtenida a partir de estaciones meteorológicas.
 
 \begin{table}
 \begin{threeparttable}[]
@@ -825,7 +836,7 @@ Hidrográficas                   & Principales Ríos                            
 \item[d] {\footnotesize Ministerio de Agricultura, Alimentación y Medio Ambiente (MAGRAMA)}
 \item[e] {\footnotesize \href{https://power.larc.nasa.gov/#resources}{NASA Prediction Of Worlwide Energy Resources (NASA POWER)}}
 \end{tablenotes}
-\caption{Conjuntos de datos brutos, tipos de datos y fuentes.}
+\caption{Datos recopilados por categorías.}
 \label{tab:fuentes}
 \end{threeparttable}
 \end{table}
@@ -844,21 +855,22 @@ suficiente de muestras negativas y positivas distribuidas espacial y
 temporalmente que tengan asociadas las variables explicativas
 correspondientes.
 
-Intuitivamente, las muestras positivas serán aquellas observaciones
-(puntos definidos en el tiempo y en el espacio) dentro del marco
-espacio-temporal del estudio en las que se ha detectado un incendio
-forestal en el día de la observación. Es decir, son observaciones dentro
-de los polígonos de incendios el día que estos se han producido. Por
-tanto, las muestras negativas serán observaciones dentro del marco
-espacio-temporal definido en las que no se ha detectado un incendio
-forestal. Es imporante tener en cuenta que dado que solo se dispone de
-los incendios con una extensión mayor a 100 ha, la muestra cuenta con un
-importante sesgo, ya que los casos positivos están infrarepresentados.
-Por ello, no podremos hacer inferencia a todos los incendios forestales,
-si no solo a los de una extensión superior a 100ha. Un comentario
-relevante es que al usar información meteorológica basada en modelos, la
-presencia de un incendio forestal no altera los valores meteorológicos
-de esa zona.
+En las siguientes secciones se explicará en profundidad el proceso
+seguido para generar la muestra. Intuitivamente, las muestras positivas
+serán aquellas observaciones (puntos definidos en el tiempo y en el
+espacio) dentro del marco espacio-temporal del estudio en las que se ha
+detectado un incendio forestal en el día de la observación. Es decir,
+son observaciones dentro de los polígonos de incendios el día que estos
+se han producido. Por tanto, las muestras negativas serán observaciones
+dentro del marco espacio-temporal definido en las que no se ha detectado
+un incendio forestal. Es importante tener en cuenta que dado que solo se
+dispone de los incendios con una extensión mayor a 100 ha, la muestra
+cuenta con un importante sesgo, ya que los casos positivos están
+infrarepresentados. Por ello, no podremos hacer inferencia a todos los
+incendios forestales, si no solo a los de una extensión superior a 100
+ha. Un comentario relevante es que al usar información meteorológica
+basada en modelos, la presencia de un incendio forestal no altera los
+valores meteorológicos de esa zona.
 
 A continuación se detalla el proceso seguido para generar el conjunto de
 datos depurado sobre el que desarrollar el estudio a partir de los
@@ -883,7 +895,7 @@ Para poder construir cualquier modelo de clasificación binaria se
 necesita disponer de una muestra que cuente con un número suficiente de
 casos positivos y negativo. Además, es aconsejable trabajar con
 conjuntos de datos balanceados para evitar sesgos en los modelos de
-clasificación \citep{THABTAH2020429}.
+clasificación. \citep{THABTAH2020429}
 
 Como ya se ha comentado, se considerarán observaciones positivas
 aquellas que se hayan visto afectadas por un incendio forestal en el día
@@ -891,28 +903,28 @@ y lugar de la observación. En cambio, serán observaciones negativas
 aquellas que no se hayan visto afectadas por un incendio forestal en el
 día y lugar de la observación. Estas observaciones deberán generarse a
 partir de los polígonos de incendios disponibles. Para ello, se usará un
-enfoque similar al utilizado en \citep{tojanova2006}, con algunas
-diferencias importantes. En el estudio citado se usan los puntos de
-ignición como muestras positivas, con el objetivo de predecir los puntos
-de origen de los incendios forestales. En cambio, en el presente trabajo
-no se disponen de los puntos de ignición de los incendios, por lo que el
-enfoque adoptado es ligeramente diferente; el objetivo es predecir las
-zonas que pueden verse afectadas por un incendio forestal (superior a
-100ha) bajo unas circunstancias concretas. De esta forma, para construir
-la muestra de casos positivos se han generado 10 puntos aleatorios
-dentro de cada polígono de incendio y se les ha asignado la fecha del
-día de incio del incendio. En \citet{tojanova2006} la muestra de casos
-negativos se genera de la siguiente manera: se toman fechas aleatorias
-dentro del periodo de estudio y a cada una de ellas se le asocia una
-localización aleatoria dentro del área de estudio satisfaciendo que
-deben estar a al menos 15km de de cualquier incendio detectado en un
-margen de ± 3 días. Esta forma de tomar los casos negativos asegura que
-estén lo suficientemente alejados de los incendios forestales para
-representar condiciones no influidas por estos, dando prioridad así a
-las áreas con una menor prioridad de ocurrencia de incendio en un
-período definido. En el presente trabajo se utilizarán los mismos
-parámetros (franja de ± 3 días y distancia superior a 15km), sin
-embargo, sería conveniente en estudios futuros plantearse si esos
+enfoque similar al utilizado en \citep{stojanova2012estimating}, con
+algunas diferencias importantes. En el estudio citado se usan los puntos
+de ignición como muestras positivas, con el objetivo de predecir los
+puntos de origen de los incendios forestales. En cambio, en el presente
+trabajo no se disponen de los puntos de ignición de los incendios, por
+lo que el enfoque adoptado es ligeramente diferente; el objetivo es
+predecir las zonas que pueden verse afectadas por un incendio forestal
+(superior a 100ha) bajo unas circunstancias concretas. De esta forma,
+para construir la muestra de casos positivos se han generado 10 puntos
+aleatorios dentro de cada polígono de incendio y se les ha asignado la
+fecha del día de incio del incendio. En \citet{stojanova2012estimating}
+la muestra de casos negativos se genera de la siguiente manera: se toman
+fechas aleatorias dentro del periodo de estudio y a cada una de ellas se
+le asocia una localización aleatoria dentro del área de estudio
+satisfaciendo que deben estar a al menos 15km de de cualquier incendio
+detectado en un margen de ± 3 días. Esta forma de tomar los casos
+negativos asegura que estén lo suficientemente alejados de los incendios
+forestales para representar condiciones no influidas por estos, dando
+prioridad así a las áreas con una menor prioridad de ocurrencia de
+incendio en un período definido. En el presente trabajo se utilizarán
+los mismos parámetros (franja de ± 3 días y distancia superior a 15km),
+sin embargo, sería conveniente en estudios futuros plantearse si esos
 parámetros son adecuados o tal vez sería más adecuado tomar otros
 valores, basados, por ejemplo, en la duración media de los incendios en
 Andalucía y otras características propias de los incendios en la región.
@@ -924,28 +936,28 @@ Andalucía y otras características propias de los incendios en la región.
 \label{fig:incendios_mes}
 \end{figure}
 
-Tanto en \citet{tojanova2006} como en otros estudios consultados se
-generan los casos negativos tomando fechas completamente aleatorias
-dentro de la franja temporal del estudio. Sin embargo, esto induce un
-claro sesgo en los datos, ya que las observaciones positivas no se
-distribuyen uniformemente entre los 12 meses, si no que se concentran
-marcadamente en los meses de verano, como puede observarse en la Figura
-\ref{fig:incendios_mes}. Generar el conjunto de datos sin tener en
-cuenta este hecho hace que las muestras positivas y negativas tengan
-características meteorológicas muy diferenciadas que no responden al
-verdadero proceso latente de aparición de incendios forestales sino al
-proceso de selección de la muestra, pudiendo provocar un marcado sesgo
-positivo en las medidas de evaluación de los modelos que en realidad no
-estarían reflejando la realidad si no los sesgos introducidos en los
-conjuntos de datos. Por ello, en el presente trabajo, para generar
-aleatoriamente los días de las muestras negativas se seguirá una
-distribución de probabilidad proporcional a la cantidad de incendios
-observados a lo largo del periodo de estudio en cada mes. Mediante este
-enfoque se espera obtener una muestra balanceada y estratificada por mes
-que permita construir modelos de clasificación capaces de captar los
-patrones latentes de aparición de incendios forestales. Además, este
-enfoque permite centrar el esfuerzo computacional en los periodos en los
-que más incendios se producen.
+Tanto en \citet{stojanova2012estimating} como en otros estudios
+consultados se generan los casos negativos tomando fechas completamente
+aleatorias dentro de la franja temporal del estudio. Sin embargo, esto
+induce un claro sesgo en los datos, ya que las observaciones positivas
+no se distribuyen uniformemente entre los 12 meses, si no que se
+concentran marcadamente en los meses de verano, como puede observarse en
+la Figura \ref{fig:incendios_mes}. Generar el conjunto de datos sin
+tener en cuenta este hecho hace que las muestras positivas y negativas
+tengan características meteorológicas muy diferenciadas que no responden
+al verdadero proceso latente de aparición de incendios forestales sino
+al proceso de selección de la muestra, pudiendo provocar un marcado
+sesgo positivo en las medidas de evaluación de los modelos que en
+realidad no estarían reflejando la realidad si no los sesgos
+introducidos en los conjuntos de datos. Por ello, en el presente
+trabajo, para generar aleatoriamente los días de las muestras negativas
+se seguirá una distribución de probabilidad proporcional a la cantidad
+de incendios observados a lo largo del periodo de estudio en cada mes.
+Mediante este enfoque se espera obtener una muestra balanceada y
+estratificada por mes que permita construir modelos de clasificación
+capaces de captar los patrones latentes de aparición de incendios
+forestales. Además, este enfoque permite centrar el esfuerzo
+computacional en los periodos en los que más incendios se producen.
 
 \hypertarget{asignaciuxf3n-de-las-variables-descriptivas-a-cada-observaciuxf3n}{%
 \subsection{Asignación de las variables descriptivas a cada

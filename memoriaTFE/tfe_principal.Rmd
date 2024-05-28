@@ -173,6 +173,12 @@ knitr::write_bib(c("knitr","rmarkdown"),
 ```{r child = 'capitulo04n.Rmd'}
 ```
 
+
+\FloatBarrier
+
+```{r child = 'capitulo041n.Rmd'}
+```
+
 \FloatBarrier
 
 ```{r child = 'capitulo05n.Rmd'}

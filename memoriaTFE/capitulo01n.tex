@@ -540,22 +540,39 @@ linewidth=4pt]{mBox}
 \hypertarget{introducciuxf3n}{%
 \chapter{Introducción}\label{introducciuxf3n}}
 
+destrucción de vastas áreas de bosque, la degradación del suelo pérdida
+de biodiversidad s
+
+, además de poner en riesgo infraestructuras y vidas humanas.
+
+Andalucía es la segunda comunidad de España con más terreno forestal,
+con 4.325.378 ha de suelo forestal que suponen el 49.37\% de su
+superficie.
+
+En 2022, 15.786,64 hectarias fueron afectadas por el fuego en Andalucía,
+practicamente el doble de la media anual de los 10 años anteriores,
+8873,68 hectarias {[}Memoria Plan INFOCA 2022{]}.
+
+En el Plan Estratégico Estatal del Patrimonio Natural y de la
+Biodiversidad a 2030 {[}Cita{]} ``identifica las principales presiones y
+amenazas, entre las cuales destaca el aumento de la superficie forestal
+afectada por incendios forestales en 2022''.
+
 \hypertarget{objetivos}{%
 \section{Objetivos}\label{objetivos}}
 
 El objetivo de esta investigación es construir modelos de \emph{Machine
 Learning} que permitan predecir incendios forestales en la Comunidad
-Autónoma de Andalucía.
-
-Subobjetivos:
+Autónoma de Andalucía. Para abordar dicho objetivo, se realizarán las
+siguientes tareas:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
   Construir un conjunto de datos que permita la realización de análisis
-  estadísticos y la posterior construcción de modelos de Machine
-  Learning para la predicción de incendios forestales en Andalucía a
-  partir de un estudio previo del problema.
+  estadísticos y la posterior construcción de modelos de \emph{Machine
+  Learning} (ML) para la predicción de incendios forestales en Andalucía
+  a partir de un estudio previo del problema.
 \item
   Modelizar el riesgo de incendio forestal usando distintos algoritmos
   de ML y comparar sus resultados
@@ -570,13 +587,17 @@ Subobjetivos:
 \hypertarget{revisiuxf3n-bibliogruxe1fica}{%
 \section{Revisión bibliográfica}\label{revisiuxf3n-bibliogruxe1fica}}
 
-\citet{CortezMorais}: SVM, DT, Regresión Lineal Múltiple, Naive Bayes,
-RF and NN para predecir el área quemada por los incendios forestales en
-el parque natural de Montesinho (norte portugal) a partir de información
-meteorológica.
+\citet{CortezMorais}: En esta investigación se evalúa el rendimiento de
+distintos modelos de Machine Learning, como Máquinas de Soporte
+Vectorial, Árboles de Decisión, Regresión Lineal Múltiple, Naive Bayes,
+Bosques Aleatorios y Redes Neuronales, para predecir el área quemada por
+los incendios forestales en el Parque Natural de Montesinho, en el norte
+de Portugal, a partir de información meteorológica. Los mejores
+resultados se obtienen para el modelo de SVM considerando 4 variables
+explicativas: temperatura, humedad relativa, precipitaciones y viento.
 
 \citet{ReviewMLApplicationsWF}: El artículo revisa las aplicaciones del
-machine learning (ML) en la ciencia y gestión de incendios forestales,
+Machine Learning (ML) en la ciencia y gestión de incendios forestales,
 destacando su uso en seis dominios clave: caracterización de
 combustibles, detección y mapeo de incendios; clima y cambio climático;
 ocurrencia, susceptibilidad y riesgo de incendios; predicción del
@@ -586,8 +607,8 @@ frecuente de algoritmos de ML como random forests, MaxEnt, redes
 neuronales artificiales, árboles de decisión, máquinas de vectores de
 soporte y algoritmos genéticos. La revisión enfatiza las ventajas y
 limitaciones de estos métodos y subraya la necesidad de combinar la
-experiencia en ciencia de incendios con técnicas avanzadas de ML para
-modelar procesos de fuego de manera realista.
+experiencia en la ciencia del fuego con técnicas avanzadas de ML para
+poder construir modelos realistas y útiles.
 
 \citet{logreg_hcwf}: Se aplica regresión logística en una cuadrícula de
 1 × 1 km en la Comunidad Autónoma de Madrid, utilizando datos
@@ -600,25 +621,40 @@ variable de respuesta. El rendimiento de los modelos se evalúa con los
 incendios ocurridos en 2006 y 2007, obteniendo un AUC de 0.70 y 0.67
 para ambos modelos, respectivamente.
 
-\citet{SpainOnFire}: En este artículo se presenta un nuevo modelo de
-evalucaión de incendios forestales (WAM, Wildfire Assessment Model) que
+\citet{SpainOnFire}: En este artículo se presenta el nuevo Modelo de
+Evaluación de Incendios Forestales (WAM, por sus siglas en inglés) que
 utiliza deep learning para anticipar el impacto de los incendios a
 partir de información meteorológica satelital y el NDVI en Castilla y
-León y Andalucía. Las variables respuestas que considera son el área
-quemada, el tiempo de control y extensión y el número de recursos
-humanos, recursos aéreos y recursos pesados que se usarán en la
-extinción del incendio. El modelo emplea una red convolucional residual
-que realiza regresiones sobre variables atmosféricas e índice de verdor.
+León y Andalucía. Las variables respuesta del modelo son el área
+quemada, el tiempo de control y extinción, y la cantidad de recursos
+humanos, aéreos y pesados necesarios para la extinción del incendio.
+Emplea una red convolucional residual que realiza regresiones sobre
+variables atmosféricas e índice de verdor. El WAM se preentrena con
+100,000 ejemplos de datos sin etiquetar y se ajusta con un pequeño
+conjunto de 445 muestras etiquetadas.
 
-El Modelo de Evaluación de Incendios Forestales (WAM) utiliza deep
-learning para anticipar el impacto económico y ecológico de incendios en
-regiones peligrosas de España, como Castilla y León y Andalucía. El
-modelo emplea una red convolucional residual que realiza regresiones
-sobre variables atmosféricas e índice de verdor. Se preentrena con
-100,000 ejemplos de datos sin etiquetar y se ajusta con un conjunto
-pequeño de 445 muestras.
+\citet{incendiosAndalucia} En este trabajo analiza la superficie
+calcinada por los incendios forestales ocurridos entre 1975 y 2013 en la
+Comunidad Autónoma de Andalucía en función de 15 variables explicativas:
+altitud, insolación, pendiente, precipitación invernal, precipitación
+estival, temperatura estival, velocidad del viento, frecuencia del
+viento, superficie protegida, superficie de monte público, superficie de
+usos forestales, distancia a viario, distancia a zonas pobladas, saldo
+demográfico y saldo ganadero. Se aplica un modelo de Regresión Lineal
+Múltiple y un Modelo de Regresión Geográficamente Ponderada. Los mejores
+resultados se obtienen en el segundo modelo, puesto que permite
+considerar la estructura de correlaciones espaciales presentes en los
+datos.
 
-\citet{incendiosAndalucia}
+\citet{HumanCauseWildFiresSpain} En este artículo se identifican los
+factores humanas asociados con un mayor riesgo de incendio forestal en
+España y se analiza la distribución espacial de la aparición de
+incendios forestales en el país tomando como unidad de estudio el
+municipio. Se consideran 108 variables, de las cuales se seleccionan 29
+tras un primer estudio exploratorio, las cuales se usan para entrenar un
+modelo de regresión logística para estimar la probabilidad de una alta o
+baja ocurrencia de incendios. Finalmente, tan solo resultan
+significativas 13 de las variables consideradas.
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 

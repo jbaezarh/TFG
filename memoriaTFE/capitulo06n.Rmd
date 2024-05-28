@@ -37,14 +37,16 @@ El control y extinción de los incendios forestales requiere del desplazamiento 
 <!-- Se ha adoptado un enfoque innovador, al abordar el problema desde una perspectiva global y dinámica; global pues se consideran todas las dimensiones del -->
 
 En el primer capítulo se ha presentado el problema, justificando su importancia y las dificultades que conlleva. Se ha explicado el enfoque adoptado en este trabajo y se han comentado trabajos anteriores similares. 
+
 <!-- , acotando el estudio a la Comunidad Autónoma de Andalucía y al periodo comprendido entre 2002 y 2002, -->
 
-En el segundo capítulo se han introducido los principales conceptos y las principales herramientas utilizadas a lo largo del trabajo. Se han explicado brevemente todos los modelos empleados, indicando referencias en las que poder ahondar en los detalles de estos. 
+En el segundo capítulo se han introducido los principales conceptos y herramientas utilizados a lo largo del trabajo. Se han explicado brevemente todos los modelos empleados, indicando referencias en las que poder ahondar en los detalles de estos. 
 
 <!-- Justificar en la sección 3 el por qué del método de muestreo elegido -->
-En el tercer capítulo se han procesado los conjuntos geoespaciales recopilados para producir un conjunto de datos adecuado para el análisis estadístico. Esto se ha llevado a cabo en tres etapas: generación de la muestra, asignación de variables a localizaciones y depuración de los datos. 
+En el tercer capítulo se han procesado los conjuntos geoespaciales recopilados para producir un conjunto de datos adecuado para el análisis estadístico. Esto se ha llevado a cabo en tres etapas: generación de la muestra, asignación de variables a localizaciones y depuración de los datos. En el proceso de generación de la muestra de casos negativos, necesaria para poder entrenar cualquier algoritmo de clasificación binaria, se ha adoptado un enfoque diferente a otros estudios similares. Tras valorar distintas alternativas, se ha optado por generar la muestra de fechas de los negativos siguiendo una distribución de probabilidad proporcional a la cantidad mensual de incendios observados en todo el periodo. De esta forma, 
 
-Dado que para poder entrenar los modelos considerados es necesario disponer de 
+
+
 
 En primer lugar se ha generado una muestra balanceada de 20000 observaciones usando el mes de año como variable de estratificación y considerando en cada estrato un tamaño muestral proporcional a la cantidad de incendios registrados en cada mes del año durante el periodo de estudio. Se trata de un enfoque innovador, ya que en todos los trabajos consultados las muestras negativas se
 

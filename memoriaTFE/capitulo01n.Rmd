@@ -27,6 +27,12 @@ source("cabecera_chunk_inicio.R")
 <!-- A constant and controlled level of emission of carbon and other gases into the atmosphere is a pre-condition for preventing global warming and an essential issue for a sustainable world. Fires in the natural environment are phenomena that extensively increase the level of greenhouse emissions and disturb the normal functioning of natural ecosystems. -->
 
 
+destrucción de vastas áreas de bosque, la degradación del suelo 
+pérdida de biodiversidad
+s
+
+, además de poner en riesgo infraestructuras y vidas humanas.  
+
 
 <!-- Posible estructura de la introducción obtenida de "Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian" -->
 
@@ -35,21 +41,23 @@ source("cabecera_chunk_inicio.R")
 <!-- Superficie forestal en Andalucía. -->
 <!-- Principales usos de los bosques -->
 <!-- Biodiversidad -->
-<!-- Andalucía es la segunda comunidad de España con más terreno forestal, con 4.325.378 ha de suelo forestal que suponen el 49.37% de su superficie. -->
+Andalucía es la segunda comunidad de España con más terreno forestal, con 4.325.378 ha de suelo forestal que suponen el 49.37% de su superficie.
+
+
 
 <!-- (https://www.miteco.gob.es/es/biodiversidad/temas/inventarios-nacionales/inventario-forestal-nacional/superficie_por_uso.html) -->
 
 
 <!-- 2. Papel de los incendios forestales en el ecosistema.Influencia del humano. Consecuencias de los incendios para las personas. -->
 
-<!-- En 2022, 15.786,64 hectarias fueron afectadas por el fuego en Andalucía, practicamente el doble de la media anual de los 10 años anteriores,  8873,68 hectarias [Memoria Plan INFOCA 2022]. -->
+En 2022, 15.786,64 hectarias fueron afectadas por el fuego en Andalucía, practicamente el doble de la media anual de los 10 años anteriores,  8873,68 hectarias [Memoria Plan INFOCA 2022].
 
 <!-- Riesgo para la biodiversidad vegetal y animal.  -->
 <!-- Daño a la infraestructura y riesgo para la vida de las personas. -->
 <!-- Costes incendios forestales [Barómetro de las catastrofes Naturales en España 2022] -->
 
 
-<!-- En el Plan Estratégico Estatal del Patrimonio Natural y de la Biodiversidad a 2030 [Cita] "identifica las principales presiones y amenazas, entre las cuales destaca el aumento de la superficie forestal afectada por incendios forestales en 2022". -->
+En el Plan Estratégico Estatal del Patrimonio Natural y de la Biodiversidad a 2030 [Cita] "identifica las principales presiones y amenazas, entre las cuales destaca el aumento de la superficie forestal afectada por incendios forestales en 2022".
 
 <!-- Incendios forestales (>1ha) vs conatos (<=1ha). -->
 
@@ -99,11 +107,9 @@ source("cabecera_chunk_inicio.R")
 
 ## Objetivos
 
-El objetivo de esta investigación es construir modelos de *Machine Learning* que permitan predecir incendios forestales en la Comunidad Autónoma de Andalucía.
+El objetivo de esta investigación es construir modelos de *Machine Learning* que permitan predecir incendios forestales en la Comunidad Autónoma de Andalucía. Para abordar dicho objetivo, se realizarán las siguientes tareas:
 
-Subobjetivos: 
-
-1. Construir un conjunto de datos que permita la realización de análisis estadísticos y la posterior construcción de modelos de Machine Learning para la predicción de incendios forestales en Andalucía a partir de un estudio previo del problema. 
+1. Construir un conjunto de datos que permita la realización de análisis estadísticos y la posterior construcción de modelos de *Machine Learning* (ML) para la predicción de incendios forestales en Andalucía a partir de un estudio previo del problema. 
 
 2. Modelizar el riesgo de incendio forestal usando distintos algoritmos de ML y comparar sus resultados
 
@@ -134,6 +140,13 @@ Subobjetivos:
 
 
 @HumanCauseWildFiresSpain En este artículo se identifican los factores humanas asociados con un mayor riesgo de incendio forestal en España y se analiza la distribución espacial de la aparición de incendios forestales en el país tomando como unidad de estudio el municipio. Se consideran 108 variables, de las cuales se seleccionan 29 tras un primer estudio exploratorio, las cuales se usan para entrenar un modelo de regresión logística para estimar la probabilidad de una alta o baja ocurrencia de incendios. Finalmente, tan solo resultan significativas 13 de las variables consideradas.
+
+
+
+@stojanova2012estimating
+@SAYAD2019130
+<!-- Añadir algún otro similar -->
+
 
 
 <!-- "Spain on fire: A novel wildfire risk assessment model based on image satellite processing and atmospheric information, Helena Liz-López , Javier Huertas-Tato a , Jorge Pérez-Aracil, Carlos Casanova-Mateo, Julia Sanz-Justo, David Camacho" -->

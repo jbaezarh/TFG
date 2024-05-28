@@ -543,13 +543,13 @@ linewidth=4pt]{mBox}
 \hypertarget{datos-georreferenciados}{%
 \section{Datos georreferenciados}\label{datos-georreferenciados}}
 
-Todos los datos empleados en este trabajo son datos georreferenciados,
-lo que significa que están asociados a ubicaciones geográficas
-específicas. Por ello, resulta esencial introducir los tipos de datos
-más utilizados para trabajar con esta información, sus características y
-las herramientas disponibles para manipularlos. Se tratarán los datos
-vectoriales y los datos ráster, al ser los tipos de datos fundamentales
-en este contexto, con características bien diferenciadas entre ellos.
+Todos los datos empleados en este trabajo son georreferenciados, lo que
+significa que están asociados a ubicaciones geográficas específicas. Por
+ello, resulta esencial introducir los tipos de datos más utilizados para
+trabajar con esta información, sus características y las herramientas
+disponibles para manipularlos. En esta sección e tratarán los datos
+vectoriales y los datos ráster, al ser los tipos fundamentales en este
+contexto, con características bien diferenciadas entre ellos.
 
 \hypertarget{datos-vectoriales}{%
 \subsection{Datos Vectoriales}\label{datos-vectoriales}}
@@ -562,7 +562,8 @@ polígonos. Para esta sección se han usado como referencia
 \citet{lovelace_geocomputation_2019}.
 
 \hypertarget{simple-features}{%
-\subsubsection*{Simple Features}\label{simple-features}}
+\subsubsection*{\texorpdfstring{\emph{Simple
+Features}}{Simple Features}}\label{simple-features}}
 
 Las \emph{Simple Features} son un estándar abierto ampliamente utilizado
 para la representación de datos vectoriales, desarrollado y respaldado
@@ -570,25 +571,26 @@ por el \emph{Open Geospatial Consortium} (OGC), una organización sin
 ánimo de lucro dedicada a la creación de estándares abiertos e
 interoperables a nivel global dentro del marco de los sistemas
 geográficos de información (GIS, por sus siglas en ingés) y de la
-\emph{World Wide Web}.
+\emph{World Wide Web}. \citep{OCGweb}
 
-El paquete \emph{sf} proporciona clases para datos vectoriales
-geográficos y una interfaz de línea de comandos consistente para
-importantes bibliotecas de bajo nivel para geoprocesamiento
+El paquete \emph{sf} proporciona en \emph{R} clases para datos
+vectoriales geográficos y una interfaz de línea de comandos consistente
+para importantes bibliotecas de bajo nivel para geoprocesamiento
 (\emph{GDAL}, \emph{PROJ}, \emph{GEOS}, \emph{S2},\ldots).
 \citep{sfpackage}
 
-Los objetos \emph{sf} son fáciles de manipular ya que son dataframes o
-tibbles con dos características fundamentales. En primer lugar,
-contienen metadatos geográficos adicionales: tipo de geometría,
-dimensión, \emph{Bounding Box} (límites o extensión geográfica) e
-información sobre el Sistema de referencia de coordenadas. Y además,
-presentan una columna de geometrías. Algunas ventajas del uso de este
-modelo de datos en R son que en la mayoría de operaciones los objeto
-\emph{sf} se pueden tratar como data frames, los nombres de las
-funciones son consistentes (todos empiezan por \texttt{st\_}), las
-funciones se pueden combinar con el operador tubería y además funcionan
-bien con el ecosistema de paquetes \emph{tidyverse}.
+Los objetos \emph{sf} son fáciles de manipular ya que son
+\emph{dataframes} o \emph{tibbles} con dos características
+fundamentales. En primer lugar, contienen metadatos geográficos
+adicionales: tipo de geometría, dimensión, \emph{Bounding Box} (límites
+o extensión geográfica) e información sobre el Sistema de referencia de
+coordenadas. Y además, presentan una columna de geometrías. Algunas
+ventajas del uso de este modelo de datos en R son que en la mayoría de
+operaciones los objeto \emph{sf} se pueden tratar como
+\emph{dataframes}, los nombres de las funciones son consistentes (todos
+empiezan por \texttt{st\_}), las funciones se pueden combinar con el
+operador tubería y además funcionan bien con el ecosistema de paquetes
+\emph{tidyverse}.
 
 El paquete \emph{sf} de R soporta 18 tipos de geometrías para las
 \emph{simple features}, de las cuales las más utilizadas son:
@@ -599,7 +601,7 @@ MULTIPOLYGON} y \emph{GEOMETRYCOLLECTION}.
 \subsection{Datos Ráster}\label{datos-ruxe1ster}}
 
 El modelo de datos ráster representa el espacio con una cuadrícula de
-celdas (o píxeles) a cada una de las cuales se le asocia un valor o
+celdas (o píxeles),y a cada una de las cuales se le asocia un valor o
 varios, tratándose así de rásteres de una o varias capas,
 respectivamente. Lo más común es trabajar con cuadrículas regulares, es
 decir, formadas por celdas rectangulares de igual tamaño. Sin embargo,
@@ -613,33 +615,29 @@ se definen el sistema de referencia de coordenadas, la extensión (o
 límites espaciales del área cubierta por el ráster), la resolución y el
 origen. El origen son las coordenadas de uno de los píxeles del ráster,
 que sirve de referencia para los demás, siendo generalmente utilizado el
-de la esquina inferior izquierda (aunque el paquete \emph{TERRA}
-\citep{terrapackage}, usado en este trabajo, usa por defecto el de la
-esquina superior izquierda). La resolución se calcula como:
+de la esquina inferior izquierda \footnote{Sin embargo, el paquete
+  \emph{TERRA}, usado en este trabajo, usa por defecto el de la esquina
+  superior izquierda \citep{terrapackage}}. La resolución se calcula
+como:
 
-\[ resolution = \frac{x_{max}-x_{min}}{ncol},\frac{y_{max}-y_{min}}{nrow} \]
+\[ resolution = \left(\frac{x_{max}-x_{min}}{ncol},\frac{y_{max}-y_{min}}{nrow}\right) \]
 
 La representación en forma de matriz evita tener que almacenar
 explícitamente las coordenadas de cada una de las cuatro esquinas de
 cada píxel, debiendo almacenar solamente las coordenadas de un punto (el
-origen). Esto, unido a las operaciones del álgebra de mapas hacen que el
-procesamiento de datos ráster sea mucho más eficiente que el de datos
-vectoriales.
+origen). Esto hace que el procesamiento de datos ráster sea mucho más
+eficiente que el de datos vectoriales.
 
 Se usará el paquete \emph{TERRA} para tratar los datos en formato
-ráster. Este paquete permite tratar el modelo de rásteres regulares con
-una o varias capas a través de la clase de objetos \texttt{SpatRaster}.
-Sin embargo, existen otras alternativas, como el paquete \emph{stars}
-\citep{starspackage}, que además de ser más potente, permite trabajar
-con rásteres no regulares y ofrece una mejor integración con el paquete
-\emph{sf} y el entorno \emph{tidyverse}.
+ráster, que permite tratar el modelo de rásteres regulares con una o
+varias capas a través de la clase de objetos \texttt{SpatRaster}.
 
 \hypertarget{sistemas-de-referencia-de-coordenadas}{%
 \subsection{Sistemas de Referencia de
 Coordenadas}\label{sistemas-de-referencia-de-coordenadas}}
 
 Intrínseco a cualquier modelo de datos espaciales está el concepto de
-Sistema de referencia de coordenadas (CRS), que establece cómo la
+Sistema de Referencia de Coordenadas (CRS), que establece cómo la
 geometría de los datos se relaciona con la superficie terrestre. Es
 decir, es el nexo de unión entre el modelo de datos y la realidad, por
 lo que juega un papel fundamental. Los CRS pueden ser de dos tipos:
@@ -658,17 +656,17 @@ Este-Oeste. La latitud es la distancia angular al Ecuador medida en la
 dirección Sur-Norte.
 
 Cualquier sistema de coordenadas geográficas se compone de tres
-elementos: el elipsoide, el geoide y el \emph{datum}. El primero es el
-elipsoide (o esfera) utilizado para representar de forma simplificada la
-superficie terrestre, sobre el que se supone que se encuentran los datos
-y que permitirá realizar mediciones. El segundo, el geoide, es el modelo
-matemático que representa la verdadera forma de la Tierra, que no es
-suave sino que presenta ondulaciones debidas a las fluctuaciones del
-campo gravitatorio a lo largo de la superficie terrestre, que además
-cambian a una amplia escala temporal. Y el tercero, el \emph{datum},
-indica cómo se alinean el elipsoide y el geoide, es decir, cómo el
-modelo matemático se ajusta a la realidad. Este puede ser local o
-geocéntrico, en función de si el elipsoide se ajusta al geoide en un
+elementos: el elipsoide, el geoide y el \emph{datum}. El primero, el
+elipsoide o esfera, es utilizado para representar de forma simplificada
+la superficie terrestre, sobre él se supone que se encuentran los datos
+y es el que permitirá realizar mediciones. El segundo, el geoide, es el
+modelo matemático que representa la verdadera forma de la Tierra, que no
+es suave sino que presenta ondulaciones debidas a las fluctuaciones del
+campo gravitatorio a lo largo de la superficie terrestre, las cuales
+también cambian a una amplia escala temporal. Y el tercero, el
+\emph{datum}, indica cómo se alinean el elipsoide y el geoide, es decir,
+cómo el modelo matemático se ajusta a la realidad. Este puede ser local
+o geocéntrico, en función de si el elipsoide se ajusta al geoide en un
 punto concreto de la superficie terrestre o de si es el centro del
 elipsoide el que se alinea con el centro de la Tierra. Ejemplos de
 \emph{datum} geocéntricos usados en este trabajo son:
@@ -714,10 +712,11 @@ que está asociado al meridiano central. Se trata de proyecciones
 conformales, por lo que preservan ángulos y formas en pequeñas regiones,
 pero distorsionan distancias y áreas.
 
-A lo largo de este trabajo se utilizará ampliamente el sistema de
-coordenadas proyectadas UTM30N (es habitual especificar el hemisferio
-para evitar confusión en los valores del eje Y, ya que miden distancia
-al ecuador, de ahí la N de hemisferio norte).
+A lo largo de este trabajo se utilizará el sistema de coordenadas
+proyectadas UTM30N, ya que es el que traen muchos de los archivos ráster
+manipulados y es conveniente evitar cambiar de CRS los datos ráster
+siempre que sea posible, ya que esta operación provoca una pérdida de
+información.
 
 \hypertarget{anuxe1lisis-exploratorio-de-datos}{%
 \section{Análisis Exploratorio de
@@ -758,7 +757,7 @@ finalmente a datos consistentes.
 
 }
 
-\caption{Cadena de valor estadística. \it Fuente: \citet{van2018statistical}}\label{fig:unnamed-chunk-2}
+\caption{Etapas en el procesamiento de los datos dentro de un proyecto estadístico. \it Fuente: \citet{van2018statistical}}\label{fig:unnamed-chunk-2}
 \end{figure}
 
 Entendemos que un conjunto de datos es técnicamente correcto cuando cada
@@ -771,7 +770,8 @@ clases adecuadas si fuese necesario.
 Decimos que un conjunto de datos es consistente cuando es técnicamente
 correcto y, además, adecuado para el análisis estadístico. Se trata, por
 tanto, de datos que han eliminado, corregido o imputado los valores
-faltantes, los valores especiales, los valores atípicos y los errores.
+faltantes, los valores especiales, los valores atípicos y los
+errores.\citep{de2013introduction}
 
 \hypertarget{anuxe1lisis-de-componentes-principales}{%
 \subsection{Análisis de Componentes
@@ -799,7 +799,7 @@ Las $p$ primeras componentes principales se corresponden con los autovectores un
 \end{proposition}
 
 \begin{definition}
-Se define la fracción de varianza explicada por las $p$ primeras componentes principales como $\frac{\sum_{j=1}^p \lambda_j}{\sum_{j=1}^k \lambda_j}$.
+Se define la fracción de varianza explicada por las $p$ primeras componentes principales, con $p \le k$, como $\frac{\sum_{j=1}^p \lambda_j}{\sum_{j=1}^k \lambda_j}$.
 \end{definition}
 
 El número de componentes principales necesarias para explicar un
@@ -815,8 +815,8 @@ conjunto de entrenamiento se conoce el valor de la variable objetivo (en
 este caso si ha habido incendio o no). Más concretamente, se trata de un
 problema de clasificación binaria, ya que el objetivo es asignar cada
 observación a una de las dos clases posibles (incendio o no incendio).
-Existen numerosas técnicas de clasificación binaria supervisada, en este
-trabajo se explorarán algunas de las de uso más común en problemas
+Existen numerosas técnicas de clasificación binaria supervisada, y en
+este trabajo se explorarán algunas de las de uso más común en problemas
 similares. Las principales fuentes consultadas para esta sección han
 sido \citet{hastie2009elements}, el capítulo 6 de
 \citet{MLmodelSuthaharan} y entradas del blog \citet{eight2late}.
@@ -831,10 +831,10 @@ generalizado basado en las siguientes hipótesis:
 \begin{itemize}
 \tightlist
 \item
-  Hipótesis distribucional. Dadas las variables explicativas,
+  \textbf{Hipótesis distribucional}. Dadas las variables explicativas,
   \(\underline X_i\) con \(i = 1,2,...,n\), se verifica que las
-  variables \(Y|_{\underline X= \underline x_i}\) y su distribución
-  pertenece a la famila Bernouilli, es decir,
+  variables \(Y|_{\underline X= \underline x_i}\) son independientes y
+  su distribución pertenece a la familia Bernouilli, es decir,
 \end{itemize}
 
 \[Y|_{\underline X= \underline x_i} \sim Be(\pi( \underline x_i))\]
@@ -842,12 +842,13 @@ generalizado basado en las siguientes hipótesis:
 \begin{itemize}
 \tightlist
 \item
-  Hipótesis estructural. La esperanzara
-  \(E(Y|_{\underline X= \underline x_i}) = \pi_i\) está relacionada con
-  un predictor lineal (\(\eta_i = \beta^t z_i\)) a través de la función
-  \emph{logit} (con \(\underline z_i = \left(1,\underline x_i\right)\))
-  Es decir, dado que
-  \[\eta_i = \underline \beta^t \underline z_i= \ln(\frac{\pi_i}{1-\pi_i})\]
+  \textbf{Hipótesis estructural}. La esperanzara
+  \(E(Y|_{\underline X = \underline x_i}) = \pi_i\), donde
+  \(\pi_i = \pi( \underline x_i)\), está relacionada con un predictor
+  lineal (\(\eta_i = \beta^t z_i\)) a través de la función \emph{logit}
+  con parámetro \(\underline z_i = \left(1,\underline x_i\right)\). Es
+  decir, dado que
+  \[\eta_i = \underline \beta^t \underline z_i= \ln\left(\frac{\pi_i}{1-\pi_i}\right)\]
   O equivalentemente,
   \[\pi_i = \frac{\exp(\underline \beta^t \underline z_i)}{1 + \exp(\underline \beta^t \underline z_i)}\]
 \end{itemize}
@@ -876,9 +877,8 @@ Sea \(\underline \beta = \left( \beta_0, \underline \beta_1 \right)\),
 donde \(\underline \beta_1\) contiene los coeficientes de las
 covariables. En la regresión \emph{ridge} el término de penalización es
 de la forma \(\| \underline \beta_1 \|^2_2\) mientras que en la
-regresión \emph{lasso} el penalización es de la forma
-\(\| \underline \beta_1 \|_1\). Por tanto, el problema de optimización
-será
+regresión \emph{lasso} es de la forma \(\| \underline \beta_1 \|_1\).
+Por tanto, el problema de optimización será
 
 \[\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum \beta_i^2 \]
 
@@ -886,7 +886,8 @@ en el caso de la regresión logística \emph{ridge} y
 
 \[\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum |\beta_i|\]
 
-en el caso de la regresión logística \emph{lasso}.
+en el caso de la regresión logística \emph{lasso}, donde en ambos casos
+\(\lambda\) es un parámetro de regularización o de penalización.
 
 En este trabajo se usará el paquete \emph{glmnet} \citep{glmnetpackage},
 que implementa una combinación de ambos métodos (llamada \emph{elastic
@@ -897,7 +898,8 @@ de optimización resultante en este caso será:
 \[\min_{\underline \beta} -l(\underline \beta)  + \lambda \left[(1-\alpha)\sum \beta_i^2 + \alpha \sum |\beta_i| \right]\]
 
 \hypertarget{support-vector-machine}{%
-\subsection{Support Vector Machine}\label{support-vector-machine}}
+\subsection{\texorpdfstring{\emph{Support Vector
+Machine}}{Support Vector Machine}}\label{support-vector-machine}}
 
 Las Máquinas de Vector Soporte (SVM) son una familia de modelos
 principalmente usados en problemas de clasificación binaria (si bien se
@@ -909,26 +911,26 @@ conjunto de puntos.
 \subsubsection{SVM lineal}\label{svm-lineal}}
 
 Dada una muestra \(\left\{(\underline x_i,y_i) \right\}_{i=1,...,n}\)
-con \(\underline x_i \in \mathbb{R}^d\) y \(y_i \in \{-1,1\}\) para todo
+con \(\underline x_i \in \mathbb{R}^d\) e \(y_i \in \{-1,1\}\) para todo
 \(i \in \{1,...,n\}\), el objetivo es encontrar al hiperplano de la
 forma
 
-\[h(x) = w_1x_1 +w_2x_2+...+w_dx_d +b = \underline w^t \underline x = 0 \]
+\[h(x) = w_1x_1 +w_2x_2+...+w_dx_d +b = \underline w^t \underline x + b= 0 \]
 que mejor separe a la muestra.
 
 \begin{definition}
-Se dice que la muestra muestra es linealmente separable si existe un hiperplano, denominado hiperplano de separación, que cumple, para todo $i \in 1,...,n$:
-$$\underline w^t \underline x_i + b \ge 0 \space \space \text{si} \space \space y_i=+1$$
-$$\underline w^t \underline x_i + b \le 0 \space \space \text{si} \space \space y_i=-1$$
+Se dice que la muestra es **linealmente separable** si existe un hiperplano definido por $\underline w^t \underline x + b= 0$, denominado hiperplano de separación, que cumple, para todo $i \in 1,...,n$:
+$$\underline w^t \underline x_i + b \ge 0 \; \; \text{si} \;\; y_i=+1$$
+$$\underline w^t \underline x_i + b \le 0 \; \; \text{si} \;\; y_i=-1$$
 \end{definition}
 
 \begin{definition}
-Dado un hiperplano de separación de una muestra linealmente separable, se define el margen como la menor de las distancias del hiperplano a cualquier elemento de la muestra. Se denotará por $\tau$.
+Dado un hiperplano de separación de una muestra linealmente separable, se define el *margen* como la menor de las distancias del hiperplano a cualquier elemento de la muestra. Se denotará por $\tau$.
 \end{definition}
 
 \begin{proposition}
-Dado un punto $\underline x_i$ y un hiperplano $h(x) = w_1x_1 +w_2x_2+...+w_dx_d +b = \underline w^t \underline x = 0$, la distancia entre ambos viene dada por:
-$$d(h,\underline x_i) = \frac{|h(\underline x_i)|}{\|w\|} = \frac{y_i(\underline w^t \underline x_i+b)}{\|w\|}$$
+Dado un punto $\underline x_i$ y un hiperplano $\pi :\;h(x) = \underline w^t \underline x + b= 0$, la distancia entre ambos viene dada por:
+$$d(\pi,\underline x_i) = \frac{|h(\underline x_i)|}{\|w\|} = \frac{y_i(\underline w^t \underline x_i+b)}{\|w\|}$$
 donde $\|\cdot\|$ hace referencia a la norma euclídea.
 \end{proposition}
 
@@ -949,7 +951,7 @@ optimización siguiente:
 \begin{equation}
 \begin{aligned}
 \min_{w,b} \quad & \frac{1}{2}w^{t}w\\
-\textrm{s.t.} \quad & \underline w^t \underline x_i+b \ge 1, \quad & \forall i\in \{1,...,n\} \\
+\textrm{s.a.} \quad & \underline w^t \underline x_i+b \ge 1, \quad & \forall i\in \{1,...,n\} \\
   & w \in \mathbb{R}^d, \space b \in \mathbb{R} \\ 
 \end{aligned}
 \end{equation}
@@ -959,7 +961,7 @@ permitir que pueda haber casos mal clasificados, y penalizarlos
 proporcionalmente a la distancia a la que se encuentren del subespacio
 correcto (holgura). Para ello, se introducen en la formulación del
 modelo las variables artificiales \(\xi_i,\quad i=1,...,n\). Se habla
-entonces de hiperplano de separación \emph{soft margin}. De esta forma,
+entonces de hiperplano de separación \emph{soft margin}. De esta forma
 se llega al problema de optimización siguiente:
 
 \begin{equation}
@@ -972,8 +974,8 @@ se llega al problema de optimización siguiente:
 \end{equation}
 
 donde \(C>0\) es un parámetro de regularización que permite controlar
-los errores de clasificación permitidos por el modelo, controlando así
-el sobreajuste. Este parámetro recibe el nombre de coste (\emph{cost}).
+los errores de clasificación permitidos por el modelo, evitando así el
+sobreajuste. Este parámetro recibe el nombre de coste (\emph{cost}).
 
 \hypertarget{svm-no-lineal}{%
 \subsubsection{SVM no lineal}\label{svm-no-lineal}}
@@ -981,8 +983,8 @@ el sobreajuste. Este parámetro recibe el nombre de coste (\emph{cost}).
 Existen muchos casos en los que el SVM no es capaz de obtener buenos
 resultados, debido a la estructura de la distribución de las clases en
 la muestra. En estos casos, es común recurrir a una técnica llamada
-\emph{kernel trick}. Esta técnica consiste en realizar una inmersión del
-conjunto de los vectores de la muestra en un espacio de dimensión
+\emph{kernel trick}. Esta herramienta consiste en realizar una inmersión
+del conjunto de los vectores de la muestra en un espacio de dimensión
 superior (llamado \emph{feature space}) en el que los casos sí sean
 separables (o al menos mejore la separabilidad de estos). Esta inmersión
 en un espacio de dimensión superior se hace indirectamente a través de
@@ -996,26 +998,27 @@ inmersiones en espacios de dimensión superior:
 \item
   Kernel polinomial: \(k(x,z) = \left( \gamma(x^tz + c_0) \right)^p\)
 \item
-  Kernel RDF (radial o gaussiano): \(k(x,z) = \exp(-\gamma \| x-z\|^2)\)
+  Kernel RDF (Radial Basis Function), radial o gaussiano:
+  \(k(x,z) = \exp(-\gamma \| x-z\|^2)\)
 \end{itemize}
 
-\hypertarget{decision-trees}{%
-\subsection{Decision Trees}\label{decision-trees}}
+\hypertarget{uxe1rboles-de-decisiuxf3n}{%
+\subsection{Árboles de decisión}\label{uxe1rboles-de-decisiuxf3n}}
 
 Un árbol de decisión (DT) es un algoritmo de aprendizaje supervisado no
 paramétrico, que puede aplicarse tanto a problemas de clasificación como
 de regresión. La idea de este método es segmentar el espacio predictor
-en rectángulos, de forma que para predecir una observación se usa la
-moda (o la media) de la región a la que pertenece. Se trata de un modelo
-jerárquico con estructura de árbol, que consta de un nodo raiz, ramas,
-nodos internos y nodos hojas. Cada nodo representa un test sobre una
-variable, y cada las ramas que nacen de ese nodo representan los
-posibles valores que puede tomar esa variable. De esta forma, para
-clasificar una nueva instancia basta comenzar en el nodo raíz e ir
-descendiendo por el árbol hasta llegar al nodo hoja correspondiente, que
-indicará la clasificación asignada a dicha instancia. La simplicidad del
-método muestra su principal ventaja, su fácil comprensión dada su
-estructura de árbol.
+mediante hiperplanos ortogonales a los ejes, de forma que para predecir
+una observación se usa la moda o la media de la región a la que
+pertenece. Se trata de un modelo jerárquico con estructura de árbol, que
+consta de un nodo raíz, ramas, nodos internos y nodos hojas. Cada nodo
+representa un test sobre una variable, y cada las ramas que nacen de ese
+nodo representan los posibles valores que puede tomar esa variable. De
+esta forma, para clasificar una nueva instancia basta comenzar en el
+nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja
+correspondiente, que indicará la clasificación asignada a dicha
+instancia. La simplicidad del método muestra su principal ventaja, su
+fácil comprensión dada su estructura de árbol.
 
 Existen diversas técnicas para construir árboles de clasificación (y
 regresión), aquí se ilustra una de las más usadas que recibe el nombre
@@ -1038,7 +1041,7 @@ recinto \(R_j\). Es decir,
 
 Para construir un árbol de clasificación, el algoritmo necesita decidir
 las variables tests y los puntos de corte en cada nodo, así como la
-topología del árbol. Para realizar esto, se vale de un método
+topología del árbol. Para realizar esto, se vale de un algoritmo
 \emph{greedy}, que en cada nodo elige la variable y el punto de corte
 que mejor separan los datos en base a una medida de impureza. Es decir,
 la construcción de un árbol de clasificación no se hace mediante la
@@ -1092,7 +1095,7 @@ Así, el algoritmo de construcción de un árbol de clasificación es:
 
 \[C_{\alpha}(T) = \Phi(T) + \alpha|T_0|\] El parámetro \(\alpha\)
 permite controlar la capacidad de generalización del modelo
-(\emph{Bias-Variance tradeoff}) y se estima mediante Validación Cruzada.
+(\emph{Bias-Variance Tradeoff}) y se estima mediante Validación Cruzada.
 
 El gran inconveniente de los árboles de decisión es que en general son
 modelos con una varianza elevada, por lo que tienden a ser inestables y
@@ -1102,7 +1105,8 @@ con árboles de decisión son los Bosques Aleatorios (\emph{Random Forest}
 en inglés).
 
 \hypertarget{random-forest}{%
-\subsection{Random Forest}\label{random-forest}}
+\subsection{\texorpdfstring{\emph{Random
+Forest}}{Random Forest}}\label{random-forest}}
 
 La idea detrás del modelo de bosques aleatorios es reducir la varianza
 de los árboles de decisión sin aumentar el sesgo. Para intentar
@@ -1155,8 +1159,9 @@ Para predecir la clase de un nuevo punto \(\underline x\) se aplica la
 regla de la clase más votada al conjunto de clases predichas por los
 \(B\) árboles de decisión bootstrap para \(\underline x\).
 
-\hypertarget{k-nearest-neibors}{%
-\subsection{K-Nearest Neibors}\label{k-nearest-neibors}}
+\hypertarget{k-nearest-neighbours}{%
+\subsection{\texorpdfstring{K-\emph{Nearest
+Neighbours}}{K-Nearest Neighbours}}\label{k-nearest-neighbours}}
 
 El método de k vecinos más cercanos (KNN) clasifica una nueva
 observación \(\underline x\) en base a las clases de las \(k\)
