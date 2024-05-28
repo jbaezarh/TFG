@@ -541,26 +541,19 @@ linewidth=4pt]{mBox}
 \chapter{Conclusiones, aportaciones y trabajo
 futuro}\label{conclusiones-aportaciones-y-trabajo-futuro}}
 
-\citet{CortezMorais} En este último capítulo se va a realizar una
-recapitulación de las conclusiones extraídas en cada una de las
-secciones del presente trabajo de fin de estudios. En primer lugar, se
-presentarán de forma resumida las conclusiones obtenidas a lo largo del
-trabajo. A continuación, se detallarán las aportaciones realizadas en el
-campo de la predicción de incendios forestales. Por último, se indicarán
-algunas lineas de investigación, dentro del campo de la predicción de
-incendios forestales y la inteligencia artificial, que permitirían
-profundizar en el desarrollo de la metodología presentada de cara a
-obtener mejores modelos con utilidad práctica.
+En este último capítulo se va a realizar una recapitulación de las
+conclusiones extraídas en cada una de las secciones del presente trabajo
+de fin de estudios. En primer lugar, se presentarán de forma resumida
+las conclusiones obtenidas a lo largo del trabajo. A continuación, se
+detallarán las aportaciones realizadas en el campo de la predicción de
+incendios forestales. Por último, se indicarán algunas lineas de
+investigación, dentro del campo de la predicción de incendios forestales
+y la inteligencia artificial, que permitirían profundizar en el
+desarrollo de la metodología presentada de cara a obtener mejores
+modelos con utilidad práctica.
 
 \hypertarget{conclusiones}{%
 \section{Conclusiones}\label{conclusiones}}
-
-Los incendios forestales suponen un gran riesgo para las personas, las
-infraestructuras, la biodiversidad y el medio natural. Sin embargo,
-estos también juegan un papel fundamental en la regeneración de los
-bosques mediterráneos, su flora y su fauna. Es por ello que encontrar
-regímenes de incendios sostenibles es uno de los principales objetivos
-de cualquier política de gestión forestal.
 
 El control y extinción de los incendios forestales requiere del
 desplazamiento de un gran número de efectivos, y el éxito en la
@@ -571,36 +564,80 @@ verse afectadas por un incendio forestal en la Comunidad Autónoma de
 Andalucía, facilitando así la toma de decisiones y permitiendo una
 asignación de los recursos más eficiente.
 
-En el primer capítulo se ha presentado el problema, justificando su
-importancia y las dificultades que conlleva. Se ha explicado el enfoque
-adoptado en este trabajo y se han comentado trabajos anteriores
-similares.
+A lo largo de esta memoria se ha desarrollado una metodología completa
+para la construcción de modelos de predicción de incendios forestales en
+la Comunidad Autónoma de Andalucía mediante el uso de técnicas de
+\emph{Machine Learning} y procesamiento de datos geoespaciales,
+adoptando un enfoque dinámico y global. Dinámico, pues se predice el el
+riesgo de incendio forestal para una localización específica en un día
+concreto. Global, pues se han considerado 27 variables que abarcan las 5
+dimensiones principales : antropológica, demográfica, meteorológica,
+topográfica y de vegetación.
 
-En el segundo capítulo se han introducido los principales conceptos y
-herramientas utilizados a lo largo del trabajo. Se han explicado
-brevemente todos los modelos empleados, indicando referencias en las que
-poder ahondar en los detalles de estos.
+Se ha comenzado introduciendo el problema, justificando su relevancia y
+estableciendo 3 tareas claras para alcanzar el objetivo del trabajo. La
+primera de las tareas implicaba la construcción de un conjunto de datos
+adecuado para el análisis estadístico y la construcción de modelos de
+ML. Esta tarea se abordó en el capítulo 2, donde no solo se ha generado
+un conjunto de 20.000 muestras sobre el que se ha desarrollado el
+trabajo, si no que se ha implementado un algoritmo para tomar muestras
+aleatorias de casos positivos y negativos dentro del marco del estudio y
+asociar a cada observación los valores correspondientes de todas las
+variables consideradas. Se ha explorado el uso de estratificación por
+mes en la selección de la muestra, con el objetivo de entrenar modelos
+que sean capaces de detectar relaciones más profundas en los datos
+relacionadas con la aparición de los incendios forestales. Se ha visto
+que, por ejemplo, en el caso del \emph{Random Forest} esta
+estratificación ha conducido a que la variable \emph{uso\_suelo} haya
+tomado demasiada importancia en la clasificación, conduciendo a modelos
+que no parecen comportarse adecuadamente. \textbar\textbar\textbar{}
+Queda, por tanto, abierta la pregunta de cuál sería la mejor manera de
+tomar la muestra de casos negativos de forma que se encuentre un
+equilibrio entre la sensibilidad del modelo a las variables
+meteorológicas sin perder la influencia de las demás variables.
+\textbar\textbar\textbar{}
 
-En el tercer capítulo se han procesado los conjuntos geoespaciales
-recopilados para producir un conjunto de datos adecuado para el análisis
-estadístico. Esto se ha llevado a cabo en tres etapas: generación de la
-muestra, asignación de variables a localizaciones y depuración de los
-datos. En el proceso de generación de la muestra de casos negativos,
-necesaria para poder entrenar cualquier algoritmo de clasificación
-binaria, se ha adoptado un enfoque diferente a otros estudios similares.
-Tras valorar distintas alternativas, se ha optado por generar la muestra
-de fechas de los negativos siguiendo una distribución de probabilidad
-proporcional a la cantidad mensual de incendios observados en todo el
-periodo. De esta forma,
+A continuación, se ha analizado en profundidad el conjunto de datos
+generado, recurriendo principalmente a técnicas gráficas, aunque también
+se han usado algunos métodos numéricos. La complejidad de esta fase
+radica en que para llegar a obtener información relevante es necesario
+tener en cuenta las dimensiones espacial y temporal de los datos. Esta
+fase ha permitido llegar a un mayor conocimiento acerca del conjunto de
+datos, caracterizado por una gran presencia de valores \emph{outlier},
+por distribuciones asimétricas hacia la derecha en casi todas las
+variables numéricas y correlaciones generalmente pequeñas en valor
+absoluto. A nivel gráfico, se ha observado que las variables que
+muestran mayores diferencias entre ambas clases son \emph{PRECTOTCORR}
+(el total diario de precipitaciones), \emph{WS10M} (la velocidad del
+viento a 10 m) y \emph{uso\_suelo} (la clasificación de uso de suelo).
+Un buen reflejo de la complejidad del conjunto de datos es que para
+explicar el \(80%
+\) de la varianza de las 18 variables numéricas en la muestra se
+necesitan 11 componentes principales.
 
-En primer lugar se ha generado una muestra balanceada de 20000
-observaciones usando el mes de año como variable de estratificación y
-considerando en cada estrato un tamaño muestral proporcional a la
-cantidad de incendios registrados en cada mes del año durante el periodo
-de estudio. Se trata de un enfoque innovador, ya que en todos los
-trabajos consultados las muestras negativas se
+La siguiente tarea planteada se ha desarrollado en el capítulo 5, donde
+se han construido distintos modelos de ML de clasificación binaria. Se
+ha usado el flujo de trabajo propuesto por el paquete de R
+\emph{tidymodels} para preprocesar los datos, entrenar los modelos y
+ajustar los valores de los hiperparámetros. Los modelos considerados han
+sido: regresión logística con penalización, regresión logística con
+penalización usando PCA, k-\emph{Nearest Neighbours}, SVM lineal, SVM
+radial, árbol de decisión y \emph{Random Forest}. Se ha usado una
+partición temporal en entrenamiento-validación-test para entrenar los
+modelos, ajustar los parámetros y evaluar su capacidad de generalización
+sobre nuevos datos. Al entrenar los modelos sobre el conjunto de datos
+generado en las etapas anteriores con la estratificación por mes,
 
-espUna correcta gestión de los mismos es fundamental para asegurar
+Tanto en el conjunto de validación como sobre el conjunto test, los
+modelos de regresión logística con penalización, SVM lineal y SVM radial
+mostraron resultados muy similares
+
+A continuación se detallarán los aspectos más relevantes de cada sección
+del trabajo, pero es relevante mencionar que probablemente las
+conclusiones más importantes no sean las que queden en recogidas en
+estas páginas, si no a las que se podría llegar a partir de las
+herramientas desarrollas, extendiéndolas y profundizando en ellas, con
+mayor recursos.
 
 \hypertarget{aportaciones}{%
 \section{Aportaciones}\label{aportaciones}}
@@ -610,6 +647,8 @@ ADAPTABLE (a otras regiones, más variables,..)!
 
 \begin{itemize}
 \tightlist
+\item
+  recopilación de toda la información
 \item
   Metodología para construir conjuntos de datos útiles para la
   predicción de incendios forestales
