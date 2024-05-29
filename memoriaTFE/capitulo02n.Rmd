@@ -157,7 +157,7 @@ Las $p$ primeras componentes principales se corresponden con los autovectores un
 Se define la fracción de varianza explicada por las $p$ primeras componentes principales, con $p \le k$, como $\frac{\sum_{j=1}^p \lambda_j}{\sum_{j=1}^k \lambda_j}$.
 \end{definition}
 
-El número de componentes principales necesarias para explicar un porcentaje dado de la varianza de los datos puede servir para caracterizar la magnitud del problema.
+El número de componentes principales necesarias para explicar un porcentaje elevado de la varianza de los datos puede servir para caracterizar la complejidad del problema, indicando la verdadera dimensión en la que se encuentran los datos.
 
 <!-- Imputación: Hot Deck Imputation -->
 

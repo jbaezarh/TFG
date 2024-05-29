@@ -89,9 +89,18 @@ Para analizar la capacidad de predicción del modelo para este incendio, se ha l
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{graficos/fire_prob_sierra_bermeja.png}
-\caption[Aplicación del modelo de regresión logística con penalización al incendio de Sierra Bermeja]{Mapa con las probabilidades de incendio estimadas en los días en torno al origen del incendio de Sierra Bermeja. El área total recorrida por el fuego se muestra en rojo. \it Fuente: Elaboración propia.}
+\caption[Aplicación del modelo de regresión logística con penalización al incendio de Sierra Bermeja]{Mapa con las probabilidades de incendio estimadas en los días en torno al origen del incendio de Sierra Bermeja usando el modelo de regresión logística lasso. El área total recorrida por el fuego se muestra en rojo. \it Fuente: Elaboración propia.}
 \label{fig:fire_prob_sierra_bermeja}
 \end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{graficos/fire_prob_sierra_bermeja_svm_linear.png}
+\caption[Aplicación del modelo SVM lineal al incendio de Sierra Bermeja]{Mapa con las probabilidades de incendio estimadas en los días en torno al origen del incendio de Sierra Bermeja usando el modelo SVM lineal. El área total recorrida por el fuego se muestra en rojo. \it Fuente: Elaboración propia.}
+\label{fig:fire_prob_sierra_bermeja}
+\end{figure}
+
+
 
 De este gráfico pueden extraerse varias conclusiones. Por un lado puede observarse que el día del origen del incendio se produce un aumento drástico de las probabilidades estimadas de incendio, las cuales continúan siendo muy altas 15 días después y, aunque disminuyen de forma general, se mantienen elevadas hasta 45 días después del inicio del fuego. Sin embargo, si bien es cierto que a nivel global el modelo sí parece aportar información estimando un riesgo muy alto de incendio en la región, al aumentar el nivel de detalle puede observarse que la capacidad discriminatoria del modelo disminuye significativamente. Esto es coherente, ya que la resolución de las variables climáticas es de aproximadamente 50 km por 50 km, por lo que no son adecuadas para trabajar con un nivel de detalle tan reducido.
 
