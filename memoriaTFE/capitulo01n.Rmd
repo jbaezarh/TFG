@@ -73,8 +73,6 @@ Como se señala en el artículo mencionado, la predicción de incendios forestal
 
 En @CortezMorais los autores evalúan el rendimiento de distintos modelos de ML, como SVM, árboles de decisión, regresión lineal múltiple, Naive Bayes, bosques aleatorios y redes neuronales, para predecir el área quemada por los incendios forestales en el Parque Natural de Montesinho, en el norte de Portugal, a partir de información meteorológica. Los mejores resultados se obtienen para el modelo de SVM considerando 4 variables explicativas: temperatura, humedad relativa, precipitaciones y viento.
 
-<!-- En esta investigación se evalúa el rendimiento de distintos modelos de Machine Learning (SVM, DT, Regresión Lineal Múltiple, Naive Bayes, RF y NN) para predecir el área quemada por los incendios forestales en el parque natural de Montesinho (norte portugal) a partir de  información meteorológica. -->
-
 En la investigación llevada a cabo por @logreg_hcwf se aplica regresión logística en una cuadrícula de 1 × 1 km en la Comunidad Autónoma de Madrid, utilizando datos socioeconómicos como variables predictoras para representar los factores antropogénicos relacionados con el riesgo de incendio. También se evalúa otro enfoque basado en la predicción de la densidad de puntos de ignición en una cuadrícula de 10 × 10 km, utilizando funciones Kernel. La ocurrencia histórica de incendios de 2000 a 2005 se utiliza como variable de respuesta. El rendimiento de los modelos se evalúa con los incendios ocurridos en 2006 y 2007, obteniendo un AUC de 0.70 y 0.67 para ambos modelos, respectivamente.
 
 
@@ -84,21 +82,35 @@ En @HumanCauseWildFiresSpain se identifican los factores humanas asociados con u
 
 En @SpainOnFire se presenta un nuevo Modelo de Evaluación de Incendios Forestales (WAM, por sus siglas en inglés) que utiliza deep learning para anticipar el impacto de los incendios a partir de información meteorológica satelital y el NDVI en Castilla y León y Andalucía. Las variables respuesta del modelo son el área quemada, el tiempo de control y extinción, y la cantidad de recursos humanos, aéreos y pesados necesarios para la extinción del incendio. Emplea una red convolucional residual que realiza regresiones sobre variables atmosféricas e índice de verdor. El WAM se preentrena con 100,000 ejemplos de datos sin etiquetar y se ajusta con un pequeño conjunto de 445 muestras etiquetadas.
 
-En @stojanova2012estimating los autores construyen y comparan diversos modelos predictivos para estimar el riesgo de incendio en tres regiones de Eslovenia (Kras, la región costera y la Eslovenia continental) a partir de datos georreferenciados, imágenes de teledetección y el modelo de predicción meteorológica ALADIN. Los mejores resultados los obtienen con los modelos *bagging DT* y *Random Forest*.
-
+En @stojanova2012estimating los autores construyen y comparan diversos modelos de clasificación (KNN, naïve Bayes, árboles de decisión, regresión logística, SVM, *Bayesian Networks*, *AdaBoost*, *bagging DT* y *RF*) para estimar el riesgo de incendio en tres regiones de Eslovenia (Kras, la región costera y la Eslovenia continental) a partir de datos georreferenciados, imágenes de teledetección y el modelo de predicción meteorológica ALADIN. Los mejores resultados los obtienen con los modelos *bagging DT* y *Random Forest*.
+<!-- No evalúan distintos configuraciones de los hiperparámetros de los modelos -->
 
 
 ### El enfoque de este trabajo {.unlisted .unnumbered}
 
+En el siguiente trabajo se abordará el problema de la predicción de incendios forestales en la Comunidad Autónoma de Andalucía desde una perspectiva estadística mediante el uso de (GIS) y modelos de ML. Se adaptará un enfoque dinámico y global, es decir, se buscará predecir el riesgo de que una determinada localización se vea afectada por un incendio forestal en un momento dado a través de  27 covariables que cubren las 5 principales dimensiones desde las que abordar el estudio de los incendios forestales: la antropológica, la demográfica, la meteorológica, la topográfica y la vegetación. 
 
-Understanding and better predicting wildfires is therefore crucial in several important areas of wildfire management, including emergency response, ecosystem management, land-use planning, and climate adaptation to name a few.
+En el capítulo 2 se presentarán los conceptos y herramientas fundamentales que se manejarán en el trabajo. Se hará una introducción a los tipos de datos espaciales, presentando herramientas para manipularlos, y se explicarán los modelos de ML que serán utilizados (Regresión Logística, Árboles de Decisión, KNN, SVM lineal, SVM radial y Bosques Aleatorios).
+
+En el capítulo 3 se construirá la muestra que será usada para entrenar los modelos de clasificación binaria. Se implementará un método para generar muestras aleatorias dentro de los límites del estudio combinando los conjuntos de datos espaciales recopilados, mediante el uso de técnicas específicas de procesamiento de datos espaciales.
+
+En el capítulo 4 se analizará la muestra generada mediante el uso de métodos estadísticos, gráficos y numéricos, considerando las dimensiones espacial y temporal de los datos.
+
+En el capítulo 5 se construirán los modelos mencionados usando una partición temporal de la muestra en entrenamiento-validación-test. Se ajustarán los parámetros de los modelos evaluando el rendimiento sobre el conjunto de validación y se compararán las métricas de rendimiento de los modelos con las configuraciones de parámetros elegidas sobre el conjunto test, reentrenando para ello los modelos sobre el conjunto de entrenamiento y validación.
+
+En el capítulo 6 se pondrán a prueba los mejores modelos en casos prácticos, con el objetivo de evaluar sus desempeños y conocer sus limitaciones.
+
+En el capítulo 7 se repasarán los puntos más relevantes tratados a lo largo del trabajo, se resumirán las contribuciones más importantes del mismo en el contexto de la predicción de incendios forestales y se propondrán líneas de investigación para extender el trabajo y profundizar en ciertos aspectos de interés.
 
 
 
-El auge experimentado por la inteligencia artificial en las últimas décadas como consecuencia del desarrollo 
 
-El auge de la inteligencia artificial de las últimas décadas promovido por el desarrollo tecnológico 
-Por ello, no es de extrañar que desde la década de los 90 se exploren formas de construir mo
+
+
+<!-- Understanding and better predicting wildfires is therefore crucial in several important areas of wildfire management, including emergency response, ecosystem management, land-use planning, and climate adaptation to name a few. -->
+
+
+
 <!-- Referencias -->
 
 <!-- Enfoque del trabajo -->
@@ -114,39 +126,15 @@ Por ello, no es de extrañar que desde la década de los 90 se exploren formas d
 
 
 
-hotspot de biodiversidad
+
+<!-- A corto plazo, la influencia del fuego en los ecosistemas terrestres es la eliminación y modificación de la cubirta forestal, que sirve de combustible a las llamas. Sin embargo, a largo plazo, su influencia -->
 
 
-A corto plazo, la influencia del fuego en los ecosistemas terrestres es la eliminación y modificación de la cubirta forestal, que sirve de combustible a las llamas. Sin embargo, a largo plazo, su influencia
-
-
-
-
-
-
-
-
-Los incendios forestales son un factor natural de los ecosistemas terrestres. 
-
-El fuego ha dado forma a los ecosistema terrestre, acelerando los procesos de erosión, acelerando las dinámicas geomorfológicas y, en definitiva, esculpiendo las formas terrestres
+<!-- El fuego ha dado forma a los ecosistema terrestre, acelerando los procesos de erosión, acelerando las dinámicas geomorfológicas y, en definitiva, esculpiendo las formas terrestres -->
 
 
 <!-- https://link.springer.com/article/10.1007/s10618-011-0213-2 -->
 <!-- A constant and controlled level of emission of carbon and other gases into the atmosphere is a pre-condition for preventing global warming and an essential issue for a sustainable world. Fires in the natural environment are phenomena that extensively increase the level of greenhouse emissions and disturb the normal functioning of natural ecosystems. -->
-
-
-
-
-
-
-
-
-destrucción de vastas áreas de bosque, la degradación del suelo 
-pérdida de biodiversidad
-s
-
-, además de poner en riesgo infraestructuras y vidas humanas.  
-
 
 <!-- Posible estructura de la introducción obtenida de "Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian" -->
 
@@ -155,8 +143,6 @@ s
 <!-- Superficie forestal en Andalucía. -->
 <!-- Principales usos de los bosques -->
 <!-- Biodiversidad -->
-Andalucía es la segunda comunidad de España con más terreno forestal, con 4.325.378 ha de suelo forestal que suponen el 49.37% de su superficie.
-
 
 
 <!-- (https://www.miteco.gob.es/es/biodiversidad/temas/inventarios-nacionales/inventario-forestal-nacional/superficie_por_uso.html) -->
@@ -164,14 +150,12 @@ Andalucía es la segunda comunidad de España con más terreno forestal, con 4.3
 
 <!-- 2. Papel de los incendios forestales en el ecosistema.Influencia del humano. Consecuencias de los incendios para las personas. -->
 
-En 2022, 15.786,64 hectarias fueron afectadas por el fuego en Andalucía, practicamente el doble de la media anual de los 10 años anteriores,  8873,68 hectarias [Memoria Plan INFOCA 2022].
+<!-- En 2022, 15.786,64 hectarias fueron afectadas por el fuego en Andalucía, practicamente el doble de la media anual de los 10 años anteriores,  8873,68 hectarias [Memoria Plan INFOCA 2022]. -->
 
 <!-- Riesgo para la biodiversidad vegetal y animal.  -->
 <!-- Daño a la infraestructura y riesgo para la vida de las personas. -->
 <!-- Costes incendios forestales [Barómetro de las catastrofes Naturales en España 2022] -->
 
-
-En el Plan Estratégico Estatal del Patrimonio Natural y de la Biodiversidad a 2030 [Cita] "identifica las principales presiones y amenazas, entre las cuales destaca el aumento de la superficie forestal afectada por incendios forestales en 2022".
 
 <!-- Incendios forestales (>1ha) vs conatos (<=1ha). -->
 
@@ -229,13 +213,13 @@ El objetivo de esta investigación es construir modelos de *Machine Learning* qu
 
 3. Analizar el desempeño de los modelos en la realidad estudiando potenciales casos de interés.
 
-## Hipótesis
+<!-- ## Hipótesis -->
 
 <!-- "Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian" -->
 
 <!-- ![Spatial Prediction of Wildfire Susceptibility Using Field Survey GPS Data and Machine Learning Approaches, Omid Ghorbanzadeh, Khalil Valizadeh Kamran, Thomas Blaschke, Jagannath Aryal, Amin Naboureh, Jamshid Einali and Jinhu Bian.](D:/usuario/Documents/Universidad/5º/TFG - organizado/memoriaTFE/private/hipotesis_efecto_variables.png) -->
 
-## Revisión bibliográfica
+<!-- ## Revisión bibliográfica -->
 
 
 <!-- Añadir algún otro similar -->

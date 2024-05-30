@@ -179,7 +179,7 @@ El número de componentes principales necesarias para explicar un porcentaje ele
 
 El problema que se aborda en este trabajo se engloba dentro de lo que se conoce como aprendizaje supervisado, ya que para cada observación del conjunto de entrenamiento se conoce el valor de la variable objetivo (en este caso si ha habido incendio o no). Más concretamente, se trata de un problema de clasificación binaria, ya que el objetivo es asignar cada observación a una de las dos clases posibles (incendio o no incendio). Existen numerosas técnicas de clasificación binaria supervisada, y en este trabajo se explorarán algunas de las de uso más común en problemas similares. Las principales fuentes consultadas para esta sección han sido @hastie2009elements y el capítulo 6 de @MLmodelSuthaharan. Para entender la intuición detrás de los modelos puede ser útil el blog @eight2late.
 
-### Regresión logística (con penalización)
+### Regresión logística con penalización
 La regresión logística es un caso particular de modelo lineal generalizado basado en las siguientes hipótesis:
 
 - **Hipótesis distribucional**. Dadas las variables explicativas, $\underline X_i$ con $i = 1,2,...,n$, se verifica que las variables $Y|_{\underline X= \underline x_i}$ son independientes y su distribución pertenece a la familia Bernouilli, es decir,
