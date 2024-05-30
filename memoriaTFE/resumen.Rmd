@@ -2,4 +2,3 @@
 output: pdf_document
 ---
 
-Resumen...

@@ -23,6 +23,84 @@ source("cabecera_chunk_inicio.R")
 
 # Introducción
 
+El fuego es un factor natural clave en los ecosistemas terrestres.^[El contenido de los cuatro primeros párrafos de esta introducción está extraído principalmente de @MataixCerda] Tan solo necesita de tres elementos básico que se encuentran en abundancia en la superficie de la Tierra: oxígeno, combustible y calor, por lo que no sorprende que su presencia en este planeta se remonte muy atrás en el tiempo. Hay pruebas de la existencia de fuego hace 400 millones de años y desde hace 350 millones de años se producen incendios en la Tierra de forma frecuente. Para tener con qué comparar esta cifra, las hipótesis más aceptadas indican que los primeros Homo Sapiens datan de hace unos 200 mil años (FUENTE)
+
+El fuego ha condicionado la evolución y la dispersión de plantas, el desarrollo de los biomas, la formación de suelos y los ciclos hidrológicos y erosivos. Se trata, por tanto, de uno de los procesos platenarios clave. La presencia del fuego en los ecosistemas terrestres ha dado lugar a numerosas adaptaciones en los seres vivos. En el caso de los ecosistemas mediterráneos, donde los incendios son frecuentes, la vegetación ha desarrollado adaptaciones que le permiten adaptarse al fuego. Un buen ejemplo de esta adaptación al fuego lo encontramos en el pino carrasco (*Pinus halepensis*), cuyas piñas que cuelgan de las ramas de la copa solo se abren al calor de las llamas.
+
+El control del fuego fue clave para el desarrollo de la humanidad. Cocinar alimentos, abrir zonas de cultivos, facilitar el traslado de la población, quemar restos de cosechas o eliminar plagas son solo algunos de los usos que se le ha dado al fuego desde que los primeros homínidos lo descubrieron hace 1,5 millones de años.  Sin embargo, la relación del hombre con el fuego parece haber cambiado radicalmente en los últimos años.
+
+La industrialización de las sociedades modernas, la sustitución del uso de biomasa por combustibles fósiles y el éxodo rural junto con el abandono de la agricultura han provocado el cese de la explotación de los montes, generando grandes acumulaciones de biomasa que actúa como combustible para los incendios forestales. De esta forma, el fuego ha pasado de ser una herramienta para el hombre, como ha sido a lo largo de la historia, a convertirse en un gran problema ambiental.
+
+A todo esto hay que sumar los efectos del cambio climático, que a través del aumento de las temperaturas y la disminución de las precipitaciones, ha provocado que se alargue la estación de incendios y ha aumentado las situaciones de riesgo alto [@incendioCamCLim].  
+
+En España, los incendios forestales figuran en el Plan Estratégico Estatal del Patrimonio Natural y de la Biodiversidad a 2030 como una de las principales presiones y amenazas para el patrimonio natural y la biodiversidad en España, considerándose "el principal elemento de degradación de los ecosistemas forestales, con importantes repercusiones sobre bienes e incluso vidas humanas".
+
+En Andalucía este problema toma una dimensión especial al tratarse de la segunda comunidad de España con más terreno forestal (cuenta con 4.325.378 ha de suelo forestal que suponen el 49.37% de su superficie) y contar además con el *hotspot* de biodiversidad de Sierra Nevada, uno de los enclaves con mayor diversidad del continente.
+
+<!-- Cifras a nivel andaluz -->
+
+En 2022, 15.786,64 ha fueron afectadas por el fuego en Andalucía, prácticamente el doble de la media anual de los 10 años anteriores,  8873,68 ha Ese mismo año, el 91.91% de las actuaciones forestales^[Según se indica en la Estadística General de Incendios Forestales (EGIF), se usa el término actuaciones forestales para englobar a conatos (de extensión inferior a 1 ha) e incendios forestales (de extensión superior a 1 ha)] con causa es conocida fueron de origen antrópico. De estos, el 48.20% fueron debidos a negligencias, el 38.40% fueron intencionados y el 13.40% fueron accidentales. Tan solo el 5.25% de las actuaciones forestales que ocurrieron en Andalucía en 2022 fueron debida a causas naturales [@INFOCA2022]. Estas cifras ponen de manifiesto la importancia de considerar el factor humano en el estudio de los incendios forestales. 
+
+En la siguiente cita, extraída de @incendioCamCLim, los autores enfatizan la necesidad de considerar el factor humano en la predicción de incendios forestales, e indican la existencia de factores que influyen en que unas determinadas zonas tengan un mayor riesgo de verse afectas por incendios forestales que otras, entre los que mencionan el tipo y la configuración de la vegetación:
+
+|           *A pesar de la importancia de la meteorología en los incendios, la capacidad *
+|       *predictiva de la ocurrencia de incendios [...] en base a variables meteorológicas* 
+|       *[...] suele ser baja. [...] Esto es debido a que la     mayor parte de los *
+|       *incendios en España es de de origen humano, lo que dificulta su predictibilidad.* 
+|       *Así, las igniciones no ocurren al azar, ni en el espacio ni en el tiempo. [...] *
+|       *El territorio no se quema de manera aleatoria, siendo normal que unas zonas ardan* 
+|       *más que otras. [...] Unos tipos de vegetación suelen arder más frecuentemente que *
+|       *otros. [...] La probabilidad de que un incendio se propague se ve favorecida por *
+|       *la configuración espacial de las manchas de vegetación que conforman el paisaje.*
+
+
+
+<!-- IA e incendios -->
+
+Los incendios forestales son un proceso sumamente complejo en el que se interrelacionan una gran cantidad de factores como la fuente de ignición, la composición del combustible, las condiciones meteorológicas o la orografía del terreno, además de la ya mencionada acción humana. Desde el estudio de los procesos de combustión que ocurren a escala molecular al estudio de la propagación de los incendios forestales, el estudio de los mismos puede abordarse desde numerosos puntos de vista y con distintos enfoques que van desde la ecología a la física, pasando por la estadística. Pero cuando se trata de construir los modelos a gran escala necesarios para llevar a cabo la gestión de los incendios forestales, las limitaciones computacionales, la cantidad y calidad de los datos requeridos y la interacción de una enorme cantidad de factores hacen que la modelización físico-matemática no sea, en muchos, casos un enfoque factible. Es por ello, que los modelos empíricos y estadísticos han tomado cada vez más peso en el estudio de los incendios forestales, aunque su utilidad depende en muchos casos de la calidad y cantidad de los datos disponibles, así como de la capacidad los modelos de representar relaciones no lineales presentes en los datos (@ReviewMLApplicationsWF).
+
+
+
+Understanding and better predicting wildfires is therefore crucial in several important areas of wildfire management, including emergency response, ecosystem management, land-use planning, and climate adaptation to name a few.
+
+
+
+El auge experimentado por la inteligencia artificial en las últimas décadas como consecuencia del desarrollo 
+
+El auge de la inteligencia artificial de las últimas décadas promovido por el desarrollo tecnológico 
+Por ello, no es de extrañar que desde la década de los 90 se exploren formas de construir mo
+<!-- Referencias -->
+
+<!-- Enfoque del trabajo -->
+
+<!-- Estructura -->
+
+
+
+
+
+
+
+
+
+
+hotspot de biodiversidad
+
+
+A corto plazo, la influencia del fuego en los ecosistemas terrestres es la eliminación y modificación de la cubirta forestal, que sirve de combustible a las llamas. Sin embargo, a largo plazo, su influencia
+
+
+
+
+
+
+
+
+Los incendios forestales son un factor natural de los ecosistemas terrestres. 
+
+El fuego ha dado forma a los ecosistema terrestre, acelerando los procesos de erosión, acelerando las dinámicas geomorfológicas y, en definitiva, esculpiendo las formas terrestres
+
+
 <!-- https://link.springer.com/article/10.1007/s10618-011-0213-2 -->
 <!-- A constant and controlled level of emission of carbon and other gases into the atmosphere is a pre-condition for preventing global warming and an essential issue for a sustainable world. Fires in the natural environment are phenomena that extensively increase the level of greenhouse emissions and disturb the normal functioning of natural ecosystems. -->
 
