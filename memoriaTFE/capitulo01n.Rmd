@@ -23,6 +23,8 @@ source("cabecera_chunk_inicio.R")
 
 # Introducción
 
+<!-- El fuego y los incendios -->
+### El fuego y los incendios {.unlisted .unnumbered}
 El fuego es un factor natural clave en los ecosistemas terrestres.^[El contenido de los cuatro primeros párrafos de esta introducción está extraído principalmente de @MataixCerda] Tan solo necesita de tres elementos básico que se encuentran en abundancia en la superficie de la Tierra: oxígeno, combustible y calor, por lo que no sorprende que su presencia en este planeta se remonte muy atrás en el tiempo. Hay pruebas de la existencia de fuego hace 400 millones de años y desde hace 350 millones de años se producen incendios en la Tierra de forma frecuente. Para tener con qué comparar esta cifra, las hipótesis más aceptadas indican que los primeros Homo Sapiens datan de hace unos 200 mil años (FUENTE)
 
 El fuego ha condicionado la evolución y la dispersión de plantas, el desarrollo de los biomas, la formación de suelos y los ciclos hidrológicos y erosivos. Se trata, por tanto, de uno de los procesos platenarios clave. La presencia del fuego en los ecosistemas terrestres ha dado lugar a numerosas adaptaciones en los seres vivos. En el caso de los ecosistemas mediterráneos, donde los incendios son frecuentes, la vegetación ha desarrollado adaptaciones que le permiten adaptarse al fuego. Un buen ejemplo de esta adaptación al fuego lo encontramos en el pino carrasco (*Pinus halepensis*), cuyas piñas que cuelgan de las ramas de la copa solo se abren al calor de las llamas.
@@ -33,7 +35,9 @@ La industrialización de las sociedades modernas, la sustitución del uso de bio
 
 A todo esto hay que sumar los efectos del cambio climático, que a través del aumento de las temperaturas y la disminución de las precipitaciones, ha provocado que se alargue la estación de incendios y ha aumentado las situaciones de riesgo alto [@incendioCamCLim].  
 
-En España, los incendios forestales figuran en el Plan Estratégico Estatal del Patrimonio Natural y de la Biodiversidad a 2030 como una de las principales presiones y amenazas para el patrimonio natural y la biodiversidad en España, considerándose "el principal elemento de degradación de los ecosistemas forestales, con importantes repercusiones sobre bienes e incluso vidas humanas".
+<!-- Una visión desde Andalucía -->
+### Una visión desde Andalucía {.unlisted .unnumbered}
+En España, los incendios forestales figuran en el Plan Estratégico Estatal del Patrimonio Natural y de la Biodiversidad a 2030 como una de las principales presiones y amenazas para el patrimonio natural y la biodiversidad en España, considerándose "el principal elemento de degradación de los ecosistemas forestales, con importantes repercusiones sobre bienes e incluso vidas humanas". En 2022, España fue el país más afectado por los incendios forestales en Europa (excluyendo a Ucrania), con un total de 315.705 ha quemadas (@effis2022).
 
 En Andalucía este problema toma una dimensión especial al tratarse de la segunda comunidad de España con más terreno forestal (cuenta con 4.325.378 ha de suelo forestal que suponen el 49.37% de su superficie) y contar además con el *hotspot* de biodiversidad de Sierra Nevada, uno de los enclaves con mayor diversidad del continente.
 
@@ -56,9 +60,35 @@ En la siguiente cita, extraída de @incendioCamCLim, los autores enfatizan la ne
 
 
 <!-- IA e incendios -->
-
+### La estadística, el *Machine Learning* y los incendios forestales {.unlisted .unnumbered}
 Los incendios forestales son un proceso sumamente complejo en el que se interrelacionan una gran cantidad de factores como la fuente de ignición, la composición del combustible, las condiciones meteorológicas o la orografía del terreno, además de la ya mencionada acción humana. Desde el estudio de los procesos de combustión que ocurren a escala molecular al estudio de la propagación de los incendios forestales, el estudio de los mismos puede abordarse desde numerosos puntos de vista y con distintos enfoques que van desde la ecología a la física, pasando por la estadística. Pero cuando se trata de construir los modelos a gran escala necesarios para llevar a cabo la gestión de los incendios forestales, las limitaciones computacionales, la cantidad y calidad de los datos requeridos y la interacción de una enorme cantidad de factores hacen que la modelización físico-matemática no sea, en muchos, casos un enfoque factible. Es por ello, que los modelos empíricos y estadísticos han tomado cada vez más peso en el estudio de los incendios forestales, aunque su utilidad depende en muchos casos de la calidad y cantidad de los datos disponibles, así como de la capacidad los modelos de representar relaciones no lineales presentes en los datos (@ReviewMLApplicationsWF).
 
+A esto se deben sumar otros factores. En primer lugar, la creciente disponibilidad de datos provenientes de satélites y sensores remotos que permiten el monitoreo de los incendios forestales  a partir de la recolección continua de datos geoespaciales y climáticos, además del desarrollo de los Sistemas de Información Geográfica (GIS), que han permitido manipular de forma eficiente estos conjuntos de datos espaciales. El aumento de la capacidad computacional de los equipos que, unido al desarrollo de las tecnologías de la información, motivó el auge por el *Machine Learning*(ML) desde la década de los 90, lo que se manifestó en el desarrollo de nuevos algoritmos como *Support Vector Machine* o *Random Forest*. Y el creciente interés de los gobiernos en la recopilación sistemática y detallada de información relativa a los incendios forestales producidos con el fin de disponer de información relevante para el análisis y la toma de decisiones^[Una buena muestra de esto es la EGIF, la base de datos nacional de los incendios forestales. Iniciada en 1968, constituye la serie de datos sobre incendios forestales más completa en el ámbito internacional (@miteco).].
+
+
+Todo ello ha propiciado la aplicación del ML en el estudio de los incendios forestales desde la década de los 90 en seis dominios claves: caracterización de combustibles, detección y mapeo de incendios; clima y cambio climático; ocurrencia, susceptibilidad y riesgo de incendios; predicción del comportamiento del fuego; efectos del fuego; y gestión de incendios. En @ReviewMLApplicationsWF se revisan las aplicaciones del ML en la ciencia y gestión de incendios forestales, dentro de los dominios de aplicación mencionados. El estudio identifica 300 publicaciones hasta finales de 2019, mostrando el uso frecuente de algoritmos de ML como *Random Forests*, *MaxEnt*, redes neuronales artificiales, árboles de decisión, SVM y algoritmos genéticos. La revisión enfatiza las ventajas y limitaciones de estos métodos y subraya la necesidad de combinar la experiencia en la ciencia del fuego con técnicas avanzadas de ML para poder construir modelos realistas y útiles.
+
+Como se señala en el artículo mencionado, la predicción de incendios forestales es vital para la planificación, para la preparación del material y del personal, para poder llevar a cabo una gestión eficiente de los recursos, para determinar la distribución de las unidades móviles en el terreno y para asistir la toma de decisiones. Y en este campo, la combinación de los algoritmos de ML y las tecnologías GIS, junto con la gran cantidad de información georreferencia disponible actualmente, ofrece un nuevo abanico de posibilidades. A continuación se mencionan algunos trabajos recientes que ahondan en esta dirección.
+
+
+En @CortezMorais los autores evalúan el rendimiento de distintos modelos de ML, como SVM, árboles de decisión, regresión lineal múltiple, Naive Bayes, bosques aleatorios y redes neuronales, para predecir el área quemada por los incendios forestales en el Parque Natural de Montesinho, en el norte de Portugal, a partir de información meteorológica. Los mejores resultados se obtienen para el modelo de SVM considerando 4 variables explicativas: temperatura, humedad relativa, precipitaciones y viento.
+
+<!-- En esta investigación se evalúa el rendimiento de distintos modelos de Machine Learning (SVM, DT, Regresión Lineal Múltiple, Naive Bayes, RF y NN) para predecir el área quemada por los incendios forestales en el parque natural de Montesinho (norte portugal) a partir de  información meteorológica. -->
+
+En la investigación llevada a cabo por @logreg_hcwf se aplica regresión logística en una cuadrícula de 1 × 1 km en la Comunidad Autónoma de Madrid, utilizando datos socioeconómicos como variables predictoras para representar los factores antropogénicos relacionados con el riesgo de incendio. También se evalúa otro enfoque basado en la predicción de la densidad de puntos de ignición en una cuadrícula de 10 × 10 km, utilizando funciones Kernel. La ocurrencia histórica de incendios de 2000 a 2005 se utiliza como variable de respuesta. El rendimiento de los modelos se evalúa con los incendios ocurridos en 2006 y 2007, obteniendo un AUC de 0.70 y 0.67 para ambos modelos, respectivamente.
+
+
+En @incendiosAndalucia se analiza la superficie afectada por los incendios forestales ocurridos entre 1975 y 2013 en la Comunidad Autónoma de Andalucía en función de 15 variables explicativas: altitud, insolación, pendiente, precipitación invernal, precipitación estival, temperatura estival, velocidad del viento, frecuencia del viento, superficie protegida, superficie de monte público, superficie de usos forestales, distancia a viario, distancia a zonas pobladas, saldo demográfico y saldo ganadero. Se aplica un modelo de regresión lineal múltiple y un Modelo de Regresión Geográficamente Ponderada. Los mejores resultados se obtienen en el segundo modelo, puesto que permite considerar la estructura de correlaciones espaciales presentes en los datos.
+
+En @HumanCauseWildFiresSpain se identifican los factores humanas asociados con un mayor riesgo de incendio forestal en España y se analiza la distribución espacial de la aparición de incendios forestales en el país tomando como unidad de estudio el municipio. Se consideran 108 variables, de las cuales se seleccionan 29 tras un primer estudio exploratorio, las cuales se usan para entrenar un modelo de regresión logística para estimar la probabilidad de una alta o baja ocurrencia de incendios. Finalmente, tan solo resultan significativas 13 de las variables consideradas.
+
+En @SpainOnFire se presenta un nuevo Modelo de Evaluación de Incendios Forestales (WAM, por sus siglas en inglés) que utiliza deep learning para anticipar el impacto de los incendios a partir de información meteorológica satelital y el NDVI en Castilla y León y Andalucía. Las variables respuesta del modelo son el área quemada, el tiempo de control y extinción, y la cantidad de recursos humanos, aéreos y pesados necesarios para la extinción del incendio. Emplea una red convolucional residual que realiza regresiones sobre variables atmosféricas e índice de verdor. El WAM se preentrena con 100,000 ejemplos de datos sin etiquetar y se ajusta con un pequeño conjunto de 445 muestras etiquetadas.
+
+En @stojanova2012estimating los autores construyen y comparan diversos modelos predictivos para estimar el riesgo de incendio en tres regiones de Eslovenia (Kras, la región costera y la Eslovenia continental) a partir de datos georreferenciados, imágenes de teledetección y el modelo de predicción meteorológica ALADIN. Los mejores resultados los obtienen con los modelos *bagging DT* y *Random Forest*.
+
+
+
+### El enfoque de este trabajo {.unlisted .unnumbered}
 
 
 Understanding and better predicting wildfires is therefore crucial in several important areas of wildfire management, including emergency response, ecosystem management, land-use planning, and climate adaptation to name a few.
@@ -207,28 +237,7 @@ El objetivo de esta investigación es construir modelos de *Machine Learning* qu
 
 ## Revisión bibliográfica
 
-@CortezMorais: En esta investigación se evalúa el rendimiento de distintos modelos de Machine Learning, como Máquinas de Soporte Vectorial, Árboles de Decisión, Regresión Lineal Múltiple, Naive Bayes, Bosques Aleatorios y Redes Neuronales, para predecir el área quemada por los incendios forestales en el Parque Natural de Montesinho, en el norte de Portugal, a partir de información meteorológica. Los mejores resultados se obtienen para el modelo de SVM considerando 4 variables explicativas: temperatura, humedad relativa, precipitaciones y viento.
 
-<!-- En esta investigación se evalúa el rendimiento de distintos modelos de Machine Learning (SVM, DT, Regresión Lineal Múltiple, Naive Bayes, RF y NN) para predecir el área quemada por los incendios forestales en el parque natural de Montesinho (norte portugal) a partir de  información meteorológica. -->
-
-@ReviewMLApplicationsWF: El artículo revisa las aplicaciones del Machine Learning (ML) en la ciencia y gestión de incendios forestales, destacando su uso en seis dominios clave: caracterización de combustibles, detección y mapeo de incendios; clima y cambio climático; ocurrencia, susceptibilidad y riesgo de incendios; predicción del comportamiento del fuego; efectos del fuego; y gestión de incendios. Se identifican 300 publicaciones hasta finales de 2019, mostrando el uso frecuente de algoritmos de ML como random forests, MaxEnt, redes neuronales artificiales, árboles de decisión, máquinas de vectores de soporte y algoritmos genéticos. La revisión enfatiza las ventajas y limitaciones de estos métodos y subraya la necesidad de combinar la experiencia en la ciencia del fuego con técnicas avanzadas de ML para poder construir modelos realistas y útiles.
-
-
-@logreg_hcwf: Se aplica regresión logística en una cuadrícula de 1 × 1 km en la Comunidad Autónoma de Madrid, utilizando datos socioeconómicos como variables predictoras para representar los factores antropogénicos relacionados con el riesgo de incendio. También se evalúa otro enfoque basado en la predicción de la densidad de puntos de ignición en una cuadrícula de 10 × 10 km, utilizando funciones Kernel. La ocurrencia histórica de incendios de 2000 a 2005 se utiliza como variable de respuesta. El rendimiento de los modelos se evalúa con los incendios ocurridos en 2006 y 2007, obteniendo un AUC de 0.70 y 0.67 para ambos modelos, respectivamente.
-
-
-@SpainOnFire: En este artículo se presenta el nuevo Modelo de Evaluación de Incendios Forestales (WAM, por sus siglas en inglés) que utiliza deep learning para anticipar el impacto de los incendios a partir de información meteorológica satelital y el NDVI en Castilla y León y Andalucía. Las variables respuesta del modelo son el área quemada, el tiempo de control y extinción, y la cantidad de recursos humanos, aéreos y pesados necesarios para la extinción del incendio. Emplea una red convolucional residual que realiza regresiones sobre variables atmosféricas e índice de verdor. El WAM se preentrena con 100,000 ejemplos de datos sin etiquetar y se ajusta con un pequeño conjunto de 445 muestras etiquetadas.
-
-
-@incendiosAndalucia En este trabajo analiza la superficie calcinada por los incendios forestales ocurridos entre 1975 y 2013 en la Comunidad Autónoma de Andalucía en función de 15 variables explicativas: altitud, insolación, pendiente, precipitación invernal, precipitación estival, temperatura estival, velocidad del viento, frecuencia del viento, superficie protegida, superficie de monte público, superficie de usos forestales, distancia a viario, distancia a zonas pobladas, saldo demográfico y saldo ganadero. Se aplica un modelo de Regresión Lineal Múltiple y un Modelo de Regresión Geográficamente Ponderada. Los mejores resultados se obtienen en el segundo modelo, puesto que permite considerar la estructura de correlaciones espaciales presentes en los datos.
-
-
-@HumanCauseWildFiresSpain En este artículo se identifican los factores humanas asociados con un mayor riesgo de incendio forestal en España y se analiza la distribución espacial de la aparición de incendios forestales en el país tomando como unidad de estudio el municipio. Se consideran 108 variables, de las cuales se seleccionan 29 tras un primer estudio exploratorio, las cuales se usan para entrenar un modelo de regresión logística para estimar la probabilidad de una alta o baja ocurrencia de incendios. Finalmente, tan solo resultan significativas 13 de las variables consideradas.
-
-
-
-@stojanova2012estimating
-@SAYAD2019130
 <!-- Añadir algún otro similar -->
 
 
