@@ -188,7 +188,7 @@ source("cabecera_chunk_inicio.R")
 
 ### Coeficientes regresión logística con penalización
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{graficos/lr_coef.png}
 \caption[Coeficientes del modelos de regresión logística lasso seleccionado]{Coeficientes del modelos de regresión logística lasso seleccionado. \it Fuente: Elaboración propia.}
@@ -197,7 +197,7 @@ source("cabecera_chunk_inicio.R")
 
 ### VIP Bosque Aleatorio
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth,keepaspectratio]{graficos/rf_vip_final.png}
 \caption[Importancia de las variables en el bosque aleatorio final]{Importancia de las variables en el Bosque Aleatorio final. \it Fuente: Elaboración propia.}

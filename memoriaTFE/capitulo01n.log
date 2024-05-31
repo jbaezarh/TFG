@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.26)  30 MAY 2024 19:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.31)  31 MAY 2024 10:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -348,7 +348,7 @@ Package: chngcntr 2018/04/09 v1.1a change counter resetting
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2024/01/21 v0.5y Insert pages of external PDF documents (AM)
+Package: pdfpages 2024/05/29 v0.6a Insert pages of external PDF documents (AM)
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
@@ -385,7 +385,7 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 \AM@pageheight=\dimen170
 \AM@fboxrule=\dimen171
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.def
-File: pppdftex.def 2024/01/21 v0.5y Pdfpages driver for pdfTeX (AM)
+File: pppdftex.def 2024/05/29 v0.6a Pdfpages driver for pdfTeX (AM)
 )
 \pdfpages@includegraphics@status=\count299
 \AM@pagebox=\box55
@@ -788,7 +788,7 @@ Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \WF@everypar=\toks54
 Package: wrapfig 2003/01/31  v 3.6
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
-Package: colortbl 2024/02/20 v1.0g Color table columns (DPC)
+Package: colortbl 2024/05/26 v1.0h Color table columns (DPC)
 \everycr=\toks55
 \minrowclearance=\skip153
 \rownum=\count346
@@ -1062,25 +1062,25 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 Cap\'{\i }tulo 1.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 548.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 548.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 548.
 [3]
-LaTeX Info: Redefining \. on input line 681.
-LaTeX Info: Redefining \% on input line 681.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 613.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 613.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 613.
+LaTeX Info: Redefining \. on input line 679.
+LaTeX Info: Redefining \% on input line 679.
 [4]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 737.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 735.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \. on input line 747.
-LaTeX Info: Redefining \% on input line 747.
+LaTeX Info: Redefining \. on input line 745.
+LaTeX Info: Redefining \% on input line 745.
 [5]
-LaTeX Info: Redefining \. on input line 806.
-LaTeX Info: Redefining \% on input line 806.
+LaTeX Info: Redefining \. on input line 804.
+LaTeX Info: Redefining \% on input line 804.
 [6{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] (./capitulo01n.bbl
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -1099,40 +1099,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--14
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--45
+Underfull \hbox (badness 10000) in paragraph at lines 46--52
 []\T1/lmr/m/sc/12 Liz-López\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 He-le-na\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Huertas-Tato\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Ja-vier\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Pérez-Aracil\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Jor-ge\T1/lmr/m/n/12 ;
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 58--61
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 65--68
 []\T1/lmr/m/sc/12 Moreno\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 J. M.\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Ur-bie-ta\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 I.R.\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Be-dia\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 J.\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Gu-tié-rrez\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 J.M.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--61
+Underfull \hbox (badness 10000) in paragraph at lines 65--68
 \T1/lmr/m/n/12 y \T1/lmr/m/sc/12 Va-lle-jo\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 V.R.\T1/lmr/m/n/12 . ^^SLos in-cen-dios fo-res-ta-les en Es-pa-ña an-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--61
+Underfull \hbox (badness 10000) in paragraph at lines 65--68
 \T1/lmr/m/n/12 te el cam-bio cli-má-ti-co^^T. []$https : / / www . miteco . gob . es / content / dam /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--61
+Underfull \hbox (badness 10000) in paragraph at lines 65--68
 \T1/lmr/m/n/12 miteco / es / cambio-[]climatico / temas / impactos-[]vulnerabilidad-[]y-[]adaptacion /
  []
 
-[9]
-Underfull \hbox (badness 2556) in paragraph at lines 63--67
+
+Underfull \hbox (badness 2556) in paragraph at lines 70--74
 []\T1/lmr/m/sc/12 SAN-MIGUEL-AYANZ\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Je-sus\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 DU-RRANT\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Tracy\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 BO-CA\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Ro-ber-to\T1/lmr/m/n/12 ;
  []
 
 )
-LaTeX Info: Redefining \. on input line 873.
-LaTeX Info: Redefining \% on input line 873.
-LaTeX Info: Redefining \. on input line 873.
-LaTeX Info: Redefining \% on input line 873.
+LaTeX Info: Redefining \. on input line 869.
+LaTeX Info: Redefining \% on input line 869.
+LaTeX Info: Redefining \. on input line 869.
+LaTeX Info: Redefining \% on input line 869.
 [10] (./capitulo01n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
@@ -1142,21 +1142,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-05-08>
  ***********
 Package rerunfilecheck Info: File `capitulo01n.out' has not changed.
-(rerunfilecheck)             Checksum: 83C6B226FC3EFC718805DCDC0AB5C306;587.
+(rerunfilecheck)             Checksum: 5E293D013F93D8F645CD3DA1CBA3240E;312.
  ) 
 Here is how much of TeX's memory you used:
- 30879 strings out of 475935
- 589716 string characters out of 5787577
+ 30876 strings out of 475935
+ 589666 string characters out of 5787577
  1940907 words of memory out of 5000000
  52452 multiletter control sequences out of 15000+600000
  630490 words of font info for 85 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,12n,93p,2476b,595s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb>
-Output written on capitulo01n.pdf (10 pages, 264749 bytes).
+Output written on capitulo01n.pdf (10 pages, 264648 bytes).
 PDF statistics:
- 200 PDF objects out of 1000 (max. 8388607)
- 167 compressed objects within 2 object streams
- 47 named destinations out of 1000 (max. 500000)
- 53 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 193 PDF objects out of 1000 (max. 8388607)
+ 160 compressed objects within 2 object streams
+ 44 named destinations out of 1000 (max. 500000)
+ 37 words of extra memory for PDF output out of 10000 (max. 10000000)
 
