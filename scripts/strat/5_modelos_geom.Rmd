@@ -579,6 +579,78 @@ cores
 
 # Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo de forma que la computación sea más eficiente
 
+# ETAPA 3: Fijados min_n y mtry, se ajusta el número de árboles
+# -----------------
+
+# 1º Se construye el modelo
+rf_mod3 <- 
+  rand_forest(mtry = 4, min_n = rf_best1$min_n, trees = tune()) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Se usa la misma receta que antes
+rf_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  # step_holiday(date) %>% 
+  step_rm(date, cod_municipio, municipio) 
+# No normalizamos en este caso pues no es necesario
+
+# 3º Ensamblar todo con workflow
+rf_workflow3 <- 
+  workflow() %>% 
+  add_model(rf_mod3) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res3 <-
+  rf_workflow3 %>%
+  tune_grid(val_set,
+            grid = expand_grid(trees = c(50,100,200,300,500,1000)),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# Resultados del tuning
+
+rf_tuning3 <- rf_res3 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning3
+
+#plot
+rf_plot3 <- 
+  rf_res3 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = trees, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = paste0("Etapa 2\nFijado min_n = ", rf_best1$min_n, " se ajusta mtry"))
+rf_plot3
+
+# Mejor modelo
+rf_best3 <- 
+  rf_res3 %>% 
+  select_best(metric = "spec")
+rf_best3
+
+rf_metrics3 <- rf_res3 |> 
+  collect_predictions(parameters = rf_best3) |> 
+  get_metrics()
+
+rf_metrics3
+
+
+
 # ETAPA 1: fijado mtry=4, se ajusta min_n
 # -----------------
 
@@ -606,7 +678,7 @@ rf_workflow1 <-
 set.seed(345)
 
 rf_res1 <-
-  rf_workflow %>%
+  rf_workflow1 %>%
   tune_grid(val_set,
             grid = expand_grid(min_n = seq(1000,2500,100)),
             control = control_grid(save_pred = TRUE),
@@ -635,7 +707,7 @@ rf_plot1 <-
   ylab("") +
   theme_minimal()+
   labs(title = "Etapa 1\nFijado mtry = 4, se ajusta min_n")
-
+rf_plot1
 
 # Mejor modelo
 rf_best1 <- 
@@ -651,9 +723,9 @@ rf_metrics1 <- rf_res1 |>
 rf_metrics1
 
 
+
 # ETAPA 2: fijado min_n de la etapa anterior, se ajusta mtry
 # -----------------
-
 # 1º Se construye el modelo
 rf_mod2 <- 
   rand_forest(mtry = tune(), min_n = rf_best1$min_n, trees = 1000) %>% 
@@ -715,6 +787,73 @@ rf_metrics2 <- rf_res2 |>
 rf_metrics2
 
 
+# ETAPA 3: Fijados min_n y mtry, se ajusta el número de árboles
+# -----------------
+
+# 1º Se construye el modelo
+rf_mod3 <- 
+  rand_forest(mtry =rf_best2$mtry, min_n = rf_best1$min_n, trees = tune()) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Se usa la misma receta que antes
+
+# 3º Ensamblar todo con workflow
+rf_workflow3 <- 
+  workflow() %>% 
+  add_model(rf_mod3) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res3 <-
+  rf_workflow3 %>%
+  tune_grid(val_set,
+            grid = expand_grid(trees = c(50,100,200,300,500,1000)),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# Resultados del tuning
+
+rf_tuning3 <- rf_res3 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning3
+
+#plot
+rf_plot3 <- 
+  rf_res3 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = trees, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = paste0("Etapa 2\nFijado min_n = ", rf_best1$min_n, " se ajusta mtry"))
+rf_plot3
+
+# Mejor modelo
+rf_best3 <- 
+  rf_res3 %>% 
+  select_best(metric = "spec")
+rf_best3
+
+rf_metrics3 <- rf_res3 |> 
+  collect_predictions(parameters = rf_best3) |> 
+  get_metrics()
+
+rf_metrics3
+
+
+
+
 # ---------
 
 # Plots
@@ -722,6 +861,297 @@ ggarrange(rf_plot1,rf_plot2,nrow=1,common.legend = T,legend = "bottom")
 
 ```
 
+
+
+```{r }
+# Detectar el número de núcleos para trabajar en paralelo
+cores <- parallel::detectCores()
+cores
+
+# Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo de forma que la computación sea más eficiente
+
+# ETAPA 3: Fijados min_n y mtry, se ajusta el número de árboles
+# -----------------
+
+# 1º Se construye el modelo
+rf_mod3 <- 
+  rand_forest(mtry = 4, min_n = 1500,trees = tune()) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Se usa la misma receta que antes
+rf_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  # step_holiday(date) %>% 
+  step_rm(date, cod_municipio, municipio) 
+# No normalizamos en este caso pues no es necesario
+
+# 3º Ensamblar todo con workflow
+rf_workflow3 <- 
+  workflow() %>% 
+  add_model(rf_mod3) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res3 <-
+  rf_workflow3 %>%
+  tune_grid(val_set,
+            grid = expand_grid(trees = c(50,100,200,300,500,1000)),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# Resultados del tuning
+
+rf_tuning3 <- rf_res3 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning3
+
+#plot
+rf_plot3 <- 
+  rf_res3 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = trees, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = paste0("Etapa 2\nFijado min_n = ", rf_best1$min_n, " se ajusta mtry"))
+rf_plot3
+
+# Mejor modelo
+rf_best3 <- 
+  rf_res3 %>% 
+  select_best(metric = "spec")
+rf_best3
+
+rf_metrics3 <- rf_res3 |> 
+  collect_predictions(parameters = rf_best3) |> 
+  get_metrics()
+
+rf_metrics3
+
+
+
+# ETAPA 1: fijado mtry=4, se ajusta min_n
+# -----------------
+
+# 1º Construir el modelo
+rf_mod1 <- 
+  rand_forest(mtry = 4, min_n = tune(), trees = rf_best3$trees) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Construir la receta con el preprocesamiento
+rf_recipe <- 
+  recipe(fire ~ ., data = training) %>% 
+  step_date(date,features = c("dow", "month")) %>% 
+  # step_holiday(date) %>% 
+  step_rm(date, cod_municipio, municipio) 
+# No normalizamos en este caso pues no es necesario
+
+# 3º Ensamblar todo con workflow
+rf_workflow1 <- 
+  workflow() %>% 
+  add_model(rf_mod1) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res1 <-
+  rf_workflow1 %>%
+  tune_grid(val_set,
+            grid = expand_grid(min_n = seq(1000,2500,100)),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+# Resultados del tuning
+
+rf_tuning1 <- rf_res1 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning1
+
+# plot
+
+rf_plot1 <- 
+  rf_res1 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = min_n, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = "Etapa 1\nFijado mtry = 4, se ajusta min_n")
+rf_plot1
+
+# Mejor modelo
+rf_best1 <- 
+  rf_res1 %>% 
+  select_best(metric = "accuracy")
+
+rf_best1
+
+rf_metrics1 <- rf_res1 |> 
+  collect_predictions(parameters = rf_best1) |> 
+  get_metrics()
+
+rf_metrics1
+
+
+
+# ETAPA 2: fijado min_n de la etapa anterior, se ajusta mtry
+# -----------------
+# 1º Se construye el modelo
+rf_mod2 <- 
+  rand_forest(mtry = tune(), min_n = rf_best1$min_n, trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Se usa la misma receta que antes
+
+# 3º Ensamblar todo con workflow
+rf_workflow2 <- 
+  workflow() %>% 
+  add_model(rf_mod2) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res2 <-
+  rf_workflow2 %>%
+  tune_grid(val_set,
+            grid = expand_grid(mtry = 1:10),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# Resultados del tuning
+
+rf_tuning2 <- rf_res2 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning2
+
+#plot
+rf_plot2 <- 
+  rf_res2 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = mtry, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = paste0("Etapa 2\nFijado min_n = ", rf_best1$min_n, " se ajusta mtry"))
+rf_plot2
+
+# Mejor modelo
+rf_best2 <- 
+  rf_res2 %>% 
+  select_best(metric = "spec")
+rf_best2
+
+rf_metrics2 <- rf_res2 |> 
+  collect_predictions(parameters = rf_best2) |> 
+  get_metrics()
+
+rf_metrics2
+
+
+# ETAPA 3: Fijados min_n y mtry, se ajusta el número de árboles
+# -----------------
+
+# 1º Se construye el modelo
+rf_mod3 <- 
+  rand_forest(mtry =rf_best2$mtry, min_n = rf_best1$min_n, trees = tune()) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("classification")
+
+# 2º Se usa la misma receta que antes
+
+# 3º Ensamblar todo con workflow
+rf_workflow3 <- 
+  workflow() %>% 
+  add_model(rf_mod3) %>% 
+  add_recipe(rf_recipe)
+
+# 4º Train and tune
+set.seed(345)
+
+rf_res3 <-
+  rf_workflow3 %>%
+  tune_grid(val_set,
+            grid = expand_grid(trees = c(50,100,200,300,500,1000)),
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(accuracy,roc_auc,recall,spec))
+
+
+# Resultados del tuning
+
+rf_tuning3 <- rf_res3 |> 
+  collect_metrics() |> 
+  group_by(.metric)|> 
+  summarise(max = max(mean),min=min(mean))
+
+rf_tuning3
+
+#plot
+rf_plot3 <- 
+  rf_res3 %>% 
+  collect_metrics() %>%  
+  mutate(.metric = ifelse(.metric == "recall","spec",
+                          ifelse(.metric == "spec","recall",
+                                 .metric))) %>% 
+  ggplot(aes(x = trees, y = mean,col=.metric)) + 
+  geom_point() + 
+  geom_line() + 
+  ylab("") +
+  theme_minimal()+
+  labs(title = paste0("Etapa 2\nFijado min_n = ", rf_best1$min_n, " se ajusta mtry"))
+rf_plot3
+
+# Mejor modelo
+rf_best3 <- 
+  rf_res3 %>% 
+  select_best(metric = "spec")
+rf_best3
+
+rf_metrics3 <- rf_res3 |> 
+  collect_predictions(parameters = rf_best3) |> 
+  get_metrics()
+
+rf_metrics3
+
+
+
+
+# ---------
+
+# Plots
+ggarrange(rf_plot1,rf_plot2,nrow=1,common.legend = T,legend = "bottom")
+
+```
 
 ### 5. k-Nearest Neighbours
 ```{r}
@@ -1035,6 +1465,12 @@ models = tibble(model_name = c("lr","lr_pca","dt","rf","svm_linear","svm_rbf","k
                 models_tune = list(lr_res,lr_pca_res,dt_res,rf_res2,svm_res,svm_rbf_res,knn_res),
                 models_workflow = list(lr_workflow,lr_pca_workflow,dt_workflow,rf_workflow2,svm_workflow,svm_rbf_workflow,knn_workflow))
 
+
+# models = tibble(model_name = c("rf"),
+                # models_tune = list(rf_res2),
+                # models_workflow = list(rf_workflow2))
+
+
 # save(models, file="salidas_intermedias/all_models.RData")
 
 load("salidas_intermedias/all_models.RData")
@@ -1160,7 +1596,7 @@ kable(test_metrics,digits=3)
 
 # the last model
 last_rf_mod <- 
-  rand_forest(mtry = rf_best2$mtry, min_n = rf_best1$min_n, trees = 1000) %>% 
+  rand_forest(mtry = rf_best2$mtry, min_n = rf_best1$min_n, trees = rf_best3$trees) %>% 
   set_engine("ranger", num.threads = cores,importance="impurity") %>% 
   set_mode("classification")
   

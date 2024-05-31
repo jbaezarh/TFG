@@ -1542,7 +1542,7 @@ rf_workflow1 <-
 set.seed(345)
 
 rf_res1 <-
-  rf_workflow %>%
+  rf_workflow1 %>%
   tune_grid(val_set,
             grid = expand_grid(min_n = seq(1000,2500,100)),
             control = control_grid(save_pred = TRUE),

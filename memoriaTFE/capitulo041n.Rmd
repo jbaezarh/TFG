@@ -67,7 +67,7 @@ A continuación se considera el mismo modelo de regresión logística con penali
 
 ## Árboles de decisión
 
-Se construirán los árboles de decisión usando el índice de Gini como función de impureza y se elegirá el parámetro de coste-complejidad ($\alpha$) que maximice la tasa de acierto. Se considera un *grid* con 10 valores del parámetro de coste-complejidad que oscilan entre $1.28e-10$ y $3.02e- 2$. La mejor tasa de acierto en el conjunto de validación se obtiene con $\alpha = 0.00182$. En la Figura \ref{fig:dt_tuningplot} se muestran las distintas métricas de rendimiento sobre los datos de validación para cada uno de los valores del parámetro a ajustar.
+Se construirán los árboles de decisión usando el índice de Gini como función de impureza y se elegirá el parámetro de coste-complejidad ($\alpha$) que maximice la tasa de acierto. Tras valorar también el uso de la Entropía como medida de impureza y realizar algunas pruebas previas, finalmente se optó por usar el índice de Gini ya viene implementado en los paquetes considerados y en las pruebas realizadas el uso de una medida u otra no supuso cambios significativos en los resultados obtenidos.Se considera un *grid* con 10 valores del parámetro de coste-complejidad que oscilan entre $1.28e-10$ y $3.02e- 2$. La mejor tasa de acierto en el conjunto de validación se obtiene con $\alpha = 0.00182$. En la Figura \ref{fig:dt_tuningplot} se muestran las distintas métricas de rendimiento sobre los datos de validación para cada uno de los valores del parámetro a ajustar.
 
 \begin{figure}[h!]
 \centering
@@ -79,7 +79,7 @@ Se construirán los árboles de decisión usando el índice de Gini como funció
 
 ## Bosques aleatorios
 
-En este modelo se ha fijado el número de árboles a 1000 y se han ajustado los parámetros *mtry* (el número de variables que se seleccionarán aleatoriamente en cada nodo) y *min_n* (el número de observaciones en un nodo a partir del cual no se sigue dividiendo y se convierte en nodo hoja). En este caso se ha optado por un enfoque diferente, motivado por el amplio rango de valores que puede tomar el parámetro *min_n* y por las limitaciones computacionales del equipo disponible. 
+En este modelo se han ajustado los parámetros *mtry* (el número de variables que se seleccionarán aleatoriamente en cada nodo) y *min_n* (el número de observaciones en un nodo a partir del cual no se sigue dividiendo y se convierte en nodo hoja). En este caso se ha optado por un enfoque diferente, motivado por el amplio rango de valores que puede tomar el parámetro *min_n* y por las limitaciones computacionales del equipo disponible. Tras realizar varias pruebas se ha observado que, con estos datos, al ajustar el parámetro *trees* (el número de árboles a considerar) no se obtiene una mejorar significativa de los resultados frente a considerar el valor por defecto de 1000 árboles, por lo que se ha preferido dejar este parámetro fijo.
 
 De esta forma, la estimación de parámetros se ha hecho en dos etapas. En una primera etapa se ha fijado el parámetro $mtry = 4$ y se ha estimado el parámetro *min_n* considerando para ello un *grid* equiespaciado de 1000 a 2500 tomando valores de 100 en 100 ($\{1000,1100,...,2500\}$). Para elegir entre los distintos modelos esta vez se ha usado como criterio la sensitividad, obteniendo el valor más elevado para $min\_n = 2100$. En la segunda etapa, una vez *min_n*, este se ha considerado fijo y se ha estimado *m_try*, considerando una rejilla de 10 valores equiespaciados tomados del 1 al 10 ($\{1,2,...,10\}$). De nuevo se ha utilizado la sensitividad para elegir el modelo final, eligiendo así $min\_n = 7$. En la Figura \ref{fig:rf_tuningplot} se recogen los resultados de las dos etapas de *tuning*. El modelo final elegido tiene $min\_n = 2100$ y $min\_n = 7$.
 
@@ -117,7 +117,7 @@ Antes de construir el modelo, se han transformado las variables categóricas usa
 
 ## SVM radial
 
-Por último, se ha construido el modelo de SVM usando un kernel gaussiano, con la intención de comprobar si el uso de esta función kernel es capaz de mejorar la separabilidad de los datos. El preprocesamiento ha sido el mismo que en el caso del kernel lineal. Dado el elevado tiempo de entrenamiento de este modelo solo se ha probado con 8 combinaciones de valores para los parámetros $C$ y $\gamma$, que oscilan entre 0.005 y 31.7 y entre 0 y 0.05. La mayor tasa de acierto sobre los datos de validación se ha conseguido para $C = 31.7$ y $\gamma = 0.0000496$.
+Por último, se ha construido el modelo de SVM usando un kernel gaussiano, con la intención de comprobar si el uso de esta función kernel es capaz de mejorar la separabilidad de los datos. Se ha considerado este kernel y no otro por ser el de uso más común. El preprocesamiento ha sido el mismo que en el caso del kernel lineal. Dado el elevado tiempo de entrenamiento de este modelo solo se ha probado con 8 combinaciones de valores para los parámetros $C$ y $\gamma$, que oscilan entre 0.005 y 31.7 y entre 0 y 0.05, respectivamente. La mayor tasa de acierto sobre los datos de validación se ha conseguido para $C = 31.7$ y $\gamma = 0.0000496$.
 
 ## Comparación
 

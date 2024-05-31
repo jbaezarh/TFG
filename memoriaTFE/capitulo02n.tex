@@ -583,19 +583,28 @@ Los objetos \emph{sf} son fáciles de manipular ya que son
 \emph{dataframes} o \emph{tibbles} con dos características
 fundamentales. En primer lugar, contienen metadatos geográficos
 adicionales: tipo de geometría, dimensión, \emph{Bounding Box} (límites
-o extensión geográfica) e información sobre el Sistema de referencia de
-coordenadas. Y además, presentan una columna de geometrías. Algunas
-ventajas del uso de este modelo de datos en R son que en la mayoría de
-operaciones los objeto \emph{sf} se pueden tratar como
-\emph{dataframes}, los nombres de las funciones son consistentes (todos
-empiezan por \texttt{st\_}), las funciones se pueden combinar con el
-operador tubería y además funcionan bien con el ecosistema de paquetes
-\emph{tidyverse}.
+o extensión geográfica) información sobre el Sistema de referencia de
+coordenadas. Y además, presentan una columna de geometrías, que contiene
+los atributos geográficos de cada observación. Algunas ventajas del uso
+de este modelo de datos en R son que en la mayoría de operaciones los
+objeto \emph{sf} se pueden tratar como \emph{dataframes}, los nombres de
+las funciones son consistentes (todos empiezan por \texttt{st\_}), las
+funciones se pueden combinar con el operador tubería y además funcionan
+bien con el ecosistema de paquetes \emph{tidyverse}.
 
 El paquete \emph{sf} de R soporta 18 tipos de geometrías para las
 \emph{simple features}, de las cuales las más utilizadas son:
 \emph{POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING,
 MULTIPOLYGON} y \emph{GEOMETRYCOLLECTION}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.6\linewidth]{graficos/sf-classes} 
+
+}
+
+\caption{Principales tipos de \textit{simple features} soportados por el paquete de \textit{R sf}. \it Fuente: \citet{lovelace_geocomputation_2019}}\label{fig:sf-classes}
+\end{figure}
 
 \hypertarget{datos-ruxe1ster}{%
 \subsection{Datos Ráster}\label{datos-ruxe1ster}}
@@ -678,6 +687,7 @@ elipsoide el que se alinea con el centro de la Tierra. Ejemplos de
   ampliamente en la Europa Occidental.
 \item
   \emph{World Geodetic System 1984} (WGS84), usado a nivel global.
+  \citep{lovelace_geocomputation_2019}
 \end{itemize}
 
 \hypertarget{sistemas-de-coordenadas-proyectadas}{%
@@ -803,8 +813,9 @@ Se define la fracción de varianza explicada por las $p$ primeras componentes pr
 \end{definition}
 
 El número de componentes principales necesarias para explicar un
-porcentaje dado de la varianza de los datos puede servir para
-caracterizar la magnitud del problema.
+porcentaje elevado de la varianza de los datos puede servir para
+caracterizar la complejidad del problema, indicando la verdadera
+dimensión en la que se encuentran los datos.
 
 \hypertarget{modelos}{%
 \section{Modelos}\label{modelos}}
@@ -823,8 +834,8 @@ sido \citet{hastie2009elements} y el capítulo 6 de
 modelos puede ser útil el blog \citet{eight2late}.
 
 \hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
-\subsection{Regresión logística (con
-penalización)}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
+\subsection{Regresión logística con
+penalización}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
 
 La regresión logística es un caso particular de modelo lineal
 generalizado basado en las siguientes hipótesis:
@@ -1185,11 +1196,17 @@ El parámetro \emph{k} permite controlar el sobreajuste del modelo.
 
 Para validar el ajuste de los modelos comentados en los datos, se
 utilizará una partición temporal en entrenamiento-validación-test. Es
-decir, se asignará el primer 60\% de los datos (de acuerdo al día de la
-observación) a entrenamiento, el 20\% siguiente a validación y el último
-20\% a test. Este enfoque permite evitar el sesgo positivo debido al
-efecto \emph{look-ahead} en la estimación de la capacidad de
-generalización de los modelos.
+decir, se particionará la muestra en tres subconjuntos de acuerdo al día
+de la observación por orden cronológico. El primer subconjunto se
+destinará al entrenamiento de los modelos; el segundo al ajuste de
+hiperparámetros, usándose para evaluar el rendimiento de las distintas
+configuraciones de parámetros consideradas sobre nuevos datos; y el
+tercer y último subconjunto de datos se destinará a estimar la capacidad
+de generalización de los modelos sobre nuevos datos, considerando las
+configuraciones de parámetros seleccionadas en el paso anterior. Este
+enfoque permite evitar el sesgo positivo debido al efecto
+\emph{look-ahead} en la estimación de la capacidad de generalización de
+los modelos.
 
 \hypertarget{evaluaciuxf3n-de-los-modelos}{%
 \section{Evaluación de los modelos}\label{evaluaciuxf3n-de-los-modelos}}

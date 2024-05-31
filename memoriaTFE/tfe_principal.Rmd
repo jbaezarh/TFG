@@ -102,10 +102,10 @@ knitr::write_bib(c("knitr","rmarkdown"),
 
 \cleardoublepage   
 <!--  \clearpage -->
-\section*{Prólogo}  <!--Cambiar por si se necesita:  Agradecimientos -->
-\addcontentsline{toc}{section}{Prólogo} <!-- Agradecimientos -->
+\section*{Agradecimientos}  <!--Cambiar por si se necesita:  Agradecimientos -->
+\addcontentsline{toc}{section}{Agradecimientos} <!-- Agradecimientos -->
 <!-- agradecimientos.Rmd -->
-```{r child = 'prologo.Rmd'}   
+```{r child = 'agradecimientos.Rmd'}   
 ```
 
 

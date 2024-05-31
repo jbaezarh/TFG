@@ -27,9 +27,11 @@ En esta sección se pretende ilustrar el funcionamiento de los modelos construid
 
 ## Visión general del desempeño de los modelos
 
-Dado que los modelos se han construido y evaluado sobre un conjunto de datos que es inevitablemente limitado y que se ve fuertemente influenciado por decisiones metodológicas, surge la incógnita de si las métricas de rendimiento obtenidas están realmente reflejando la capacidad de generalización de los modelos al ser aplicados en la realidad o de si, en cambio, tan solo están reflejando sesgos introducidos en el conjunto de datos a través del proceso de selección. Para entender mejor el funcionamiento de los modelos y conocer si realmente esto sirven para predecir incendios forestales en la vida real, se ha decidido adoptar el enfoque que se detalla a continuación. 
+<!-- Dado que los modelos se han construido y evaluado sobre un conjunto de datos que es inevitablemente limitado y que se ve fuertemente influenciado por decisiones metodológicas, surge la incógnita de si las métricas de rendimiento obtenidas están realmente reflejando la capacidad de generalización de los modelos al ser aplicados en la realidad o de si, en cambio, tan solo están reflejando sesgos introducidos en el conjunto de datos a través del proceso de selección.  -->
 
-En primer lugar, se ha construido una malla de puntos con una resolución de 10 km por 10 km cubriendo toda la extensión de Andalucía (en este caso, se entiende como resolución la distancia entre los puntos en la dirección Este-Oeste y Norte-Sur) (Figura \ref{fig:mallapuntos10}. 
+Dado que el rendimiento de los modelos se ha evaluado en un conjunto de datos sobre el que se han tomado importantes decisiones metodológicas, es fundamental conocer si los resultados obtenidos en las métricas de rendimiento están reflejando la verdadera capacidad de generalización de los modelos y su utilidad práctica. Para entender mejor el funcionamiento de estos y conocer si realmente los modelos sirven para predecir incendios forestales en la vida real, se ha decidido adoptar el enfoque que se detalla a continuación. 
+
+En primer lugar, se ha construido una malla de puntos con una resolución de 10 km por 10 km cubriendo toda la extensión de Andalucía (en este caso, se entiende como resolución la distancia entre los puntos en la dirección Este-Oeste y Norte-Sur). Se muestra en la Figura \ref{fig:mallapuntos10}. 
 
 \begin{figure}[htb]
 \centering
