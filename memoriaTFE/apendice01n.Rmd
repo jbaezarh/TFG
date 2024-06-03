@@ -23,7 +23,7 @@ source("cabecera_chunk_inicio.R")
 
 # Apéndice: Salidas
 
-## Gráficos espaciales EDA
+## Gráficos espaciales EDA 
 
 ### Variables meteorológicas
 
@@ -190,7 +190,7 @@ source("cabecera_chunk_inicio.R")
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{graficos/lr_coef.png}
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{graficos/lr_coef.png}
 \caption[Coeficientes del modelos de regresión logística lasso seleccionado]{Coeficientes del modelos de regresión logística lasso seleccionado. \it Fuente: Elaboración propia.}
 \label{fig:lr_coef}
 \end{figure}

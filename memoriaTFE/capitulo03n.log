@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.26)  28 MAY 2024 17:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.31)  3 JUN 2024 13:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -348,7 +348,7 @@ Package: chngcntr 2018/04/09 v1.1a change counter resetting
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2024/01/21 v0.5y Insert pages of external PDF documents (AM)
+Package: pdfpages 2024/05/29 v0.6a Insert pages of external PDF documents (AM)
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
@@ -385,7 +385,7 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 \AM@pageheight=\dimen170
 \AM@fboxrule=\dimen171
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.def
-File: pppdftex.def 2024/01/21 v0.5y Pdfpages driver for pdfTeX (AM)
+File: pppdftex.def 2024/05/29 v0.6a Pdfpages driver for pdfTeX (AM)
 )
 \pdfpages@includegraphics@status=\count299
 \AM@pagebox=\box55
@@ -788,7 +788,7 @@ Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \WF@everypar=\toks54
 Package: wrapfig 2003/01/31  v 3.6
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
-Package: colortbl 2024/02/20 v1.0g Color table columns (DPC)
+Package: colortbl 2024/05/26 v1.0h Color table columns (DPC)
 \everycr=\toks55
 \minrowclearance=\skip153
 \rownum=\count346
@@ -1079,81 +1079,80 @@ File: graficos/areas_fuego.png Graphic file (type png)
 <use graficos/areas_fuego.png>
 Package pdftex.def Info: graficos/areas_fuego.png  used on input line 679.
 (pdftex.def)             Requested size: 227.62206pt x 133.66106pt.
-LaTeX Info: Redefining \. on input line 718.
-LaTeX Info: Redefining \% on input line 718.
-LaTeX Info: Redefining \. on input line 718.
-LaTeX Info: Redefining \% on input line 718.
-[5 <./graficos/areas_fuego.png>]
-LaTeX Info: Redefining \. on input line 778.
-LaTeX Info: Redefining \% on input line 778.
-LaTeX Info: Redefining \. on input line 778.
-LaTeX Info: Redefining \% on input line 778.
+LaTeX Info: Redefining \. on input line 719.
+LaTeX Info: Redefining \% on input line 719.
+LaTeX Info: Redefining \. on input line 719.
+LaTeX Info: Redefining \% on input line 719.
+[5{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc} <./graficos/areas_fuego.png>]
+LaTeX Info: Redefining \. on input line 780.
+LaTeX Info: Redefining \% on input line 780.
+LaTeX Info: Redefining \. on input line 780.
+LaTeX Info: Redefining \% on input line 780.
 [6]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 830.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 832.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Overfull \hbox (290.79599pt too wide) in paragraph at lines 803--842
+Overfull \hbox (290.79599pt too wide) in paragraph at lines 805--844
 [] 
  []
 
-LaTeX Info: Redefining \. on input line 857.
-LaTeX Info: Redefining \% on input line 857.
-LaTeX Info: Redefining \. on input line 857.
-LaTeX Info: Redefining \% on input line 857.
-[7{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
-LaTeX Info: Redefining \. on input line 931.
-LaTeX Info: Redefining \% on input line 931.
-LaTeX Info: Redefining \. on input line 931.
-LaTeX Info: Redefining \% on input line 931.
+LaTeX Info: Redefining \. on input line 859.
+LaTeX Info: Redefining \% on input line 859.
+LaTeX Info: Redefining \. on input line 859.
+LaTeX Info: Redefining \% on input line 859.
+[7{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+LaTeX Info: Redefining \. on input line 948.
+LaTeX Info: Redefining \% on input line 948.
+LaTeX Info: Redefining \. on input line 948.
+LaTeX Info: Redefining \% on input line 948.
 [8]
-<graficos/incendios_mes.png, id=150, 299.31825pt x 340.8735pt>
+<graficos/incendios_mes.png, id=161, 299.31825pt x 340.8735pt>
 File: graficos/incendios_mes.png Graphic file (type png)
 <use graficos/incendios_mes.png>
-Package pdftex.def Info: graficos/incendios_mes.png  used on input line 934.
+Package pdftex.def Info: graficos/incendios_mes.png  used on input line 951.
 (pdftex.def)             Requested size: 227.62206pt x 259.22778pt.
 
-LaTeX Warning: Reference `fig:distribucion_temporal_fire' on page 9 undefined on input line 960.
+LaTeX Warning: Reference `fig:dist_temp_fire' on page 9 undefined on input line 977.
 
-LaTeX Info: Redefining \. on input line 966.
-LaTeX Info: Redefining \% on input line 966.
-LaTeX Info: Redefining \. on input line 966.
-LaTeX Info: Redefining \% on input line 966.
+LaTeX Info: Redefining \. on input line 983.
+LaTeX Info: Redefining \% on input line 983.
+LaTeX Info: Redefining \. on input line 983.
+LaTeX Info: Redefining \% on input line 983.
 [9 <./graficos/incendios_mes.png>]
-LaTeX Info: Redefining \. on input line 1030.
-LaTeX Info: Redefining \% on input line 1030.
-LaTeX Info: Redefining \. on input line 1030.
-LaTeX Info: Redefining \% on input line 1030.
+LaTeX Info: Redefining \. on input line 1035.
+LaTeX Info: Redefining \% on input line 1035.
+LaTeX Info: Redefining \. on input line 1035.
+LaTeX Info: Redefining \% on input line 1035.
 [10]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 1050.
+               Default added (so using `tbp') on input line 1069.
 
-LaTeX Info: Redefining \. on input line 1109.
-LaTeX Info: Redefining \% on input line 1109.
-LaTeX Info: Redefining \. on input line 1109.
-LaTeX Info: Redefining \% on input line 1109.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1099.
+(c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Info: Redefining \. on input line 1112.
+LaTeX Info: Redefining \% on input line 1112.
+LaTeX Info: Redefining \. on input line 1112.
+LaTeX Info: Redefining \% on input line 1112.
 [11]
-<graficos/nas_topograficas.png, id=178, 353.78687pt x 209.24686pt>
+<graficos/nas_topograficas.png, id=186, 353.78687pt x 209.24686pt>
 File: graficos/nas_topograficas.png Graphic file (type png)
 <use graficos/nas_topograficas.png>
-Package pdftex.def Info: graficos/nas_topograficas.png  used on input line 1140.
+Package pdftex.def Info: graficos/nas_topograficas.png  used on input line 1167.
 (pdftex.def)             Requested size: 227.62206pt x 134.62633pt.
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 1149.
-
-(./capitulo03n.bbl
+LaTeX Info: Redefining \. on input line 1216.
+LaTeX Info: Redefining \% on input line 1216.
+LaTeX Info: Redefining \. on input line 1216.
+LaTeX Info: Redefining \% on input line 1216.
+[12] (./capitulo03n.bbl
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-[12 <./graficos/nas_topograficas.png>]
-LaTeX Info: Redefining \. on input line 1.
-LaTeX Info: Redefining \% on input line 1.
-LaTeX Info: Redefining \. on input line 1.
-LaTeX Info: Redefining \% on input line 1.
-[13] [14
+[13 <./graficos/nas_topograficas.png>] [14
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 10--14
@@ -1161,35 +1160,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--14
  []
 
 
-Underfull \hbox (badness 1701) in paragraph at lines 30--33
-[]\T1/lmr/m/sc/12 Gutiérrez-Hernández\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 Oli-ver\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Senciales-González\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 J. M. \T1/lmr/m/n/12 y \T1/lmr/m/sc/12 Gar-cía\T1/lmr/m/n/12 ,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 35--38
+Underfull \hbox (badness 10000) in paragraph at lines 49--52
 []\T1/lmr/m/sc/12 Moreno\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 J. M.\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Ur-bie-ta\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 I.R.\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Be-dia\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 J.\T1/lmr/m/n/12 ; \T1/lmr/m/sc/12 Gu-tié-rrez\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 J.M.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--38
+Underfull \hbox (badness 10000) in paragraph at lines 49--52
 \T1/lmr/m/n/12 y \T1/lmr/m/sc/12 Va-lle-jo\T1/lmr/m/n/12 , \T1/lmr/m/sc/12 V.R.\T1/lmr/m/n/12 . ^^SLos in-cen-dios fo-res-ta-les en Es-pa-ña an-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--38
+Underfull \hbox (badness 10000) in paragraph at lines 49--52
 \T1/lmr/m/n/12 te el cam-bio cli-má-ti-co^^T. []$https : / / www . miteco . gob . es / content / dam /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--38
+Underfull \hbox (badness 10000) in paragraph at lines 49--52
 \T1/lmr/m/n/12 miteco / es / cambio-[]climatico / temas / impactos-[]vulnerabilidad-[]y-[]adaptacion /
  []
 
 [15])
-LaTeX Info: Redefining \. on input line 1196.
-LaTeX Info: Redefining \% on input line 1196.
-LaTeX Info: Redefining \. on input line 1196.
-LaTeX Info: Redefining \% on input line 1196.
+LaTeX Info: Redefining \. on input line 1229.
+LaTeX Info: Redefining \% on input line 1229.
+LaTeX Info: Redefining \. on input line 1229.
+LaTeX Info: Redefining \% on input line 1229.
 [16] (./capitulo03n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
@@ -1202,21 +1196,21 @@ L3 programming layer <2024-05-08>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `capitulo03n.out' has not changed.
-(rerunfilecheck)             Checksum: BA851E681A98DA22E8186AEE77A5BC6F;2253.
+(rerunfilecheck)             Checksum: 8E31C779A35801EE34EAD630941DB79B;2188.
  ) 
 Here is how much of TeX's memory you used:
- 30949 strings out of 475935
- 591508 string characters out of 5787577
- 1948907 words of memory out of 5000000
- 52507 multiletter control sequences out of 15000+600000
- 630482 words of font info for 85 fonts, out of 8000000 for 9000
+ 31003 strings out of 475935
+ 592413 string characters out of 5787577
+ 1949907 words of memory out of 5000000
+ 52553 multiletter control sequences out of 15000+600000
+ 630800 words of font info for 86 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,18n,93p,1595b,604s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on capitulo03n.pdf (16 pages, 315369 bytes).
+ 84i,18n,93p,2476b,604s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on capitulo03n.pdf (16 pages, 345811 bytes).
 PDF statistics:
- 288 PDF objects out of 1000 (max. 8388607)
- 235 compressed objects within 3 object streams
- 59 named destinations out of 1000 (max. 500000)
+ 312 PDF objects out of 1000 (max. 8388607)
+ 254 compressed objects within 3 object streams
+ 63 named destinations out of 1000 (max. 500000)
  108 words of extra memory for PDF output out of 10000 (max. 10000000)
 

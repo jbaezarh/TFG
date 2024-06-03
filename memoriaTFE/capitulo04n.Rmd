@@ -26,7 +26,7 @@ source("cabecera_chunk_inicio.R")
 
 # Análisis exploratorio de datos
 
-En esta sección se aplicarán distintos métodos numéricos y gráficos de análisis de datos a la muestra generada siguiendo el procedimiento detallado en el capítulo anterior. Se usarán principalmente técnicas de estadística descriptiva para comprender las características del conjunto de datos y extraer información útil para el problema que se intenta abordar, predecir incendios forestales. Es importante tener presente que se trata de datos correlados espacial y temporalmente, lo que hace necesario el uso de métodos específicos para este tipo de datos. Los objetivos de esta etapa son:
+En este capítulo se aplicarán distintos métodos numéricos y gráficos de análisis de datos a la muestra generada siguiendo el procedimiento detallado en el capítulo anterior. Se usarán principalmente técnicas de estadística descriptiva para comprender las características del conjunto de datos y extraer información útil para el problema que se intenta abordar, predecir incendios forestales. Es importante tener presente que se trata de datos correlados espacial y temporalmente, lo que hace necesario el uso de métodos específicos para este tipo de datos. Los objetivos de esta etapa son:
 
 1. Generar conocimiento sobre el conjunto de datos que nos permita evaluar la calidad de este, sin olvidar las limitaciones que ya se han comentado en la sección anterior.
 
@@ -38,6 +38,7 @@ En esta sección se aplicarán distintos métodos numéricos y gráficos de aná
 Antes de abordar el estudio detallado de cada una de las variables y las relaciones entre estas, en la Figura \ref{fig:skim_datos} se recoge un resumen de todo el conjunto de datos, sin incluir la columna de geometría.  En este resumen se puede observar que en el conjunto de datos hay 4 tipos de variables (además de la variable *geometry* que es de tipo *simple feature column POINT*, abreviado como *sfc_POINT*): cadenas de caracteres, fechas, factores y variables numéricas.
 
 Se puede observar que hay registros en 749 municipios diferentes (de los 785 municipios de que hay en Andalucía). Probablemente el hecho de que en algunos municipios no haya habido observaciones sea debido a los datos faltantes. Las variables *municipio* y *cod_municipio* no se incorporarán a los modelos. De la misma forma, se puede ver que hay observaciones en 3691 días diferentes.
+
 <!-- https://www.ine.es/daco/daco42/codmun/cod_num_muni_provincia_ccaa.htm -->
 El conjunto cuenta con 5 variables de tipo factor: *fire* (la variable objetivo), *WD10M*, *orientacion*, *enp* y *uso_suelo*; y con 18 variables numéricas. Aunque cada una de ellas se analizará a continuación con detalle, ya cabe hacer algunos comentarios:
 
@@ -51,7 +52,7 @@ El conjunto cuenta con 5 variables de tipo factor: *fire* (la variable objetivo)
 \begin{figure}[htb]
 \centering
 \includegraphics[width = \textwidth]{graficos/skim_datos.png}
-\caption[Resumen numérico del conjunto de datos depurados]{Resumen numérico del conjunto de datos depurados. \it Fuente: Elaboración propia.}
+\caption[Resumen numérico del conjunto de datos depurados]{Resumen numérico del conjunto de datos depurados. \textit{ Fuente: Elaboración propia empleando la función} \texttt{skim} \it del paquete "skimr" \citep{skimrpackage}.}
 \label{fig:skim_datos}
 \end{figure}
 
@@ -67,9 +68,9 @@ En primer lugar, se estudiará la distribución de la variable *fire* espacial y
 \end{figure}
 
 
-En la Figura \ref{fig:dist_temp_fire} se muestran los histogramas de la variable objetivo en función del día de la semana, del mes y del año, respectivamente. En primero de ellos se observa que mientras que la distribución de los casos negativos es uniforme entre los días de la semana, en los casos positivos se aprecia un ligero aumento en el fin de semana, especialmente en el sábado. Esto podría ser algo meramente casual o deberse al hecho de que más personas van al campo durante el fin de semana por motivos de ocio y se producen más desplazamientos. En el segundo histograma, se observa como las observaciones se concentran en los meses de verano y en cada mes hay una cantidad balanceada de muestras de ambas clases (esto es fruto del proceso de muestreo de las observaciones negativas, que como se ha  explicado en la sección anterior, se ha llevado acabo asegurando que la proporción de casos negativos en cada mes sea igual a la de los casos positivos). En el tercer histograma es remarcable que, mientra las observaciones negativas están uniformemente distribuidas entre los 20 años del estudio, las positivas muestran una disminución importante en los años 2008 y 2010. En el año 2007 no hay observaciones positivas, debido a que los 4 polígonos de incendios mayores de 100 $ha$ que había registrados ese año no disponían de la fecha de inicio del incendio, por lo que no pudieron usarse para el estudio. Se desconoce la causa del reducido número de incendios (mayores de 100 $ha$) en 2007, 2008 y 2010.
+En la Figura \ref{fig:dist_temp_fire} se muestran los histogramas de la variable objetivo en función del día de la semana, del mes y del año, respectivamente. En primero el de ellos se observa que, mientras que la distribución de los casos negativos es uniforme entre los días de la semana, en los casos positivos se aprecia un ligero aumento en el fin de semana, especialmente en el sábado. Esto podría ser algo meramente casual o deberse al hecho de que más personas van al campo durante el fin de semana por motivos de ocio y se producen más desplazamientos, lo que podría podría aumentar el riesgo de que se produzcan negligencias o accidentes que desencadenen incendios forestales (en 2022, el 39.23% de las actuaciones forestales registradas fueron debidas a neglicencias u accidentes [@INFOCA2022]). En el segundo histograma, se observa como las observaciones se concentran en los meses de verano y en cada mes hay una cantidad balanceada de muestras de ambas clases (esto es fruto del proceso de muestreo de las observaciones negativas, que como se ha  explicado en la sección anterior, se ha llevado acabo asegurando que la proporción de casos negativos en cada mes sea igual a la de los casos positivos). En el tercer histograma es remarcable que, mientra las observaciones negativas están uniformemente distribuidas entre los 20 años del estudio, las positivas muestran una disminución importante en los años 2008 y 2010. En el año 2007 no hay observaciones positivas, debido a que los 4 polígonos de incendios mayores de 100 $ha$ que había registrados ese año no disponían de la fecha de inicio del incendio, por lo que no pudieron usarse para el estudio. Se desconoce la causa del reducido número de incendios (mayores de 100 $ha$) en 2007, 2008 y 2010.
 
-Dada la clara influencia el mes y la aparente influencia del día de la semana en la aparición de incendios, estas variables serán incluidas en los modelos a través del procesamiento de la variable *date*. Al hacer esto se está hipotizando que el efecto del mes o del día de la semana va más allá de las características meteorológicas propias de cada periodo, ya que también contiene información sobre otras dimensiones, como las diferentes tendencias sociales durante el periodo vacacional o los cambios en los movimientos de población durante el fin de semana o las distintas estaciones. Dada la imposibilidad de medir todas estas variables individualmente, se espera que al menos parte del efecto que puedan tener sobre la aparición de incendios forestales quede recogido a través de su estacionalidad.
+Dada la clara influencia del mes y la aparente influencia del día de la semana en la aparición de incendios (al menos, con certeza, de aquellos de la dimensión correspondiente al estudio), estas variables serán incluidas en los modelos a través del procesamiento de la variable *date*. Al hacer esto se está hipotetizando que el efecto del mes o del día de la semana va más allá de las características meteorológicas propias de cada periodo, ya que también contiene información sobre otras dimensiones, como las diferentes tendencias sociales durante el periodo vacacional o los cambios en los movimientos de población durante el fin de semana o las distintas estaciones. Dada la imposibilidad de medir todas estas variables individualmente, se espera que al menos parte del efecto que puedan tener sobre la aparición de incendios forestales quede recogido a través de su estacionalidad.
 
 
 
@@ -80,26 +81,26 @@ Dada la clara influencia el mes y la aparente influencia del día de la semana e
 \label{fig:dist_spat_fire}
 \end{figure}
 
-En la Figura \ref{fig:dist_spat_fire} se observa claramente como las $10.752$ muestras negativas están uniformemente distribuidas dentro de los límites de la Comunidad Autónoma de Andalucía, mientras que las $10794$ muestras positivas se concentran a ambos lados de la cuenca del río Guadalquivir, con una mayor densidad de observaciones en la provincia de Huelva y en algunas zonas de la costa mediterránea (como ya se apreciaba en la Figura \ref{fig:area_fuego}).
+En la Figura \ref{fig:dist_spat_fire} se observa claramente cómo las $10.752$ muestras negativas están uniformemente distribuidas dentro de los límites de la Comunidad Autónoma de Andalucía, mientras que las $10794$ muestras positivas se concentran a ambos lados de la cuenca del río Guadalquivir, con una mayor densidad de observaciones en la provincia de Huelva y en algunas zonas de la costa mediterránea (como ya se apreciaba en la Figura \ref{fig:area_fuego}).
 
-## Análisis univariantes variables numéricas
+## Análisis univariantes de las variables numéricas
 
 El análisis univariante de las variables numéricas se lleva a cabo desde 3 enfoques complementarios:
 
-1. A través de la los resúmenes numéricos recogidos en la Figura \ref{fig:skim_datos} y del análisis gráfico de los diagramas de caja y bigotes (\ref{fig:boxplots}).
+1. A través de la los resúmenes numéricos recogidos en la Figura \ref{fig:skim_datos} y del análisis gráfico de los diagramas de caja y bigotes (Figura \ref{fig:boxplots}).
 
 2. Estudiando la media mensual de cada variable en función de la variable *fire*.
 
-3. Analizando la distribución espacial de cada variable separando por mes si corresponde.
+3. Analizando la distribución espacial de cada variable separando por mes si corresponde. Los gráficos correspondientes a este análisis se recogen en el [Apéndice A.1][Gráficos espaciales EDA].
 
 \begin{figure}[]
 \centering
 \includegraphics[width =\textwidth]{graficos/boxplots.png}
-\caption[Boxplot de cada variable numérica en función de la variable objetivo]{Boxplot de cada variable numérica en función de la variable objetivo. \it Fuente: Elaboración propia.}
+\caption[Diagrama de caja y bigotes de cada variable numérica en función de la variable objetivo]{Boxplot de cada variable numérica en función de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:boxplots}
 \end{figure}
 
-En los *boxplots* de las variables numéricas en función de la variable *fire* (\ref{fig:boxplots}) destacan varios aspectos. Por un lado, como ya se había comentado anteriormente, las variables presentan escalas muy diferentes y la mayoría tiene una marcada asimetría hacia la derecha. Por otro lado, es evidente la gran cantidad de valores *outliers* que se observan en los datos, lo que tendrá implicaciones en los modelos que se construyan con ellos. Sin embargo, es importante destacar que no se trata de observaciones erróneas, si no que son inherentes a la naturaleza de los datos. Por ejemplo, en el caso de la variable *PRECTOTCORR* el valor máximo observado es 46.06 $mm$ en un día, un valor elevado que sin duda es atípico en esta región de clima seco, pero sin embargo, posible. Es también remarcable que todas las variables presentan una variabilidad similar en ambos niveles del factor *fire*, lo que indica que no será un problema de clasificación trivial. *A priori*, solo con los diagramas de caja y bigotes y los resúmenes numéricos es difícil llegar a más conclusiones, sin embargo, sí pueden observarse sutiles diferencias entre las distribuciones de algunas variables para ambos niveles del factor *fire*.
+En los *boxplots* de las variables numéricas en función de la variable *fire* (Figura \ref{fig:boxplots}) destacan varios aspectos. Por un lado, como ya se había comentado anteriormente, las variables presentan escalas muy diferentes y la mayoría tiene una marcada asimetría hacia la derecha. Por otro lado, es evidente la gran cantidad de valores *outliers* que se observan en los datos, lo que tendrá implicaciones en los modelos que se construyan con ellos. Sin embargo, es importante destacar que no se trata de observaciones erróneas, sino que son inherentes a la naturaleza de los datos. Por ejemplo, en el caso de la variable *PRECTOTCORR* el valor máximo observado es 46.06 $mm$ en un día, un valor elevado que sin duda es atípico en esta región de clima seco, pero sin embargo, posible. Es también remarcable que todas las variables presentan una variabilidad similar en ambos niveles del factor *fire*, lo que indica que no será un problema de clasificación trivial. *A priori*, solo con los diagramas de caja y bigotes y los resúmenes numéricos es difícil llegar a más conclusiones, sin embargo, sí pueden observarse sutiles diferencias entre las distribuciones de algunas variables para ambos niveles del factor *fire*.
 
 Dada la naturaleza temporal de algunas variables, el análisis gráfico de los *boxplots* resulta insufiente. Con el fin de considerar la componente estacional de las variables climáticas y de vegetación, se estudiará, a continuación, la media mensual de cada una de estas variables en función de la variable objetivo.
 
@@ -111,7 +112,7 @@ Dada la naturaleza temporal de algunas variables, el análisis gráfico de los *
 \end{figure}
 
 
-En la Figura \ref{fig:T2M_mes} se puede observar como en casi todos los meses, la temperatura media mensual es superior en las observaciones en las que se ha registrado un incendio forestal.
+En la Figura \ref{fig:T2M_mes} se puede observar cómo en casi todos los meses, la temperatura media mensual es superior en las observaciones en las que se ha registrado un incendio forestal.
 
 
 \begin{figure}[H]
@@ -121,7 +122,7 @@ En la Figura \ref{fig:T2M_mes} se puede observar como en casi todos los meses, l
 \label{fig:RH2M_mes}
 \end{figure}
 
-En la Figura \ref{fig:RH2M_mes} se puede observar que en todos los meses la media mensual de la humedad relativa del aire a 2 m sobre la superficie es menor en las observaciones en las que se ha registrado un incendio forestal. Sin embargo, las diferencias se reducen durante los meses de verano, en los que la humedad presenta valores bajos en ambas clases.
+En la Figura \ref{fig:RH2M_mes} se puede observar que en todos los meses la media mensual de la humedad relativa del aire a 2 $m$ sobre la superficie es menor en las observaciones en las que se ha registrado un incendio forestal. Sin embargo, las diferencias se reducen durante los meses de verano, en los que la humedad presenta valores bajos en ambas clases.
 
 \begin{figure}[H]
 \centering
@@ -130,7 +131,7 @@ En la Figura \ref{fig:RH2M_mes} se puede observar que en todos los meses la medi
 \label{fig:PRECTOTCORR_mes}
 \end{figure}
 
-En la Figura \ref{fig:PRECTOTCORR_mes} se observa una clara diferencia en la media mensual de las precipitaciones diarias en función del de si se ha registrado o no un incendio forestal en la observación, siendo significativamente mayor en este último caso.
+En la Figura \ref{fig:PRECTOTCORR_mes} se observa una clara diferencia en la media mensual de las precipitaciones diarias en función de si se ha registrado o no un incendio forestal en la observación, siendo significativamente mayor en este último caso.
 
 \begin{figure}[H]
 \centering
@@ -139,7 +140,7 @@ En la Figura \ref{fig:PRECTOTCORR_mes} se observa una clara diferencia en la med
 \label{fig:GWETTOP_mes}
 \end{figure}
 
-En la Figura \ref{fig:GWETTOP_mes} se observa un gráfico similar al de la humedad relativa del aire, con valores medios más elevados en las observaciones en las que no se han registrado incendio forestal. Sin embargo, también parece que las diferencias son más reducidas durante la estación estival.
+En la Figura \ref{fig:GWETTOP_mes}, que muestra la media mensual de la humedad del suelo en función de si en esa observación se ha registrado o no incendio, se observa un gráfico similar al de la humedad relativa del aire, con valores medios más elevados en las observaciones en las que no se han registrado incendio forestal. Sin embargo, también parece que las diferencias son más reducidas durante la estación estival.
 
 \begin{figure}[H]
 \centering
@@ -148,7 +149,7 @@ En la Figura \ref{fig:GWETTOP_mes} se observa un gráfico similar al de la humed
 \label{fig:WS10M_mes}
 \end{figure}
 
-En la Figura \ref{fig:WS10M_mes} se observa como durante todos los meses, la media mensual de la velocidad del viento a 10 metros sobre la superficie es mayor en los registros en los que ha habido un incendio forestal. Esto es, de hecho, algo remarcable. Ya que los incendios que se están considerando son incendios que han llegado a calcinar un área superior a 100 $ha$, es de esperar que se trate de incendios que se dan bajo unas condiciones meteorológicas concretas que facilitan la rápida propagación del fuego, dificultado su extinción temprana. Y dado que se está considerando la fecha de inicio de los incendios, esto es lo que podría estar viéndose en la Figura \ref{fig:WS10M_mes}.
+En la Figura \ref{fig:WS10M_mes} se observa cómo, durante todos los meses, la media mensual de la velocidad del viento a 10 metros sobre la superficie es mayor en los registros en los que ha habido un incendio forestal. Esto es, de hecho, algo remarcable. Ya que los incendios que se están considerando son incendios que han llegado a calcinar un área superior a 100 $ha$, es de esperar que se trate de incendios que se dan bajo unas condiciones meteorológicas concretas que facilitan la rápida propagación del fuego, dificultado su extinción temprana. Y dado que se está considerando la fecha de inicio de los incendios, esto es lo que podría estar viéndose en la Figura \ref{fig:WS10M_mes}.
 
 
 \begin{figure}[H]
@@ -158,14 +159,15 @@ En la Figura \ref{fig:WS10M_mes} se observa como durante todos los meses, la med
 \label{fig:NDVI_mes}
 \end{figure}
 
-Como se observa en la Figura \ref{fig:NDVI_mes}, las diferencias entre los casos en los que se ha registrado incendio y los que no en términos del *NDVI* no están claras.
+Como se observa en la Figura \ref{fig:NDVI_mes}, las diferencias entre los casos en los que se ha registrado incendio y los que no, en términos del *NDVI*, no están claras. Se recuerda que esta variable se utiliza para cuantificar la cantidad y verdor de la vegetación, por lo que es coherente que se observen valores medios más bajos en los meses de verano. 
 
-En el [Apéndice: Gráficos espaciales EDA] se recogen los gráficos espaciales y espacio-temporales de todas las variables numéricas. En ellos se refleja como la valores de las variables en estudio son coherentes con lo que cabría esperar de la realidad. Además, permiten una comprensión mayor de la distribución espacial (y temporal) de las variables en el área de estudio, lo que será útil de cara a interpretar los modelos que se construyan.
+En el [Apéndice A.1][Gráficos espaciales EDA] se recogen los gráficos espaciales y espacio-temporales de todas las variables numéricas. En ellos se refleja cómo los valores de las variables en estudio son coherentes con lo que cabría esperar de la realidad. Además, permiten una comprensión mayor de la distribución espacial (y temporal) de las variables en el área de estudio, lo que será útil de cara a interpretar los modelos que se construyan.
 
 
 ## Análisis multivariantes de las variables numéricas
 
-En la Figura \ref{fig:corrplot} se muestra un gráfico con las correlaciones entre las variables. La interpretación es sencilla, cuanto más intenso sea el color y cuanto mayor sea la excentricidad de la elipse, mayor será la correlación (en valor absoluto) para ese par de variables. El color de la elipse indica el signo del coeficiente de  correlación. De esta forma, se observa que las variables más correlacionadas en la muestra son: *T2M* con *RH2M* (negativamente, -0.71), *T2M* con *GWETTOP* (negativamente, -0.69), *GWETTOP* con *R2HM* (positivamente, 0.68) y *poblacion* con *dens_poblacion* (positivamente,0.63). Esto es razonable, ya que cabe esperar que al aumentar la temperatura del aire disminuya la humedad del aire y del suelo; que al aumentar la humedad del suelo aumente también la del aire y viceversa; y que municipios muy densamente poblados también tengan un elevado número de habitantes.
+En la Figura \ref{fig:corrplot} se muestra un gráfico con las correlaciones entre las variables. La interpretación es sencilla, cuanto más intenso sea el color y cuanto mayor sea la excentricidad de la elipse, mayor será la correlación (en valor absoluto) para ese par de variables. El color de la elipse indica el signo del coeficiente de  correlación. De esta forma, se observa que las variables más correlacionadas en la muestra son: *T2M* con *RH2M* (negativamente, -0.71), *T2M* con *GWETTOP* (negativamente, -0.69), *GWETTOP* con *R2HM* (positivamente, 0.68) y *poblacion* con *dens_poblacion* (positivamente, 0.63). Esto es razonable, ya que cabe esperar que al aumentar la temperatura del aire disminuya la humedad del aire y del suelo; que al aumentar la humedad del suelo aumente también la del aire y viceversa; y que municipios muy densamente poblados también tengan un elevado número de habitantes. Cabe destacar que no se trata de valores alarmantes como para considerar *a priori* que las variables proporcionan información redundante, susceptible de ser eliminadas en un paso de ingeniería de características. Sin embargo, sí se probará a reducir la dimensionalidad de los datos capturando la mayor parte de la varianza a través de PCA.
+
 
 \begin{figure}[h]
 \centering
@@ -178,7 +180,7 @@ En la Figura \ref{fig:corrplot} se muestra un gráfico con las correlaciones ent
 En la Figura \ref{fig:parcoord} se muestra el gráfico de coordenadas paralelas de las variables tipificadas a una normal estándar, es decir, restándoles la media y dividiendo por la desviación típica. Este gráfico complementa la información de los *boxplots*, pues refleja también las relaciones entre las variables. Si bien es cierto que al tener un número bastante elevado de observaciones el gráfico no es tan claro, pueden hacerse algunas observaciones importantes.
 
 En primer lugar, se observa que la variable con mayor variabilidad (una vez tipificada) es PRECTOTCORR, que presenta bastantes valores atípicos, todos ellos en observaciones en las que no se ha registrado incendio. También destacan en este sentido *dens_poblacion* y *poblacion*, entre las que además puede observarse que no hay una relación lineal clara (hay municipios con un elevado número de habitantes pero con una densidad de población reducida y viceversa).
-Además, puede verse que todas las variables tienen una marcada asimetría positiva (salvo *curvatura*,  *T2M* y *NDVI*). Este gráfico es útil también pues permite ver a que clase de *fire* corresponden los valores más atípicos de cada variable. Por ejemplo: la mayor parte de los valores más elevados de *WS10M*, *dist_poblacion*, *curvatura* y *dist_camino* se dan en observaciones positivas, mientras que en *PRECTOTCORR*, *elevacion*, *GWTTOP*, *dist_Carretera*, *dist_electr* y *dist_rios* sucede lo contrario. 
+Además, puede verse que todas las variables tienen una marcada asimetría positiva (salvo *curvatura*,  *T2M* y *NDVI*). Este gráfico es útil también pues permite ver a qué clase de *fire* corresponden los valores más atípicos de cada variable. Por ejemplo: la mayor parte de los valores más elevados de *WS10M*, *dist_poblacion*, *curvatura* y *dist_camino* se dan en observaciones positivas, mientras que en *PRECTOTCORR*, *elevacion*, *GWTTOP*, *dist_Carretera*, *dist_electr* y *dist_rios* sucede lo contrario. 
 
 
 \begin{figure}[h]
@@ -208,13 +210,16 @@ En el caso de la variable *orientación*, la relación tampoco está clara, aunq
 
 En términos de la variable *enp* por si sola no se observan diferencias significativas entre ambas clases.
 
-La variable *uso_suelo* sí que muestra una distribución marcadamente diferenciada entre ambas clases. La mayoría de las observaciones positivas se dan en espacios de vegetación arbustiva y/o herbácea, clase en la que hay casi el doble de observaciones positivas que negativas. En tierras de labor y cultivos permanentes la proporción de observaciones negativas es mucho mayor, mientras que en zonas agrícolas heterogéneas y en espacios abiertos con poca o sin vegetación hay una mayor presencia de observaciones positivas. También es relevante el hecho de que casi la totalidad de las observaciones se encuentran en zonas agrícolas y en zonas forestales, mientras que en las demás clases la proporción de observaciones es mucho menor ($3.5\%$ de total). Es por ello que antes de construir los modelos, todas las categorías de uso de suelo que no se corresponden con zonas agrícolas o forestales (es decir, todas cuyo código no comienza por 2 o 3) se agruparán en el nivel *Otro*. En \ref{fig:uso_suelo_spat} puede observarse la distribución espacial de esta variable.
+La variable *uso_suelo* sí que muestra una distribución marcadamente diferenciada entre ambas clases. La mayoría de las observaciones positivas se dan en espacios de vegetación arbustiva y/o herbácea (código 32), clase en la que hay casi el doble de observaciones positivas que negativas. En tierras de labor (código 21) y cultivos permanentes (código 22) la proporción de observaciones negativas es mucho mayor, mientras que en zonas agrícolas heterogéneas (código 24) y en espacios abiertos con poca o sin vegetación (código 33) hay una mayor presencia de observaciones positivas dentro de la muestra. También es relevante el hecho de que casi la totalidad de las observaciones se encuentran en zonas agrícolas y en zonas forestales (que se corresponden con los códigos comenzados por 2 o 3, respectivamente), mientras que en las demás clases la proporción de observaciones es mucho menor ($3.5\%$ de total). Es por ello que antes de construir los modelos, todas las categorías de uso de suelo que no se corresponden con zonas agrícolas o forestales (es decir, todas cuyo código no comienza por 2 o 3) se agruparán en el nivel *Otro*. En la Figura \ref{fig:uso_suelo_spat} del [Apéndice A.1][Gráficos espaciales EDA] puede observarse la distribución espacial de esta variable.
 
-\begin{figure}[h]
+\begin{figure}[]
 \centering
 \includegraphics[width =\textwidth]{graficos/histogramas.png}
 \caption[Histogramas de las variables categóricas en función de $fire$]{Histogramas de las variables categóricas en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:histogramas}
 \end{figure}
+
+
+
 
 

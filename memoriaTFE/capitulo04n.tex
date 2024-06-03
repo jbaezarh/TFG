@@ -537,18 +537,15 @@ linewidth=4pt]{mBox}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
-\hypertarget{cuerpo}{%
-\chapter{Cuerpo}\label{cuerpo}}
-
 \hypertarget{anuxe1lisis-exploratorio-de-datos}{%
-\section{Análisis exploratorio de
+\chapter{Análisis exploratorio de
 datos}\label{anuxe1lisis-exploratorio-de-datos}}
 
-En esta sección se aplicarán distintos métodos numéricos y gráficos de
+En este capítulo se aplicarán distintos métodos numéricos y gráficos de
 análisis de datos a la muestra generada siguiendo el procedimiento
 detallado en el capítulo anterior. Se usarán principalmente técnicas de
 estadística descriptiva para comprender las características del conjunto
-de datos y extraer conocimiento útil para el problema que se intenta
+de datos y extraer información útil para el problema que se intenta
 abordar, predecir incendios forestales. Es importante tener presente que
 se trata de datos correlados espacial y temporalmente, lo que hace
 necesario el uso de métodos específicos para este tipo de datos. Los
@@ -584,11 +581,13 @@ Se puede observar que hay registros en 749 municipios diferentes (de los
 en algunos municipios no haya habido observaciones sea debido a los
 datos faltantes. Las variables \emph{municipio} y \emph{cod\_municipio}
 no se incorporarán a los modelos. De la misma forma, se puede ver que
-hay observaciones en 3691 días diferentes. El conjunto cuenta con 5
-variables de tipo factor: \emph{fire} (la variable objetivo),
-\emph{WD10M}, \emph{orientacion}, \emph{enp} y \emph{uso\_suelo}; y con
-18 variables numéricas. Aunque cada una de ellas se analizará a
-continuación con detalle, ya cabe hacer algunos comentarios:
+hay observaciones en 3691 días diferentes.
+
+El conjunto cuenta con 5 variables de tipo factor: \emph{fire} (la
+variable objetivo), \emph{WD10M}, \emph{orientacion}, \emph{enp} y
+\emph{uso\_suelo}; y con 18 variables numéricas. Aunque cada una de
+ellas se analizará a continuación con detalle, ya cabe hacer algunos
+comentarios:
 
 \begin{itemize}
 \tightlist
@@ -616,32 +615,38 @@ continuación con detalle, ya cabe hacer algunos comentarios:
 \begin{figure}[htb]
 \centering
 \includegraphics[width = \textwidth]{graficos/skim_datos.png}
-\caption{Resumen numérico del conjunto de datos depurados. \it Fuente: Elaboración propia.}
+\caption[Resumen numérico del conjunto de datos depurados]{Resumen numérico del conjunto de datos depurados. \textit{ Fuente: Elaboración propia empleando la función} \texttt{skim} \it del paquete "skimr" \citep{skimrpackage}.}
 \label{fig:skim_datos}
 \end{figure}
 
 \hypertarget{distribuciuxf3n-de-la-variable-objetivo}{%
-\subsection{Distribución de la variable
+\section{Distribución de la variable
 objetivo}\label{distribuciuxf3n-de-la-variable-objetivo}}
 
-En primer lugar, se estudiará la distribución de la \emph{fire} espacial
-y temporalmente.
+En primer lugar, se estudiará la distribución de la variable \emph{fire}
+espacial y temporalmente.
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width = 0.75\textwidth]{graficos/distribucion_temporal_fire.png}
-\caption{Distribución temporal de la variable objetivo. \it Fuente: Elaboración propia.}
+\caption[Distribución temporal de la variable objetivo]{Distribución temporal de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:dist_temp_fire}
 \end{figure}
 
 En la Figura \ref{fig:dist_temp_fire} se muestran los histogramas de la
 variable objetivo en función del día de la semana, del mes y del año,
-respectivamente. En primero de ellos se observa que mientras que la
+respectivamente. En primero el de ellos se observa que, mientras que la
 distribución de los casos negativos es uniforme entre los días de la
 semana, en los casos positivos se aprecia un ligero aumento en el fin de
-semana, especialmente en el sábado. En el segundo histograma, se observa
+semana, especialmente en el sábado. Esto podría ser algo meramente
+casual o deberse al hecho de que más personas van al campo durante el
+fin de semana por motivos de ocio y se producen más desplazamientos, lo
+que podría podría aumentar el riesgo de que se produzcan negligencias o
+accidentes que desencadenen incendios forestales (en 2022, el 39.23\% de
+las actuaciones forestales registradas fueron debidas a neglicencias u
+accidentes \citep{INFOCA2022}). En el segundo histograma, se observa
 como las observaciones se concentran en los meses de verano y en cada
-mes hay una cantidad balancedada de muestras de ambas clases (esto es
+mes hay una cantidad balanceada de muestras de ambas clases (esto es
 fruto del proceso de muestreo de las observaciones negativas, que como
 se ha explicado en la sección anterior, se ha llevado acabo asegurando
 que la proporción de casos negativos en cada mes sea igual a la de los
@@ -649,33 +654,44 @@ casos positivos). En el tercer histograma es remarcable que, mientra las
 observaciones negativas están uniformemente distribuidas entre los 20
 años del estudio, las positivas muestran una disminución importante en
 los años 2008 y 2010. En el año 2007 no hay observaciones positivas,
-debido a que los 4 polígonos de incendios mayores de 100ha que había
-registrados ese año no disponían de la fecha de inicio del incendio, por
-lo que no pudieron usarse para el estudio. Se desconoce la causa del
-reducido número de incendios (mayores de 100ha) en 2007, 2008 y 2010.
+debido a que los 4 polígonos de incendios mayores de 100 \(ha\) que
+había registrados ese año no disponían de la fecha de inicio del
+incendio, por lo que no pudieron usarse para el estudio. Se desconoce la
+causa del reducido número de incendios (mayores de 100 \(ha\)) en 2007,
+2008 y 2010.
 
-Dada la clara influencia el mes y la aparente influencia del día de la
-semana en la aparición de incendios, estas variables serán incluidas en
-los modelos a través del procesamiento de la variable \emph{date}.
+Dada la clara influencia del mes y la aparente influencia del día de la
+semana en la aparición de incendios (al menos, con certeza, de aquellos
+de la dimensión correspondiente al estudio), estas variables serán
+incluidas en los modelos a través del procesamiento de la variable
+\emph{date}. Al hacer esto se está hipotetizando que el efecto del mes o
+del día de la semana va más allá de las características meteorológicas
+propias de cada periodo, ya que también contiene información sobre otras
+dimensiones, como las diferentes tendencias sociales durante el periodo
+vacacional o los cambios en los movimientos de población durante el fin
+de semana o las distintas estaciones. Dada la imposibilidad de medir
+todas estas variables individualmente, se espera que al menos parte del
+efecto que puedan tener sobre la aparición de incendios forestales quede
+recogido a través de su estacionalidad.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/distribucion_espacial_fire.png}
-\caption{Distribución espacial de la variable objetivo. \it Fuente: Elaboración propia.}
+\caption[Distribución espacial de la variable objetivo]{Distribución espacial de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:dist_spat_fire}
 \end{figure}
 
-En la Figura \ref{fig:dist_spat_fire} se observa claramente como las
-\(10752\) muestras negativas están uniformemente distribuidas dentro de
+En la Figura \ref{fig:dist_spat_fire} se observa claramente cómo las
+\(10.752\) muestras negativas están uniformemente distribuidas dentro de
 los límites de la Comunidad Autónoma de Andalucía, mientras que las
 \(10794\) muestras positivas se concentran a ambos lados de la cuenca
 del río Guadalquivir, con una mayor densidad de observaciones en la
 provincia de Huelva y en algunas zonas de la costa mediterránea (como ya
 se apreciaba en la Figura \ref{fig:area_fuego}).
 
-\hypertarget{anuxe1lisis-univariantes-variables-numuxe9ricas}{%
-\subsection{Análisis univariantes variables
-numéricas}\label{anuxe1lisis-univariantes-variables-numuxe9ricas}}
+\hypertarget{anuxe1lisis-univariantes-de-las-variables-numuxe9ricas}{%
+\section{Análisis univariantes de las variables
+numéricas}\label{anuxe1lisis-univariantes-de-las-variables-numuxe9ricas}}
 
 El análisis univariante de las variables numéricas se lleva a cabo desde
 3 enfoques complementarios:
@@ -685,68 +701,69 @@ El análisis univariante de las variables numéricas se lleva a cabo desde
 \item
   A través de la los resúmenes numéricos recogidos en la Figura
   \ref{fig:skim_datos} y del análisis gráfico de los diagramas de caja y
-  bigote (\ref{fig:boxplots}).
+  bigotes (Figura \ref{fig:boxplots}).
 \item
   Estudiando la media mensual de cada variable en función de la variable
   \emph{fire}.
 \item
   Analizando la distribución espacial de cada variable separando por mes
-  si corresponde.
+  si corresponde. Los gráficos correspondientes a este análisis se
+  recogen en el {[}Apéndice A.1{]}{[}Gráficos espaciales EDA{]}.
 \end{enumerate}
 
 \begin{figure}[]
 \centering
 \includegraphics[width =\textwidth]{graficos/boxplots.png}
-\caption{Boxplot de cada variable numérica en función de la variable objetivo. \it Fuente: Elaboración propia.}
+\caption[Diagrama de caja y bigotes de cada variable numérica en función de la variable objetivo]{Boxplot de cada variable numérica en función de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:boxplots}
 \end{figure}
 
 En los \emph{boxplots} de las variables numéricas en función de la
-variable \emph{fire} (\ref{fig:boxplots}) destacan varios aspectos. Por
-un lado, como ya se había comentado anteriormente, que las variables
-presentan escalas muy diferentes y que la mayoría de las variables
-tienen una marcada asimetría hacia la derecha. Por otro lado, es
-evidente la gran cantidad de valores \emph{outliers} que se observan en
-los datos, lo que tendrá implicaciones en los modelos que se construyan
-con ellos. Sin embargo, es importante destacar que no se trata de
-observaciones erróneas, si no que son inhenerentes a la naturaleza de
-los datos. Por ejemplo, en el caso de la variable \emph{PRECTOTCORR} el
-valor máximo observado es 46.06mm en un día, un valor elevado que sin
-duda es atípico en esta región de clima seco, pero sin embargo, posible.
-Es también remarcable que todas las variables presentan una variabilidad
+variable \emph{fire} (Figura \ref{fig:boxplots}) destacan varios
+aspectos. Por un lado, como ya se había comentado anteriormente, las
+variables presentan escalas muy diferentes y la mayoría tiene una
+marcada asimetría hacia la derecha. Por otro lado, es evidente la gran
+cantidad de valores \emph{outliers} que se observan en los datos, lo que
+tendrá implicaciones en los modelos que se construyan con ellos. Sin
+embargo, es importante destacar que no se trata de observaciones
+erróneas, sino que son inherentes a la naturaleza de los datos. Por
+ejemplo, en el caso de la variable \emph{PRECTOTCORR} el valor máximo
+observado es 46.06 \(mm\) en un día, un valor elevado que sin duda es
+atípico en esta región de clima seco, pero sin embargo, posible. Es
+también remarcable que todas las variables presentan una variabilidad
 similar en ambos niveles del factor \emph{fire}, lo que indica que no
-será un problema de clasificación trivial. A priori, solo con los
+será un problema de clasificación trivial. \emph{A priori}, solo con los
 diagramas de caja y bigotes y los resúmenes numéricos es difícil llegar
-sacar más conclusiones, sin embargo, sí pueden observarse sutiles
+a más conclusiones, sin embargo, sí pueden observarse sutiles
 diferencias entre las distribuciones de algunas variables para ambos
 niveles del factor \emph{fire}.
 
 Dada la naturaleza temporal de algunas variables, el análisis gráfico de
 los \emph{boxplots} resulta insufiente. Con el fin de considerar la
-componente estacional de las variables climáticas y de vegetación, a
-continuación, se estudiará la media mensual de cada una de estas
-variables función de la variable objetivo.
+componente estacional de las variables climáticas y de vegetación, se
+estudiará, a continuación, la media mensual de cada una de estas
+variables en función de la variable objetivo.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/T2M_mes.png}
-\caption{Media mensual de $T2M$ en función de $fire$. \it Fuente: Elaboración propia.}
+\caption[Media mensual de $T2M$ en función de $fire$]{Media mensual de $T2M$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:T2M_mes}
 \end{figure}
 
-En la Figura \ref{fig:T2M_mes} se puede observar como en casi todos los
+En la Figura \ref{fig:T2M_mes} se puede observar cómo en casi todos los
 meses, la temperatura media mensual es superior en las observaciones en
 las que se ha registrado un incendio forestal.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/RH2M_mes.png}
-\caption{Media mensual de $RH2M$ en función de  $fire$. \it Fuente: Elaboración propia.}
+\caption[Media mensual de $RH2M$ en función de  $fire$]{Media mensual de $RH2M$ en función de  $fire$. \it Fuente: Elaboración propia.}
 \label{fig:RH2M_mes}
 \end{figure}
 
 En la Figura \ref{fig:RH2M_mes} se puede observar que en todos los meses
-la media mensual de la humedad relativa del aire a 2m sobre la
+la media mensual de la humedad relativa del aire a 2 \(m\) sobre la
 superficie es menor en las observaciones en las que se ha registrado un
 incendio forestal. Sin embargo, las diferencias se reducen durante los
 meses de verano, en los que la humedad presenta valores bajos en ambas
@@ -755,61 +772,71 @@ clases.
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/PRECTOTCORR_mes.png}
-\caption{Media mensual de $PRECTOTCORR$ en función de $fire$. \it Fuente: Elaboración propia.}
+\caption[Media mensual de $PRECTOTCORR$ en función de $fire$]{Media mensual de $PRECTOTCORR$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:PRECTOTCORR_mes}
 \end{figure}
 
 En la Figura \ref{fig:PRECTOTCORR_mes} se observa una clara diferencia
-en la media mensual de las precipitaciones diarias en función del de si
-se ha registrado o no un incendio forestal en la observación, siendo
+en la media mensual de las precipitaciones diarias en función de si se
+ha registrado o no un incendio forestal en la observación, siendo
 significativamente mayor en este último caso.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width =0.5\textwidth]{graficos/GWETTOP_mes.png}
-\caption{Media mensual de $GWETTOP$ en función de $fire$. \it Fuente: Elaboración propia.}
+\caption[Media mensual de $GWETTOP$ en función de $fire$]{Media mensual de $GWETTOP$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:GWETTOP_mes}
 \end{figure}
 
-En la Figura \ref{fig:GWETTOP_mes} se observa un gráfico similar al de
-la humedad relativa del aire, con valores medios más elevados en las
-observaciones en las que no se han registrado incendio forestal. Sin
-embargo, también parece que las diferencias son más reducidas durante la
-estación estival.
+En la Figura \ref{fig:GWETTOP_mes}, que muestra la media mensual de la
+humedad del suelo en función de si en esa observación se ha registrado o
+no incendio, se observa un gráfico similar al de la humedad relativa del
+aire, con valores medios más elevados en las observaciones en las que no
+se han registrado incendio forestal. Sin embargo, también parece que las
+diferencias son más reducidas durante la estación estival.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/WS10M_mes.png}
-\caption{Media mensual de $WS10M$ en función de $fire$. \it Fuente: Elaboración propia.}
+\caption[Media mensual de $WS10M$ en función de $fire$]{Media mensual de $WS10M$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:WS10M_mes}
 \end{figure}
 
-En la Figura \ref{fig:WS10M_mes} se observa como durante todos los
+En la Figura \ref{fig:WS10M_mes} se observa cómo, durante todos los
 meses, la media mensual de la velocidad del viento a 10 metros sobre la
 superficie es mayor en los registros en los que ha habido un incendio
-forestal.
+forestal. Esto es, de hecho, algo remarcable. Ya que los incendios que
+se están considerando son incendios que han llegado a calcinar un área
+superior a 100 \(ha\), es de esperar que se trate de incendios que se
+dan bajo unas condiciones meteorológicas concretas que facilitan la
+rápida propagación del fuego, dificultado su extinción temprana. Y dado
+que se está considerando la fecha de inicio de los incendios, esto es lo
+que podría estar viéndose en la Figura \ref{fig:WS10M_mes}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width = 0.5\textwidth]{graficos/NDVI_mes.png}
-\caption{Media mensual de $NDVI$ en función de $fire$. \it Fuente: Elaboración propia.}
+\caption[Media mensual de $NDVI$ en función de $fire$]{Media mensual de $NDVI$ en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:NDVI_mes}
 \end{figure}
 
 Como se observa en la Figura \ref{fig:NDVI_mes}, las diferencias entre
-los casos en los que se ha registrado incendio y los que no en términos
-del \emph{NDVI} no están claras.
+los casos en los que se ha registrado incendio y los que no, en términos
+del \emph{NDVI}, no están claras. Se recuerda que esta variable se
+utiliza para cuantificar la cantidad y verdor de la vegetación, por lo
+que es coherente que se observen valores medios más bajos en los meses
+de verano.
 
-En el {[}Apéndice: Gráficos espaciales EDA{]} se recogen los gráficos
-espaciales y espacio\_temporales de todas las variables numéricas. En
-ellos se refleja como la valores de las variables en estudio son
-coherentes con lo que cabría esperar de la realidad. Además, permiten
-una comprensión mayor de la distribución espacial (y temporal) de las
-variables en el área de estudio, lo que será útil de cara a interpretar
-los modelos que se construyan.
+En el {[}Apéndice A.1{]}{[}Gráficos espaciales EDA{]} se recogen los
+gráficos espaciales y espacio-temporales de todas las variables
+numéricas. En ellos se refleja cómo los valores de las variables en
+estudio son coherentes con lo que cabría esperar de la realidad. Además,
+permiten una comprensión mayor de la distribución espacial (y temporal)
+de las variables en el área de estudio, lo que será útil de cara a
+interpretar los modelos que se construyan.
 
 \hypertarget{anuxe1lisis-multivariantes-de-las-variables-numuxe9ricas}{%
-\subsection{Análisis multivariantes de las variables
+\section{Análisis multivariantes de las variables
 numéricas}\label{anuxe1lisis-multivariantes-de-las-variables-numuxe9ricas}}
 
 En la Figura \ref{fig:corrplot} se muestra un gráfico con las
@@ -821,12 +848,22 @@ correlación. De esta forma, se observa que las variables más
 correlacionadas en la muestra son: \emph{T2M} con \emph{RH2M}
 (negativamente, -0.71), \emph{T2M} con \emph{GWETTOP} (negativamente,
 -0.69), \emph{GWETTOP} con \emph{R2HM} (positivamente, 0.68) y
-\emph{poblacion} con \emph{dens\_poblacion} (positivamente,0.63).
+\emph{poblacion} con \emph{dens\_poblacion} (positivamente, 0.63). Esto
+es razonable, ya que cabe esperar que al aumentar la temperatura del
+aire disminuya la humedad del aire y del suelo; que al aumentar la
+humedad del suelo aumente también la del aire y viceversa; y que
+municipios muy densamente poblados también tengan un elevado número de
+habitantes. Cabe destacar que no se trata de valores alarmantes como
+para considerar \emph{a priori} que las variables proporcionan
+información redundante, susceptible de ser eliminadas en un paso de
+ingeniería de características. Sin embargo, sí se probará a reducir la
+dimensionalidad de los datos capturando la mayor parte de la varianza a
+través de PCA.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width =\textwidth]{graficos/corrplot.png}
-\caption{Correlaciones entre variables numéricas. \it Fuente: Elaboración propia.}
+\includegraphics[width =0.7\textwidth]{graficos/corrplot.png}
+\caption[Correlaciones entre variables numéricas]{Correlaciones entre variables numéricas. \it Fuente: Elaboración propia.}
 \label{fig:corrplot}
 \end{figure}
 
@@ -847,7 +884,7 @@ relación lineal clara (hay municipios con un elevado número de
 habitantes pero con una densidad de población reducida y viceversa).
 Además, puede verse que todas las variables tienen una marcada asimetría
 positiva (salvo \emph{curvatura}, \emph{T2M} y \emph{NDVI}). Este
-gráfico es útil también pues permite ver a que clase de \emph{fire}
+gráfico es útil también pues permite ver a qué clase de \emph{fire}
 corresponden los valores más atípicos de cada variable. Por ejemplo: la
 mayor parte de los valores más elevados de \emph{WS10M},
 \emph{dist\_poblacion}, \emph{curvatura} y \emph{dist\_camino} se dan en
@@ -858,7 +895,7 @@ observaciones positivas, mientras que en \emph{PRECTOTCORR},
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/parcoord.png}
-\caption{Gráfico de coordenadas paralelas de las variables numéricas tipificadas. \it Fuente: Elaboración propia.}
+\caption[Gráfico de coordenadas paralelas de las variables numéricas tipificadas]{Gráfico de coordenadas paralelas de las variables numéricas tipificadas. \it Fuente: Elaboración propia.}
 \label{fig:parcoord}
 \end{figure}
 
@@ -874,12 +911,12 @@ complejo en cuanto a la dimensión real de estos.
 \begin{figure}[h]
 \centering
 \includegraphics[width =\textwidth]{graficos/pca.png}
-\caption{PCA sobre la matriz de correlaciones de las variables numéricas. \it Fuente: Elaboración propia.}
+\caption[PCA sobre la matriz de correlaciones de las variables numéricas]{PCA sobre la matriz de correlaciones de las variables numéricas. \it Fuente: Elaboración propia.}
 \label{fig:PCA}
 \end{figure}
 
 \hypertarget{anuxe1lisis-de-las-variables-categuxf3ricas}{%
-\subsection{Análisis de las variables
+\section{Análisis de las variables
 categóricas}\label{anuxe1lisis-de-las-variables-categuxf3ricas}}
 
 Las variables categóricas se analizarán a través de los histogramas de
@@ -904,350 +941,31 @@ diferencias significativas entre ambas clases.
 La variable \emph{uso\_suelo} sí que muestra una distribución
 marcadamente diferenciada entre ambas clases. La mayoría de las
 observaciones positivas se dan en espacios de vegetación arbustiva y/o
-herbácea, clase en la que hay casi el doble de observaciones positivas
-que negativas. En tierras de labor y cultivos permanentes la proporción
-de observaciones negativas es mucho mayor, mientras que en zonas
-agrícolas heterogéneas y en espacios abiertos con poca o sin vegetación
-hay una mayor presencia de observaciones positivas. También es relevante
-el hecho de que casi la totalidad de las observaciones se encuentran en
-zonas agrícolas y en zonas forestales, mientras que en las demás clases
-la proporción de observaciones es mucho menor (\(3.5\%\) de total). Es
-por ello que antes de construir los modelos, todas las categorías de uso
-de suelo que no se corresponden con zonas agrícolas o forestales (es
-decir, todas cuyo código no comienza por 2 o 3) se agruparán en el nivel
-\emph{Otro}. En \ref{fig:uso_suelo_spat} puede observarse la
-distribución espacial de esta variable.
+herbácea (código 32), clase en la que hay casi el doble de observaciones
+positivas que negativas. En tierras de labor (código 21) y cultivos
+permanentes (código 22) la proporción de observaciones negativas es
+mucho mayor, mientras que en zonas agrícolas heterogéneas (código 24) y
+en espacios abiertos con poca o sin vegetación (código 33) hay una mayor
+presencia de observaciones positivas dentro de la muestra. También es
+relevante el hecho de que casi la totalidad de las observaciones se
+encuentran en zonas agrícolas y en zonas forestales (que se corresponden
+con los códigos comenzados por 2 o 3, respectivamente), mientras que en
+las demás clases la proporción de observaciones es mucho menor
+(\(3.5\%\) de total). Es por ello que antes de construir los modelos,
+todas las categorías de uso de suelo que no se corresponden con zonas
+agrícolas o forestales (es decir, todas cuyo código no comienza por 2 o
+3) se agruparán en el nivel \emph{Otro}. En la Figura
+\ref{fig:uso_suelo_spat} del {[}Apéndice A1{]}{[}Gráficos espaciales
+EDA{]} puede observarse la distribución espacial de esta variable.
 
-\begin{figure}[h]
+\begin{figure}[]
 \centering
 \includegraphics[width =\textwidth]{graficos/histogramas.png}
-\caption{Histogramas de las variables categóricas en función de $fire$. \it Fuente: Elaboración propia.}
+\caption[Histogramas de las variables categóricas en función de $fire$]{Histogramas de las variables categóricas en función de $fire$. \it Fuente: Elaboración propia.}
 \label{fig:histogramas}
 \end{figure}
 
-\hypertarget{modelizaciuxf3n}{%
-\section{Modelización}\label{modelizaciuxf3n}}
-
-A continuación se va a utilizar el conjunto de datos construido en el
-capítulo {[}Construcción del conjunto de datos{]} para entrenar los
-modelos de clasificación binaria explicados en la sección {[}Modelos{]}.
-Es evidente que el rendimiento de los modelos debe evaluarse en
-observaciones futuras, por lo que las técnicas habituales de validación
-cruzada o partición aleatoria en entrenamiento/test no son adecuadas
-para este problema, ya que sufrirían el llamado efecto
-\emph{look-ahead}. Por tanto, el enfoque que se seguirá en este trabajo
-será trabajar con una partición en entrenamiento/validación/test
-construida a partir de la ordenación temporal de las observaciones.
-
-Se compararán los resultados obtenidos en 7 modelos diferentes:
-Regresión logística con penalización, Regresión logística con
-penalización + PCA, Árboles de decisión,Bosques aleatorios, KNN, SVM
-lineal y SVM radial.
-
-Se ha seguido el flujo de trabajo habitual de \emph{tidymodels}:
-
-1º. Crear una partición temporal en entrenamiento (60\%), validación
-(20\%) y test (20\%), que será utilizada en todos los modelos.
-
-2º. Definir cada uno de los modelos, indicando los parámetros del modelo
-deberán ajustarse.
-
-3º. Crear la receta (\emph{recipe}) con el preprocesamiento que se usará
-en cada modelo. Como se observó en la sección
-\protect\hyperlink{anuxe1lisis-exploratorio-de-datos}{Análisis
-exploratorio de datos}, se incluirán en todos los modelos variables
-categóricas que indiquen el día de la semana y el mes de cada
-observación, haciendo uso de la función \texttt{step\_date}. Igualmente,
-como también se indicó en el EDA, se modificará la variable
-\emph{uso\_suelo} para unificar todos los niveles que no sean agrícolas
-o forestales en un solo nivel que se llamará \emph{Otro}. Esto último se
-hará fuera del \emph{workflow}, antes de realizar la partición del
-conjunto de datos, haciendo uso de la función \texttt{fct\_lump} del
-paquete \emph{forcats}. Los detalles del preprocesamiento que se ha
-llevado a cabo en cada modelo pueden consultarse en el código, que se
-adjunta en el Apéndice 2, donde aparecen debidamente comentados. 4º.
-Crear el \emph{workflow} con el modelo y la receta.
-
-5º. Crear la rejilla (\emph{grid}) con los posibles valores de los
-parámetros que se deben ajustar.
-
-6º. Entrenar el modelo para cada combinación de los valores de los
-parámetros a ajustar sobre los datos de entrenamiento.
-
-7º. Evaluar el rendimiento de cada modelo sobre los datos de validación
-y seleccionar el mejor en base a las medidas de rendimiento ya
-mencionadas. El objetivo con estos modelos es predecir incendios
-forestales, por lo que es de vital importancia que los modelos funcionen
-especialmente bien en la clase positiva, es decir, que si un incendio se
-va a producir, que el modelo lo detecte. Sin embargo, es fundamental que
-el modelo tenga un buen desempeño general (un modelo que todo lo
-clasifique como incendio no serviría de nada, poniendo un ejemplo
-extremo). Por tanto, cada modelo se valorará de forma individual,
-considerando todas las métricas de rendimiento mencionadas y priorizando
-la sensitividad (o \emph{recall}). Sin embargo, en la mayoría de los
-casos maximizar la tasa de acierto maximiza también la sensitividad,
-garantizando además un buen desempeño general. Por ello, en la mayoría
-de modelos se maximizará la tasa de acierto, pero porque analizando las
-salidas individualmente se ha considerado que es la mejor opción ya que
-produce la mayor sensitividad sin bajar demasiado las otras medias.
-
-\hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
-\subsection{Regresión logística con
-penalización}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
-
-Antes de aplicar este modelo, se han transformado las variables
-categóricas a variables \emph{dummy} y se han tipificado todas las
-variables (media 0 y varianza 1).Los parámetros a ajustar son
-\(\lambda\) (parámetro de penalización o \emph{penalty}) y \(\alpha\)
-(parámetro de mixtura o \emph{mixture}). Se consideran 10 valores
-equiespaciados para cada parámetro (en el caso de \(\lambda\) entre
-\(10^{-4}\) y \(10^{-1}\) y el caso de \(\alpha\) entre \(0\) y \(1\)) y
-se construye el grid tomando todas las combinaciones de estos valores.
-
-Las métricas obtenidas por cada combinación de parámetro sobre los datos
-de validación se representan en la Figura \ref{fig:lr_tuningplot}
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/lr_tuningplot.png}
-\caption{Métricas de rendimiento de los modelos de regresión logística con penalización.  \it Fuente: Elaboración propia.}
-\label{fig:lr_tuningplot}
-\end{figure}
-
-Finalmente, se elige el modelo maximiza la tasa de acierto, cuyos
-parámetros son: \(\alpha= 1\) y \(\lambda = 0.000464\). Es decir, un
-modelo de regresión logística \emph{lasso} puro. Los coeficientes de
-este modelo se muestran en la Figura \ref{fig:lr_coef}.
-
-\hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n-pca}{%
-\subsection{Regresión logística con penalización +
-PCA}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n-pca}}
-
-A continuación se considera el mismo modelo de regresión logística con
-penalización que en la sección anterior pero en lugar de trabajar con
-los datos directamente, se aplica análisis de componentes principales
-sobre los datos normalizados en el preprocesamiento, ajustando el número
-de componentes principales utilizadas. Para construir el \emph{grid} de
-parámetros se consideran los mismos valores que en el modelo sin PCA
-para los parámetros de penalización y mixtura pero ahora se consideran
-también 7 posibles valores para el número de componentes principales
-(\(\{20,25,30,...,50\}\)). Finalmente, el modelo que maximiza la tasa de
-acierto es el que tiene 40 componentes principales, \(\alpha= 0.333\) y
-\(\lambda = 0.00464\).
-
-\hypertarget{uxe1rboles-de-decisiuxf3n}{%
-\subsection{Árboles de decisión}\label{uxe1rboles-de-decisiuxf3n}}
-
-Se construirán los árboles de decisión usando el índice de Gini como
-función de impureza y se elegirá el parámetro de coste-complejidad
-(\(\alpha\)) que maximice la tasa de acierto. Se considera un
-\emph{grid} con 10 valores del parámetro de coste-complejidad que
-oscilan entre \(1.28e-10\) y \(3.02e- 2\). La mejor tasa de acierto en
-el conjunto de validación se obtiene con \(\alpha = 0.00182\). En la
-Figura \ref{fig:dt_tuningplot} se muestran las distintas métricas de
-rendimiento sobre los datos de validación para cada uno de los valores
-del parámetro a ajustar.
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/dt_tuningplot.png}
-\caption{Métricas de rendimiento del árbol de decisión en función de el parámetro de coste\-complejidad. \it Fuente: Elaboración propia.}
-\label{fig:dt_tuningplot}
-\end{figure}
-
-\hypertarget{bosques-aleatorios}{%
-\subsection{Bosques aleatorios}\label{bosques-aleatorios}}
-
-En este modelo se ha fijado el número de árboles a 1000 y se han
-ajustado los parámetros \emph{mtry} (el número de variables que se
-seleccionarán aleatoriamente en cada nodo) y \emph{min\_n} (el número de
-observaciones en un nodo a partir del cual no se sigue dividiendo y se
-convierte en nodo hoja). En este caso se ha optado por un enfoque
-diferente, motivado por el amplio rango de valores que puede tomar el
-parámetro \emph{min\_n} y por las limitaciones computacionales del
-equipo disponible.
-
-De esta forma, la estimación de parámetros se ha hecho en dos etapas. En
-una primera etapa se ha fijado el parámetro \(mtry = 4\) y se ha
-estimado el parámetro \emph{min\_n} considerando para ello un
-\emph{grid} equiespaciado de 1000 a 2500 tomando valores de 100 en 100
-(\(\{1000,1100,...,2500\}\)). Para elegir entre los distintos modelos
-esta vez se ha usado como criterio la sensitividad, obteniendo el valor
-más elevado para \(min\_n = 2100\). En la segunda etapa, una vez
-\emph{min\_n}, este se ha considerado fijo y se ha estimado
-\emph{m\_try}, considerando una rejilla de 10 valores equiespaciados
-tomados del 1 al 10 (\(\{1,2,...,10\}\)). De nuevo se ha utilizado la
-sensitividad para elegir el modelo final, eligiendo así \(min\_n = 7\).
-En la Figura \ref{rf_tuningplot} se recogen los resultados de las dos
-estapas de \emph{tuning}. El modelo final elegido tiene
-\(min\_n = 2100\) y \(min\_n = 7\).
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/rf_tuningplot.png}
-\caption{Métricas de rendimiento de Random Forest en función de los parámetros.  \it Fuente: Elaboración propia.}
-\label{fig:rf_tuningplot}
-\end{figure}
-
-\hypertarget{knn}{%
-\subsection{KNN}\label{knn}}
-
-Para aplicar el modelo, primero se han transformado las variables
-categóricas en variables \emph{dummy} y, porsteriormente, se han
-tipificado las todas las variables. Se ha usado la distancia euclídea
-entre los vectores transformados. Para ajustar el parámetro \(k\) del
-modelo se han tomado valores entre 1 y 400. La mayor tasa de acierto
-sobre los datos de validación se ha obtenido con \(k = 275\). Los
-resultados del \emph{tuning} se muestran en la Figura
-\ref{fig:knn_tuningplot}.
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/knn_tuningplot.png}
-\caption{Métricas de rendimiento de KNN en función del número de vecinos. \it Fuente: Elaboración propia.}
-\label{fig:knn_tuningplot}
-\end{figure}
-
-\hypertarget{svm-lineal}{%
-\subsection{SVM lineal}\label{svm-lineal}}
-
-Antes de construir el modelo, se han transformado las variables
-categóricas usando variables \emph{dummy} y se han tipificado todas las
-variables. Se ha probado con 15 valores del parámetro \emph{coste} entre
-0.001949 y 24.666648. La mayor tasa de acierto y el mayor \emph{recall}
-se han obtenido para \(C = 0.0437\). Los resultados del \emph{tuning} se
-muestran en la Figura \ref{fig:svm_tuningplot}
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/svm_tuningplot.png}
-\caption{Métricas de rendimiento de svm en función del coste. \it Fuente: Elaboración propia.}
-\label{fig:svm_tuningplot}
-\end{figure}
-
-\hypertarget{svm-radial}{%
-\subsection{SVM radial}\label{svm-radial}}
-
-Por último, se ha construido el modelo de SVM usando un kernel
-gaussiano. El preprocesamiento ha sido el mismo que en el caso del
-kernel lineal. Dado el elevado tiempo de entrenamiento de este modelo
-solo se ha probado con 8 combinaciones de valores para los parámetros
-\(C\) y \(\gamma\), que oscilan entre 0.005 y 31.7 y entre 0 y 0.05. La
-mayor tasa de acierto sobre los datos de validación se ha conseguido
-para \(C = 31.7\) y \(\gamma = 0.0000496\).
-
-\hypertarget{comparaciuxf3n}{%
-\section{Comparación}\label{comparaciuxf3n}}
-
-A continuación se muestran las métricas de cada uno de los modelos
-seleccionados en los datos de validación en la Tabla
-\ref{tab:metricas_val} y en la Figura \ref{fig:validation_metrics}. Las
-curvas ROC de todos los modelos se muestran en la Figura
-\ref{fig:roc_validation}.
-
-Puede observarse que los resultados obtenidos por todos los modelos son
-bastante similares. Destacan el modelo de bosque aleatorio y el de
-regresión logística con penalización, el primero por ser el que tiene la
-tasa de acierto y la sensitividad más elevadas, y el segundo por dar los
-mejores resultado en cuanto a precisión y especificidad. Las curvas ROC
-de los modelos de bosque aleatorio, regresión logística con
-penalización, SVM lineal y SVM radial son prácticamente iguales. Los
-modelos más pobres son la regresión logística aplicando PCA, KNN y el
-árbol de decisión.
-
-\begin{table}[]
-\centering
-\resizebox{0.5\columnwidth}{!}{%
-\begin{tabular}{@{}llllll@{}}
-\toprule
-model\_name & roc\_auc & accuracy & recall & specificity & precision \\ \midrule
-lr          & 0.785    & 0.719    & 0.700  & 0.738       & 0.727     \\
-lr\_pca     & 0.727    & 0.659    & 0.624  & 0.694       & 0.670     \\
-dt          & 0.656    & 0.656    & 0.709  & 0.604       & 0.641     \\
-rf          & 0.781    & 0.725    & 0.758  & 0.693       & 0.711     \\
-svm\_linear & 0.781    & 0.716    & 0.710  & 0.722       & 0.718     \\
-svm\_rbf    & 0.777    & 0.710    & 0.692  & 0.728       & 0.717     \\
-knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomrule
-\end{tabular}%
-}
-\caption{Métricas de los modelos seleccionados sobre el conjunto de validación.  \it Fuente: Elaboración propia.}
-\label{tab:metricas_val}
-\end{table}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/validation_metrics.png}
-\caption{Métricas obtenidas sobre el conjunto de validación por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
-\label{fig:validation_metrics}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/roc_validation.png}
-\caption{Curvas ROC sobre el conjunto de validación. \it Fuente: Elaboración propia.}
-\label{fig:roc_validation}
-\end{figure}
-
-Por último, para conocer la capacidad de generalización de los modelos
-construidos, estos se evaluarán sobre nuevas observaciones, el conjunto
-de datos test. Recuérdese que el entrenamiento de los modelos se ha
-realizado con el conjunto de entrenamiento, formado por 12927
-observaciones tomadas entre el 2002 y mediados de 2014 y para ajustar
-los parámetros de cada modelo, se han utilizado 4309 observaciones
-tomadas entre mediados de 2014 y mediados de 2019. Finalmente, se
-evaluará la capacidad de predicción de los modelos sobre 4310 nuevas
-observaciones tomadas entre mediados de 2019 y 2022. Para ello, primero
-se juntarán los conjuntos de entrenamiento y validación para reentrenar
-los modelos con la configuración de parámetros seleccionada en cada
-caso, y posterior mente se compararán los valores predichos por los
-modelos con los valores reales. Los resultados obtenidos se muestran en
-la Tabla \ref{tab:metricas_test} y el la Figura \ref{fig:test_metrics}.
-Las curvas ROC de los distintos modelos sobre el conjunto de datos test
-se muestra en la Figura \ref{fig:roc_test}.
-
-En este caso, los mejores resultados en todas las medidas los da el
-modelo de regresión logística con penalización. Los modelos de SVM
-muestran resultados bastante similares entre ellos y prácticamente
-iguales al modelo de regresión logística. Sobre los datos test, el
-modelo de bosque aleatorio ha dado un rendimiento peor que el obtenido
-en validación, quedando por detrás de los tres modelos ya comentados,
-aunque la sensitividad de todos estos modelos es prácticamente igual. De
-nuevo, los peores resultados los dan los modelos de regresión logística
-aplicando PCA y el árbol de decisión, seguidos del KNN.
-
-\begin{table}[]
-\centering
-\resizebox{0.5\columnwidth}{!}{%
-\begin{tabular}{@{}llllll@{}}
-\toprule
-model\_name & roc\_auc & accuracy & recall & specificity & precision \\ \midrule
-lr          & 0.795    & 0.710    & 0.726  & 0.693       & 0.718     \\
-lr\_pca     & 0.715    & 0.645    & 0.631  & 0.661       & 0.667     \\
-dt          & 0.667    & 0.668    & 0.712  & 0.621       & 0.670     \\
-rf          & 0.762    & 0.699    & 0.727  & 0.669       & 0.703     \\
-svm\_linear & 0.790    & 0.705    & 0.729  & 0.680       & 0.710     \\
-svm\_rbf    & 0.789    & 0.706    & 0.727  & 0.683       & 0.712     \\
-knn         & 0.744    & 0.673    & 0.719  & 0.624       & 0.673     \\ \bottomrule
-\end{tabular}%
-}
-\caption{Métricas sobre el conjunto test. \it Fuente: Elaboración propia.}
-\label{tab:metricas_test}
-\end{table}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/test_metrics.png}
-\caption{Métricas obtenidas sobre el conjunto test por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
-\label{fig:test_metrics}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width =0.7\textwidth]{graficos/roc_test.png}
-\raggedright
-\caption[Curvas ROC sobre test.]{Curvas ROC sobre test. \it Fuente: Elaboración propia.}
-\label{fig:roc_test}
-\end{figure}
+Prueba {[}Gráficos espaciales EDA{]}{[}{]}
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 

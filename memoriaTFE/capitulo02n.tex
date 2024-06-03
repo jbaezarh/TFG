@@ -540,6 +540,16 @@ linewidth=4pt]{mBox}
 \hypertarget{preliminares}{%
 \chapter{Preliminares}\label{preliminares}}
 
+Este capítulo describirán algunos aspectos esenciales para el adecuado
+seguimiento y comprensión del resto del documento. Se introducirán los
+elementos esenciales que sientan las bases de las técnicas empleadas en
+el estudio junto con las herramientas computacionales empleadas. En
+algunos casos, junto con la descripción de los conceptos, se hará
+referencia a aspectos tecnológicos relacionados con las herramientas
+utilizadas, para relacionar cada una con el contexto en el que aparece,
+si bien al final del capítulo se dedicará una sección específica para
+describir los aspectos esenciales relacionados con las mismas.
+
 \hypertarget{datos-georreferenciados}{%
 \section{Datos georreferenciados}\label{datos-georreferenciados}}
 
@@ -547,7 +557,7 @@ Todos los datos empleados en este trabajo son georreferenciados, lo que
 significa que están asociados a ubicaciones geográficas específicas. Por
 ello, resulta esencial introducir los tipos de datos más utilizados para
 trabajar con esta información, sus características y las herramientas
-disponibles para manipularlos. En esta sección e tratarán los datos
+disponibles para manipularlos. En esta sección se tratarán los datos
 vectoriales y los datos ráster, al ser los tipos fundamentales en este
 contexto, con características bien diferenciadas entre ellos.
 
@@ -559,7 +569,7 @@ sistema de referencia de coordenadas (CRS, por sus siglas en inglés).
 Estos puntos pueden representar características independientes o pueden
 estar conectados para formar geometrías más complejas como líneas y
 polígonos. Para esta sección se han usado como referencia
-\citet{lovelace_geocomputation_2019}.
+\citet{lovelace_geocomputation_2019} y \citet{introGISGimond}.
 
 \hypertarget{simple-features}{%
 \subsubsection*{\texorpdfstring{\emph{Simple
@@ -571,52 +581,49 @@ por el \emph{Open Geospatial Consortium} (OGC), una organización sin
 ánimo de lucro dedicada a la creación de estándares abiertos e
 interoperables a nivel global dentro del marco de los sistemas
 geográficos de información (GIS, por sus siglas en ingés) y de la
-\emph{World Wide Web}. \citep{OCGweb}
+\emph{World Wide Web} \citep{OCGweb}.
 
 El paquete \emph{sf} proporciona en \emph{R} clases para datos
 vectoriales geográficos y una interfaz de línea de comandos consistente
 para importantes bibliotecas de bajo nivel para geoprocesamiento
-(\emph{GDAL}, \emph{PROJ}, \emph{GEOS}, \emph{S2},\ldots).
-\citep{sfpackage}
+(\emph{GDAL}, \emph{PROJ}, \emph{GEOS}, \emph{S2},\ldots)
+\citep{sfpackage}.
 
-Los objetos \emph{sf} son fáciles de manipular ya que son
+Los objetos \emph{sf} son fáciles de manipular, ya que son
 \emph{dataframes} o \emph{tibbles} con dos características
 fundamentales. En primer lugar, contienen metadatos geográficos
 adicionales: tipo de geometría, dimensión, \emph{Bounding Box} (límites
-o extensión geográfica) información sobre el Sistema de referencia de
-coordenadas. Y además, presentan una columna de geometrías, que contiene
+o extensión geográfica) e información sobre el Sistema de referencia de
+coordenadas. Además, presentan una columna de geometrías, que contiene
 los atributos geográficos de cada observación. Algunas ventajas del uso
-de este modelo de datos en R son que en la mayoría de operaciones los
-objeto \emph{sf} se pueden tratar como \emph{dataframes}, los nombres de
-las funciones son consistentes (todos empiezan por \texttt{st\_}), las
-funciones se pueden combinar con el operador tubería y además funcionan
-bien con el ecosistema de paquetes \emph{tidyverse}.
+de este modelo de datos en \(R\) son que en la mayoría de operaciones
+los objetos \emph{sf} se pueden tratar como \emph{dataframes}, los
+nombres de las funciones son consistentes (todos empiezan por
+\texttt{st\_}), las funciones se pueden combinar con el operador tubería
+y además funcionan bien con el ecosistema de paquetes \emph{tidyverse}.
 
-El paquete \emph{sf} de R soporta 18 tipos de geometrías para las
-\emph{simple features}, de las cuales las más utilizadas son:
-\emph{POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING,
-MULTIPOLYGON} y \emph{GEOMETRYCOLLECTION}.
+El paquete \emph{sf} de \(R\) soporta 18 tipos de geometrías para las
+\emph{simple features}, de las cuales las más utilizadas se muestran en
+la Figura \ref{fig:sf-classes}.
 
 \begin{figure}[H]
-
-{\centering \includegraphics[width=0.6\linewidth]{graficos/sf-classes} 
-
-}
-
-\caption{Principales tipos de \textit{simple features} soportados por el paquete de \textit{R sf}. \it Fuente: \citet{lovelace_geocomputation_2019}}\label{fig:sf-classes}
+\centering
+\includegraphics[width = 0.7\textwidth]{graficos/sf-classes.png}
+\caption[Principales tipos de \textit{simple features} soportados por el paquete de \textit{R sf}]{Principales tipos de \textit{simple features} soportados por el paquete de \textit{R sf}. \it Fuente: \citet{lovelace_geocomputation_2019}.}
+\label{fig:sf-classes}
 \end{figure}
 
 \hypertarget{datos-ruxe1ster}{%
 \subsection{Datos Ráster}\label{datos-ruxe1ster}}
 
 El modelo de datos ráster representa el espacio con una cuadrícula de
-celdas (o píxeles),y a cada una de las cuales se le asocia un valor o
+celdas (o píxeles), a cada una de las cuales se le asocia un valor o
 varios, tratándose así de rásteres de una o varias capas,
 respectivamente. Lo más común es trabajar con cuadrículas regulares, es
 decir, formadas por celdas rectangulares de igual tamaño. Sin embargo,
 existen otros modelos de ráster más complejos en los que se usan
-cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas).
-\citep{lovelace_geocomputation_2019}
+cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas)
+\citep{lovelace_geocomputation_2019}.
 
 Los datos en formato ráster constan de una cabecera y una matriz cuyos
 elementos representan celdas equiespaciadas. En la cabecera del ráster
@@ -667,12 +674,12 @@ dirección Sur-Norte.
 Cualquier sistema de coordenadas geográficas se compone de tres
 elementos: el elipsoide, el geoide y el \emph{datum}. El primero, el
 elipsoide o esfera, es utilizado para representar de forma simplificada
-la superficie terrestre, sobre él se supone que se encuentran los datos
+la superficie terrestre; sobre él se supone que se encuentran los datos
 y es el que permitirá realizar mediciones. El segundo, el geoide, es el
 modelo matemático que representa la verdadera forma de la Tierra, que no
 es suave sino que presenta ondulaciones debidas a las fluctuaciones del
 campo gravitatorio a lo largo de la superficie terrestre, las cuales
-también cambian a una amplia escala temporal. Y el tercero, el
+también cambian a una amplia escala temporal. Por último, el
 \emph{datum}, indica cómo se alinean el elipsoide y el geoide, es decir,
 cómo el modelo matemático se ajusta a la realidad. Este puede ser local
 o geocéntrico, en función de si el elipsoide se ajusta al geoide en un
@@ -686,8 +693,8 @@ elipsoide el que se alinea con el centro de la Tierra. Ejemplos de
   \emph{European Terrestrial Reference System 1989} (ETRS89), usado
   ampliamente en la Europa Occidental.
 \item
-  \emph{World Geodetic System 1984} (WGS84), usado a nivel global.
-  \citep{lovelace_geocomputation_2019}
+  \emph{World Geodetic System 1984} (WGS84), usado a nivel global
+  \citep{lovelace_geocomputation_2019}.
 \end{itemize}
 
 \hypertarget{sistemas-de-coordenadas-proyectadas}{%
@@ -710,7 +717,7 @@ de estas propiedades pero no todas, por lo que es habitual clasificar
 los PCS en función de la propiedad que mantienen: las proyecciones de
 igual área preservan el área, las azimutales preservan la dirección, las
 equidistantes preservan la distancia y las conformales preservan la
-forma local. En función de como se realice la proyección, estas también
+forma local. En función de cómo se realice la proyección, estas también
 se pueden clasificar en planas, cilíndricas o cónicas.
 
 Un caso particular y ampliamente usado de PCS cilíndrico son los
@@ -724,7 +731,7 @@ pero distorsionan distancias y áreas.
 
 A lo largo de este trabajo se utilizará el sistema de coordenadas
 proyectadas UTM30N, ya que es el que traen muchos de los archivos ráster
-manipulados y es conveniente evitar cambiar de CRS los datos ráster
+manipulados, y es conveniente evitar cambiar de CRS los datos ráster
 siempre que sea posible, ya que esta operación provoca una pérdida de
 información.
 
@@ -732,20 +739,20 @@ información.
 \section{Análisis Exploratorio de
 Datos}\label{anuxe1lisis-exploratorio-de-datos}}
 
-El Análisis Exploratorio de Datos (EDA), es una parte fundamental de
-todo proyecto de \emph{Machine Learning} y en general de cualquier
-proyecto en el que se deba trabajar con datos de cualquier procedencia
-para extraer de ellos conclusiones. Antes del procesamiento de los datos
-es siempre necesario explorar, entender y evaluar la calidad de estos,
-pues como indica la expresión inglesa \emph{garbage in, garbage out}, si
+El Análisis Exploratorio de Datos (EDA) es una parte fundamental de todo
+proyecto de \emph{Machine Learning}, y en general de cualquier proyecto
+en el que se deba trabajar con datos de cualquier procedencia para
+extraer de ellos conclusiones. Antes del procesamiento de los datos es
+siempre necesario explorar, entender y evaluar la calidad de estos, pues
+como indica la expresión inglesa \emph{garbage in, garbage out}, si
 trabajamos con datos pobres, no podemos esperar obtener de ellos buenos
-resultados. \citep{wickham2016r}
+resultados \citep{wickham2016r}.
 
 El EDA hace referencia al conjunto de técnicas estadísticas (tanto
 numéricas como gráficas) con las que se pretende explorar, describir y
 resumir la naturaleza de los datos, comprender las relaciones existentes
 entre las distintas variables presentes, identificar posibles errores o
-revelar posibles valores atípicos. Todo esto con el objetivo de
+revelar posibles valores atípicos, todo esto con el objetivo de
 maximizar nuestra compresión sobre el conjunto de datos.
 
 \hypertarget{depuraciuxf3n-de-los-datos}{%
@@ -753,7 +760,7 @@ maximizar nuestra compresión sobre el conjunto de datos.
 
 La depuración de los datos o \emph{data cleaning} es el proceso de
 detectar y corregir o eliminar datos incorrectos, corruptos, con formato
-incorrecto, duplicados o incompletos dentro de un conjunto de datos.
+inadecuado, duplicados o incompletos dentro de un conjunto de datos.
 Puede considerarse una fase dentro del EDA (como se sugiere en
 \citet{wickham2016r}) o una fase previa a este.
 
@@ -762,16 +769,14 @@ Puede entenderse que el \emph{data cleaning} es el proceso de pasar de
 finalmente a datos consistentes.
 
 \begin{figure}[H]
-
-{\centering \includegraphics[width=0.95\linewidth]{graficos/statistical_value_chain} 
-
-}
-
-\caption{Etapas en el procesamiento de los datos dentro de un proyecto estadístico. \it Fuente: \citet{van2018statistical}}\label{fig:unnamed-chunk-2}
+\centering
+\includegraphics[width = 0.85\textwidth]{graficos/statistical_value_chain.png}
+\caption[Etapas en el procesamiento de los datos dentro de un proyecto estadístico]{Etapas en el procesamiento de los datos dentro de un proyecto estadístico. \it Fuente: \citet{van2018statistical}.}
+\label{fig:stat_val}
 \end{figure}
 
 Entendemos que un conjunto de datos es técnicamente correcto cuando cada
-valor pertenece a una variable y está almacenado en el tipo que que le
+valor pertenece a una variable y está almacenado en el tipo que le
 corresponde en base al conocimiento del dominio del problema. Para ello
 se debe reajustar el tipo de cada variable al que le corresponda en base
 al conocimiento que se tenga sobre esta, codificando los valores en las
@@ -780,8 +785,8 @@ clases adecuadas si fuese necesario.
 Decimos que un conjunto de datos es consistente cuando es técnicamente
 correcto y, además, adecuado para el análisis estadístico. Se trata, por
 tanto, de datos que han eliminado, corregido o imputado los valores
-faltantes, los valores especiales, los valores atípicos y los
-errores.\citep{de2013introduction}
+faltantes, los valores especiales, los valores atípicos y los errores
+\citep{de2013introduction}.
 
 \hypertarget{anuxe1lisis-de-componentes-principales}{%
 \subsection{Análisis de Componentes
@@ -880,17 +885,17 @@ optimización a resolver será
 \[\min_{\underline \beta} -l(\underline \beta)\]
 
 Sin embargo, con el objetivo de evitar el sobreajuste y construir
-modelos con mayor capacidad de generalización existen variaciones de la
+modelos con mayor capacidad de generalización, existen variaciones de la
 regresión logística que incluyen un término de penalización en la
-función objetivo. Las dos variantes de uso más extendido son la
-regresión \emph{ridge} y \emph{lasso}.
+función objetivo. Las dos variantes de uso más extendido son las
+regresiones \emph{ridge} y \emph{lasso}.
 
 Sea \(\underline \beta = \left( \beta_0, \underline \beta_1 \right)\),
 donde \(\underline \beta_1\) contiene los coeficientes de las
 covariables. En la regresión \emph{ridge} el término de penalización es
-de la forma \(\| \underline \beta_1 \|^2_2\) mientras que en la
+de la forma \(\| \underline \beta_1 \|^2_2\), mientras que en la
 regresión \emph{lasso} es de la forma \(\| \underline \beta_1 \|_1\).
-Por tanto, el problema de optimización será
+Por tanto, el problema de optimización asociado será
 
 \[\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum \beta_i^2 \]
 
@@ -903,15 +908,15 @@ en el caso de la regresión logística \emph{lasso}, donde en ambos casos
 
 En este trabajo se usará el paquete \emph{glmnet} \citep{glmnetpackage},
 que implementa una combinación de ambos métodos (llamada \emph{elastic
-net}), en la que se añade un parámetro de mixtura
+net}), en la que se añade un parámetro de mezcla
 \(\alpha \in \left[0,1\right]\) que combina ambos enfoques. El problema
 de optimización resultante en este caso será:
 
 \[\min_{\underline \beta} -l(\underline \beta)  + \lambda \left[(1-\alpha)\sum \beta_i^2 + \alpha \sum |\beta_i| \right]\]
 
-\hypertarget{support-vector-machine}{%
-\subsection{\texorpdfstring{\emph{Support Vector
-Machine}}{Support Vector Machine}}\label{support-vector-machine}}
+\hypertarget{muxe1quinas-de-vectores-soporte}{%
+\subsection{Máquinas de Vectores
+Soporte}\label{muxe1quinas-de-vectores-soporte}}
 
 Las Máquinas de Vector Soporte (SVM) son una familia de modelos
 principalmente usados en problemas de clasificación binaria (si bien se
@@ -922,7 +927,7 @@ conjunto de puntos.
 \hypertarget{svm-lineal}{%
 \subsubsection{SVM lineal}\label{svm-lineal}}
 
-Dada una muestra \(\left\{(\underline x_i,y_i) \right\}_{i=1,...,n}\)
+Dada una muestra \(\left\{(\underline x_i,y_i) \right\}_{i=1,...,n}\),
 con \(\underline x_i \in \mathbb{R}^d\) e \(y_i \in \{-1,1\}\) para todo
 \(i \in \{1,...,n\}\), el objetivo es encontrar al hiperplano de la
 forma
@@ -931,13 +936,13 @@ forma
 que mejor separe a la muestra.
 
 \begin{definition}
-Se dice que la muestra es **linealmente separable** si existe un hiperplano definido por $\underline w^t \underline x + b= 0$, denominado hiperplano de separación, que cumple, para todo $i \in 1,...,n$:
+Se dice que la muestra es  \textbf{linealmente separable} si existe un hiperplano definido por $\underline w^t \underline x + b= 0$, denominado hiperplano de separación, que cumple, para todo $i \in 1,...,n$:
 $$\underline w^t \underline x_i + b \ge 0 \; \; \text{si} \;\; y_i=+1$$
 $$\underline w^t \underline x_i + b \le 0 \; \; \text{si} \;\; y_i=-1$$
 \end{definition}
 
 \begin{definition}
-Dado un hiperplano de separación de una muestra linealmente separable, se define el *margen* como la menor de las distancias del hiperplano a cualquier elemento de la muestra. Se denotará por $\tau$.
+Dado un hiperplano de separación de una muestra linealmente separable, se define el  \textbf{margen} como la menor de las distancias del hiperplano a cualquier elemento de la muestra. Se denotará por $\tau$.
 \end{definition}
 
 \begin{proposition}
@@ -947,17 +952,17 @@ donde $\|\cdot\|$ hace referencia a la norma euclídea.
 \end{proposition}
 
 \begin{proposition}
-Dada una muestra linealmente separable $\left\{(\underline x_i,y_i) \right\}_{i=1,...,n}$ con $\underline x_i \in \mathbb{R}^d$ y $y_i \in \{-1,1\}$ y un hiperplano de separación $h(x) = \underline w^t \underline x = 0$ con margen $\tau$, se verifica que
+Dada una muestra linealmente separable $\left\{(\underline x_i,y_i) \right\}_{i=1,...,n}$, con $\underline x_i \in \mathbb{R}^d$ y $y_i \in \{-1,1\}$ y un hiperplano de separación $\pi :\;h(x) = \underline w^t \underline x = 0$ con margen $\tau$, se verifica que
 $$\frac{y_i(\underline w^t \underline x_i+b)}{\|w\|} \ge \tau \;\;\; \forall i\in \{1,...,n\}$$
-O equivalentemente,
+o equivalentemente,
 $$y_i(\underline w^t \underline x_i+b) \ge \tau\|w\| \;\;\; \forall i\in \{1,...,n\}$$
-Y, además, es posible reescribir el mismo hiperplano $h$ de forma que $\tau\|w\| = 1$.
+Además, es posible reescribir el mismo hiperplano $\pi$ de forma que $\tau\|w\| = 1$.
 \end{proposition}
 
 De está ultima expresión se deduce que maximizar el margen \(\tau\) es
 equivalente a minimizar la norma euclídea de \(w\). Por tanto, para
 encontrar el hiperplano de separación óptimo para una muestra en las
-condiciones de la proposición anterior basta resolver el problema de
+condiciones de la proposición anterior, basta resolver el problema de
 optimización siguiente:
 
 \begin{equation}
@@ -995,15 +1000,15 @@ sobreajuste. Este parámetro recibe el nombre de coste (\emph{cost}).
 Existen muchos casos en los que el SVM no es capaz de obtener buenos
 resultados, debido a la estructura de la distribución de las clases en
 la muestra. En estos casos, es común recurrir a una técnica llamada
-\emph{kernel trick}. Esta herramienta consiste en realizar una inmersión
-del conjunto de los vectores de la muestra en un espacio de dimensión
-superior (llamado \emph{feature space}) en el que los casos sí sean
-separables (o al menos mejore la separabilidad de estos). Esta inmersión
-en un espacio de dimensión superior se hace indirectamente a través de
-funciones \emph{kernel}, que calculan los productos escalares entre los
-vectores de la muestra en el espacio de inmersión. Existen distintos
-tipos de funciones \emph{kernel} que se corresponden con distintas
-inmersiones en espacios de dimensión superior:
+\emph{kernel trick}, que consiste en realizar una inmersión del conjunto
+de los vectores de la muestra en un espacio de dimensión superior
+(llamado \emph{feature space}) en el que los casos sí sean separables (o
+al menos mejore la separabilidad de estos). Esta inmersión en un espacio
+de dimensión superior se hace indirectamente a través de funciones
+\emph{kernel}, que calculan los productos escalares entre los vectores
+de la muestra en el espacio de inmersión. Existen distintos tipos de
+funciones \emph{kernel} que se corresponden con distintas inmersiones en
+espacios de dimensión superior:
 
 \begin{itemize}
 \tightlist
@@ -1024,16 +1029,16 @@ mediante hiperplanos ortogonales a los ejes, de forma que para predecir
 una observación se usa la moda o la media de la región a la que
 pertenece. Se trata de un modelo jerárquico con estructura de árbol, que
 consta de un nodo raíz, ramas, nodos internos y nodos hojas. Cada nodo
-representa un test sobre una variable, y cada las ramas que nacen de ese
-nodo representan los posibles valores que puede tomar esa variable. De
-esta forma, para clasificar una nueva instancia basta comenzar en el
-nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja
+representa un test sobre una variable, y las ramas que nacen de ese nodo
+representan los posibles valores que puede tomar esa variable. De esta
+forma, para clasificar una nueva instancia basta comenzar en el nodo
+raíz e ir descendiendo por el árbol hasta llegar al nodo hoja
 correspondiente, que indicará la clasificación asignada a dicha
 instancia. La simplicidad del método muestra su principal ventaja, su
 fácil comprensión dada su estructura de árbol.
 
 Existen diversas técnicas para construir árboles de clasificación (y
-regresión), aquí se ilustra una de las más usadas que recibe el nombre
+regresión), aquí se ilustra una de las más usadas, que recibe el nombre
 de CART (\emph{Clasification And Regression Trees},
 \citet{breiman1984classification}). Se explica para el caso de árboles
 de clasificación binarios, es decir, en los que de cada nodo salen dos
@@ -1116,9 +1121,8 @@ de \emph{Bagging} y \emph{Boosting}. Una de las técnicas más extendida
 con árboles de decisión son los Bosques Aleatorios (\emph{Random Forest}
 en inglés).
 
-\hypertarget{random-forest}{%
-\subsection{\texorpdfstring{\emph{Random
-Forest}}{Random Forest}}\label{random-forest}}
+\hypertarget{bosque-aleatorio}{%
+\subsection{Bosque aleatorio}\label{bosque-aleatorio}}
 
 La idea detrás del modelo de bosques aleatorios es reducir la varianza
 de los árboles de decisión sin aumentar el sesgo. Para intentar
@@ -1155,7 +1159,7 @@ El algoritmo para construir un bosque aletorio es el siguiente:
       Seleccionar aleatoriamente \(m_{try}\) variables de entre las
       \(d\) variables predictoras.
     \item
-      Elegir el mejor par variable/división de entre las \(m\_try\)
+      Elegir el mejor par variable/división de entre las \(m_{try}\)
       variables seleccionadas en función de la reducción del criterio de
       impureza.
     \item
@@ -1171,9 +1175,8 @@ Para predecir la clase de un nuevo punto \(\underline x\) se aplica la
 regla de la clase más votada al conjunto de clases predichas por los
 \(B\) árboles de decisión bootstrap para \(\underline x\).
 
-\hypertarget{k-nearest-neighbours}{%
-\subsection{\texorpdfstring{K-\emph{Nearest
-Neighbours}}{K-Nearest Neighbours}}\label{k-nearest-neighbours}}
+\hypertarget{k-vecinos-muxe1s-cercanos}{%
+\subsection{K Vecinos más cercanos}\label{k-vecinos-muxe1s-cercanos}}
 
 El método de k vecinos más cercanos (KNN) clasifica una nueva
 observación \(\underline x\) en base a las clases de las \(k\)
@@ -1226,33 +1229,35 @@ problema.
 
 En el presente trabajo el problema que se aborda es un problema de
 clasificación binaria, pues tenemos solo dos clases que son la clase
-positiva y la clase negativa. A la hora de clasificar una nueva
-instancia pueden darse 4 situaciones:
+positiva (en nuestro caso la presencia de incendio) y la clase negativa
+(su ausencia). A la hora de clasificar una nueva instancia pueden darse
+4 situaciones:
 
 \begin{itemize}
 \item
   Que se clasifique como positiva siendo realmente positiva, en cuyo
-  caso se dirá que forma parte de las \emph{True Positives (TP)}
+  caso se dirá que forma parte de las \emph{True Positives (TP)}.
 \item
   Que se clasifique como negativa siendo realmente negativa, en cuyo
-  caso se dirá que forma parte de las \emph{True Negatives (TN)}
+  caso se dirá que forma parte de las \emph{True Negatives (TN)}.
 \item
   Que se clasifique como positiva siendo realmente negativa, en cuyo
-  caso se dirá que forma parte de las \emph{False Positives (FP)}
+  caso se dirá que forma parte de las \emph{False Positives (FP)}.
 \item
   Que se clasifique como negativa siendo realmente positiva, en cuyo
-  caso se dirá que forma parte de las \emph{False Negatives (FN)}
+  caso se dirá que forma parte de las \emph{False Negatives (FN)}.
 \end{itemize}
 
-Se considerarán las siguientes métricas de rendimiento para problemas de
-clasificación binaria:
+A continuación, se presentan las métricas de rendimiento para problemas
+de clasificación binaria que serán usadas en el trabajo.
 
 \textbf{Tasa de acierto o exactitud}. Mide la proporción de casos que
 han sido correctamente clasificados.
 \[Exactitud = \frac{TP + TN}{TP + FP + TN + FN}\]
 
-\textbf{Precisión}. Mide la proporción de casos clasificados como
-positivos que realmente lo son. \[ Precisión = \frac{TP}{TP + FP}\]
+\textbf{Precisión}. Mide la proporción de casos realmente positivos de
+entre todos los que el modelo ha clasificado como tales.
+\[ Precisión = \frac{TP}{TP + FP}\]
 
 \textbf{Especificidad}. Mide la proporción de casos negativos que han
 sido correctamente clasificados por el modelo.
@@ -1277,10 +1282,10 @@ Figura \ref{fig:roc_validation}.
 \section{Herramientas}\label{herramientas}}
 
 Toda la parte práctica del presente trabajo se ha llevado a cabo
-empleado el lenguaje de programación R \citep{Rproject} a través del
-entorno de desarrollo integrado que ofrece RStudio. R es un lenguaje y
-entorno de programación de código abierto desarrollado dentro del
-proyecto GNU y orientado a la computación estadística. Este lenguaje
+empleando el lenguaje de programación \(R\) \citep{Rproject} a través
+del entorno de desarrollo integrado que ofrece \(RStudio\). \(R\) es un
+lenguaje y entorno de programación de código abierto desarrollado dentro
+del proyecto GNU y orientado a la computación estadística. Este lenguaje
 puede extender sus funcionalidades fácilmente a través de la gran
 cantidad de paquetes disponibles dentro del repositorio de paquetes de
 CRAN (\emph{The Comprehensive R Archive Network}), siendo este uno de
@@ -1290,7 +1295,7 @@ utilizados en el trabajo.
 
 A lo largo de todo el trabajo, se ha utilizado de forma central el
 ecosistema de paquetes \emph{tidyverse} \citep{tidyversepackage}. Se
-trata de una colección de paquetes de R que comparten las mismas
+trata de una colección de paquetes de \(R\) que comparten las mismas
 estructuras de datos y la misma filosofía de programación, orientados a
 facilitar las tareas centrales de cualquier proyecto de \emph{data
 science} (Figura \ref{fig:tidiverse_workflow}). Cuenta con numerosos
@@ -1302,43 +1307,44 @@ programación funcional; y \emph{tibble} que proporciona la estructura
 tabular de datos sobre la que trabajar.
 
 \begin{figure}[H]
-
-{\centering \includegraphics[width=0.95\linewidth]{graficos/tidyverse_workflow} 
-
-}
-
-\caption{Flujo de trabajo en un proyecto de \textit{data science}. \it Fuente: \citet{tidyversepackage}}\label{fig:tidiverse_workflow}
+\centering
+\includegraphics[width = 0.8\textwidth]{graficos/tidyverse_workflow.png}
+\caption[Flujo de trabajo en un proyecto de \textit{data science}]{Flujo de trabajo en un proyecto de \textit{data science}. \it Fuente: \citet{tidyversepackage}.}
+\label{fig:tidiverse_workflow}
 \end{figure}
 
 Para la modelización se ha utilizado \emph{tidymodels}
-\citep{tidymodelspackage}. Se trata de un conjunto de paquetes de R
+\citep{tidymodelspackage}. Se trata de un conjunto de paquetes de \(R\)
 orientados a facilitar el flujo de trabajo en el modelado estadístico de
-datos, siguiendo la filosofía ``tidy data'' de \emph{tidyverse}. Integra
-herramientas para preprocesamiento de datos (\emph{recipes}), ajuste de
-modelos (\emph{parsnip}), combinación de flujos de trabajo
-(\emph{workflows}), partición de datos y validación cruzada
-(\emph{rsample}), cálculo de métricas de rendimiento (\emph{yardstick}),
-optimización de hiperparámetros (\emph{tune}) y conversión de resultados
-de modelos a formatos ordenados (\emph{broom}). Los paquetes que
-componen \emph{tidymodels} no implementan los modelos estadísticos por
-sí mismos, si no que los importan de librerías específicas. En su lugar,
-se enfocan en facilitar el flujo de trabajo del modelado, mejorando la
-cohesión y la eficiencia, y permitiendo la integración natural con otros
-paquetes del \emph{tidiverse}.
+datos, siguiendo la filosofía \emph{tidy data} de \emph{tidyverse}.
+Integra herramientas para ingeniería de características
+(\emph{recipes}), definición y ajuste de modelos (\emph{parsnip}),
+combinación de flujos de trabajo (\emph{workflows}), partición de datos
+y validación cruzada (\emph{rsample}), cálculo de métricas de
+rendimiento (\emph{yardstick}), optimización de hiperparámetros
+(\emph{tune}) y conversión de resultados de modelos a formatos ordenados
+(\emph{broom}). Los paquetes que componen \emph{tidymodels} no
+implementan los modelos estadísticos por sí mismos, sino que los
+importan de librerías específicas. En su lugar, se enfocan en facilitar
+el flujo de trabajo del modelado, mejorando la cohesión y la eficiencia,
+a través de una fachada común para la diversidad de paquetes subyacentes
+correspondientes a los distintos modelos, y permitiendo la integración
+natural con otros paquetes del \emph{tidyverse}.
 
-Como se detalló en la Sección
-\protect\hyperlink{datos-georreferenciados}{Datos georreferenciados},
-para el tratamiento de datos vectoriales se ha utilizado el paquete de R
-\emph{sf} \citep{sfpackage}, que proporciona una forma estandarizada de
-codificar y manipular datos espaciales vectoriales a través de las
-\emph{simple features}, integrándose dentro del ecosistema
-\emph{tidyverse}. Para la manipulación de datos de tipo ráster se ha
-recurrido al paquete \emph{terra} \citep{terrapackage}.
+Como se detalló en la
+\protect\hyperlink{datos-georreferenciados}{Sección 2.1 sobre datos
+georreferenciados}, para el tratamiento de datos vectoriales se ha
+utilizado el paquete de \(R\) \emph{sf} \citep{sfpackage}, que
+proporciona una forma estandarizada de codificar y manipular datos
+espaciales vectoriales a través de las \emph{simple features},
+integrándose dentro del ecosistema \emph{tidyverse}. Para la
+manipulación de datos de tipo ráster se ha recurrido al paquete
+\emph{terra} \citep{terrapackage}.
 
 La descarga de información meteorológica satelital se ha realizado a
 través del paquete \emph{nasapower} \citep{nasapower}, que facilita el
 acceso a información meteorológica global de forma reproducible a través
-de R. El paquete \emph{mapSpain}\citep{R-mapspain} ha facilitado el
+de \(R\). El paquete \emph{mapSpain}\citep{R-mapspain} ha facilitado el
 acceso a las fronteras administrativas de España a distintos niveles de
 desagregación (comunidad autónoma, provincia y municipio). Se basa en el
 \emph{GISCO Eurostat database}

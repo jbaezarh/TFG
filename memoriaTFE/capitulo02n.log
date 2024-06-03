@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.31)  31 MAY 2024 12:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.31)  3 JUN 2024 14:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1062,139 +1062,146 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 Cap\'{\i }tulo 1.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 591.
+[3]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 602.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [3]
-<graficos/sf-classes.png, id=141, 602.25pt x 602.25pt>
+)
+<graficos/sf-classes.png, id=143, 602.25pt x 602.25pt>
 File: graficos/sf-classes.png Graphic file (type png)
 <use graficos/sf-classes.png>
-Package pdftex.def Info: graficos/sf-classes.png  used on input line 602.
-(pdftex.def)             Requested size: 273.14923pt x 273.16035pt.
+Package pdftex.def Info: graficos/sf-classes.png  used on input line 611.
+(pdftex.def)             Requested size: 318.66948pt x 318.67636pt.
+LaTeX Info: Redefining \. on input line 627.
+LaTeX Info: Redefining \% on input line 627.
+LaTeX Info: Redefining \. on input line 627.
+LaTeX Info: Redefining \% on input line 627.
+[4{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc} <./graficos/sf-classes.png>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 629.
+(Font)              <10> on input line 636.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 629.
+(Font)              <7> on input line 636.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 629.
-LaTeX Info: Redefining \. on input line 632.
-LaTeX Info: Redefining \% on input line 632.
-LaTeX Info: Redefining \. on input line 632.
-LaTeX Info: Redefining \% on input line 632.
-[4 <./graficos/sf-classes.png>]
-LaTeX Info: Redefining \. on input line 705.
-LaTeX Info: Redefining \% on input line 705.
-LaTeX Info: Redefining \. on input line 705.
-LaTeX Info: Redefining \% on input line 705.
-[5{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 719.
+(Font)              <5> on input line 636.
+LaTeX Info: Redefining \. on input line 689.
+LaTeX Info: Redefining \% on input line 689.
+LaTeX Info: Redefining \. on input line 689.
+LaTeX Info: Redefining \% on input line 689.
+[5{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 726.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \. on input line 759.
-LaTeX Info: Redefining \% on input line 759.
-LaTeX Info: Redefining \. on input line 759.
-LaTeX Info: Redefining \% on input line 759.
+LaTeX Info: Redefining \. on input line 757.
+LaTeX Info: Redefining \% on input line 757.
+LaTeX Info: Redefining \. on input line 757.
+LaTeX Info: Redefining \% on input line 757.
 [6{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-<graficos/statistical_value_chain.png, id=191, 554.07pt x 175.40532pt>
+<graficos/statistical_value_chain.png, id=192, 554.07pt x 175.40532pt>
 File: graficos/statistical_value_chain.png Graphic file (type png)
 <use graficos/statistical_value_chain.png>
-Package pdftex.def Info: graficos/statistical_value_chain.png  used on input line 766.
-(pdftex.def)             Requested size: 432.48051pt x 136.91194pt.
-Package mdframed Info: mdframed works in twoside mode on input line 800.
+Package pdftex.def Info: graficos/statistical_value_chain.png  used on input line 773.
+(pdftex.def)             Requested size: 386.96027pt x 122.50185pt.
+Package mdframed Info: mdframed works in twoside mode on input line 805.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 800.
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 801.
+(mdframed)              on input line 805.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 806.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \. on input line 809.
-LaTeX Info: Redefining \% on input line 809.
-LaTeX Info: Redefining \. on input line 809.
-LaTeX Info: Redefining \% on input line 809.
+Package mdframed Info: Not enough space on this page on input line 807.
+LaTeX Info: Redefining \. on input line 807.
+LaTeX Info: Redefining \% on input line 807.
+LaTeX Info: Redefining \. on input line 807.
+LaTeX Info: Redefining \% on input line 807.
 [7 <./graficos/statistical_value_chain.png>]
-Package mdframed Info: mdframed works in twoside mode on input line 811.
+Package mdframed Info: Not enough space on this page on input line 807.
+Package mdframed Info: mdframed works in twoside mode on input line 816.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 811.
-LaTeX Info: Redefining \. on input line 874.
-LaTeX Info: Redefining \% on input line 874.
-LaTeX Info: Redefining \. on input line 874.
-LaTeX Info: Redefining \% on input line 874.
+(mdframed)              on input line 816.
+LaTeX Info: Redefining \. on input line 868.
+LaTeX Info: Redefining \% on input line 868.
+LaTeX Info: Redefining \. on input line 868.
+LaTeX Info: Redefining \% on input line 868.
 [8]
-LaTeX Info: Redefining \. on input line 930.
-LaTeX Info: Redefining \% on input line 930.
-LaTeX Info: Redefining \. on input line 930.
-LaTeX Info: Redefining \% on input line 930.
+LaTeX Info: Redefining \. on input line 928.
+LaTeX Info: Redefining \% on input line 928.
+LaTeX Info: Redefining \. on input line 928.
+LaTeX Info: Redefining \% on input line 928.
 [9]
-Package mdframed Info: mdframed works in twoside mode on input line 933.
+Package mdframed Info: mdframed works in twoside mode on input line 938.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 933.
-Package mdframed Info: mdframed works in twoside mode on input line 939.
+(mdframed)              on input line 938.
+Package mdframed Info: mdframed works in twoside mode on input line 944.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 939.
-LaTeX Info: Redefining \. on input line 986.
-LaTeX Info: Redefining \% on input line 986.
-LaTeX Info: Redefining \. on input line 986.
-LaTeX Info: Redefining \% on input line 986.
+(mdframed)              on input line 944.
+LaTeX Info: Redefining \. on input line 974.
+LaTeX Info: Redefining \% on input line 974.
+LaTeX Info: Redefining \. on input line 974.
+LaTeX Info: Redefining \% on input line 974.
 [10]
-LaTeX Info: Redefining \. on input line 1045.
-LaTeX Info: Redefining \% on input line 1045.
-LaTeX Info: Redefining \. on input line 1045.
-LaTeX Info: Redefining \% on input line 1045.
+LaTeX Info: Redefining \. on input line 1039.
+LaTeX Info: Redefining \% on input line 1039.
+LaTeX Info: Redefining \. on input line 1039.
+LaTeX Info: Redefining \% on input line 1039.
 [11]
-LaTeX Info: Redefining \. on input line 1112.
-LaTeX Info: Redefining \% on input line 1112.
-LaTeX Info: Redefining \. on input line 1112.
-LaTeX Info: Redefining \% on input line 1112.
+LaTeX Info: Redefining \. on input line 1111.
+LaTeX Info: Redefining \% on input line 1111.
+LaTeX Info: Redefining \. on input line 1111.
+LaTeX Info: Redefining \% on input line 1111.
 [12]
-LaTeX Info: Redefining \. on input line 1187.
-LaTeX Info: Redefining \% on input line 1187.
-LaTeX Info: Redefining \. on input line 1187.
-LaTeX Info: Redefining \% on input line 1187.
+LaTeX Info: Redefining \. on input line 1189.
+LaTeX Info: Redefining \% on input line 1189.
+LaTeX Info: Redefining \. on input line 1189.
+LaTeX Info: Redefining \% on input line 1189.
 [13]
-LaTeX Info: Redefining \. on input line 1245.
-LaTeX Info: Redefining \% on input line 1245.
-LaTeX Info: Redefining \. on input line 1245.
-LaTeX Info: Redefining \% on input line 1245.
+LaTeX Info: Redefining \. on input line 1241.
+LaTeX Info: Redefining \% on input line 1241.
+LaTeX Info: Redefining \. on input line 1241.
+LaTeX Info: Redefining \% on input line 1241.
 [14]
 
-LaTeX Warning: Command \' invalid in math mode on input line 1255.
+LaTeX Warning: Command \' invalid in math mode on input line 1260.
 
 
-LaTeX Warning: Reference `fig:roc_validation' on page 15 undefined on input line 1274.
+LaTeX Warning: Reference `fig:roc_validation' on page 15 undefined on input line 1279.
 
-LaTeX Info: Redefining \. on input line 1303.
-LaTeX Info: Redefining \% on input line 1303.
-LaTeX Info: Redefining \. on input line 1303.
-LaTeX Info: Redefining \% on input line 1303.
+LaTeX Info: Redefining \. on input line 1295.
+LaTeX Info: Redefining \% on input line 1295.
+LaTeX Info: Redefining \. on input line 1295.
+LaTeX Info: Redefining \% on input line 1295.
 [15]
 <graficos/tidyverse_workflow.png, id=296, 537.50812pt x 200.24812pt>
 File: graficos/tidyverse_workflow.png Graphic file (type png)
 <use graficos/tidyverse_workflow.png>
-Package pdftex.def Info: graficos/tidyverse_workflow.png  used on input line 1306.
-(pdftex.def)             Requested size: 432.48051pt x 161.12149pt.
-(./capitulo02n.bbl
+Package pdftex.def Info: graficos/tidyverse_workflow.png  used on input line 1311.
+(pdftex.def)             Requested size: 364.19667pt x 135.68109pt.
+LaTeX Info: Redefining \. on input line 1344.
+LaTeX Info: Redefining \% on input line 1344.
+LaTeX Info: Redefining \. on input line 1344.
+LaTeX Info: Redefining \% on input line 1344.
+[16 <./graficos/tidyverse_workflow.png>] (./capitulo02n.bbl
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-[16 <./graficos/tidyverse_workflow.png>]
+[17] [18
+
+]
 Underfull \hbox (badness 10000) in paragraph at lines 27--31
 []$\T1/lmr/m/n/12 https : / / cran . r-[]project . org / doc / contrib / de _ Jonge + van _ der _ Loo-[]Introduction _
  []
 
-[17
-
-])
-LaTeX Info: Redefining \. on input line 1354.
-LaTeX Info: Redefining \% on input line 1354.
-LaTeX Info: Redefining \. on input line 1354.
-LaTeX Info: Redefining \% on input line 1354.
-[18] (./capitulo02n.aux
+[19])
+LaTeX Info: Redefining \. on input line 1360.
+LaTeX Info: Redefining \% on input line 1360.
+LaTeX Info: Redefining \. on input line 1360.
+LaTeX Info: Redefining \% on input line 1360.
+[20] (./capitulo02n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
@@ -1206,21 +1213,21 @@ L3 programming layer <2024-05-08>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `capitulo02n.out' has not changed.
-(rerunfilecheck)             Checksum: 299B7C88BD3ED10C0CDB3EB3D78059FE;3477.
+(rerunfilecheck)             Checksum: EC45453D950841FE673A2633234368AE;3547.
  ) 
 Here is how much of TeX's memory you used:
- 31165 strings out of 475935
- 595789 string characters out of 5787577
- 1945907 words of memory out of 5000000
- 52660 multiletter control sequences out of 15000+600000
- 651083 words of font info for 92 fonts, out of 8000000 for 9000
+ 31154 strings out of 475935
+ 595405 string characters out of 5787577
+ 1942907 words of memory out of 5000000
+ 52647 multiletter control sequences out of 15000+600000
+ 646812 words of font info for 91 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,13n,93p,1595b,603s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,13n,93p,1595b,656s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on capitulo02n.pdf (18 pages, 473629 bytes).
+Output written on capitulo02n.pdf (20 pages, 472356 bytes).
 PDF statistics:
- 461 PDF objects out of 1000 (max. 8388607)
- 385 compressed objects within 4 object streams
- 110 named destinations out of 1000 (max. 500000)
+ 472 PDF objects out of 1000 (max. 8388607)
+ 394 compressed objects within 4 object streams
+ 112 named destinations out of 1000 (max. 500000)
  196 words of extra memory for PDF output out of 10000 (max. 10000000)
 

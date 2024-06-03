@@ -989,7 +989,7 @@ ggplot(data = prov) +
   guides(alpha="none")
 ```
 
-En la gran mayoría de las observaciones no se han observado precipitaciones. Se observan algunos valores positivos de precipitaciones distribuidos por el territorio Andaluz, alcanzándose los máximos en observaciones localizadas ne las coordilleras béticas.
+En la gran mayoría de las observaciones no se han observado precipitaciones. Se observan algunos valores positivos de precipitaciones distribuidos por el territorio andaluz, alcanzándose los máximos en observaciones localizadas en las coordilleras béticas.
 
 ```{r}
 datos %>% 
@@ -1074,7 +1074,7 @@ by(datos$dens_poblacion,datos$fire,summary)
 
 ```
 
-Comentario similar a la población. Mayor densidad de población en las zonas de costa y en las capitales de provincia.
+Se puede observar una distribución espacial similar a la cantidad de población. Se observa una mayor densisdad de población en las zonas de costa y en las capitales de provincia.
 
 #### pendiente{.unlisted .unnumbered}
 ```{r}

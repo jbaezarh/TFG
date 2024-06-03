@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.26)  28 MAY 2024 14:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.31)  3 JUN 2024 19:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -323,8 +323,7 @@ Package: flexbib 2018/09/15 v. 1.999
 \bibsep=\skip55
 LaTeX Info: Redefining \cite on input line 448.
 \c@NAT@ctr=\count294
-No file capitulo041n.bbl.
-) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
+(./capitulo041n.bbl)) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count295
 \float@exts=\toks28
@@ -349,7 +348,7 @@ Package: chngcntr 2018/04/09 v1.1a change counter resetting
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2024/01/21 v0.5y Insert pages of external PDF documents (AM)
+Package: pdfpages 2024/05/29 v0.6a Insert pages of external PDF documents (AM)
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
@@ -386,7 +385,7 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 \AM@pageheight=\dimen170
 \AM@fboxrule=\dimen171
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.def
-File: pppdftex.def 2024/01/21 v0.5y Pdfpages driver for pdfTeX (AM)
+File: pppdftex.def 2024/05/29 v0.6a Pdfpages driver for pdfTeX (AM)
 )
 \pdfpages@includegraphics@status=\count299
 \AM@pagebox=\box55
@@ -789,7 +788,7 @@ Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \WF@everypar=\toks54
 Package: wrapfig 2003/01/31  v 3.6
 ) (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
-Package: colortbl 2024/02/20 v1.0g Color table columns (DPC)
+Package: colortbl 2024/05/26 v1.0h Color table columns (DPC)
 \everycr=\toks55
 \minrowclearance=\skip153
 \rownum=\count346
@@ -1063,129 +1062,131 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 Cap\'{\i }tulo 1.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 562.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 563.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 572.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 575.
 (c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [3{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-<graficos/lr_tuningplot.png, id=78, 540.30429pt x 383.37514pt>
+<graficos/lr_tuningplot.png, id=85, 540.30429pt x 383.37514pt>
 File: graficos/lr_tuningplot.png Graphic file (type png)
 <use graficos/lr_tuningplot.png>
-Package pdftex.def Info: graficos/lr_tuningplot.png  used on input line 626.
+Package pdftex.def Info: graficos/lr_tuningplot.png  used on input line 630.
 (pdftex.def)             Requested size: 318.66948pt x 226.11917pt.
 
-LaTeX Warning: Reference `fig:lr_coef' on page 4 undefined on input line 634.
+LaTeX Warning: Reference `fig:lr_coef' on page 4 undefined on input line 638.
 
-LaTeX Info: Redefining \. on input line 651.
-LaTeX Info: Redefining \% on input line 651.
-LaTeX Info: Redefining \. on input line 651.
-LaTeX Info: Redefining \% on input line 651.
+LaTeX Info: Redefining \. on input line 643.
+LaTeX Info: Redefining \% on input line 643.
+LaTeX Info: Redefining \. on input line 643.
+LaTeX Info: Redefining \% on input line 643.
 [4{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc} <./graficos/lr_tuningplot.png (PNG copy)>]
-<graficos/dt_tuningplot.png, id=94, 493.52803pt x 428.8654pt>
+
+LaTeX Warning: Reference `fig:lr_coef' on page 5 undefined on input line 662.
+
+<graficos/dt_tuningplot.png, id=100, 493.52803pt x 428.8654pt>
 File: graficos/dt_tuningplot.png Graphic file (type png)
 <use graficos/dt_tuningplot.png>
-Package pdftex.def Info: graficos/dt_tuningplot.png  used on input line 667.
-(pdftex.def)             Requested size: 318.66948pt x 276.92688pt.
-LaTeX Info: Redefining \. on input line 683.
-LaTeX Info: Redefining \% on input line 683.
-LaTeX Info: Redefining \. on input line 683.
-LaTeX Info: Redefining \% on input line 683.
-[5 <./graficos/dt_tuningplot.png>]
-
-LaTeX Warning: Reference `rf_tuningplot' on page 6 undefined on input line 695.
-
-<graficos/rf_tuningplot.png, id=104, 493.52803pt x 428.8654pt>
-File: graficos/rf_tuningplot.png Graphic file (type png)
-<use graficos/rf_tuningplot.png>
-Package pdftex.def Info: graficos/rf_tuningplot.png  used on input line 701.
-(pdftex.def)             Requested size: 318.66948pt x 276.92688pt.
-LaTeX Info: Redefining \. on input line 717.
-LaTeX Info: Redefining \% on input line 717.
-LaTeX Info: Redefining \. on input line 717.
-LaTeX Info: Redefining \% on input line 717.
-[6 <./graficos/rf_tuningplot.png (PNG copy)>]
-<graficos/knn_tuningplot.png, id=112, 493.52803pt x 428.8654pt>
-File: graficos/knn_tuningplot.png Graphic file (type png)
-<use graficos/knn_tuningplot.png>
-Package pdftex.def Info: graficos/knn_tuningplot.png  used on input line 720.
-(pdftex.def)             Requested size: 318.66948pt x 276.92688pt.
-<graficos/svm_tuningplot.png, id=114, 493.52803pt x 428.8654pt>
-File: graficos/svm_tuningplot.png Graphic file (type png)
-<use graficos/svm_tuningplot.png>
-Package pdftex.def Info: graficos/svm_tuningplot.png  used on input line 737.
+Package pdftex.def Info: graficos/dt_tuningplot.png  used on input line 694.
 (pdftex.def)             Requested size: 318.66948pt x 276.92688pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Info: Redefining \. on input line 761.
-LaTeX Info: Redefining \% on input line 761.
-LaTeX Info: Redefining \. on input line 761.
-LaTeX Info: Redefining \% on input line 761.
-[7 <./graficos/knn_tuningplot.png>]
+LaTeX Info: Redefining \. on input line 713.
+LaTeX Info: Redefining \% on input line 713.
+LaTeX Info: Redefining \. on input line 713.
+LaTeX Info: Redefining \% on input line 713.
+[5]
+<graficos/rf_tuningplot.png, id=111, 760.73685pt x 400.33777pt>
+File: graficos/rf_tuningplot.png Graphic file (type png)
+<use graficos/rf_tuningplot.png>
+Package pdftex.def Info: graficos/rf_tuningplot.png  used on input line 731.
+(pdftex.def)             Requested size: 318.66948pt x 167.70088pt.
 
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 772.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<graficos/validation_metrics.png, id=129, 493.52803pt x 428.8654pt>
-File: graficos/validation_metrics.png Graphic file (type png)
-<use graficos/validation_metrics.png>
-Package pdftex.def Info: graficos/validation_metrics.png  used on input line 793.
+LaTeX Info: Redefining \. on input line 746.
+LaTeX Info: Redefining \% on input line 746.
+LaTeX Info: Redefining \. on input line 746.
+LaTeX Info: Redefining \% on input line 746.
+[6 <./graficos/dt_tuningplot.png>]
+<graficos/knn_tuningplot.png, id=120, 493.52803pt x 428.8654pt>
+File: graficos/knn_tuningplot.png Graphic file (type png)
+<use graficos/knn_tuningplot.png>
+Package pdftex.def Info: graficos/knn_tuningplot.png  used on input line 749.
 (pdftex.def)             Requested size: 318.66948pt x 276.92688pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<graficos/roc_validation.png, id=130, 519.2029pt x 428.8654pt>
-File: graficos/roc_validation.png Graphic file (type png)
-<use graficos/roc_validation.png>
-Package pdftex.def Info: graficos/roc_validation.png  used on input line 800.
-(pdftex.def)             Requested size: 318.66948pt x 263.2304pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-LaTeX Info: Redefining \. on input line 824.
-LaTeX Info: Redefining \% on input line 824.
-LaTeX Info: Redefining \. on input line 824.
-LaTeX Info: Redefining \% on input line 824.
+LaTeX Info: Redefining \. on input line 763.
+LaTeX Info: Redefining \% on input line 763.
+LaTeX Info: Redefining \. on input line 763.
+LaTeX Info: Redefining \% on input line 763.
+[7 <./graficos/rf_tuningplot.png> <./graficos/knn_tuningplot.png>]
+<graficos/svm_tuningplot.png, id=131, 493.52803pt x 428.8654pt>
+File: graficos/svm_tuningplot.png Graphic file (type png)
+<use graficos/svm_tuningplot.png>
+Package pdftex.def Info: graficos/svm_tuningplot.png  used on input line 766.
+(pdftex.def)             Requested size: 318.66948pt x 276.92688pt.
+LaTeX Info: Redefining \. on input line 805.
+LaTeX Info: Redefining \% on input line 805.
+LaTeX Info: Redefining \. on input line 805.
+LaTeX Info: Redefining \% on input line 805.
 [8 <./graficos/svm_tuningplot.png>]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 835.
+               Default added (so using `tbp') on input line 806.
 
-<graficos/test_metrics.png, id=143, 519.2029pt x 428.8654pt>
+<graficos/validation_metrics.png, id=146, 493.52803pt x 428.8654pt>
+File: graficos/validation_metrics.png Graphic file (type png)
+<use graficos/validation_metrics.png>
+Package pdftex.def Info: graficos/validation_metrics.png  used on input line 827.
+(pdftex.def)             Requested size: 318.66948pt x 276.92688pt.
+<graficos/roc_validation.png, id=147, 519.2029pt x 428.8654pt>
+File: graficos/roc_validation.png Graphic file (type png)
+<use graficos/roc_validation.png>
+Package pdftex.def Info: graficos/roc_validation.png  used on input line 834.
+(pdftex.def)             Requested size: 318.66948pt x 263.2304pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+LaTeX Info: Redefining \. on input line 858.
+LaTeX Info: Redefining \% on input line 858.
+LaTeX Info: Redefining \. on input line 858.
+LaTeX Info: Redefining \% on input line 858.
+[9 <./graficos/validation_metrics.png>]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 869.
+
+<graficos/test_metrics.png, id=157, 519.2029pt x 428.8654pt>
 File: graficos/test_metrics.png Graphic file (type png)
 <use graficos/test_metrics.png>
-Package pdftex.def Info: graficos/test_metrics.png  used on input line 856.
+Package pdftex.def Info: graficos/test_metrics.png  used on input line 890.
 (pdftex.def)             Requested size: 318.66948pt x 263.2304pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<graficos/roc_test.png, id=144, 519.2029pt x 428.8654pt>
+<graficos/roc_test.png, id=158, 519.2029pt x 428.8654pt>
 File: graficos/roc_test.png Graphic file (type png)
 <use graficos/roc_test.png>
-Package pdftex.def Info: graficos/roc_test.png  used on input line 863.
+Package pdftex.def Info: graficos/roc_test.png  used on input line 897.
 (pdftex.def)             Requested size: 318.66948pt x 263.2304pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-No file capitulo041n.bbl.
-LaTeX Info: Redefining \. on input line 875.
-LaTeX Info: Redefining \% on input line 875.
-LaTeX Info: Redefining \. on input line 875.
-LaTeX Info: Redefining \% on input line 875.
-[9 <./graficos/validation_metrics.png>]
-LaTeX Info: Redefining \. on input line 875.
-LaTeX Info: Redefining \% on input line 875.
-LaTeX Info: Redefining \. on input line 875.
-LaTeX Info: Redefining \% on input line 875.
+(./capitulo041n.bbl
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
 [10 <./graficos/roc_validation.png>]
-LaTeX Info: Redefining \. on input line 875.
-LaTeX Info: Redefining \% on input line 875.
-LaTeX Info: Redefining \. on input line 875.
-LaTeX Info: Redefining \% on input line 875.
-[11 <./graficos/test_metrics.png> <./graficos/roc_test.png>] (./capitulo041n.aux
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+[11 <./graficos/test_metrics.png> <./graficos/roc_test.png>] [12
+
+]) [13] (./capitulo041n.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
@@ -1197,21 +1198,21 @@ L3 programming layer <2024-05-08>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `capitulo041n.out' has not changed.
-(rerunfilecheck)             Checksum: 63D301180BDD7BE87B324016B923891A;1424.
+(rerunfilecheck)             Checksum: A0C948D9DCADB7C592DA4C24CB01DE17;1530.
  ) 
 Here is how much of TeX's memory you used:
- 30934 strings out of 475935
- 591891 string characters out of 5787577
- 1939907 words of memory out of 5000000
- 52520 multiletter control sequences out of 15000+600000
- 605710 words of font info for 67 fonts, out of 8000000 for 9000
+ 30960 strings out of 475935
+ 592251 string characters out of 5787577
+ 1938907 words of memory out of 5000000
+ 52536 multiletter control sequences out of 15000+600000
+ 608505 words of font info for 68 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,12n,93p,549b,468s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on capitulo041n.pdf (11 pages, 333413 bytes).
+ 84i,12n,93p,1596b,472s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/usuario/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on capitulo041n.pdf (13 pages, 340884 bytes).
 PDF statistics:
- 232 PDF objects out of 1000 (max. 8388607)
- 178 compressed objects within 2 object streams
- 44 named destinations out of 1000 (max. 500000)
- 138 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 256 PDF objects out of 1000 (max. 8388607)
+ 197 compressed objects within 2 object streams
+ 48 named destinations out of 1000 (max. 500000)
+ 146 words of extra memory for PDF output out of 10000 (max. 10000000)
 
