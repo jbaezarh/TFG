@@ -102,6 +102,16 @@ source("cabecera_chunk_inicio.R")
 \label{fig:NDVI_spat}
 \end{figure}
 
+### Variable hidrológica
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = \textwidth]{graficos/dist_rios_spat.png}
+\caption[Distribución espacial de \textit{dist\_rio}]{Distribución espacial de \textit{dist\_rio}. \it Fuente: Elaboración propia.}
+\label{fig:dist_rio_spat}
+\end{figure}
+
+
 ### Variables topográficas
 
 \begin{figure}[H]

@@ -1,0 +1,127 @@
+\begin{thebibliography}{19}
+%Comandos de formato, por si no est'an definidos.
+\ProvideTextCommand{\guillemotleft}{OT1}{\leavevmode\raise .27ex\hbox{$\scriptscriptstyle\ll$}} \ProvideTextCommand{\guillemotright}{OT1}{\leavevmode\raise .27ex\hbox{$\scriptscriptstyle\gg$}}
+\providecommand{\enquote}[1]{\guillemotleft#1\guillemotright} \providecommand{\natexlab}[1]{#1} \providecommand{\bibnamefont}[1]{\textsc{#1}} \providecommand{\bibfnamefont}[1]{\textsc{#1}} \providecommand{\bibfnamefontand}[1]{#1} \providecommand{\citenamefont}[1]{#1} \providecommand{\bibnamefont}[1]{\textsc{#1}} \providecommand{\bbletalfont}[1]{\emph{#1}}  \providecommand{\citeandfont}[1]{#1} \providecommand{\citetalfont}[1]{#1} \providecommand{\bibyearfont}[1]{#1} \providecommand{\isbn}[1]{ISBN #1} \providecommand{\url}[1]{\texttt{#1}} \providecommand{\urlprefix}{} \providecommand{\nameseparator}{;} \providecommand{\namereplace}[1]{{---{}---} \ifx\datebegin\relax \else \def\datebegin #1.{\relax}\fi} \providecommand{\dateend}[1]{, #1} \providecommand{\bibtitle}[1]{#1}\providecommand{\bibtranslator}[1]{#1} \providecommand{\bibtranslatorname}{Traducido por } \providecommand{\selectlanguage}[1]{\relax} \providecommand{\finalpoint}{.} \providecommand{\namesend}{:} \providecommand{\Capitalize}[1]{\uppercase{#1}} \providecommand{\capitalize}[1]{\expandafter\Capitalize#1} \providecommand{\bibinfont}[1]{\textbf{#1}} \providecommand{\inbooktitlefont}[1]{\emph{#1}} \providecommand{\bibvolfont}[1]{\textbf{#1}} \providecommand{\bibandfont}[1]{#1}  \providecommand{\bibcommentname}{\textsc{Obs:}} \providecommand{\bibcomment}[2]{\begin{quotation} \noindent\textsc{\bibcommentname}\ #2\end{quotation}} \providecommand{\bibabstract}[2]{\begin{quotation} \noindent\textsc{\Abstractname:}\ #2\end{quotation}}
+\providecommand{\bblin}{En} \providecommand{\bbland}{y} \providecommand{\bbletal}{et al.} \providecommand{\bbled}{ed.} \providecommand{\bbleds}{Eds.} \providecommand{\bbvolume}{Vol.}  \providecommand{\bblof}{de} \providecommand{\bbledition}{ª~edición} \providecommand{\bblp}{p.}  \providecommand{\bblpp}{pp.} \providecommand{\bbltechreport}{Informe técnico} \providecommand{\bblmthesis}{Tesina} \providecommand{\bblphdthesis}{Tesis doctoral} \providecommand{\bblchapter}{cap\'\i{}tulo} \providecommand{\bblnumber}{número} \providecommand{\bblvolume}{volumen} \providecommand{\MR}[1]{\relax\ifhmode\unskip\space\fi MR #1} \expandafter\ifx\csname urlstyle\endcsname\relax \providecommand{\doi}[1]{doi: #1}\else  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+%Para resultados estilo plain descomente la l'inea siguiente
+%\let\oldbibitem=\bibitem \def\bibitem[#1]#2{\oldbibitem{#2}}
+
+\bibitem[{OCG()}]{OCGweb}
+\datebegin .
+  \newblock \bibtitle{\enquote{Open Geospatial Consortium}}.
+  \newblock \url{https://www.ogc.org/}\finalpoint{}
+
+\bibitem[{\citenamefont{Awati}(2024)}]{eight2late}
+\bibnamefont{Awati}, \bibfnamefont{Kailash}\namesend{}\datebegin 2024.
+  \newblock \bibtitle{\enquote{Eight to Late}}.
+  \newblock \url{https://eight2late.wordpress.com/}\dateend{2024}\finalpoint{}
+
+\bibitem[{\citenamefont{Breiman} \citetalfont{\bbletal{}}(1984)\citenamefont{Breiman}, \citenamefont{Friedman}, \citenamefont{Stone} \citeandfont{\bbland{}} \citenamefont{Olshen}}]{breiman1984classification}
+\bibnamefont{Breiman}, \bibfnamefont{L.}\nameseparator{} \bibnamefont{Friedman}, \bibfnamefont{J.}\nameseparator{} \bibnamefont{Stone}, \bibfnamefont{C.J.} \bibandfont{\bbland{}} \bibnamefont{Olshen}, \bibfnamefont{R.A.}\namesend{}\datebegin 1984.
+  \newblock \bibtitle{\emph{Classification and Regression Trees}}.
+  \newblock Taylor \& Francis\dateend{1984}.
+  \newblock ISBN 9780412048418.
+  \newblock \doi{https://doi.org/10.1201/9781315139470}\finalpoint{}
+
+\bibitem[{\citenamefont{de~Jonge} \citeandfont{\bbland{}} \citenamefont{van~der Loo}(2013)}]{de2013introduction}
+\bibnamefont{de~Jonge}, \bibfnamefont{E.} \bibandfont{\bbland{}} \bibnamefont{van~der Loo}, \bibfnamefont{M.}\namesend{}\datebegin 2013.
+  \newblock \bibtitle{\emph{An Introduction to Data Cleaning with R}}.
+  \newblock Discussion Paper / Statistics Netherlands. Statistics Netherlands\dateend{2013}.
+  \newblock \preurl{} \url{https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf}\finalpoint{}
+
+\bibitem[{\citenamefont{Gimond}(2023)}]{introGISGimond}
+\bibnamefont{Gimond}, \bibfnamefont{Manuel}\namesend{}\datebegin 2023.
+  \newblock \bibtitle{\enquote{Intro to GIS and Spatial Analysis}}.
+  \newblock \url{https://mgimond.github.io/Spatial/}\dateend{2023}\finalpoint{}
+
+\bibitem[{\citenamefont{Hastie} \citetalfont{\bbletal{}}(2009)\citenamefont{Hastie}, \citenamefont{Tibshirani} \citeandfont{\bbland{}} \citenamefont{Friedman}}]{hastie2009elements}
+\bibnamefont{Hastie}, \bibfnamefont{T.}\nameseparator{} \bibnamefont{Tibshirani}, \bibfnamefont{R.} \bibandfont{\bbland{}} \bibnamefont{Friedman}, \bibfnamefont{J.H.}\namesend{}\datebegin 2009.
+  \newblock \bibtitle{\emph{The Elements of Statistical Learning: Data Mining, Inference, and Prediction}}.
+  \newblock Springer series in statistics. Springer\dateend{2009}.
+  \newblock ISBN 9780387848846.
+  \newblock \preurl{} \url{https://hastie.su.domains/Papers/ESLII.pdf}\finalpoint{}
+
+\bibitem[{\citenamefont{Hernangómez}(2024)}]{R-mapspain}
+\bibnamefont{Hernangómez}, \bibfnamefont{Diego}\namesend{}\datebegin 2024.
+  \newblock \bibtitle{\emph{{mapSpain}: Administrative Boundaries of Spain}}\dateend{2024}.
+  \newblock \doi{10.5281/zenodo.5366622}.
+  \newblock \preurl{} \url{https://ropenspain.github.io/mapSpain/}\finalpoint{}
+  \bibabstract{R-mapspain}{Administrative Boundaries of Spain at several levels (Autonomous Communities, Provinces, Municipalities) based on the GISCO Eurostat database <https://ec.europa.eu/eurostat/web/gisco> and CartoBase SIANE from Instituto Geografico Nacional <https://www.ign.es/>. It also provides a leaflet plugin and the ability of downloading and processing static tiles.}
+
+\bibitem[{\citenamefont{Hijmans}(2024)}]{terrapackage}
+\bibnamefont{Hijmans}, \bibfnamefont{Robert~J.}\namesend{}\datebegin 2024.
+  \newblock \bibtitle{\emph{terra: Spatial Data Analysis}}\dateend{2024}.
+  \newblock \preurl{} \url{https://CRAN.R-project.org/package=terra}.
+  \newblock R package version 1.7-71\finalpoint{}
+
+\bibitem[{\citenamefont{Kuhn} \citeandfont{\bbland{}} \citenamefont{Wickham}(2020)}]{tidymodelspackage}
+\bibnamefont{Kuhn}, \bibfnamefont{Max} \bibandfont{\bbland{}} \bibnamefont{Wickham}, \bibfnamefont{Hadley}\namesend{}\datebegin 2020.
+  \newblock \bibtitle{\emph{Tidymodels: a collection of packages for modeling and machine learning using tidyverse principles.}}\dateend{2020}.
+  \newblock \preurl{} \url{https://www.tidymodels.org}\finalpoint{}
+
+\bibitem[{\citenamefont{Lovelace} \citetalfont{\bbletal{}}(2019)\citenamefont{Lovelace}, \citenamefont{Nowosad} \citeandfont{\bbland{}} \citenamefont{Muenchow}}]{lovelace_geocomputation_2019}
+\bibnamefont{Lovelace}, \bibfnamefont{Robin}\nameseparator{} \bibnamefont{Nowosad}, \bibfnamefont{Jakub} \bibandfont{\bbland{}} \bibnamefont{Muenchow}, \bibfnamefont{Jannes}\namesend{}\datebegin 2019.
+  \newblock \bibtitle{\emph{Geocomputation with {{R}}}}.
+  \newblock {CRC Press}\dateend{2019}.
+  \newblock ISBN 1-138-30451-4\finalpoint{}
+  \bibabstract{lovelace_geocomputation_2019}{Book on geographic data with R.}
+
+\bibitem[{\citenamefont{Pebesma}(2018)}]{sfpackage}
+\bibnamefont{Pebesma}, \bibfnamefont{Edzer}\namesend{}\datebegin 2018.
+  \newblock \bibtitle{\enquote{{Simple Features for R: Standardized Support for Spatial Vector Data}}}.
+  \newblock \emph{{The R Journal}}\dateend{2018}, \bibvolfont{10(1)}, \bblpp{} 439--446.
+  \newblock \doi{10.32614/RJ-2018-009}.
+  \newblock \preurl{} \url{https://doi.org/10.32614/RJ-2018-009}\finalpoint{}
+
+\bibitem[{\citenamefont{{R Core Team}}(2024)}]{Rproject}
+\bibnamefont{{R Core Team}}\namesend{}\datebegin 2024.
+  \newblock \bibtitle{\emph{R: A Language and Environment for Statistical Computing}}.
+  \newblock R Foundation for Statistical Computing, Vienna, Austria\dateend{2024}.
+  \newblock \preurl{} \url{https://www.R-project.org/}\finalpoint{}
+
+\bibitem[{\citenamefont{Shao} \citeandfont{\bbland{}} \citenamefont{Deng}(2015)}]{PCAShaoDeng}
+\bibnamefont{Shao}, \bibfnamefont{YH} \bibandfont{\bbland{}} \bibnamefont{Deng}, \bibfnamefont{NY}\namesend{}\datebegin 2015.
+  \newblock \bibtitle{\enquote{The Equivalence Between Principal Component Analysis and Nearest Flat in the Least Square Sense}}.
+  \newblock \emph{Journal of Optimization Theory and Applications}\dateend{2015}, \bibvolfont{166}, \bblpp{} 278--284.
+  \newblock \doi{10.1007/s10957-014-0647-y}.
+  \newblock \preurl{} \url{https://link.springer.com/article/10.1007/s10957-014-0647-y}\finalpoint{}
+
+\bibitem[{\citenamefont{Sparks}(2018)}]{nasapower}
+\bibnamefont{Sparks}, \bibfnamefont{Adam~H.}\namesend{}\datebegin 2018.
+  \newblock \bibtitle{\enquote{nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data Client for R}}.
+  \newblock \emph{The Journal of Open Source Software}\dateend{2018}, \bibvolfont{3(30)}, \bblp{} 1035.
+  \newblock \doi{10.21105/joss.01035}\finalpoint{}
+
+\bibitem[{\citenamefont{Suthaharan}(2016)}]{MLmodelSuthaharan}
+\bibnamefont{Suthaharan}, \bibfnamefont{Shan}\namesend{}\datebegin 2016.
+  \newblock \bibtitle{\emph{Machine Learning Models and Algorithms for Big Data Classification}}, \bblvolume{}~36 \bblof{} \emph{Integrated Series in Information Systems}.
+  \newblock Springer New York, NY\dateend{2016}.
+  \newblock \doi{10.1007/978-1-4899-7641-3}\finalpoint{}
+
+\bibitem[{\citenamefont{Tay} \citetalfont{\bbletal{}}(2023)\citenamefont{Tay}, \citenamefont{Narasimhan} \citeandfont{\bbland{}} \citenamefont{Hastie}}]{glmnetpackage}
+\bibnamefont{Tay}, \bibfnamefont{J.~Kenneth}\nameseparator{} \bibnamefont{Narasimhan}, \bibfnamefont{Balasubramanian} \bibandfont{\bbland{}} \bibnamefont{Hastie}, \bibfnamefont{Trevor}\namesend{}\datebegin 2023.
+  \newblock \bibtitle{\enquote{Elastic Net Regularization Paths for All Generalized Linear Models}}.
+  \newblock \emph{Journal of Statistical Software}\dateend{2023}, \bibvolfont{106(1)}, \bblpp{} 1--31.
+  \newblock \doi{10.18637/jss.v106.i01}\finalpoint{}
+
+\bibitem[{\citenamefont{van~der Loo} \citeandfont{\bbland{}} \citenamefont{de~Jonge}(2018)}]{van2018statistical}
+\bibnamefont{van~der Loo}, \bibfnamefont{M.} \bibandfont{\bbland{}} \bibnamefont{de~Jonge}, \bibfnamefont{E.}\namesend{}\datebegin 2018.
+  \newblock \bibtitle{\emph{Statistical Data Cleaning with Applications in R}}.
+  \newblock Wiley\dateend{2018}.
+  \newblock ISBN 9781118897157.
+  \newblock \doi{10.1002/9781118897126}\finalpoint{}
+
+\bibitem[{\citenamefont{Wickham} \citeandfont{\bbland{}} \citenamefont{Grolemund}(2016)}]{wickham2016r}
+\bibnamefont{Wickham}, \bibfnamefont{H.} \bibandfont{\bbland{}} \bibnamefont{Grolemund}, \bibfnamefont{G.}\namesend{}\datebegin 2016.
+  \newblock \bibtitle{\emph{R for Data Science: Import, Tidy, Transform, Visualize, and Model Data}}.
+  \newblock O'Reilly Media\dateend{2016}.
+  \newblock ISBN 9781491910368.
+  \newblock \preurl{} \url{https://r4ds.hadley.nz/}\finalpoint{}
+
+\bibitem[{\citenamefont{Wickham} \citetalfont{\bbletal{}}(2019)\citenamefont{Wickham}, \citenamefont{Averick}, \citenamefont{Bryan}, \citenamefont{Chang}, \citenamefont{McGowan}, \citenamefont{François}, \citenamefont{Grolemund}, \citenamefont{Hayes}, \citenamefont{Henry}, \citenamefont{Hester}, \citenamefont{Kuhn}, \citenamefont{Pedersen}, \citenamefont{Miller}, \citenamefont{Bache}, \citenamefont{Müller}, \citenamefont{Ooms}, \citenamefont{Robinson}, \citenamefont{Seidel}, \citenamefont{Spinu}, \citenamefont{Takahashi}, \citenamefont{Vaughan}, \citenamefont{Wilke}, \citenamefont{Woo} \citeandfont{\bbland{}} \citenamefont{Yutani}}]{tidyversepackage}
+\bibnamefont{Wickham}, \bibfnamefont{Hadley}\nameseparator{} \bibnamefont{Averick}, \bibfnamefont{Mara}\nameseparator{} \bibnamefont{Bryan}, \bibfnamefont{Jennifer}\nameseparator{} \bibnamefont{Chang}, \bibfnamefont{Winston}\nameseparator{} \bibnamefont{McGowan}, \bibfnamefont{Lucy~D'Agostino}\nameseparator{} \bibnamefont{François}, \bibfnamefont{Romain}\nameseparator{} \bibnamefont{Grolemund}, \bibfnamefont{Garrett}\nameseparator{} \bibnamefont{Hayes}, \bibfnamefont{Alex}\nameseparator{} \bibnamefont{Henry}, \bibfnamefont{Lionel}\nameseparator{} \bibnamefont{Hester}, \bibfnamefont{Jim}\nameseparator{} \bibnamefont{Kuhn}, \bibfnamefont{Max}\nameseparator{} \bibnamefont{Pedersen}, \bibfnamefont{Thomas~Lin}\nameseparator{} \bibnamefont{Miller}, \bibfnamefont{Evan}\nameseparator{} \bibnamefont{Bache}, \bibfnamefont{Stephan~Milton}\nameseparator{} \bibnamefont{Müller}, \bibfnamefont{Kirill}\nameseparator{} \bibnamefont{Ooms}, \bibfnamefont{Jeroen}\nameseparator{} \bibnamefont{Robinson}, \bibfnamefont{David}\nameseparator{} \bibnamefont{Seidel}, \bibfnamefont{Dana~Paige}\nameseparator{} \bibnamefont{Spinu}, \bibfnamefont{Vitalie}\nameseparator{} \bibnamefont{Takahashi}, \bibfnamefont{Kohske}\nameseparator{} \bibnamefont{Vaughan}, \bibfnamefont{Davis}\nameseparator{} \bibnamefont{Wilke}, \bibfnamefont{Claus}\nameseparator{} \bibnamefont{Woo}, \bibfnamefont{Kara} \bibandfont{\bbland{}} \bibnamefont{Yutani}, \bibfnamefont{Hiroaki}\namesend{}\datebegin 2019.
+  \newblock \bibtitle{\enquote{Welcome to the {tidyverse}}}.
+  \newblock \emph{Journal of Open Source Software}\dateend{2019}, \bibvolfont{4(43)}, \bblp{} 1686.
+  \newblock \doi{10.21105/joss.01686}\finalpoint{}
+
+\end{thebibliography}

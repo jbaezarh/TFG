@@ -25,7 +25,9 @@ source("cabecera_chunk_inicio.R")
 
 # Preliminares
 
-Este capítulo describirán algunos aspectos esenciales para el adecuado seguimiento y comprensión del resto del documento. Se introducirán los elementos esenciales que sientan las bases de las técnicas empleadas en el estudio junto con las herramientas computacionales empleadas.  En algunos casos, junto con la descripción de los conceptos, se hará referencia a aspectos tecnológicos relacionados con las herramientas utilizadas, para relacionar cada una con el contexto en el que aparece, si bien al final del capítulo se dedicará una sección específica para describir los aspectos esenciales relacionados con las mismas.
+En este capítulo se introducirán los elementos principales que sientan las bases de las técnicas empleadas en el estudio junto con las herramientas computacionales utilizadas, aspectos esenciales para el adecuado seguimiento y comprensión del resto del documento.
+
+<!-- En este capítulo se describirán algunos aspectos esenciales para el adecuado seguimiento y comprensión del resto del documento. Se introducirán los elementos esenciales que sientan las bases de las técnicas empleadas en el estudio junto con las herramientas computacionales utilizadas, si bien al final del capítulo se dedicará una sección específica para describir los aspectos esenciales relacionados con las mismas. -->
 
 <!-- Definir de forma breve y concisa todas las técnicas que serán utilizadas. -->
 
@@ -39,9 +41,9 @@ Este capítulo describirán algunos aspectos esenciales para el adecuado seguimi
 Todos los datos empleados en este trabajo son georreferenciados, lo que significa que están asociados a ubicaciones geográficas específicas. Por ello, resulta esencial introducir los tipos de datos más utilizados para trabajar con esta información, sus características y las herramientas disponibles para manipularlos. En esta sección se tratarán los datos vectoriales y los datos ráster, al ser los tipos fundamentales en este contexto, con características bien diferenciadas entre ellos.
 
 
-### Datos Vectoriales
+### Datos vectoriales
 
-El modelo de datos vectoriales se basa en puntos ubicados dentro de un sistema de referencia de coordenadas (CRS, por sus siglas en inglés). Estos puntos pueden representar características independientes o pueden estar conectados para formar geometrías más complejas como líneas y polígonos. Para esta sección se han usado como referencia @lovelace_geocomputation_2019 y @introGISGimond.
+El modelo de datos vectoriales se basa en puntos ubicados dentro de un sistema de referencia de coordenadas (CRS, por sus siglas en inglés). Estos puntos pueden representar características independientes o pueden estar conectados para formar geometrías más complejas como líneas y polígonos. Para esta sección se han usado como referencia [@lovelace_geocomputation_2019] y [@introGISGimond].
 
 #### *Simple Features*{.unlisted .unnumbered}
 
@@ -51,7 +53,7 @@ El paquete *sf* proporciona en *R* clases para datos vectoriales geográficos y 
 
 Los objetos *sf* son fáciles de manipular, ya que son *dataframes* o *tibbles* con dos características fundamentales. En primer lugar, contienen metadatos geográficos adicionales: tipo de geometría, dimensión, *Bounding Box* (límites o extensión geográfica) e información sobre el Sistema de referencia de coordenadas. Además, presentan una columna de geometrías, que contiene los atributos geográficos de cada observación. Algunas ventajas del uso de este modelo de datos en $R$ son que en la mayoría de operaciones los objetos *sf* se pueden tratar como *dataframes*, los nombres de las funciones son consistentes (todos empiezan por `st_`), las funciones se pueden combinar con el operador tubería y además funcionan bien con el ecosistema de paquetes *tidyverse*.
 
-El paquete *sf* de $R$ soporta 18 tipos de geometrías para las *simple features*, de las cuales las más utilizadas se muestran en la Figura \ref{fig:sf-classes}.
+El paquete *sf* de $R$ admite 18 tipos de geometrías para las *simple features*, de las cuales las más utilizadas se muestran en la Figura \ref{fig:sf-classes}.
 
 
 <!-- ```{r sf-classes, echo = FALSE, out.width="70%", fig.cap = "Principales tipos de \\textit{simple features} soportados por el paquete de \\textit{R sf}. \\it Fuente: \\citet{lovelace_geocomputation_2019}"} -->
@@ -66,7 +68,7 @@ El paquete *sf* de $R$ soporta 18 tipos de geometrías para las *simple features
 \end{figure}
 
 
-### Datos Ráster
+### Datos ráster
 
 El modelo de datos ráster representa el espacio con una cuadrícula de celdas (o píxeles), a cada una de las cuales se le asocia un valor o varios, tratándose así de rásteres de una o varias capas, respectivamente. Lo más común es trabajar con cuadrículas regulares, es decir, formadas por celdas rectangulares de igual tamaño. Sin embargo, existen otros modelos de ráster más complejos en los que se usan cuadrículas irregulares (rotadas, truncadas, rectilíneas o curvilíneas) [@lovelace_geocomputation_2019].
 
@@ -87,7 +89,7 @@ Se usará el paquete *TERRA* para tratar los datos en formato ráster, que permi
 <!-- https://mgimond.github.io/Spatial/chp09_0.html -->
 <!-- https://r.geocompx.org/spatial-operations#map-algebra -->
 
-Intrínseco a cualquier modelo de datos espaciales está el concepto de Sistema de Referencia de Coordenadas (CRS), que establece cómo la geometría de los datos se relaciona con la superficie terrestre. Es decir, es el nexo de unión entre el modelo de datos y la realidad, por lo que juega un papel fundamental. Los CRS pueden ser de dos tipos: geográficos o proyectados. En esta sección se usan como referencia el Capítulo 9 de @introGISGimond y el Capítulo 2 de @lovelace_geocomputation_2019.
+Intrínseco a cualquier modelo de datos espaciales está el concepto de Sistema de Referencia de Coordenadas (CRS), que establece cómo la geometría de los datos se relaciona con la superficie terrestre. Es decir, es el nexo de unión entre el modelo de datos y la realidad, por lo que juega un papel fundamental. Los CRS pueden ser de dos tipos: geográficos o proyectados. En esta sección se usan como referencia el Capítulo 9 de [@introGISGimond] y el Capítulo 2 de [@lovelace_geocomputation_2019].
 
 #### Sistemas de Coordenadas Geográficas {.unlisted .unnumbered}
 
@@ -107,7 +109,7 @@ Un Sistema de Coordenadas Proyectadas (PCS) es un sistema de referencia que perm
 
 Al proyectar la superficie terrestre en una superficie plana siempre se modifican algunas propiedades de los objetos, como el área, la dirección, la distancia o la forma. Un PCS solo puede conservar alguna de estas propiedades pero no todas, por lo que es habitual clasificar los PCS en función de la propiedad que mantienen: las proyecciones de igual área preservan el área, las azimutales preservan la dirección, las equidistantes preservan la distancia y las conformales preservan la forma local. En función de cómo se realice la proyección, estas también se pueden clasificar en planas, cilíndricas o cónicas.
 
-Un caso particular y ampliamente usado de PCS cilíndrico son los *Universe Transverse Mercator* (UTM), en los que se proyecta el elipsoide sobre un cilindro tangente a este por las líneas de longitud (los meridianos). De esta forma, se divide el globo en 60 zonas de 6º de longitud, para cada una de las cuales existe un PCS UTM correspondiente que está asociado al meridiano central. Se trata de proyecciones conformales, por lo que preservan ángulos y formas en pequeñas regiones, pero distorsionan distancias y áreas. 
+Un caso particular y ampliamente usado de PCS cilíndrico son los *Universe Transverse Mercator* (UTM), en los que se proyecta el elipsoide sobre un cilindro tangente a este por las líneas de longitud (los meridianos). De esta forma, se divide el globo en 60 zonas de $6^\circ$ de longitud, para cada una de las cuales existe un PCS UTM correspondiente que está asociado al meridiano central. Se trata de proyecciones conformales, por lo que preservan ángulos y formas en pequeñas regiones, pero distorsionan distancias y áreas. 
 
 A lo largo de este trabajo se utilizará el sistema de coordenadas proyectadas UTM30N, ya que es el que traen muchos de los archivos ráster manipulados, y es conveniente evitar cambiar de CRS los datos ráster siempre que sea posible, ya que esta operación  provoca una pérdida de información. 
 
@@ -130,7 +132,7 @@ El EDA hace referencia al conjunto de técnicas estadísticas (tanto numéricas 
 <!-- https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf -->
 <!-- https://r4ds.hadley.nz/eda#introduction -->
 
-La depuración de los datos o *data cleaning* es el proceso de detectar y corregir o eliminar datos incorrectos, corruptos, con formato inadecuado, duplicados o incompletos dentro de un conjunto de datos. Puede considerarse una fase dentro del EDA (como se sugiere en @wickham2016r) o una fase previa a este. 
+La depuración de los datos o *data cleaning* es el proceso de detectar y corregir o eliminar datos incorrectos, corruptos, con formato inadecuado, duplicados o incompletos dentro de un conjunto de datos. Puede considerarse una fase dentro del EDA (como se sugiere en [@wickham2016r]) o una fase previa a este. 
 
 Puede entenderse que el *data cleaning* es el proceso de pasar de *raw data* o datos en bruto a datos  técnicamente correctos y finalmente a datos consistentes. 
 
@@ -162,7 +164,7 @@ Decimos que un conjunto de datos es consistente cuando es técnicamente correcto
 
 ### Análisis de Componentes Principales
 
-El Análisis de Componentes Principales (PCA) es una técnica de reducción de la dimensionalidad ampliamente usada en el análisis de datos multivariante. Al emplear técnicas de reducción de dimensionalidad como PCA, se persiguen diversos objetivos: eliminar correlaciones redundantes, reducir el ruido presente en los datos y facilitar el uso de algoritmos cuya eficiencia computacional está fuertemente influenciada por la dimensionalidad de los datos. A continuación, se definen los conceptos fundamentales del Análisis de Componentes Principales siguiendo el enfoque expuesto en @PCAShaoDeng.
+El Análisis de Componentes Principales (PCA) es una técnica de reducción de la dimensionalidad ampliamente usada en el análisis de datos multivariante. Al emplear técnicas de reducción de dimensionalidad como PCA, se persiguen diversos objetivos: eliminar correlaciones redundantes, reducir el ruido presente en los datos y facilitar el uso de algoritmos cuya eficiencia computacional está fuertemente influenciada por la dimensionalidad de los datos. A continuación, se definen los conceptos fundamentales del Análisis de Componentes Principales siguiendo el enfoque expuesto en [@PCAShaoDeng].
 
 \begin{definition}
 Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las $k$ componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión $p$ que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
@@ -198,10 +200,10 @@ El número de componentes principales necesarias para explicar un porcentaje ele
 <!-- https://eight2late.wordpress.com/?s=decision+tree -->
 <!-- https://eight2late.wordpress.com/?s=support+vector+machine -->
 
-El problema que se aborda en este trabajo se engloba dentro de lo que se conoce como aprendizaje supervisado, ya que para cada observación del conjunto de entrenamiento se conoce el valor de la variable objetivo (en este caso si ha habido incendio o no). Más concretamente, se trata de un problema de clasificación binaria, ya que el objetivo es asignar cada observación a una de las dos clases posibles (incendio o no incendio). Existen numerosas técnicas de clasificación binaria supervisada, y en este trabajo se explorarán algunas de las de uso más común en problemas similares. Las principales fuentes consultadas para esta sección han sido @hastie2009elements y el capítulo 6 de @MLmodelSuthaharan. Para entender la intuición detrás de los modelos puede ser útil el blog @eight2late.
+El problema que se aborda en este trabajo se engloba dentro de lo que se conoce como aprendizaje supervisado, ya que para cada observación del conjunto de entrenamiento se conoce el valor de la variable objetivo (en este caso si ha habido incendio o no). Más concretamente, se trata de un problema de clasificación binaria, ya que el objetivo es asignar cada observación a una de las dos clases posibles (incendio o no incendio). Existen numerosas técnicas de clasificación binaria supervisada, y en este trabajo se explorarán algunas de las de uso más común en problemas similares. Las principales fuentes consultadas para esta sección han sido [@hastie2009elements] y el capítulo 6 de [@MLmodelSuthaharan]. Para entender la intuición detrás de los modelos puede ser útil el blog [@eight2late].
 
-### Regresión logística con penalización
-La regresión logística es un caso particular de modelo lineal generalizado basado en las siguientes hipótesis:
+### Regresión Logística con penalización
+La Regresión Logística es un caso particular de Modelo Lineal Generalizado basado en las siguientes hipótesis:
 
 - **Hipótesis distribucional**. Dadas las variables explicativas, $\underline X_i$ con $i = 1,2,...,n$, se verifica que las variables $Y|_{\underline X= \underline x_i}$ son independientes y su distribución pertenece a la familia Bernouilli, es decir,
 
@@ -225,10 +227,10 @@ y_i\ln \left( \frac{\pi_i}{1-\pi_i} \right) +
 <!-- y_i\ln \left( \frac{\frac{\exp(\underline \beta^t \underline z_i)}{1 + \exp(\underline \beta^t \underline z_i)}}{1-\frac{\exp(\underline \beta^t \underline z_i)}{1 + \exp(\underline \beta^t \underline z_i)}} \right) +  -->
 <!-- \ln \left( 1 - \frac{\exp(\underline \beta^t \underline z_i)}{1 + \exp(\underline \beta^t \underline z_i)}\right) \right]$$ -->
 
-En la regresión logística clásica se estima el vector de parámetros $\underline \beta$ maximizando la función de log-verosimilud, o lo que es equivalente, minimizando su opuesta. Por tanto, el problema de optimización a resolver será
+En la Regresión Logística clásica se estima el vector de parámetros $\underline \beta$ maximizando la función de log-verosimilud, o lo que es equivalente, minimizando su opuesta. Por tanto, el problema de optimización a resolver será
 $$\min_{\underline \beta} -l(\underline \beta)$$
 
-Sin embargo, con el objetivo de evitar el sobreajuste y construir modelos con mayor capacidad de generalización, existen variaciones de la regresión logística que incluyen un término de penalización en la función objetivo. Las dos variantes de uso más extendido son las regresiones *ridge* y *lasso*.
+Sin embargo, con el objetivo de evitar el sobreajuste y construir modelos con mayor capacidad de generalización, existen variaciones de la Regresión Logística que incluyen un término de penalización en la función objetivo. Las dos variantes de uso más extendido son las regresiones *ridge* y *lasso*.
 
 Sea $\underline \beta = \left( \beta_0, \underline \beta_1 \right)$, donde $\underline \beta_1$ contiene los coeficientes de las covariables. En la regresión *ridge* el término de penalización es de la forma $\| \underline \beta_1 \|^2_2$, mientras que en la regresión *lasso* es de la forma $\| \underline \beta_1 \|_1$. Por tanto, el problema de optimización asociado será
 
@@ -238,7 +240,7 @@ en el caso de la regresión logística *ridge* y
 
 $$\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum |\beta_i|$$ 
 
-en el caso de la regresión logística *lasso*, donde en ambos casos $\lambda$ es un parámetro de regularización o de penalización.
+en el caso de la Regresión Logística *lasso*, donde en ambos casos $\lambda$ es un parámetro de regularización o de penalización.
 
 En este trabajo se usará el paquete *glmnet* [@glmnetpackage], que implementa una combinación de ambos métodos (llamada *elastic net*), en la que se añade un parámetro de mezcla $\alpha \in \left[0,1\right]$ que combina ambos enfoques. El problema de optimización resultante en este caso será:
 
@@ -300,13 +302,13 @@ De está ultima expresión se deduce que maximizar el margen $\tau$ es equivalen
 \end{equation}
 
 
-En general, las muestras no son separables, por lo que es necesario permitir que pueda haber casos mal clasificados, y penalizarlos proporcionalmente a la distancia a la que se encuentren del subespacio correcto (holgura). Para ello, se introducen en la formulación del modelo las variables artificiales $\xi_i,\quad i=1,...,n$. Se habla entonces de hiperplano de separación *soft margin*. De esta forma se llega al problema de optimización siguiente:
+En general, las muestras no son separables, por lo que es necesario permitir que pueda haber casos mal clasificados, y penalizarlos proporcionalmente a la distancia a la que se encuentren del subespacio correcto (holgura). Para ello, se introducen en la formulación del modelo las variables artificiales $\xi_i,\; i=1,...,n$. Se habla entonces de hiperplano de separación *soft margin*. De esta forma se llega al problema de optimización siguiente:
 
 
 \begin{equation}
 \begin{aligned}
 \min_{w,b,\xi} \quad & \frac{1}{2}w^{t}w+C\sum_{i=1}^{n}{\xi_{i}}\\
-\textrm{s.t.} \quad & \underline w^t \underline x_i+b \ge 1, \quad & \forall i\in \{1,...,n\}\\
+\textrm{s.a.} \quad & \underline w^t \underline x_i+b \ge 1, \quad & \forall i\in \{1,...,n\}\\
   &\xi\geq0,   \quad & \forall i\in \{1,...,n\} \\
   & w \in \mathbb{R}^d, \space b \in \mathbb{R} \\
 \end{aligned}
@@ -327,13 +329,13 @@ Existen distintos tipos de funciones *kernel* que se corresponden con distintas 
 - Kernel RDF (Radial Basis Function), radial o gaussiano: $k(x,z) = \exp(-\gamma \| x-z\|^2)$ 
 
 
-### Árboles de decisión
+### Árboles de Decisión
 <!-- Elements of Statistical Learning, pag 324 -->
 
-Un árbol de decisión (DT) es un algoritmo de aprendizaje supervisado no paramétrico, que puede aplicarse tanto a problemas de clasificación como de regresión. La idea de este método es segmentar el espacio predictor mediante hiperplanos ortogonales a los ejes, de forma que para predecir una observación se usa la moda o la media de la región a la que pertenece. Se trata de un modelo jerárquico con estructura de árbol, que consta de un nodo raíz, ramas, nodos internos y nodos hojas. Cada nodo representa un test sobre una variable, y las ramas que nacen de ese nodo representan los posibles valores que puede tomar esa variable. De esta forma, para clasificar una nueva instancia basta comenzar en el nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja correspondiente, que indicará la clasificación asignada a dicha instancia. La simplicidad del método muestra su principal ventaja, su fácil comprensión dada su estructura de árbol. 
+Un Árbol de Decisión (DT) es un algoritmo de aprendizaje supervisado no paramétrico, que puede aplicarse tanto a problemas de clasificación como de regresión. La idea de este método es segmentar el espacio predictor mediante hiperplanos ortogonales a los ejes, de forma que para predecir una observación se usa la moda o la media de la región a la que pertenece. Se trata de un modelo jerárquico con estructura de árbol, que consta de un nodo raíz, ramas, nodos internos y nodos hojas. Cada nodo representa un test sobre una variable, y las ramas que nacen de ese nodo representan los posibles valores que puede tomar esa variable. De esta forma, para clasificar una nueva instancia basta comenzar en el nodo raíz e ir descendiendo por el árbol hasta llegar al nodo hoja correspondiente, que indicará la clasificación asignada a dicha instancia. La simplicidad del método muestra su principal ventaja, su fácil comprensión dada su estructura de árbol. 
 
 
-Existen diversas técnicas para construir árboles de clasificación (y regresión), aquí se ilustra una de las más usadas, que recibe el nombre de CART (*Clasification And Regression Trees*, @breiman1984classification). Se explica para el caso de árboles de clasificación binarios, es decir,  en los que de cada nodo salen dos ramas.
+Existen diversas técnicas para construir árboles de clasificación (y regresión), aquí se ilustra una de las más usadas, que recibe el nombre de CART (*Clasification And Regression Trees*, [@breiman1984classification]). Se explica para el caso de árboles de clasificación binarios, es decir,  en los que de cada nodo salen dos ramas.
 
 Dada una muestra $\left\{ (\underline x_i,y_i) \right\}$ con $\underline x_i = (x_{i1},...,x_{id})$, un árbol de clasificación con $J$ hojas se puede expresar como
 $$f(\underline x) = \sum_{j=1}^J c_j I(\underline x \in R_j)$$
@@ -379,18 +381,18 @@ El gran inconveniente de los árboles de decisión es que en general son modelos
 <!-- Inconveniente: Modelo muy sesible a pequeños cambios en los datos (inestable) -> Modelo con mucha varianza -> Overfitting!! -->
 <!-- Solución: Random Forest -->
 
-### Bosque aleatorio
+### Bosques Aleatorios
 
 <!-- Elements of Statistical Learning, pag 601 -->
-La idea detrás del modelo de bosques aleatorios es reducir la varianza de los árboles de decisión sin aumentar el sesgo. Para intentar conseguir este objetivo, la idea es aplicar *Bagging* (*Bootstrap Aggregating*) al modelo de árbol de decisión. Sin embargo, ya que al aplicar *Bagging* la redución de la varianza es mayor cuanto más incorrelados sean los predictores individuales, en cada nuevo nodo de cada árbol construido se selecciona la variable que más disminuya la impureza de entre un conjunto aleatorio  de $m_{try} < d$ predictores.
+La idea detrás del modelo de Bosques Aleatorios es reducir la varianza de los árboles de decisión sin aumentar el sesgo. Para intentar conseguir este objetivo, la idea es aplicar *Bagging* (*Bootstrap Aggregating*) al modelo de Árbol de Decisión. Sin embargo, ya que al aplicar *Bagging* la redución de la varianza es mayor cuanto más incorrelados sean los predictores individuales, en cada nuevo nodo de cada árbol construido se selecciona la variable que más disminuya la impureza de entre un conjunto aleatorio  de $m_{try} < d$ predictores.
 
 <!-- Ponerlo guay como algoritmo (estilo proposición,...): -->
-El algoritmo para construir un bosque aletorio es el siguiente:
+El algoritmo para construir un Bosque Aleatorio es el siguiente:
 
 1. Para $b = {1,...,B}:$
 
     a) Seleccionar una muestra bootstrap $Z^*$ de tamaño $n$ del conjunto de entrenamiento.
-    b) Construir un árbol de decisión $T_b$ a partir de la muestra bootstrap $b$, aplicando recursivamente los siguiente pasos para cada nodo terminan del árbol, hasta que se alcanze el tamaño mínimo de nodo $n_{min}:$
+    b) Construir un Árbol de Decisión $T_b$ a partir de la muestra bootstrap $b$, aplicando recursivamente los siguiente pasos para cada nodo terminan del árbol, hasta que se alcanze el tamaño mínimo de nodo $n_{min}:$
           
           i. Seleccionar aleatoriamente $m_{try}$ variables de entre las $d$ variables predictoras.
           ii. Elegir el mejor par variable/división de entre las $m_{try}$ variables seleccionadas en función de la reducción del criterio de impureza.
@@ -414,7 +416,7 @@ El método de k vecinos más cercanos (KNN) clasifica una nueva observación  $\
 $$f(\underline x) = mayority\; vote\;\{ y_i \,| \, \underline x_i \in N_k(\underline x)\}$$
 donde $N_k(\underline x)$ es el conjunto de los $k$ puntos $\underline x_i \in \Theta$ más próximos a $\underline x$ en $\Theta$ en base a la distancia $d$.
 
-El parámetro *k* permite controlar el sobreajuste del modelo.
+El parámetro *k* permite controlar el sobreajuste del modelo. Por ejemplo, si se toma $k = 1$, para clasificar una nueva observación, se le asigna la clase de la observación que se encuentre más próxima a esta en base a la distancia $d$. En cambio, si se toma $k=n$, se está usando la regla de la clase más votada en la muestra.
 
 
 ## Validación del ajuste
@@ -483,7 +485,13 @@ A lo largo de todo el trabajo, se ha utilizado de forma central el ecosistema de
 \end{figure}
 
 
-Para la modelización se ha utilizado *tidymodels* [@tidymodelspackage]. Se trata de un conjunto de paquetes de $R$ orientados a facilitar el flujo de trabajo en el modelado estadístico de datos, siguiendo la filosofía *tidy data* de *tidyverse*. Integra herramientas para ingeniería de características (*recipes*), definición y ajuste de modelos (*parsnip*), combinación de flujos de trabajo (*workflows*), partición de datos y validación cruzada (*rsample*), cálculo de métricas de rendimiento (*yardstick*), optimización de hiperparámetros (*tune*) y conversión de resultados de modelos a formatos ordenados (*broom*). Los paquetes que componen *tidymodels* no implementan los modelos estadísticos por sí mismos, sino que los importan de librerías específicas. En su lugar, se enfocan en facilitar el flujo de trabajo del modelado, mejorando la cohesión y la eficiencia, a través de una fachada común para la diversidad de paquetes subyacentes correspondientes a los distintos modelos, y permitiendo la integración natural con otros paquetes del *tidyverse*.
+Para la modelización se ha utilizado *tidymodels* [@tidymodelspackage]. Se trata de un conjunto de paquetes de $R$ orientados a facilitar el flujo de trabajo en el modelado estadístico de datos, siguiendo la filosofía *"tidy data"* de *tidyverse*. Integra herramientas para ingeniería de características (*recipes*), definición y ajuste de modelos (*parsnip*), combinación de flujos de trabajo (*workflows*), partición de datos y validación cruzada (*rsample*), cálculo de métricas de rendimiento (*yardstick*), optimización de hiperparámetros (*tune*) y conversión de resultados de modelos a formatos ordenados (*broom*). Los paquetes que componen *tidymodels* no implementan los modelos estadísticos por sí mismos, sino que los importan de librerías específicas. En su lugar, se enfocan en facilitar el flujo de trabajo del modelado, mejorando la cohesión y la eficiencia, a través de una fachada común para la diversidad de paquetes subyacentes correspondientes a los distintos modelos, y permitiendo la integración natural con otros paquetes del *tidyverse*.
+
+\begin{figure*}[h]
+  \includegraphics[width=.5\textwidth]{graficos/tidyverse_icons.png}\hfill
+  \includegraphics[width=.5\textwidth]{graficos/tidymodels_icons.png}\hfill
+  \caption[Iconos de los principales paquetes incluidos en \textit{tidyverse} y en \textit{tidymodels}]{Iconos de los principales paquetes incluidos en \textit{tidyverse} (a la izquierda) y en \textit{tidymodels} (a la derecha). \it Fuente: \url{https://www.tidyverse.org/} para los iconos de tidyverse y \citet{tidymodelspackage} para los iconos de tidymodels.}
+\end{figure*}
 
 Como se detalló en la [Sección 2.1 sobre datos georreferenciados][Datos georreferenciados], para el tratamiento de datos vectoriales se ha utilizado el paquete de $R$ *sf* [@sfpackage], que proporciona una forma estandarizada de codificar y manipular datos espaciales vectoriales a través de las *simple features*, integrándose dentro del ecosistema *tidyverse*. Para la manipulación de datos de tipo ráster se ha recurrido al paquete *terra* [@terrapackage]. 
 

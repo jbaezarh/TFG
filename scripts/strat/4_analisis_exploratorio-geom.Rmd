@@ -581,6 +581,18 @@ ggplot(data = prov) +
   theme_minimal()
 ```
 
+### dist_rios
+```{r}
+ggplot(data = prov) + 
+  geom_sf() +
+  geom_sf(data = datos, aes(color=dist_rios, alpha=dist_rios)) +
+    scale_color_gradientn(colours = rainbow(5,rev=T)) +
+  guides(size="none",alpha="none") +
+  ggtitle("Distribución espacial de dist_rios") +
+  theme_minimal()
+```
+
+
 ## Variables numéricas
 
 En los datos hay 18 variables numéricas.

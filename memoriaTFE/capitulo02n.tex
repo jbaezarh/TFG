@@ -540,15 +540,10 @@ linewidth=4pt]{mBox}
 \hypertarget{preliminares}{%
 \chapter{Preliminares}\label{preliminares}}
 
-Este capítulo describirán algunos aspectos esenciales para el adecuado
-seguimiento y comprensión del resto del documento. Se introducirán los
-elementos esenciales que sientan las bases de las técnicas empleadas en
-el estudio junto con las herramientas computacionales empleadas. En
-algunos casos, junto con la descripción de los conceptos, se hará
-referencia a aspectos tecnológicos relacionados con las herramientas
-utilizadas, para relacionar cada una con el contexto en el que aparece,
-si bien al final del capítulo se dedicará una sección específica para
-describir los aspectos esenciales relacionados con las mismas.
+En este capítulo se introducirán los elementos principales que sientan
+las bases de las técnicas empleadas en el estudio junto con las
+herramientas computacionales utilizadas, aspectos esenciales para el
+adecuado seguimiento y comprensión del resto del documento.
 
 \hypertarget{datos-georreferenciados}{%
 \section{Datos georreferenciados}\label{datos-georreferenciados}}
@@ -562,14 +557,14 @@ vectoriales y los datos ráster, al ser los tipos fundamentales en este
 contexto, con características bien diferenciadas entre ellos.
 
 \hypertarget{datos-vectoriales}{%
-\subsection{Datos Vectoriales}\label{datos-vectoriales}}
+\subsection{Datos vectoriales}\label{datos-vectoriales}}
 
 El modelo de datos vectoriales se basa en puntos ubicados dentro de un
 sistema de referencia de coordenadas (CRS, por sus siglas en inglés).
 Estos puntos pueden representar características independientes o pueden
 estar conectados para formar geometrías más complejas como líneas y
 polígonos. Para esta sección se han usado como referencia
-\citet{lovelace_geocomputation_2019} y \citet{introGISGimond}.
+\citep{lovelace_geocomputation_2019} y \citep{introGISGimond}.
 
 \hypertarget{simple-features}{%
 \subsubsection*{\texorpdfstring{\emph{Simple
@@ -602,7 +597,7 @@ nombres de las funciones son consistentes (todos empiezan por
 \texttt{st\_}), las funciones se pueden combinar con el operador tubería
 y además funcionan bien con el ecosistema de paquetes \emph{tidyverse}.
 
-El paquete \emph{sf} de \(R\) soporta 18 tipos de geometrías para las
+El paquete \emph{sf} de \(R\) admite 18 tipos de geometrías para las
 \emph{simple features}, de las cuales las más utilizadas se muestran en
 la Figura \ref{fig:sf-classes}.
 
@@ -614,7 +609,7 @@ la Figura \ref{fig:sf-classes}.
 \end{figure}
 
 \hypertarget{datos-ruxe1ster}{%
-\subsection{Datos Ráster}\label{datos-ruxe1ster}}
+\subsection{Datos ráster}\label{datos-ruxe1ster}}
 
 El modelo de datos ráster representa el espacio con una cuadrícula de
 celdas (o píxeles), a cada una de las cuales se le asocia un valor o
@@ -658,8 +653,8 @@ geometría de los datos se relaciona con la superficie terrestre. Es
 decir, es el nexo de unión entre el modelo de datos y la realidad, por
 lo que juega un papel fundamental. Los CRS pueden ser de dos tipos:
 geográficos o proyectados. En esta sección se usan como referencia el
-Capítulo 9 de \citet{introGISGimond} y el Capítulo 2 de
-\citet{lovelace_geocomputation_2019}.
+Capítulo 9 de \citep{introGISGimond} y el Capítulo 2 de
+\citep{lovelace_geocomputation_2019}.
 
 \hypertarget{sistemas-de-coordenadas-geogruxe1ficas}{%
 \subsubsection*{Sistemas de Coordenadas
@@ -723,11 +718,11 @@ se pueden clasificar en planas, cilíndricas o cónicas.
 Un caso particular y ampliamente usado de PCS cilíndrico son los
 \emph{Universe Transverse Mercator} (UTM), en los que se proyecta el
 elipsoide sobre un cilindro tangente a este por las líneas de longitud
-(los meridianos). De esta forma, se divide el globo en 60 zonas de 6º de
-longitud, para cada una de las cuales existe un PCS UTM correspondiente
-que está asociado al meridiano central. Se trata de proyecciones
-conformales, por lo que preservan ángulos y formas en pequeñas regiones,
-pero distorsionan distancias y áreas.
+(los meridianos). De esta forma, se divide el globo en 60 zonas de
+\(6^\circ\) de longitud, para cada una de las cuales existe un PCS UTM
+correspondiente que está asociado al meridiano central. Se trata de
+proyecciones conformales, por lo que preservan ángulos y formas en
+pequeñas regiones, pero distorsionan distancias y áreas.
 
 A lo largo de este trabajo se utilizará el sistema de coordenadas
 proyectadas UTM30N, ya que es el que traen muchos de los archivos ráster
@@ -762,7 +757,7 @@ La depuración de los datos o \emph{data cleaning} es el proceso de
 detectar y corregir o eliminar datos incorrectos, corruptos, con formato
 inadecuado, duplicados o incompletos dentro de un conjunto de datos.
 Puede considerarse una fase dentro del EDA (como se sugiere en
-\citet{wickham2016r}) o una fase previa a este.
+\citep{wickham2016r}) o una fase previa a este.
 
 Puede entenderse que el \emph{data cleaning} es el proceso de pasar de
 \emph{raw data} o datos en bruto a datos técnicamente correctos y
@@ -800,7 +795,7 @@ redundantes, reducir el ruido presente en los datos y facilitar el uso
 de algoritmos cuya eficiencia computacional está fuertemente
 influenciada por la dimensionalidad de los datos. A continuación, se
 definen los conceptos fundamentales del Análisis de Componentes
-Principales siguiendo el enfoque expuesto en \citet{PCAShaoDeng}.
+Principales siguiendo el enfoque expuesto en \citep{PCAShaoDeng}.
 
 \begin{definition}
 Dadas $\underline x_1, ..., \underline x_n \in \mathbb{R}^k$ realizaciones de un vector aleatorio $\underline X$ en $\mathbb{R}^k$, se dice que los vectores $\underline c_1, \underline c_2,...,\underline c_p \in \mathbb{R}^k$ son las $k$ componentes principales (muestrales) del vector aleatorio $\underline X$ si forman una base ortonormal del espacio $V \subset \mathbb{R}^k$ de dimensión $p$ que minimiza la media del cuadrado de la distancia euclídea entre los $\underline x_i$ y su proyección $\pi_{V}(\underline x_i)$ sobre $V$.
@@ -834,16 +829,16 @@ observación a una de las dos clases posibles (incendio o no incendio).
 Existen numerosas técnicas de clasificación binaria supervisada, y en
 este trabajo se explorarán algunas de las de uso más común en problemas
 similares. Las principales fuentes consultadas para esta sección han
-sido \citet{hastie2009elements} y el capítulo 6 de
-\citet{MLmodelSuthaharan}. Para entender la intuición detrás de los
-modelos puede ser útil el blog \citet{eight2late}.
+sido \citep{hastie2009elements} y el capítulo 6 de
+\citep{MLmodelSuthaharan}. Para entender la intuición detrás de los
+modelos puede ser útil el blog \citep{eight2late}.
 
 \hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
-\subsection{Regresión logística con
+\subsection{Regresión Logística con
 penalización}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
 
-La regresión logística es un caso particular de modelo lineal
-generalizado basado en las siguientes hipótesis:
+La Regresión Logística es un caso particular de Modelo Lineal
+Generalizado basado en las siguientes hipótesis:
 
 \begin{itemize}
 \tightlist
@@ -878,7 +873,7 @@ Bajo estas hipótesis, la función de log-verosimilitud dada una muestra
 y_i\ln \left( \frac{\pi_i}{1-\pi_i} \right) + 
 \ln \left( 1 - \pi_i\right) \right]\]
 
-En la regresión logística clásica se estima el vector de parámetros
+En la Regresión Logística clásica se estima el vector de parámetros
 \(\underline \beta\) maximizando la función de log-verosimilud, o lo que
 es equivalente, minimizando su opuesta. Por tanto, el problema de
 optimización a resolver será
@@ -886,7 +881,7 @@ optimización a resolver será
 
 Sin embargo, con el objetivo de evitar el sobreajuste y construir
 modelos con mayor capacidad de generalización, existen variaciones de la
-regresión logística que incluyen un término de penalización en la
+Regresión Logística que incluyen un término de penalización en la
 función objetivo. Las dos variantes de uso más extendido son las
 regresiones \emph{ridge} y \emph{lasso}.
 
@@ -903,7 +898,7 @@ en el caso de la regresión logística \emph{ridge} y
 
 \[\min_{\underline \beta} -l(\underline \beta)  + \lambda \sum |\beta_i|\]
 
-en el caso de la regresión logística \emph{lasso}, donde en ambos casos
+en el caso de la Regresión Logística \emph{lasso}, donde en ambos casos
 \(\lambda\) es un parámetro de regularización o de penalización.
 
 En este trabajo se usará el paquete \emph{glmnet} \citep{glmnetpackage},
@@ -977,14 +972,14 @@ En general, las muestras no son separables, por lo que es necesario
 permitir que pueda haber casos mal clasificados, y penalizarlos
 proporcionalmente a la distancia a la que se encuentren del subespacio
 correcto (holgura). Para ello, se introducen en la formulación del
-modelo las variables artificiales \(\xi_i,\quad i=1,...,n\). Se habla
+modelo las variables artificiales \(\xi_i,\; i=1,...,n\). Se habla
 entonces de hiperplano de separación \emph{soft margin}. De esta forma
 se llega al problema de optimización siguiente:
 
 \begin{equation}
 \begin{aligned}
 \min_{w,b,\xi} \quad & \frac{1}{2}w^{t}w+C\sum_{i=1}^{n}{\xi_{i}}\\
-\textrm{s.t.} \quad & \underline w^t \underline x_i+b \ge 1, \quad & \forall i\in \{1,...,n\}\\
+\textrm{s.a.} \quad & \underline w^t \underline x_i+b \ge 1, \quad & \forall i\in \{1,...,n\}\\
   &\xi\geq0,   \quad & \forall i\in \{1,...,n\} \\
   & w \in \mathbb{R}^d, \space b \in \mathbb{R} \\
 \end{aligned}
@@ -1020,9 +1015,9 @@ espacios de dimensión superior:
 \end{itemize}
 
 \hypertarget{uxe1rboles-de-decisiuxf3n}{%
-\subsection{Árboles de decisión}\label{uxe1rboles-de-decisiuxf3n}}
+\subsection{Árboles de Decisión}\label{uxe1rboles-de-decisiuxf3n}}
 
-Un árbol de decisión (DT) es un algoritmo de aprendizaje supervisado no
+Un Árbol de Decisión (DT) es un algoritmo de aprendizaje supervisado no
 paramétrico, que puede aplicarse tanto a problemas de clasificación como
 de regresión. La idea de este método es segmentar el espacio predictor
 mediante hiperplanos ortogonales a los ejes, de forma que para predecir
@@ -1040,7 +1035,7 @@ fácil comprensión dada su estructura de árbol.
 Existen diversas técnicas para construir árboles de clasificación (y
 regresión), aquí se ilustra una de las más usadas, que recibe el nombre
 de CART (\emph{Clasification And Regression Trees},
-\citet{breiman1984classification}). Se explica para el caso de árboles
+\citep{breiman1984classification}). Se explica para el caso de árboles
 de clasificación binarios, es decir, en los que de cada nodo salen dos
 ramas.
 
@@ -1086,9 +1081,9 @@ Así, el algoritmo de construcción de un árbol de clasificación es:
 \item
   Comenzar con el nodo raíz, que incluye todos los casos.
 \item
-  Determinar el par (variable,corte) que conduce a una mayor reducción
-  de la impureza. Es decir, dada una medida de impureza \(\Phi\) se
-  busca la variable \(j \in {1,..,d}\) y el corte \(s \in \mathbb{R}\)
+  Determinar el par variable-corte que conduce a una mayor reducción de
+  la impureza. Es decir, dada una medida de impureza \(\Phi\) se busca
+  la variable \(j \in {1,..,d}\) y el corte \(s \in \mathbb{R}\)
   solución de \[\min_{j \in {1,..,d},\;s \in \mathbb{R}}\left[ 
   \frac{|R_1|}{|R_1|+|R_2|} \Phi \left(\{y_i |\underline x_i \in R_1(j,s)\} \right)  + 
   \frac{|R_2|}{|R_1|+|R_2|} \Phi \left(\{y_i |\underline x_i \in R_2(j,s)\} \right)\right]\]
@@ -1121,20 +1116,20 @@ de \emph{Bagging} y \emph{Boosting}. Una de las técnicas más extendida
 con árboles de decisión son los Bosques Aleatorios (\emph{Random Forest}
 en inglés).
 
-\hypertarget{bosque-aleatorio}{%
-\subsection{Bosque aleatorio}\label{bosque-aleatorio}}
+\hypertarget{bosques-aleatorios}{%
+\subsection{Bosques Aleatorios}\label{bosques-aleatorios}}
 
-La idea detrás del modelo de bosques aleatorios es reducir la varianza
+La idea detrás del modelo de Bosques Aleatorios es reducir la varianza
 de los árboles de decisión sin aumentar el sesgo. Para intentar
 conseguir este objetivo, la idea es aplicar \emph{Bagging}
-(\emph{Bootstrap Aggregating}) al modelo de árbol de decisión. Sin
+(\emph{Bootstrap Aggregating}) al modelo de Árbol de Decisión. Sin
 embargo, ya que al aplicar \emph{Bagging} la redución de la varianza es
 mayor cuanto más incorrelados sean los predictores individuales, en cada
 nuevo nodo de cada árbol construido se selecciona la variable que más
 disminuya la impureza de entre un conjunto aleatorio de \(m_{try} < d\)
 predictores.
 
-El algoritmo para construir un bosque aletorio es el siguiente:
+El algoritmo para construir un Bosque Aleatorio es el siguiente:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1147,7 +1142,7 @@ El algoritmo para construir un bosque aletorio es el siguiente:
     Seleccionar una muestra bootstrap \(Z^*\) de tamaño \(n\) del
     conjunto de entrenamiento.
   \item
-    Construir un árbol de decisión \(T_b\) a partir de la muestra
+    Construir un Árbol de Decisión \(T_b\) a partir de la muestra
     bootstrap \(b\), aplicando recursivamente los siguiente pasos para
     cada nodo terminan del árbol, hasta que se alcanze el tamaño mínimo
     de nodo \(n_{min}:\)
@@ -1192,7 +1187,11 @@ donde \(N_k(\underline x)\) es el conjunto de los \(k\) puntos
 \(\underline x_i \in \Theta\) más próximos a \(\underline x\) en
 \(\Theta\) en base a la distancia \(d\).
 
-El parámetro \emph{k} permite controlar el sobreajuste del modelo.
+El parámetro \emph{k} permite controlar el sobreajuste del modelo. Por
+ejemplo, si se toma \(k = 1\), para clasificar una nueva observación, se
+le asigna la clase de la observación que se encuentre más próxima a esta
+en base a la distancia \(d\). En cambio, si se toma \(k=n\), se está
+usando la regla de la clase más votada en la muestra.
 
 \hypertarget{validaciuxf3n-del-ajuste}{%
 \section{Validación del ajuste}\label{validaciuxf3n-del-ajuste}}
@@ -1316,7 +1315,7 @@ tabular de datos sobre la que trabajar.
 Para la modelización se ha utilizado \emph{tidymodels}
 \citep{tidymodelspackage}. Se trata de un conjunto de paquetes de \(R\)
 orientados a facilitar el flujo de trabajo en el modelado estadístico de
-datos, siguiendo la filosofía \emph{tidy data} de \emph{tidyverse}.
+datos, siguiendo la filosofía \emph{``tidy data''} de \emph{tidyverse}.
 Integra herramientas para ingeniería de características
 (\emph{recipes}), definición y ajuste de modelos (\emph{parsnip}),
 combinación de flujos de trabajo (\emph{workflows}), partición de datos
@@ -1330,6 +1329,12 @@ el flujo de trabajo del modelado, mejorando la cohesión y la eficiencia,
 a través de una fachada común para la diversidad de paquetes subyacentes
 correspondientes a los distintos modelos, y permitiendo la integración
 natural con otros paquetes del \emph{tidyverse}.
+
+\begin{figure*}[h]
+  \includegraphics[width=.5\textwidth]{graficos/tidyverse_icons.png}\hfill
+  \includegraphics[width=.5\textwidth]{graficos/tidymodels_icons.png}\hfill
+  \caption[Iconos de los principales paquetes incluidos en \textit{tidyverse} y en \textit{tidymodels}]{Iconos de los principales paquetes incluidos en \textit{tidyverse} (a la izquierda) y en \textit{tidymodels} (a la derecha). \it Fuente: \url{https://www.tidyverse.org/} para los iconos de tidyverse y \citet{tidymodelspackage} para los iconos de tidymodels.}
+\end{figure*}
 
 Como se detalló en la
 \protect\hyperlink{datos-georreferenciados}{Sección 2.1 sobre datos

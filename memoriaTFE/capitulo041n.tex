@@ -728,7 +728,7 @@ elegir el modelo final, eligiendo así \(min\_n = 7\). En la Figura
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width =0.7\textwidth]{graficos/rf_tuningplot.png}
+\includegraphics[width =\textwidth]{graficos/rf_tuningplot.png}
 \caption[Métricas de rendimiento de Random Forest en función de los parámetros]{Métricas de rendimiento de Random Forest en función de los parámetros.  \it Fuente: Elaboración propia.}
 \label{fig:rf_tuningplot}
 \end{figure}
@@ -782,8 +782,13 @@ ha probado con 8 combinaciones de valores para los parámetros \(C\) y
 respectivamente. La mayor tasa de acierto sobre los datos de validación
 se ha conseguido para \(C = 31.7\) y \(\gamma = 0.0000496\).
 
-\hypertarget{comparativa}{%
-\section{Comparativa}\label{comparativa}}
+\hypertarget{evaluaciuxf3n-y-comparaciuxf3n-de-modelos}{%
+\section{Evaluación y comparación de
+modelos}\label{evaluaciuxf3n-y-comparaciuxf3n-de-modelos}}
+
+\hypertarget{comparativa-sobre-el-conjunto-de-validaciuxf3n}{%
+\subsection{Comparativa sobre el conjunto de
+validación}\label{comparativa-sobre-el-conjunto-de-validaciuxf3n}}
 
 A continuación se muestran las métricas de cada uno de los modelos
 seleccionados en los datos de validación en la Tabla
@@ -836,8 +841,9 @@ knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomr
 \label{fig:roc_validation}
 \end{figure}
 
-\hypertarget{test}{%
-\section{Test}\label{test}}
+\hypertarget{comparativa-sobre-el-cojunto-test}{%
+\section{Comparativa sobre el cojunto
+test}\label{comparativa-sobre-el-cojunto-test}}
 
 Por último, para conocer la capacidad de generalización de los modelos
 construidos, estos se evaluarán sobre nuevas observaciones, el conjunto

@@ -83,7 +83,7 @@ Dada la clara influencia del mes y la aparente influencia del día de la semana 
 
 En la Figura \ref{fig:dist_spat_fire} se observa claramente cómo las $10.752$ muestras negativas están uniformemente distribuidas dentro de los límites de la Comunidad Autónoma de Andalucía, mientras que las $10794$ muestras positivas se concentran a ambos lados de la cuenca del río Guadalquivir, con una mayor densidad de observaciones en la provincia de Huelva y en algunas zonas de la costa mediterránea (como ya se apreciaba en la Figura \ref{fig:area_fuego}).
 
-## Análisis univariantes de las variables numéricas
+## Análisis univariante de las variables numéricas
 
 El análisis univariante de las variables numéricas se lleva a cabo desde 3 enfoques complementarios:
 
@@ -96,13 +96,13 @@ El análisis univariante de las variables numéricas se lleva a cabo desde 3 enf
 \begin{figure}[]
 \centering
 \includegraphics[width =\textwidth]{graficos/boxplots.png}
-\caption[Diagrama de caja y bigotes de cada variable numérica en función de la variable objetivo]{Boxplot de cada variable numérica en función de la variable objetivo. \it Fuente: Elaboración propia.}
+\caption[Diagrama de caja y bigotes de cada variable numérica en función de la variable objetivo]{Diagrama de caja y bigotes de cada variable numérica en función de la variable objetivo. \it Fuente: Elaboración propia.}
 \label{fig:boxplots}
 \end{figure}
 
 En los *boxplots* de las variables numéricas en función de la variable *fire* (Figura \ref{fig:boxplots}) destacan varios aspectos. Por un lado, como ya se había comentado anteriormente, las variables presentan escalas muy diferentes y la mayoría tiene una marcada asimetría hacia la derecha. Por otro lado, es evidente la gran cantidad de valores *outliers* que se observan en los datos, lo que tendrá implicaciones en los modelos que se construyan con ellos. Sin embargo, es importante destacar que no se trata de observaciones erróneas, sino que son inherentes a la naturaleza de los datos. Por ejemplo, en el caso de la variable *PRECTOTCORR* el valor máximo observado es 46.06 $mm$ en un día, un valor elevado que sin duda es atípico en esta región de clima seco, pero sin embargo, posible. Es también remarcable que todas las variables presentan una variabilidad similar en ambos niveles del factor *fire*, lo que indica que no será un problema de clasificación trivial. *A priori*, solo con los diagramas de caja y bigotes y los resúmenes numéricos es difícil llegar a más conclusiones, sin embargo, sí pueden observarse sutiles diferencias entre las distribuciones de algunas variables para ambos niveles del factor *fire*.
 
-Dada la naturaleza temporal de algunas variables, el análisis gráfico de los *boxplots* resulta insufiente. Con el fin de considerar la componente estacional de las variables climáticas y de vegetación, se estudiará, a continuación, la media mensual de cada una de estas variables en función de la variable objetivo.
+Dada la naturaleza temporal de algunas variables, el análisis gráfico de los *boxplots* resulta insuficiente. Con el fin de considerar la componente estacional de las variables climáticas y de vegetación, se estudiará, a continuación, la media mensual de cada una de estas variables en función de la variable objetivo.
 
 \begin{figure}[H]
 \centering
@@ -164,7 +164,7 @@ Como se observa en la Figura \ref{fig:NDVI_mes}, las diferencias entre los casos
 En el [Apéndice A.1][Gráficos espaciales EDA] se recogen los gráficos espaciales y espacio-temporales de todas las variables numéricas. En ellos se refleja cómo los valores de las variables en estudio son coherentes con lo que cabría esperar de la realidad. Además, permiten una comprensión mayor de la distribución espacial (y temporal) de las variables en el área de estudio, lo que será útil de cara a interpretar los modelos que se construyan.
 
 
-## Análisis multivariantes de las variables numéricas
+## Análisis multivariante de las variables numéricas
 
 En la Figura \ref{fig:corrplot} se muestra un gráfico con las correlaciones entre las variables. La interpretación es sencilla, cuanto más intenso sea el color y cuanto mayor sea la excentricidad de la elipse, mayor será la correlación (en valor absoluto) para ese par de variables. El color de la elipse indica el signo del coeficiente de  correlación. De esta forma, se observa que las variables más correlacionadas en la muestra son: *T2M* con *RH2M* (negativamente, -0.71), *T2M* con *GWETTOP* (negativamente, -0.69), *GWETTOP* con *R2HM* (positivamente, 0.68) y *poblacion* con *dens_poblacion* (positivamente, 0.63). Esto es razonable, ya que cabe esperar que al aumentar la temperatura del aire disminuya la humedad del aire y del suelo; que al aumentar la humedad del suelo aumente también la del aire y viceversa; y que municipios muy densamente poblados también tengan un elevado número de habitantes. Cabe destacar que no se trata de valores alarmantes como para considerar *a priori* que las variables proporcionan información redundante, susceptible de ser eliminadas en un paso de ingeniería de características. Sin embargo, sí se probará a reducir la dimensionalidad de los datos capturando la mayor parte de la varianza a través de PCA.
 
