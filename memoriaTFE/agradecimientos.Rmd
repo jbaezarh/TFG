@@ -1,8 +1,0 @@
----
-output: pdf_document
----
-
-
-*A mis tutores, Luis y Xopre, por su implicación y su profesionalidad.*
-
-*A mi familia, por su apoyo incondicional.*
