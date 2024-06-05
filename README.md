@@ -5,6 +5,8 @@ En este repositorio se puede encontrar todo el código usado en el trabajo fin d
 
 Con el objetivo facilitar la colaboración en el proyecto y hacer que el contenido de este sea completamente reproducible, se ha usado el paquete de *R* *renv*, que permite crear entornos de trabajo reproducibles para los proyectos de *R*. Gracias al uso de este paquete, el proyecto tiene su propia librería local, y cualquiera que lo abra dispondrá de todos los paquetes utilizados en la misma versión ha sido empleada en el proyecto con solo correr `renv::restore()`.
 
-NOTA: La carpeta con los datos brutos (`data_raw`) contiene archivos demasiado pesados para subirlos a GitHub, pero puede descargarse desde [este enlace](https://drive.google.com/file/d/1300aPDOf36zR2UCSVrEL7RilQDoCXgwy/view?usp=drive_link) , basta descomprimirla y copiar la carpeta `data_raw` en el directorio principal.
+Los conjuntos de datos procesados se encuentran en el directorio `salidas_intermedias/`. En el código se indica el archivo adecuado en cada caso.
+
+NOTA: La carpeta con los datos brutos (`data_raw`) contiene archivos demasiado pesados para subirlos a GitHub, pero puede descargarse desde [este enlace](https://drive.google.com/file/d/1_gczTaw8lQybE6GgeZo6E4jgF9MvhzpS/view?usp=drive_link) , basta descomprimirla y copiar la carpeta `data_raw` en el directorio principal.
 
  
