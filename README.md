@@ -5,7 +5,7 @@ En este repositorio se puede encontrar todo el código usado en el trabajo fin d
 
 Con el objetivo facilitar la colaboración en el proyecto y hacer que el contenido de este sea completamente reproducible, se ha usado el paquete de *R* *renv*, que permite crear entornos de trabajo reproducibles para los proyectos de *R*. Gracias al uso de este paquete, el proyecto tiene su propia librería local, y cualquiera que lo abra dispondrá de todos los paquetes utilizados en la misma versión ha sido empleada en el proyecto con solo correr `renv::restore()`.
 
-Los scripts con el código se encuentran en el directorio `scripts`. 
+Los scripts con el código se encuentran en el directorio `scripts/`. 
 
 Los conjuntos de datos procesados se encuentran en el directorio `salidas_intermedias/`. En el código se indica el archivo adecuado en cada caso.
 
