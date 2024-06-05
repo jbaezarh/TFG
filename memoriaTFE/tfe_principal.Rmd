@@ -102,15 +102,6 @@ knitr::write_bib(c("knitr","rmarkdown"),
 
 \cleardoublepage   
 <!--  \clearpage -->
-\section*{Agradecimientos}  <!--Cambiar por si se necesita:  Agradecimientos -->
-\addcontentsline{toc}{section}{Agradecimientos} <!-- Agradecimientos -->
-<!-- agradecimientos.Rmd -->
-```{r child = 'agradecimientos.Rmd'}   
-```
-
-
-\cleardoublepage   
-<!--  \clearpage -->
 \section*{Resumen}
 \addcontentsline{toc}{section}{Resumen}
 

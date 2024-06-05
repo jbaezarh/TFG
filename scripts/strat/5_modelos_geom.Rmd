@@ -513,7 +513,7 @@ dt_res <-
             metrics = metric_set(accuracy,roc_auc,recall,spec))
 
 
-# plot(dt_res |> extract_fit_engine())
+ # plot(dt_res |> extract_fit_engine())
 
 dt_tuning = dt_res |> 
   collect_metrics() |> 
@@ -551,20 +551,20 @@ dt_metrics
 ```
 
 ```{r}
-# library(rpart.plot)
-# library(rattle)
-# library(RColorBrewer)
+library(rpart.plot)
+library(rattle)
+library(RColorBrewer)
 # 
-# arbol = dt_workflow %>% 
-#   finalize_workflow(dt_best) %>%
-#   fit(training) %>% 
-#   extract_fit_engine() 
-# 
+arbol = dt_workflow %>%
+  finalize_workflow(dt_best) %>%
+  fit(training) %>%
+  extract_fit_engine()
+
 # fancyRpartPlot(arbol,cex=0.6)
 # rpart.plot(arbol,cex=0.6)
 # 
-# plot(arbol,main="Arbol de clasificación: datos spam",margin=0.1,compress=T,branch=0.8)
-# text(arbol,col="blue",cex=0.6)
+plot(arbol,main="Arbol de clasificación: datos spam",margin=0.1,compress=T,branch=0.8)
+ text(arbol,col="blue",cex=0.6)
 
 ```
 

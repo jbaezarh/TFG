@@ -129,10 +129,11 @@ Por último, se ha construido el modelo de SVM usando un *kernel* gaussiano, con
 
 A continuación se muestran las métricas de cada uno de los modelos seleccionados en los datos de validación en la Tabla \ref{tab:metricas_val} y en la Figura \ref{fig:validation_metrics}. Las curvas ROC de todos los modelos se muestran en la Figura \ref{fig:roc_validation}. 
 
+
 Puede observarse que los resultados obtenidos por todos los modelos son bastante similares. Destacan el modelo de Bosque Aleatorio y el de Regresión Logística con penalización, el primero por ser el que tiene la tasa de acierto y la sensibilidad más elevadas, y el segundo por dar los mejores resultado en cuanto a precisión y especificidad. Las curvas ROC de los modelos de bosque aleatorio, regresión logística con penalización, SVM lineal y SVM radial son prácticamente iguales. Los modelos más pobres son la regresión logística aplicando PCA, KNN y el árbol de decisión. Seguramente, esto sea debido a que son modelos demasiado simples dada la complejidad del problema al que se quieren aplicar. 
 
 
-\begin{table}[]
+\begin{table}[H]
 \centering
 \resizebox{0.5\columnwidth}{!}{%
 \begin{tabular}{@{}llllll@{}}
@@ -153,29 +154,50 @@ knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomr
 
 
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/validation_metrics.png}
 \caption[Gráfico de métricas obtenidas sobre el conjunto de validación]{Gráfico de métricas obtenidas sobre el conjunto de validación por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
 \label{fig:validation_metrics}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/roc_validation.png}
 \caption[Curvas ROC sobre el conjunto de validación]{Curvas ROC sobre el conjunto de validación. \it Fuente: Elaboración propia.}
 \label{fig:roc_validation}
 \end{figure}
 
+A continuación, se incluye un fragmento del código en el que se ilustra el uso de funciones propias del flujo de trabajo habitual de *tidymodels* dentro de la filosofía *"tidy data"* propia del ecosistema *tidyverse*, haciendo uso de estructuras anidadas y funciones de orden superior. En este fragmento, se selecciona la mejor combinación de parámetros para cada modelo, usando la tasa de acierto global como criterio; a continuación, se obtienen todas las medidas de rendimiento sobre el conjunto de validación para cada modelo ajustado, haciendo uso de la función propia `get_metrics`; y por último, se crea la curva ROC de cada modelo ajustado sobre el conjunto de validación. El objeto `models_tune` contiene los resultados del ajuste de cada combinación de parámetros considerada para cada modelo sobre el conjunto de validación. El código completo puede observarse en el [Apéndice B.3.4][Comparativa en validación].
 
-## Comparativa sobre el cojunto test
+
+```{r eval = FALSE}
+models = models %>% 
+  mutate(best_tuning = map(models_tune, 
+                           function(x) select_best(x, 
+                                                   metric = "accuracy")),
+         best_metrics = map2(models_tune,
+                             best_tuning,       
+                             ~ collect_predictions(.x,
+                                                   parameters = .y) %>%    
+                               get_metrics() %>%          
+                               extract2(1)), 
+         roc = map2(models_tune,
+                    best_tuning,
+                    ~ collect_predictions(.x,
+                                          parameters = .y) %>%    
+                      roc_curve(fire, .pred_0))
+         ) 
+```
+
+### Comparativa sobre el cojunto test
 
 Por último, para conocer la capacidad de generalización de los modelos construidos, estos se evaluarán sobre nuevas observaciones, el conjunto de datos test. Recuérdese que el entrenamiento de los modelos se ha realizado con el conjunto de entrenamiento, formado por 12.927 observaciones tomadas entre el 2002 y mediados de 2014, y para ajustar los parámetros de cada modelo, se han utilizado 4.309 observaciones tomadas entre mediados de 2014 y mediados de 2019. Finalmente, se evaluará la capacidad de predicción de los modelos sobre 4.310 nuevas observaciones tomadas entre mediados de 2019 y 2022. Para ello, primero se unirán los conjuntos de entrenamiento y validación para reentrenar los modelos con la configuración de parámetros seleccionada en cada caso, y posteriormente se compararán los valores predichos por los modelos con los valores reales. Los resultados obtenidos se muestran en la Tabla \ref{tab:metricas_test} y el la Figura \ref{fig:test_metrics}. Las curvas ROC de los distintos modelos sobre el conjunto de datos test se muestra en la Figura \ref{fig:roc_test}.
 
 En este caso, los mejores resultados en todas las medidas los da el modelo de Regresión Logística con penalización. Los modelos de SVM muestran resultados bastante similares entre ellos y prácticamente iguales al modelo de Regresión Logística. Sobre los datos test, el modelo de Bosque Aleatorio ha dado un rendimiento peor que el obtenido en validación, quedando por detrás de los tres modelos ya comentados, aunque la sensibilidad de todos estos modelos es prácticamente igual. De nuevo, los peores resultados los dan los modelos de Regresión Logística aplicando PCA y el Árbol de Decisión, seguidos del KNN.
 
 
-\begin{table}[]
+\begin{table}[H]
 \centering
 \resizebox{0.5\columnwidth}{!}{%
 \begin{tabular}{@{}llllll@{}}
@@ -194,14 +216,14 @@ knn         & 0.744    & 0.673    & 0.719  & 0.624       & 0.673     \\ \bottomr
 \label{tab:metricas_test}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/test_metrics.png}
 \caption[Gráfico de métricas obtenidas sobre el conjunto test]{Métricas obtenidas sobre el conjunto test por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
 \label{fig:test_metrics}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/roc_test.png}
 \caption[Curvas ROC sobre test]{Curvas ROC sobre test. \it Fuente: Elaboración propia.}
@@ -210,3 +232,36 @@ knn         & 0.744    & 0.673    & 0.719  & 0.624       & 0.673     \\ \bottomr
 
 
 
+En el fragmento de código que se incluye a continuación, se realizan las siguientes operaciones sobre todos los modelos considerados:
+
+1. Se finaliza el entrenamiento de los modelos, usando la combinación de parámetros previamente seleccionada para cada uno.
+2. Se reentrenan sobre la unión de los conjuntos de entrenamiento y validación.
+3. Se obtienen las medidas de rendimiento sobre el conjunto test.
+4. Se construye la curva ROC de cada modelo sobre el conjunto test.
+
+El código completo puede observarse en el [Apéndice B.3.5][Comparativa en test].
+
+```{r eval = FALSE}
+models = models %>% 
+  mutate(final_workflow = map2(models_workflow, 
+                               best_tuning, 
+                               finalize_workflow),
+         last_fit = map(final_workflow, 
+                        function(x) last_fit(x,
+                                             splits,
+                                             add_validation_set=T)),
+         test_metrics = map(last_fit,      
+                            ~collect_predictions(.x) %>%  
+                              get_metrics() %>%  
+                              extract2(1)), 
+         test_roc = map(last_fit,
+                        ~collect_predictions(.x) %>%     
+                          roc_curve(fire, .pred_0)) 
+         )
+```
+
+La fácil compresión del código, la posibilidad de usar funciones de orden superior que permiten realizar operaciones a múltiples elementos de forma sencilla y eficiente, y el uso de estructuras anidadas y funciones de orden superior que  simplifican la programación, muestran la potencia de la integración de *tidymodels* dentro del universo *tidyverse*.
+
+
+
+En el siguiente capítulo, se evaluará el rendimiento de los modelos construidos en esta sección al ser aplicados a dos casos prácticos. De esta forma, se podrá valorar la utilidad de estos en la realidad y conocer sus limitaciones.

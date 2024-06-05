@@ -36,6 +36,50 @@
 \urlstyle{same}  % don't use monospace font for urls
 %
 \usepackage[usenames,dvipsnames]{xcolor}  %new PLLC
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+% PLLC modifica-ini
+% PLLC modifica-fin
+
 \IfFileExists{parskip.sty}{%
 \usepackage{parskip}
 }{% else
@@ -625,8 +669,8 @@ La principal de ellas fue que hasta marzo de 2024 la base de datos de la
 EGIF solo se encontraba disponible en el Catálogo de Datos del Gobierno
 de España en formato TURTLE\footnote{TURTLE es una sintaxis para RDF
   compatible con SPARQL. RDF (\emph{Resource Description Framework}) es
-  un estándar de semántica web utilizado para el intercambiar de datos
-  en la Web.} y esto conllevó numerosas dificultades. Se exploraron
+  un estándar de semántica web utilizado para el intercambio de datos en
+  la Web.} y esto conllevó numerosas dificultades. Se exploraron
 distintas librerías de R (y alguna de Python) para el manejo de datos en
 este formato, como \emph{RDFlib} \citep{rdflib}. Sin embargo, al
 tratarse de una base de datos de un tamaño considerable
@@ -761,9 +805,9 @@ predecir los incendios forestales en Andalucía. Estos conjuntos se
 recogen en la Tabla \ref{tab:fuentes}, donde también se indica la fuente
 de la que ha sido obtenido cada uno de ellos, el tipo de datos que
 contiene (indicando su resolución en el caso de los datos ráster) y la
-frecuencia de las observaciones (o resolución temporal) en el caso de
-las variables temporales. En realidad, el número de archivos de datos
-que se manejan es mucho mayor, ya que, por ejemplo, para la variable
+frecuencia de las observaciones (o resolución temporal) para las
+variables temporales. En realidad, el número de archivos de datos que se
+manejan es mucho mayor, ya que, por ejemplo, para la variable
 \emph{NDVI} se dispone de un archivo \emph{tiff} para cada mes del
 periodo de estudio, resultando en un total de unos 240 archivos ráster
 diferentes solo para esta variable. Inevitablemente, esto añade cierta
@@ -930,7 +974,7 @@ predecir las zonas que pueden verse afectadas por un incendio forestal
 forma, para construir la muestra de casos positivos se han generado 10
 puntos aleatorios dentro de cada polígono de incendio y se les ha
 asignado la fecha del día de inicio del incendio. En
-\citet{stojanova2012estimating} la muestra de casos negativos se genera
+\citep{stojanova2012estimating} la muestra de casos negativos se genera
 de la siguiente manera: se toman fechas aleatorias dentro del periodo de
 estudio y a cada una de ellas se le asocia una localización aleatoria
 dentro del área de estudio satisfaciendo que deben estar a al menos 15
@@ -953,7 +997,7 @@ propias de los incendios en la región.
 \label{fig:incendios_mes}
 \end{figure}
 
-Tanto en \citet{stojanova2012estimating} como en otros estudios
+Tanto en \citep{stojanova2012estimating} como en otros estudios
 consultados se generan los casos negativos tomando fechas completamente
 aleatorias dentro de la franja temporal del estudio. Sin embargo, esto
 induce un claro sesgo en los datos, ya que las observaciones positivas
@@ -983,11 +1027,73 @@ producen.
 
 Pueden observarse todos los detalles del procedimiento seguido para
 generar la muestra en el código usado para ello, que se adjunta en la
-primera sección del {[}Apéndice: Código{]}.
+primera sección del {[}Apéndice: Código{]}. Sin embargo, a modo
+ilustrativo, se incluye a continuación el código de un fragmento del
+bucle usado para generar la muestra, en el que se generan las
+localizaciones aleatorias de las observaciones negativas, verificando
+las relaciones mencionadas. Se usa la función \texttt{st\_sample} del
+paquete \emph{sf} de \emph{R} para generar localizaciones aleatorias
+dentro de un polígono (en este caso \texttt{area\_monte} es el polígono
+de la Comunidad Autónoma de Andalucía), la función
+\texttt{st\_is\_within\_distance} para comprobar la relación espacial
+``estar a una distancia menor o igual de 15km'', la función
+\texttt{st\_union} para realizar uniones espaciales de \emph{simple
+features}, y la función \texttt{st\_sf} para crear un objeto \emph{sf} a
+partir de un \emph{dataframe} y un objeto de tipo \emph{sfc} con las
+geometrías. Para más detalles, puede acudirse al apéndice.
 
-\hypertarget{asignaciuxf3n-de-variables-descriptivasobservaciones}{%
-\subsection{Asignación de variables
-descriptivasobservaciones}\label{asignaciuxf3n-de-variables-descriptivasobservaciones}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (day }\ControlFlowTok{in}\NormalTok{ dates\_year) \{}
+\NormalTok{  incendios\_day }\OtherTok{=} \FunctionTok{filter}\NormalTok{(incendios,}
+\NormalTok{                         fecha\_inic}\SpecialCharTok{\textgreater{}=}\NormalTok{day}\DecValTok{{-}3} \SpecialCharTok{\&}\NormalTok{ fecha\_inic}\SpecialCharTok{\textless{}=}\NormalTok{day}\SpecialCharTok{+}\DecValTok{3}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{nrow}\NormalTok{(incendios\_day)}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{ }
+    \CommentTok{\# Si no ha habido incendios en una franja de 6 días en Andalucía}
+    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(locations)) \{}
+\NormalTok{      locations }\OtherTok{=} \FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{) }
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{      locations }\OtherTok{=} \FunctionTok{c}\NormalTok{(locations, }\FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{))}
+\NormalTok{    \}}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{ }
+    \CommentTok{\# Si ha habido algún incendio en una franja de 6 días en Andalucía }
+    \CommentTok{\# (3 días antes a 3 días después)}
+    \ControlFlowTok{repeat}\NormalTok{ \{}
+\NormalTok{      possible\_location }\OtherTok{=} \FunctionTok{st\_sample}\NormalTok{(area\_monte,}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}
+      \CommentTok{\# Se comprueba si está a 15km o menos de un incendio registrado}
+      \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{st\_is\_within\_distance}\NormalTok{(possible\_location, }
+                                 \FunctionTok{st\_union}\NormalTok{(incendios\_day), }
+                                 \AttributeTok{dist =} \DecValTok{15000}\NormalTok{, }\AttributeTok{sparse =} \ConstantTok{FALSE}\NormalTok{)) \{}
+        \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(locations)) \{}
+\NormalTok{          locations }\OtherTok{=}\NormalTok{ possible\_location}
+          \ControlFlowTok{break}
+\NormalTok{        \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{          locations }\OtherTok{=} \FunctionTok{c}\NormalTok{(locations, possible\_location)}
+          \ControlFlowTok{break}
+\NormalTok{        \}}
+\NormalTok{      \}}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\# Atributos del objeto sf  }
+\NormalTok{points\_out\_attr }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{fire =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{length}\NormalTok{(dates\_year)),}
+                              \AttributeTok{date =}\NormalTok{ dates\_year)}
+  
+\CommentTok{\# Se crea el objeto sf a partir de los atributos y las geometrías}
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(points\_out)) \{}
+\NormalTok{  points\_out }\OtherTok{\textless{}{-}} \FunctionTok{st\_sf}\NormalTok{(points\_out\_attr,}
+                      \AttributeTok{geometry=}\NormalTok{ locations)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  points\_out }\OtherTok{\textless{}{-}}\NormalTok{ points\_out }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{add\_row}\NormalTok{(}\FunctionTok{st\_sf}\NormalTok{(points\_out\_attr,}
+                  \AttributeTok{geometry=}\NormalTok{ locations)) }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{asignaciuxf3n-de-variables-descriptivas-a-observaciones}{%
+\subsection{Asignación de variables descriptivas a
+observaciones}\label{asignaciuxf3n-de-variables-descriptivas-a-observaciones}}
 
 Una vez generada una muestra balanceada de 22.170 observaciones dentro
 de Andalucía entre el 1 de enero de 2002 y el 31 de diciembre de 2022
@@ -1005,8 +1111,8 @@ que sea posible, no transformar el CRS de los datos ráster, pues al
 hacerlo se deben interpolar los valores de los píxeles, produciendo una
 pérdida de información).
 
-A continuación se detalla el proceso seguido para manipular construir
-cada variable:
+A continuación se detalla el proceso seguido para construir cada
+variable:
 
 \begin{itemize}
 \item
@@ -1014,7 +1120,7 @@ cada variable:
   píxel correspondiente a las coordenadas del punto de cada observación
   para cada uno de los conjuntos de datos.
 \item
-  \textbf{Variables antropológicas}:
+  \textbf{Variables antropogénicas}:
 
   \begin{itemize}
   \item
@@ -1094,30 +1200,31 @@ Superficies de agua                                         & Aguas continentale
 
 \begin{itemize}
 \item
-  Para construir la variable \emph{poblacion}, primero se ha asignado a
-  cada observación el código del municipio en el que está, haciendo uso
-  de la función \texttt{st\_intersects} y considerando los polígonos de
-  los municipios proporcionados por el paquete \emph{mapSpain}.
-  Posteriormente, se ha hecho un \emph{left\_join} para unir el conjunto
-  de observaciones con los datos de población extraídos del IECA,
-  utilizando el código del municipio y el año de la observación para
-  realizar la unión. Para la variable \emph{dens\_población} se ha
-  procedido de la misma manera, pero se ha divido previamente el dato de
-  población anual de cada municipio por la extensión del municipio
-  correspondiente en \(km^2\), para lo que ha debido realizarse
-  previamente otro \emph{left\_join} para unir el conjunto de datos de
-  población anual y el de áreas de municipios mediante el código del
-  municipio.
+  \textbf{Variables demográficas}: Para construir la variable
+  \emph{poblacion}, primero se ha asignado a cada observación el código
+  del municipio en el que está, haciendo uso de la función
+  \texttt{st\_intersects} y considerando los polígonos de los municipios
+  proporcionados por el paquete \emph{mapSpain}. Posteriormente, se ha
+  hecho un \emph{left\_join} para unir el conjunto de observaciones con
+  los datos de población extraídos del IECA, utilizando el código del
+  municipio y el año de la observación para realizar la unión. Para la
+  variable \emph{dens\_población} se ha procedido de la misma manera,
+  pero se ha divido previamente el dato de población anual de cada
+  municipio por la extensión del municipio correspondiente en \(km^2\),
+  para lo que ha debido realizarse previamente otro \emph{left\_join}
+  para unir el conjunto de datos de población anual y el de áreas de
+  municipios mediante el código del municipio.
 \item
-  La distancia a los ríos \emph{dist\_rios} se ha obtenido calculando la
-  distancia de cada observación al conjunto de geometrías de los
-  principales ríos de España.
+  \textbf{Variable hidrológica}: La distancia a los ríos
+  \emph{dist\_rios} se ha obtenido calculando la distancia de cada
+  observación al conjunto de geometrías de los principales ríos de
+  España.
 \item
-  El NDVI viene en archivos \emph{raster} mensuales (lo que supone un
-  total de unos 240 archivos en formato \emph{.tiff}). Para cada
-  observación se ha extraído el valor del píxel en cuestión (en función
-  de las coordenadas del punto) del archivo correspondiente (que depende
-  del mes y año de la observación).
+  \textbf{Variables de vegetación}: El NDVI viene en archivos ráster
+  mensuales (lo que supone un total de unos 240 archivos en formato
+  \emph{.tiff}). Para cada observación se ha extraído el valor del píxel
+  en cuestión (en función de las coordenadas del punto) del archivo
+  correspondiente (que depende del mes y año de la observación).
 \end{itemize}
 
 \hypertarget{depuraciuxf3n-de-la-muestra}{%
@@ -1214,11 +1321,11 @@ Identificadoras   & date             & Fecha de la observación                 
 \label{tab:variables}
 \end{table}
 
-Sobre este conjunto de datos se realizará en el {[}capítulo
+Sobre este conjunto de datos se realizará en el {[}Capítulo
 4{]}{[}Análisis exploratorio de datos{]} un análisis exhaustivo de las
 variables y de las relaciones entre las mismas, que proporcionará un
 conocimiento esencial para llevar a cabo los modelos predictivos objeto
-de este trabajo, detallados en el {[}capítulo 5{]}{[}Modelización{]}.
+de este trabajo, detallados en el {[}Capítulo 5{]}{[}Modelización{]}.
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 

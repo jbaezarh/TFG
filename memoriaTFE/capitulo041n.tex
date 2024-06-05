@@ -36,6 +36,50 @@
 \urlstyle{same}  % don't use monospace font for urls
 %
 \usepackage[usenames,dvipsnames]{xcolor}  %new PLLC
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+% PLLC modifica-ini
+% PLLC modifica-fin
+
 \IfFileExists{parskip.sty}{%
 \usepackage{parskip}
 }{% else
@@ -553,9 +597,9 @@ será trabajar con una partición en entrenamiento-validación-test
 construida a partir de la ordenación temporal de las observaciones.
 
 Se compararán los resultados obtenidos en 7 modelos diferentes:
-Regresión logística con penalización, Regresión logística con
-penalización + PCA, Árboles de decisión, Bosques aleatorios, KNN, SVM
-lineal y SVM radial.
+Regresión Logística con penalización, Regresión Logística con
+penalización usando PCA, Árboles de Decisión, Bosques Aleatorios, KNN,
+SVM lineal y SVM radial.
 
 Se ha seguido el flujo de trabajo habitual del paquete
 \emph{tidymodels}:
@@ -609,7 +653,7 @@ salidas individualmente se ha considerado que es la mejor opción ya que
 produce la mayor sensibilidad sin bajar demasiado las otras medias.
 
 \hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}{%
-\section{Regresión logística con
+\section{Regresión Logística con
 penalización}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n}}
 
 Antes de aplicar este modelo, se han transformado las variables
@@ -628,21 +672,21 @@ de validación se representan en la Figura \ref{fig:lr_tuningplot}.
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/lr_tuningplot.png}
-\caption[Métricas de rendimiento de los modelos de regresión logística con penalización]{Métricas de rendimiento de los modelos de regresión logística con penalización.  \it Fuente: Elaboración propia.}
+\caption[Métricas de rendimiento de los modelos de Regresión Logística con penalización]{Métricas de rendimiento de los modelos de Regresión Logística con penalización.  \it Fuente: Elaboración propia.}
 \label{fig:lr_tuningplot}
 \end{figure}
 
 Finalmente, se elige el modelo maximiza la tasa de acierto, cuyos
 parámetros son: \(\alpha= 1\) y \(\lambda = 0.000464\). Es decir, un
-modelo de regresión logística \emph{lasso} puro. Los coeficientes de
+modelo de Regresión Logística \emph{lasso} puro. Los coeficientes de
 este modelo se muestran en la Figura \ref{fig:lr_coef} del {[}Apéndice
 A.2. Salidas de los modelos{]}{[}Salidas de los modelos{]}.
 
-\hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n-y-pca}{%
-\section{Regresión logística con penalización y
-PCA}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n-y-pca}}
+\hypertarget{regresiuxf3n-loguxedstica-con-penalizaciuxf3n-usando-pca}{%
+\section{Regresión Logística con penalización usando
+PCA}\label{regresiuxf3n-loguxedstica-con-penalizaciuxf3n-usando-pca}}
 
-A continuación se considera el mismo modelo de regresión logística con
+A continuación se considera el mismo modelo de Regresión Logística con
 penalización que en la sección, anterior pero en lugar de trabajar con
 los datos directamente, se aplica análisis de componentes principales
 sobre los datos normalizados en el preprocesamiento, ajustando el número
@@ -672,9 +716,9 @@ Finalmente, el modelo que maximiza la tasa de acierto es el que tiene 40
 componentes principales, \(\alpha= 0.333\) y \(\lambda = 0.00464\).
 
 \hypertarget{uxe1rboles-de-decisiuxf3n}{%
-\section{Árboles de decisión}\label{uxe1rboles-de-decisiuxf3n}}
+\section{Árboles de Decisión}\label{uxe1rboles-de-decisiuxf3n}}
 
-Se construirán los árboles de decisión usando el índice de Gini como
+Se construirán los Árboles de Decisión usando el índice de Gini como
 medida de impureza utilizada para determinar el par variable-corte en
 cada nodo, y se elegirá el parámetro de coste-complejidad (\(\alpha\))
 que maximice la tasa de acierto. Tras valorar también el uso de la
@@ -692,12 +736,12 @@ cada uno de los valores del parámetro a ajustar.
 \begin{figure}[h!]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/dt_tuningplot.png}
-\caption[Métricas de rendimiento del árbol de decisión en función de $\alpha$]{Métricas de rendimiento del árbol de decisión en función del parámetro de coste-complejidad. \it Fuente: Elaboración propia.}
+\caption[Métricas de rendimiento del Árbol de Decisión en función de $\alpha$]{Métricas de rendimiento del Árbol de Decisión en función del parámetro de coste-complejidad. \it Fuente: Elaboración propia.}
 \label{fig:dt_tuningplot}
 \end{figure}
 
 \hypertarget{bosques-aleatorios}{%
-\section{Bosques aleatorios}\label{bosques-aleatorios}}
+\section{Bosques Aleatorios}\label{bosques-aleatorios}}
 
 En este modelo se han ajustado los parámetros \emph{mtry} (el número de
 variables que se seleccionarán aleatoriamente en cada nodo) y
@@ -715,7 +759,7 @@ De esta forma, la estimación de parámetros se ha hecho en dos etapas. En
 una primera etapa se ha fijado el parámetro \(mtry = 4\) y se ha
 estimado el parámetro \emph{min\_n} considerando para ello un
 \emph{grid} equiespaciado de 1000 a 2500 tomando valores de 100 en 100
-(\(\{1000,1100,...,2500\}\)). Para elegir entre los distintos modelos
+(\(\{1000,1100,...,2500\}\)). Para elegir entre los distintos modelos,
 esta vez se ha usado como criterio la sensibilidad, obteniendo el valor
 más elevado para \(min\_n = 2100\). En la segunda etapa, una vez
 \emph{min\_n}, este se ha considerado fijo y se ha estimado \emph{mtry},
@@ -726,10 +770,30 @@ elegir el modelo final, eligiendo así \(min\_n = 7\). En la Figura
 \emph{tuning}. El modelo final elegido tiene \(min\_n = 2100\) y
 \(mtry = 7\).
 
+Aquí es necesario hacer un inciso sobre el motivo de considerar valores
+de \(min\_n\) tan elevados, en especial si se tiene en cuenta que la
+muestra con la que se trabaja está formada por 20.000 registros. En un
+inicio, se trató de ajustar ambos parámetros a la vez, considerando
+valores usuales para el parámetro \(min_n\) (del orden de la decena).
+Sin embargo, los tiempos de entrenamiento eran sumamente largos y el
+rendimiento de los modelos era pésimo. Si bien el área bajo la curva ROC
+y la tasa global de acierto eran aceptables y la tasa de acierto en la
+clase negativa era excelente, en la clase positiva las tasas de acierto
+obtenidas era inferiores a 0.5, indicando que los modelos no estaban
+funcionando adecuadamente. Entonces, se comenzaron a realizar pruebas
+con valores más elevados de \(min\_n\), hasta conseguir un rendimiento
+aceptable en la clase positiva, que es lo principal en este problema. De
+esta forma, se llegó a los valores del parámetro \(min\_n\) que se
+presentan en el párrafo anterior, que llevan a considerar árboles poco
+profundos. Sería interesante, en trabajos futuros, seguir explorando
+vías de mejora de este modelo, tratando de desentrañar las causas del
+rendimiento poco prometedor obtenido con valores de \(min\_n\)
+moderados.
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width =\textwidth]{graficos/rf_tuningplot.png}
-\caption[Métricas de rendimiento de Random Forest en función de los parámetros]{Métricas de rendimiento de Random Forest en función de los parámetros.  \it Fuente: Elaboración propia.}
+\caption[Métricas de rendimiento de \textit{Random Forest} en función de los parámetros]{Métricas de rendimiento de \textit{Random Forest} en función de los parámetros.  \it Fuente: Elaboración propia.}
 \label{fig:rf_tuningplot}
 \end{figure}
 
@@ -797,8 +861,8 @@ curvas ROC de todos los modelos se muestran en la Figura
 \ref{fig:roc_validation}.
 
 Puede observarse que los resultados obtenidos por todos los modelos son
-bastante similares. Destacan el modelo de bosque aleatorio y el de
-regresión logística con penalización, el primero por ser el que tiene la
+bastante similares. Destacan el modelo de Bosque Aleatorio y el de
+Regresión Logística con penalización, el primero por ser el que tiene la
 tasa de acierto y la sensibilidad más elevadas, y el segundo por dar los
 mejores resultado en cuanto a precisión y especificidad. Las curvas ROC
 de los modelos de bosque aleatorio, regresión logística con
@@ -808,7 +872,7 @@ modelos más pobres son la regresión logística aplicando PCA, KNN y el
 demasiado simples dada la complejidad del problema al que se quieren
 aplicar.
 
-\begin{table}[]
+\begin{table}[H]
 \centering
 \resizebox{0.5\columnwidth}{!}{%
 \begin{tabular}{@{}llllll@{}}
@@ -827,19 +891,54 @@ knn         & 0.732    & 0.672    & 0.706  & 0.637       & 0.660     \\ \bottomr
 \label{tab:metricas_val}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/validation_metrics.png}
 \caption[Gráfico de métricas obtenidas sobre el conjunto de validación]{Gráfico de métricas obtenidas sobre el conjunto de validación por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
 \label{fig:validation_metrics}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/roc_validation.png}
 \caption[Curvas ROC sobre el conjunto de validación]{Curvas ROC sobre el conjunto de validación. \it Fuente: Elaboración propia.}
 \label{fig:roc_validation}
 \end{figure}
+
+A continuación, se incluye un fragmento del código en el que se ilustra
+el uso de funciones propias del flujo de trabajo habitual de
+\emph{tidymodels} dentro de la filosofía \emph{``tidy data''} propia del
+ecosistema \emph{tidyverse}, haciendo uso de estructuras anidadas y
+funciones de orden superior. En este fragmento, se selecciona la mejor
+combinación de parámetros para cada modelo, usando la tasa de acierto
+global como criterio; a continuación, se obtienen todas las medidas de
+rendimiento sobre el conjunto de validación para cada modelo ajustado,
+haciendo uso de la función propia \texttt{get\_metrics}; y por último,
+se crea la curva ROC de cada modelo ajustado sobre el conjunto de
+validación. El objeto \texttt{models\_tune} contiene los resultados del
+ajuste de cada combinación de parámetros considerada para cada modelo
+sobre el conjunto de validación.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{models }\OtherTok{=}\NormalTok{ models }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{best\_tuning =} \FunctionTok{map}\NormalTok{(models\_tune, }
+                           \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{select\_best}\NormalTok{(x, }
+                                                   \AttributeTok{metric =} \StringTok{"accuracy"}\NormalTok{)),}
+         \AttributeTok{best\_metrics =} \FunctionTok{map2}\NormalTok{(models\_tune,}
+\NormalTok{                             best\_tuning,       }
+                             \SpecialCharTok{\textasciitilde{}} \FunctionTok{collect\_predictions}\NormalTok{(.x,}
+                                                   \AttributeTok{parameters =}\NormalTok{ .y) }\SpecialCharTok{\%\textgreater{}\%}    
+                               \FunctionTok{get\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}          
+                               \FunctionTok{extract2}\NormalTok{(}\DecValTok{1}\NormalTok{)), }
+         \AttributeTok{roc =} \FunctionTok{map2}\NormalTok{(models\_tune,}
+\NormalTok{                    best\_tuning,}
+                    \SpecialCharTok{\textasciitilde{}} \FunctionTok{collect\_predictions}\NormalTok{(.x,}
+                                          \AttributeTok{parameters =}\NormalTok{ .y) }\SpecialCharTok{\%\textgreater{}\%}    
+                      \FunctionTok{roc\_curve}\NormalTok{(fire, .pred\_0))}
+\NormalTok{         ) }
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{comparativa-sobre-el-cojunto-test}{%
 \section{Comparativa sobre el cojunto
@@ -863,16 +962,16 @@ Las curvas ROC de los distintos modelos sobre el conjunto de datos test
 se muestra en la Figura \ref{fig:roc_test}.
 
 En este caso, los mejores resultados en todas las medidas los da el
-modelo de regresión logística con penalización. Los modelos de SVM
+modelo de Regresión Logística con penalización. Los modelos de SVM
 muestran resultados bastante similares entre ellos y prácticamente
-iguales al modelo de regresión logística. Sobre los datos test, el
-modelo de bosque aleatorio ha dado un rendimiento peor que el obtenido
+iguales al modelo de Regresión Logística. Sobre los datos test, el
+modelo de Bosque Aleatorio ha dado un rendimiento peor que el obtenido
 en validación, quedando por detrás de los tres modelos ya comentados,
 aunque la sensibilidad de todos estos modelos es prácticamente igual. De
-nuevo, los peores resultados los dan los modelos de regresión logística
-aplicando PCA y el árbol de decisión, seguidos del KNN.
+nuevo, los peores resultados los dan los modelos de Regresión Logística
+aplicando PCA y el Árbol de Decisión, seguidos del KNN.
 
-\begin{table}[]
+\begin{table}[H]
 \centering
 \resizebox{0.5\columnwidth}{!}{%
 \begin{tabular}{@{}llllll@{}}
@@ -891,19 +990,70 @@ knn         & 0.744    & 0.673    & 0.719  & 0.624       & 0.673     \\ \bottomr
 \label{tab:metricas_test}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/test_metrics.png}
 \caption[Gráfico de métricas obtenidas sobre el conjunto test]{Métricas obtenidas sobre el conjunto test por cada uno de los modelos seleccionados. \it Fuente: Elaboración propia.}
 \label{fig:test_metrics}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width =0.7\textwidth]{graficos/roc_test.png}
 \caption[Curvas ROC sobre test]{Curvas ROC sobre test. \it Fuente: Elaboración propia.}
 \label{fig:roc_test}
 \end{figure}
+
+En el fragmento de código que se incluye a continuación, se realizan las
+siguientes operaciones sobre todos los modelos considerados:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Se finaliza el entrenamiento de los modelos, usando la combinación de
+  parámetros previamente seleccionada para cada uno.
+\item
+  Se reentrenan sobre la unión de los conjuntos de entrenamiento y
+  validación.
+\item
+  Se obtienen las medidas de rendimiento sobre el conjunto test.
+\item
+  Se construye la curva ROC de cada modelo sobre el conjunto test
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{models }\OtherTok{=}\NormalTok{ models }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{final\_workflow =} \FunctionTok{map2}\NormalTok{(models\_workflow, }
+\NormalTok{                               best\_tuning, }
+\NormalTok{                               finalize\_workflow),}
+         \AttributeTok{last\_fit =} \FunctionTok{map}\NormalTok{(final\_workflow, }
+                        \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{last\_fit}\NormalTok{(x,}
+\NormalTok{                                             splits,}
+                                             \AttributeTok{add\_validation\_set=}\NormalTok{T)),}
+         \AttributeTok{test\_metrics =} \FunctionTok{map}\NormalTok{(last\_fit,      }
+                            \SpecialCharTok{\textasciitilde{}}\FunctionTok{collect\_predictions}\NormalTok{(.x) }\SpecialCharTok{\%\textgreater{}\%}  
+                              \FunctionTok{get\_metrics}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}  
+                              \FunctionTok{extract2}\NormalTok{(}\DecValTok{1}\NormalTok{)), }
+         \AttributeTok{test\_roc =} \FunctionTok{map}\NormalTok{(last\_fit,}
+                        \SpecialCharTok{\textasciitilde{}}\FunctionTok{collect\_predictions}\NormalTok{(.x) }\SpecialCharTok{\%\textgreater{}\%}     
+                          \FunctionTok{roc\_curve}\NormalTok{(fire, .pred\_0)) }
+\NormalTok{         )}
+\end{Highlighting}
+\end{Shaded}
+
+La fácil compresión del código, la posibilidad de usar funciones de
+orden superior que permiten realizar operaciones a múltiples elementos
+de forma sencilla y eficiente, y el uso de estructuras anidadas y
+funciones de orden superior que simplifican la programación, muestran la
+potencia de la integración de \emph{tidymodels} dentro del universo
+\emph{tidyverse}.
+
+En el siguiente capítulo, se evaluará el rendimiento de los modelos
+construidos en esta sección al ser aplicados a dos casos prácticos. De
+esta forma, se podrá valorar la utilidad de estos en la realidad y
+conocer sus limitaciones.
 
 \bibliography{bib/library.bib,bib/paquetes.bib}
 

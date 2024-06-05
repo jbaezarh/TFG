@@ -24,13 +24,22 @@ source("cabecera_chunk_inicio.R")
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(eval = FALSE)
+
 ```
 
 # Apéndice: Código
 
-## Generación de la muestra
+Para elaborar el presente trabajo, ha sido necesario escribir una gran cantidad de código, debido al gran número de técnicas empleadas y de resultados y gráficos presentados. Siendo consciente del papel fundamental que la programación ha tenido en este trabajo, y de la necesidad de ilustrar algunas de los procedimientos seguidos, se ha optado por incluir un apéndice con los principales fragmentos del código empleado. El objetivo de este apéndice es, por tanto, ilustrar las técnicas empleadas, sirviendo de apoyo al texto. 
+
+El lector interesado encontrará aquí el código en lenguaje *R* empleado para llevar a cabo algunas de las tareas esenciales descritas en la memoria, con los comentarios necesarios para su correcta comprensión. Se ha decidido incluir los paquetes usados en cada sección por considerarse de interés. 
+
+Se han omitido o acortado muchas secciones, con el objetivo de no excederse en la extensión del apéndice, pero ilustrando adecuadamente las técnicas empleadas. El código completo, junto con los datos originales y los conjuntos de datos generados, puede consultarse en el repositorio de github \url{https://github.com/jbaezarh/TFG} o en el archivo adjunto proporcionado (en este caso, sin los datos originales).
+
+
+## Generación de la muestra {#code:generar_muestra}
+
 ```{r eval=FALSE}
-# Librerías --------------------------------------------------------  
+# Librerías -------------------------------------------------------
 # Se cargan las librerías que se usarán en esta sección
 
 library(terra) # Raster data
@@ -147,19 +156,22 @@ for (year in 2002:2022) {
   
   for (day in dates_year) {
     incendios_day = filter(incendios,fecha_inic>=day-3 & fecha_inic<=day+3)
-    if (nrow(incendios_day)==0){ # Si no ha habido incendios en una franja de 6 días en Andalucía
+    if (nrow(incendios_day)==0){ 
+      # Si no ha habido incendios en una franja de 6 días en Andalucía
       if (is.null(locations)) {
-        locations = st_sample(area_monte,size=1)
+        locations = st_sample(area_monte,size=1) 
       } else {
         locations = c(locations, st_sample(area_monte,size=1))
       }
-    } else { # Si ha habido algún incendio en una franja de 6 días en Andalucía (3 antes o 3 después)
+    } else { 
+      # Si ha habido algún incendio en una franja de 6 días en Andalucía 
+      # (3 días antes a 3 días después)
       repeat {
         possible_location = st_sample(area_monte,size=1)
+        # Se comprueba si está a 15km o menos de un incendio registrado
         if (!st_is_within_distance(possible_location, 
                                    st_union(incendios_day), 
                                    dist = 15000, sparse = FALSE)) {
-          possible_location = st_sample(area_monte,size=1)
           if (is.null(locations)) {
             locations = possible_location
             break
@@ -201,7 +213,7 @@ save(sample,file=paste0("salidas_intermedias/sample_strat_",
                         Sys.Date(),".RData"))
 ```
 
-## Asignación de variables a localizaciones
+## Asignación de variables a localizaciones {#code:asignar_variables}
 
 A continuación se define la función `asignar_variables` que dada una muestra de puntos en Andalucía con fechas comprendidas entre 2002 y 2022 le asocia a cada observación todos los valores de las variables consideradas en el estudio. Esta función se usará varias veces a lo largo del trabajo.
 
@@ -209,7 +221,7 @@ A continuación se define la función `asignar_variables` que dada una muestra d
 # Librerías -----------------------------------------
 # Se cargan las librerías que se usarán en esta sección
 library(nasapower) # Para obtener la información meteorológica
-library(raster, include.only = c("rasterFromXYZ"))  # Función para construir rasters a partir de data.frames
+library(raster, include.only = c("rasterFromXYZ"))  # Función para construir rásteres a partir de data.frames
 library(tidyverse) # Manipulación de datos
 library(sf) # Vector data
 library(terra) # Raster data
@@ -222,7 +234,7 @@ asignar_variables = function(sample) {
 
   
   crs_reference = st_crs(sample) # Se usa el sistema de referencia de coordenadas de la muestra
-  and = esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos)) # Polígono de Andalucía
+  and = esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(sample)) # Polígono de Andalucía
   
   # Variables meteorológicas ----------------------------
   cat("Asignando variables meteorológicas...\n")
@@ -232,7 +244,7 @@ asignar_variables = function(sample) {
   
   dataset = NULL # Variable en la que se almacenará el conjunto completo
   
-  # Se trabaja anualmente pues la API de NASA POWER solo admite consultas de hasta 366 días
+  # Se trabaja anualmente, pues la API de NASA POWER solo admite consultas de hasta 366 días
 
   for (year in sort(unique(year(sample$date)))) {
     
@@ -252,7 +264,7 @@ asignar_variables = function(sample) {
     
     # Identificador
     daily_single_ag$clim_id <- 1:nrow(daily_single_ag)
-    points$clim_id = NA # Inicializo el identificador
+    points$clim_id = NA # Se inicializa el identificador
     
     for (day in unique(points$date)) {
       
@@ -264,7 +276,7 @@ asignar_variables = function(sample) {
       
       id_rast_day = rast(rasterFromXYZ(clim_day,crs="WGS84")) # Se crea el raster con los identificadores
       
-      points[points_day,]$clim_id <- terra::extract(id_rast_day,points_WGS84[points_day,])$clim_id # Se asocia a cada registro de la muestra el identificador correspondiente
+      points[points_day,]$clim_id <- terra::extract(id_rast_day, points_WGS84[points_day,])$clim_id # Se asocia a cada registro de la muestra el identificador correspondiente
     }
     
     # Haciendo uso del identificador se asocian todas las variables meteorológicas correspondientes a cada registro
@@ -287,16 +299,14 @@ asignar_variables = function(sample) {
   orient <- rast("data_raw/topograficas/orientacion.tif")
   curv <- rast("data_raw/topograficas/curvatura.tif")
   
-  # Es necesario pasarlas a numeric para poder trabajar con ellas y extraer los valores
-  pend <- as.numeric(pend)
-  orient <- as.numeric(orient)
-  curv <- as.numeric(curv)
-  
   # Se extraen los valores de cada una de las capas
   var_topograficas <- list(elevacion = elev,pendiente = pend,
-                           orientacion = orient,curvatura = curv)
+                           orientacion = orient,curvatura = curv) |> 
+    lapply(as.numeric) # Es necesario pasarlas a numeric para poder 
+                       # trabajar con ellas y extraer los valores
   
-  points_topograficas <- sapply(var_topograficas,function(x) terra::extract(x,dataset))[2,] |> 
+  
+  points_topograficas <- sapply(var_topograficas, function(x) terra::extract(x,dataset))[2,] |> 
     as_tibble()
   
   dataset <- cbind(dataset,points_topograficas)
@@ -304,8 +314,8 @@ asignar_variables = function(sample) {
   rm(elev,pend,orient,curv,var_topograficas,points_topograficas)
   
   
-  # Variables antropológicas -------------------------------
-  cat("Asignando variables antropológicas...\n")
+  # Variables antropogénicas -------------------------------
+  cat("Asignando variables antropogénicas...\n")
   
   ## Para optimizar el cálculo evitando que se repitan cálculos si hay puntos repetidos:!!
   dataset_geoms <- dataset %>% 
@@ -430,7 +440,7 @@ asignar_variables = function(sample) {
   poblacion <- read_csv2("data_raw/antropologicas/Población/poblacion_municipios.txt",
                          locale=locale(decimal_mark = ","),
                          col_select = 1:5,col_types = "ccifn") |> 
-    mutate(Valor=as.integer(round(Valor))) # Por algún motivo aparecen decimales
+    mutate(Valor=as.integer(round(Valor))) # La población debe ser un entero
   
   
   area_municipios <- read_csv2("data_raw/antropologicas/Población/extension_municipal.txt",
@@ -452,11 +462,9 @@ asignar_variables = function(sample) {
     mutate(dens_poblacion = Poblacion/Area) %>% 
     select(-Area)
   
-  municipios <- esp_get_munic(epsg = 4258,region = "Andalucía")
-  
-  municipios <- municipios |> 
+  municipios <- esp_get_munic(epsg = 4258,region = "Andalucía") |> 
     st_transform(crs_reference)
-  
+    
   # Se asocia cada observacion su código de municipio correspondiente 
   
   num_mun = st_intersects(dataset,municipios) 
@@ -485,17 +493,27 @@ asignar_variables = function(sample) {
     for (MONTH in 1:12) {
       MM = str_pad(MONTH,2,"left",pad = "0")
       YY = substr(as.character(YEAR),3,4)
-      # if (as.numeric(YY)<=01) {
-      #   ruta <- paste0("data_raw/vegetacion/",YEAR,"NOAAVHMEDMNDVI/InfGeografica/InfRaster/TIF/NOAAVH_",YY,MM,"01_Andaluz_MEDMndvi.tif")
-      # } else 
+  
       if (as.numeric(YY)<=06) {
-        ruta <- paste0("data_raw/vegetacion/",YEAR,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/TERMOD_",YY,MM,"01_h17v05_medmndvi.tif")
+        ruta <- paste0("data_raw/vegetacion/",YEAR,
+                       "TERMODMEDMNDVI/InfGeografica/
+                       InfRaster/TIFF/TERMOD_",
+                       YY,MM,"01_h17v05_medmndvi.tif")
       } else if (as.numeric(YY)<=11) {
-        ruta <- paste0("data_raw/vegetacion/",YEAR,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIF/TERMOD_",YY,MM,"01_h17v05_medmndvi.tif")
+        ruta <- paste0("data_raw/vegetacion/",YEAR,
+                       "TERMODMEDMNDVI/InfGeografica/
+                       InfRaster/TIF/TERMOD_",
+                       YY,MM,"01_h17v05_medmndvi.tif")
       } else if (as.numeric(YY)<=21) {
-        ruta <- paste0("data_raw/vegetacion/",YEAR,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/termod_",YY,MM,"01_h17v05_medmndvi.tif")
+        ruta <- paste0("data_raw/vegetacion/",YEAR,
+                       "TERMODMEDMNDVI/InfGeografica/
+                       InfRaster/TIFF/termod_",
+                       YY,MM,"01_h17v05_medmndvi.tif")
       }else {
-        ruta <- paste0("data_raw/vegetacion/",YEAR,"TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod_",YY,MM,"01_h17v05_medmndvi_COG.tif")
+        ruta <- paste0("data_raw/vegetacion/",YEAR,
+                       "TERMODMEDMNDVI/InfGeografica/
+                       InfRaster/COG/termod_",
+                       YY,MM,"01_h17v05_medmndvi_COG.tif")
       }
       
       if (file.exists(ruta)) {
@@ -506,10 +524,10 @@ asignar_variables = function(sample) {
           NDVI_rast = as.numeric(rast(ruta))
           if (MONTH==4 & YEAR==2011){
             # Ese archivo viene defectuoso y se le asigna el CRS de los otros archivos del mismo año (todos los demás del año tienen el mismo)
-            crs(NDVI_rast) = 
-              "PROJCRS[\"WGS 84 / UTM zone 30N\",\n    BASEGEOGCRS[\"WGS 84\",\n        DATUM[\"World Geodetic System 1984\",\n            ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4326]],\n    CONVERSION[\"UTM zone 30N\",\n        METHOD[\"Transverse Mercator\",\n            ID[\"EPSG\",9807]],\n        PARAMETER[\"Latitude of natural origin\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",-3,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9996,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",500000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",0,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"(E)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"(N)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Navigation and medium accuracy spatial referencing.\"],\n        AREA[\"Between 6°W and 0°W, northern hemisphere between equator and 84°N, onshore and offshore. Algeria. Burkina Faso. Côte' Ivoire (Ivory Coast). Faroe Islands - offshore. France. Ghana. Gibraltar. Ireland - offshore Irish Sea. Mali. Mauritania. Morocco. Spain. United Kingdom (UK).\"],\n        BBOX[0,-6,84,0]],\n    ID[\"EPSG\",32630]]"
-          } 
-          
+            crs(NDVI_rast) = crs(rast(
+              "data_raw/vegetacion/2011TERMODMEDMNDVI/InfGeografica/
+              InfRaster/TIF/TERMOD_110501_h17v05_medmndvi.tif"))
+              } 
           dataset[isMY,]$NDVI = terra::extract(NDVI_rast,dataset[isMY,])[,2]
         }
       } else
@@ -524,13 +542,16 @@ asignar_variables = function(sample) {
   dataset <- dataset |> 
     mutate(enp = as.factor(enp),
            orientacion = cut(orientacion,
-                             breaks = c(-Inf,-1,22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5,360),
-                             labels = c("Plano","N","NE","E","SE","S","SW","W","NW","N")),
+                             breaks = c(-Inf, -1, 22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5, 360),
+                             labels = c("Plano", "N", "NE", "E", "SE", "S", "SW", "W", "NW", "N")),
            WD10M = cut(WD10M,
-                       breaks = c(0,22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5,360),
-                       labels = c("N","NE","E","SE","S","SW","W","NW","N")),
-           uso_suelo = uso_suelo |> as.character() |> str_sub(0,2) |> as.factor()
-           ) %>% 
+                       breaks = c(0, 22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5, 360),
+                       labels = c("N", "NE", "E", "SE", "S", "SW", "W", "NW", "N")),
+           uso_suelo = uso_suelo |> 
+             as.character() |> 
+             str_sub(0,2) |> 
+             as.factor()
+           )  |>  
     select(-c(YEAR,MM,DD))
   
   return(dataset)
@@ -542,7 +563,7 @@ Se usa la función definida para asignar las variables explicativas a la muestra
 # Se carga la muestra generada en el paso anterior:
 load("salidas_intermedias/sample_strat_2024-04-26.RData")
 
-# Se eliminan las observaciones que no tienen fecha pues se pueden usar para el estudio
+# Se eliminan las observaciones que no tienen fecha pues no se pueden usar para el estudio
 sample <- na.omit(sample)
 
 # Se aplica la función a la muestra 
@@ -552,701 +573,22 @@ dataset <- asignar_variables(sample)
 save(dataset,
      file = paste0("salidas_intermedias/dataset_strat_completo",
                    Sys.Date(),".RData"))
-```
 
-## Depuración de la muestra
-
-En la propia función usada para generar la muestra ya se ajustaron los tipos de las variables y se codificaron adecuadamente las variables *WD10M* y *orientacion*. A continuación se estudian los casos faltantes y finalmente se decide eliminarlos.
-
-```{r eval=FALSE}
-# Librerías --------------------------------------------
-# Se cargan las librerías que se usarán en esta sección
-library(tidyverse) # Manipulación de datos 
-library(sf) # Vector data
-library(terra) # Raster data
-library(mapSpain) # Polígonos de regiones de España
-library(magrittr) # Operador %<>% 
-library(skimr) # Resumen de datos
-
-# Carga de los datos -----------------------------------
-# Se carga la muestra con todas las variables construida anteriormente
-load("salidas_intermedias/dataset_strat_completo2024-04-26.RData")
-
-
-# Codificación variable fire: --------------------------
+# Eliminación de casos faltantes --------------------------------------------
 datos <- dataset |> 
-  mutate(fire = as.factor(fire))
-
-# Análisis de valores perdidos: ------------------------
-datos %>% skimr()
-dataset %>% apply(1,anyNA) %>% sum() # 200 registros con valores perdidos
-
-# Se observan:
-#   8 nas en uso_suelo
-#   32 nas en pendiente
-#   36 nas en orientacion
-#   32 nas en curvatura
-#   85 nas en doblacion y en dist_poblacion
-#   85 nas en NDVI
-
-datos1 = datos %>% drop_na()
-
-# Valores perdidos en variables topográficas -----------
-Andalucia <- esp_get_ccaa(ccaa = "Andalucía") # Se carga el mapa de Andalucía
-andalucia_proj <- st_transform(Andalucia,st_crs(dataset)) # Se proyecta al sistema de referencia de los datos
-
-# Mapa de valores perdidos en variables topográficas:
-plot(st_geometry(andalucia_proj),reset=F)
-datos |> 
-  filter(is.na(pendiente)| is.na(orientacion) | is.na(curvatura)) |> 
-  st_geometry() |> 
-  plot(pch=16,col="red",add=T) # Se encuentran en los límites de Andalucía
-
-datos |> 
-  st_drop_geometry() |> 
-  filter(is.na(pendiente)| is.na(orientacion) | is.na(curvatura)) |> 
-  count() #53 registros con algún valor perdido entre las variables topográficas
-
-
-# Valores perdidos en variables demográficas -------------------
-# Se observa que los valores perdidos se deben a que los datos no están disponibles en el conjunto de datos disponible en el INE
-datos |> 
-  st_drop_geometry() |> 
-  filter(is.na(poblacion)) |> 
-  mutate(Año = year(date)) |> 
-  select(Año,municipio,cod_municipio)
-
-# Ejemplo:
-pob = read_csv2("data_raw/antropologicas/Población/poblacion_municipios.txt")[,c(1:5)] 
-pob |> filter(CODIGO_INE3 == "18077") # Datos no disponibles
-
-datos |> 
-  st_drop_geometry() |> 
-  filter(is.na(poblacion)) |> 
-  count() # 85 resgistros con valores perdidos en las variables demográficas
-
-# Valores perdidos en uso_suelo -----------------------------
-dataset |> filter(is.na(uso_suelo)) %>% count() # 8 registros con valores perdidos en la variable uso_suelo
-
-dataset |> filter(is.na(uso_suelo)) |> st_geometry() |> plot(pch=16,col="red",add=T)
-# De nuevo se observa que se encuentran en los límites de Andalucía con la costa
-
-# Valores perdidos en NDVI -----------------------------------
-# Se muestran en el mapa
-plot(st_geometry(andalucia_proj),reset=F)
-dataset |> filter(is.na(NDVI)) |> st_geometry() |> plot(pch=16,col="red",add=T) 
-
-
-# Gráfico de NDVI medio cada mes
-NDVI_mes = datos |> 
-  st_drop_geometry() |> 
-  mutate(mes = month(date),
-         año = year(date)) |> 
-  group_by(año,mes) |> 
-  summarise(NDVI_mes = mean(na.omit(NDVI))) |> 
-  ungroup() |> 
-  mutate(date = dmy(paste(01,mes,año,sep="/")))
-  
-NDVI_mes |> 
-  ggplot(aes(x=date,y=NDVI_mes)) +
-  geom_line()+
-  scale_x_date(date_breaks = "6 month",date_labels = "%y%b")+
-  theme(axis.text.x = element_text(angle = 90))
-
-# 2008 tiene un NDVI especialmente bajo, puede deberse a numerosos factores:
-#   - Que efectivamente sea un año especialmente seco
-#   - Las características de la muestra seleccionada ese año
-#   - Errores de medición
-#   - ...
-
-# La mayor parte de los valores perdidos en la variable uso_suelo son debidos a que el archivo tiff para ese mes no está disponible en la REDIAM. Los meses de los que no se dispone del ráster NDVI son: "2003-01", "2003-04", "2017-02", "2018-11", "2020-11", "2021-12", "2022-03" y "2022-12".
-
-# Eliminación registros con valores perdidos -----------------
-# Tras explorar otras opciones finalmente se opta por eliminar los registros
-# que contienen valroes perdidos:
-datos = datos %>% drop_na()
-
-# Almacenamiento del conjunto de datos depurados -------------
-# Se guarda el conjunto de datos depurados
-save(datos, 
-     file = paste0("salidas_intermedias/datos_strat_depurados_geom_",
-                   Sys.Date(),".RData"))
-
+  mutate(fire = as.factor(fire)) |> 
+  drop_na()
 ```
 
-## Análisis exploratorio
-```{r eval=FALSE}
-# Librerías -------------------------------------------------
-# Se cargan las librerías que se usarán en esta sección
-library(tidyverse) # Manipulación de datos 
-library(sf) # Vector data
-library(terra) # Raster data
-library(mapSpain) # Polígonos de regiones de España
-library(magrittr) # Operador %<>% 
-library(skimr) # Resumen de datos
-library(corrplot) # Gráfico de coorrelaciones
-library(GGally) # Coordenadas paralelas
-library(ggpubr) # Función ggarrange
-
-# Carga de los datos --------------------------------------
-load("salidas_intermedias/datos_strat_depurados_geom_2024-05-03.RData")
-
-# Resumen numérico ----------------------------------------
-datos %>%  st_drop_geometry %>% skim(.data_name = "datos")
-```
-
-### Variable objetivo
-
-```{r eval=FALSE}
-# Distribución temporal -----------------------------------
-# Mensual:
-g_mes <- datos %>% 
-  st_drop_geometry() %>% 
-  # filter(fire==1) %>% 
-  count(month(date,label=T),fire) %>% 
-  rename("mes" = "month(date, label = T)") %>% 
-  ggplot(aes(x = mes,y = n,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) +
-  # theme(axis.text.x = element_text(angle = 90)) +
-  scale_fill_hue(direction = -1) +
-  theme_minimal() +
-  xlab("Mes") +
-  ylab("Número de observaciones")
-
-g_mes
-
-# Anual
-g_year <- datos %>% 
-  st_drop_geometry() %>% 
-  # filter(fire==1) %>% 
-  count(year(date),fire) %>% 
-  rename("año" = "year(date)") %>% 
-  ggplot(aes(x = año,y = n,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) +
-  scale_x_continuous(breaks=2002:2022) +
-  geom_smooth(se=F,aes(color=fire),alpha=0.1) +
-  scale_color_manual(values=c("darkblue","darkred")) + 
-  scale_fill_hue(direction = -1) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  xlab("Año") +
-  ylab("Número de observaciones")
-g_year
-
-# En 2007 no se han generado observaciones positivas
-# Causa: En el shapefile que contiene los incendios producidos en 2007 solo hay 4 observaciones y ninguna tenía la fecha, por lo que estas no han podido utilizarse
-
-# Valores muy bajos en 2008 y 2010, revisar
-# 2010: correcto, en el archivo con los polígonos de incendios en 2010 solo hay 26 observaciones
-# 2008: en el archivo relativo a ese año hay 37 observaciones, pero 11 de ellas no tienen la fecha de inicio, por lo que no se han podido utilizar
-
-# Día de la semana
-g_dia <- datos %>% 
-  st_drop_geometry() %>% 
-  # filter(fire==1) %>% 
-  count(weekdays(date),fire) %>% 
-  rename("dia" = "weekdays(date)") %>% 
-  ggplot(aes(x = dia,y = n,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) +
-  scale_x_discrete(limits=c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5)) +
- # geom_smooth(se=F) +
-  scale_fill_hue(direction = -1) +
-  theme_minimal() +
-  xlab("Día") +
-  ylab("Número de observaciones")
-g_dia
-
-# Para mostrar los tres gráficos juntos
-ggarrange(g_dia,g_mes,g_year,ncol=1,common.legend = T,legend = "bottom")
-
-# Distribución temporal -----------------------------------
-# Se cargan los polígonos de las provincias
-and <- esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos))
-prov <- esp_get_prov() %>% filter(nuts2.name=="Andalucía") %>% st_transform(st_crs(datos))
-
-# Casos positivos
-g1 = ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos %>% filter(fire==1),size = 1, alpha = 0.4,col="red")+
-  ggtitle("Distribución espacial de casos positivos") +
-  theme_minimal()
-
-# Casos negativos
-g0 = ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos %>% filter(fire==0),size = 1, alpha = 0.4,col="blue") +
-  ggtitle("Distribución espacial de casos negativos") +
-  theme_minimal()
-
-# Ambos gráficos juntos:
-ggarrange(g1,g0,nrow=2)
-```
-
-### Análisis univariantes
-
-#### T2M{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=T2M),size = 1.2, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE)) + 
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de T2M por mes") + 
-  theme_minimal() +
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())
-```
-
-Las temperaturas más elevadas se encuentran en el interior.
-
-```{r}
-datos %>% 
-  st_drop_geometry() %>% 
-  group_by(month(date,label=T),fire) %>% 
-  summarize(AVG_T2M = mean(T2M),
-            Mes = `month(date, label = T)`) %>% 
-  ggplot(aes(x=Mes,y=AVG_T2M,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) +
-  scale_fill_hue(direction = -1) +
-  theme_minimal()  
-  # + theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
-```
-
-En prácticamente todos los meses, la media de temperaturas en las observaciones positivas es mayor que en las observaciones negativas. Las temperaturas son más altas en los meses de verano, como cabía esperar.
-
-
-
-
-#### RH2M{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=RH2M),size = 1.2, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE)) + 
-  scale_color_gradientn(colours = rainbow(5,rev=F)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de RH2M por mes") +
-  theme_minimal() +
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())
-```
-
-La humedad del aire es mayor en las de costa. Las zonas más secas se encuentran en las zonas de interior del norte de Andalucía.
-
-```{r}
-datos %>% 
-  st_drop_geometry() %>% 
-  group_by(month(date,label=T),fire) %>% 
-  summarize(AVG_RH2M = mean(RH2M),
-            Mes = `month(date, label = T)`) %>% 
-  ggplot(aes(x=Mes,y=AVG_RH2M,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) +
-  scale_fill_hue(direction = -1) +
-  theme_minimal()  
-  # + theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
-```
-
-En prácticamente todos los meses, la humedad del aire media entre las observaciones positivas es menor que en las observaciones negativas. La humedad del aire disminuye significativamente en verano.
-
-#### GWETTOP{.unlisted .unnumbered}
-
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=GWETTOP),size = 1, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE)) + 
-  scale_color_gradientn(colours = rainbow(5,rev=F)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de GWETTOP por mes") +
-  theme_minimal() +
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())
-```
-
-Las zonas con mayor humedad superficial de suelo son las que se encuentran en la costa mediterránea. Las zonas con un suelo más seco son las que se encuentran al norte de la cuenca el Guadalquivir, destacando la provincia de Huelva (hay que tener en cuenta que también es una zona en la que hay muchos incendios, la mayoría de los cuales se produce en verano, por lo que hay una gran concentración de observaciones durante el periodo estival, lo que podría influir en el hecho de que se observen tantas observaciones con valores tan bajos de la humedad superficial de suelo).
-
-
-```{r}
-datos %>% 
-  st_drop_geometry() %>% 
-  group_by(month(date,label=T),fire) %>% 
-  summarize(AVG_GWETTOP = mean(GWETTOP),
-            Mes = `month(date, label = T)`) %>% 
-  ggplot(aes(x=Mes,y=AVG_GWETTOP,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) +
-  scale_fill_hue(direction = -1) +
-  theme_minimal()  
-```
-
-En general, la humedad superficial de suelo media entre los casos positivos es inferior que entre los casos negativos. Esto es especialmente evidendente entre los meses de primavera y otoño. En los meses de invierno esto no está tan claro, incluso parece revertirse la tendencia.
-
-#### WS10M{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=WS10M,alpha=WS10M,size=as.numeric(ifelse(WS10M<7.5,1,1.2)))) +
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  facet_wrap(~month(date,label=TRUE))+
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de WS10M por mes") +
-  theme_minimal() +
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) +
-  guides(size="none",alpha="none")
-```
-
-Los valores más elevados de la velocidad del viento a 10m de altura se dan en las zonas costeras.
-
-
-```{r}
-datos %>% 
-  st_drop_geometry() %>% 
-  group_by(month(date,label=T),fire) %>% 
-  summarize(AVG_WS10M = mean(WS10M),
-            Mes = `month(date, label = T)`) %>% 
-  ggplot(aes(x=Mes,y=AVG_WS10M,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8)+
-  scale_fill_hue(direction = -1) +
-  theme_minimal()  
-```
-
-En todos los meses, los valores medios de la velocidad del viento a 10m sobre la superficie son significativamente mayores en las observaciones positivas.
-
-#### WD10M{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=WD10M),size = 1.2, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE))+ 
-  # scale_color_stepsn(colours = rainborainbpw(8,rev=T)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de WD10M por mes") +
-  theme_minimal() +
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) +
-  guides(color = guide_legend(override.aes = list(size = 5))) +
-  scale_color_viridis_d(option="turbo")
-
-```
-
-```{r}
-# Quisiera tener la dirección mayoritaria por mes y si hay incendio o no 
-mode <- function(x) { names(which.max(table(x))) }
-
-datos_mode_WD10M = datos %>%
-  st_drop_geometry() %>%
-  group_by(month(date,label=T),fire) %>%
-  summarize(mode_WD10M = mode(WD10M)) 
-
-tibble(mes = datos_mode_WD10M[datos_mode_WD10M$fire==1,1],
-       fire1 = datos_mode_WD10M[datos_mode_WD10M$fire==1,3],
-       fire0 = datos_mode_WD10M[datos_mode_WD10M$fire==0,3]) 
-
-# No parece aportar ninguna información relevante
-```
-
-
-#### PRECTOTCORR{.unlisted .unnumbered}
-
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=PRECTOTCORR,size=PRECTOTCORR,alpha=PRECTOTCORR)) +
-  facet_wrap(~month(date,label=TRUE)) + 
-  scale_color_gradientn(colours = rainbow(5,rev=F)) +
-  guides(size="none") +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de PRECTOTCORR por mes") +
-  theme_minimal() +
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) +
-  guides(alpha="none")
-```
-
-En la gran mayoría de las observaciones no se han observado precipitaciones. Se observan algunos valores positivos de precipitaciones distribuidos por el territorio andaluz, alcanzándose los máximos en observaciones localizadas en las coordilleras béticas.
-
-```{r}
-datos %>% 
-  st_drop_geometry() %>% 
-  group_by(month(date,label=T),fire) %>% 
-  summarize(AVG_PRECTOTCORR = mean(PRECTOTCORR),
-            Mes = `month(date, label = T)`) %>% 
-  ggplot(aes(x=Mes,y=AVG_PRECTOTCORR,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) +
-  scale_fill_hue(direction = -1) +
-  theme_minimal()  
-```
-
-Se observa una clara diferencia en la media mensual de precipitaciones en ambas clases en todos los meses, siendo mucho mayores entre las observaciones negativas. En los meses de verano esto sigue siendo cierto, si bien las diferencias se suavizan significativamente, ya que en ambos clases las precipitaciones son reducidas.
-
-
-#### NDVI{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=NDVI),size = 1.2, alpha = 0.6) +
-  facet_wrap(~month(date,label=TRUE)) + 
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de NDVI por mes") +
-  theme_minimal() +
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())
-```
-
-Los valores más elevados del NDVI se encuentran en el norte de la comunidad (Sierra Morena y Sierra de Aracena) y en la zona sur-centro. Los valores son especialmente elevados en la Sierra de Grazalema y en las marismas del Guadalquivir y especialmente bajos en el este de la comunidad (Almería).
-
-```{r}
-datos %>% 
-  st_drop_geometry() %>% 
-  group_by(month(date,label=T),fire) %>% 
-  summarize(AVG_NDVI = mean(NDVI),
-            Mes = `month(date, label = T)`) %>% 
-  ggplot(aes(x=Mes,y=AVG_NDVI,fill=fire)) +
-  geom_col(position="dodge",alpha=0.8) +
-  scale_fill_hue(direction = -1) +
-  theme_minimal()    
-  # theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
-```
-
-El valor del NDVI disminuye en los meses de verano y alcanza su máximo en los meses de invierno. No se observa claramente una relación entre el NDVI y la clase de la observación en la muestra.
-
-#### poblacion{.unlisted .unnumbered}
-
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=poblacion,size = poblacion,alpha=poblacion/median(poblacion))) +
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de poblacion") + 
-  theme_minimal() 
-
-by(datos$poblacion,datos$fire,summary)
-```
-
-En la gran mayoría del territorio se observan niveles de población inferiores a 20.000 habitantes por municipio. Destacan las capitales de provincia por tener valores significativamente más elevados.
-
-
-#### dens_poblacion{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=dens_poblacion, size= dens_poblacion, alpha=dens_poblacion)) +
-  scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  # scale_color_gradient(low="blue", high="red")+
-  ggtitle("Distribución espacial de dens_poblacion") +
-  theme_minimal()
-
-by(datos$dens_poblacion,datos$fire,summary)
-
-```
-
-Se puede observar una distribución espacial similar a la cantidad de población. Se observa una mayor densisdad de población en las zonas de costa y en las capitales de provincia.
-
-#### pendiente{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=pendiente, size= pendiente, alpha=pendiente)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de pendiente") +
-  theme_minimal()
-```
-
-
-#### elevacion{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=elevacion, size= elevacion, alpha=elevacion)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de elevacion") +
-  theme_minimal()
-```
-
-#### curvatura{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=curvatura, alpha=curvatura)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de curvatura") +
-  theme_minimal()
-```
-
-
-
-#### dist_carretera{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=dist_carretera, alpha=dist_carretera)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de dist_carretera") +
-  theme_minimal()
-```
-
-
-#### dist_electr{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=dist_electr, alpha=dist_electr)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de dist_electr") +
-  theme_minimal()
-```
-
-#### dist_camino{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=dist_camino, alpha=dist_camino)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de dist_camino") +
-  theme_minimal()
-```
-
-#### dist_sendero{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=dist_sendero, alpha=dist_sendero)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de dist_sendero") +
-  theme_minimal()
-```
-
-
-#### dist_poblacion{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=dist_poblacion, alpha=dist_poblacion)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de dist_poblacion") +
-  theme_minimal()
-```
-
-#### dist_ferrocarril{.unlisted .unnumbered}
-```{r}
-ggplot(data = prov) + 
-  geom_sf() +
-  geom_sf(data = datos, aes(color=dist_ferrocarril, alpha=dist_ferrocarril)) +
-    scale_color_gradientn(colours = rainbow(5,rev=T)) +
-  guides(size="none",alpha="none") +
-  ggtitle("Distribución espacial de dist_ferrocarril") +
-  theme_minimal()
-```
-
-
-### Análisis multivariantes
-
-#### Variables numéricas{.unlisted .unnumbered}
-
-```{r}
-datos_numeric = datos %>% 
-  select(where(is.numeric)) %>% 
-  st_drop_geometry()
-
-# Correlaciones -------------------------------------------
-R = cor(datos_numeric)
-corrplot(R,method = "ellipse",type = "lower")
-summary(R-diag(diag(R)))
-# Las variables más correlacionadas en la muestra son T2M con RH2M (negativamente, -0.71), T2M con GWETTOP (negativamente, -0.69) y GWETTOP con R2HM (positivamente, 0.68). Tiene sentido que la humedad del aire a dos metros esté correlacionada positivamente con la humedad del suelo y que ambas estén -egativamente correlacionadas con la temperatura del aire. También están correladas la población con la densidad de población (positivamente,0.63).
-
-
-# Gráfico de coordenadas paralelas ------------------------
-datos |> 
-  select(fire,where(is.numeric)) |> 
-  ggparcoord(columns=2:19,alphaLines=0.1,groupColumn = "fire") +
-  xlab('') + 
-  ylab('') + 
-  scale_x_discrete(labels=colnames(datos_numeric)) +
-  scale_color_hue(direction = -1) +
-  # guides(color ="none")+
-  theme_minimal() + 
-  ggtitle("Tipificación a normal estándar (por defecto)") +
-  theme(plot.title = element_text(size = 9),
-        axis.text.x = element_text(angle = 90))
-
-# Boxplots ------------------------------------------------
-boxplots <- map(names(datos_numeric), ~ ggplot(datos, aes(x = fire, y = .data[[.x]],fill=fire)) +
-                  geom_boxplot() +
-                  scale_fill_hue(direction = -1) +
-                  guides(fill="none") +
-                  labs(title = paste(.x, "~ fire")))
-ggarrange(plotlist = boxplots,ncol=6,nrow=3)
-
-# PCA -----------------------------------------------------
-pca <- princomp(datos_numeric,cor=T)
-summary(pca) 
-# Se necesitan al menos 11 componentes principales para explicar el 80% de la variabilidad de las 18 variables numéricas de la muestra (tipificadas) y al menos 14 para explicar el 90%. Esto refleja, la complejidad del conjunto de datos.
-```
-
-#### Variables categóricas{.unlisted .unnumbered}
-```{r}
-datos_categ <- datos %>%  
-  select(WD10M,orientacion,enp,uso_suelo) %>% 
-  st_drop_geometry()
-
-# Histogramas ---------------------------------------------
-histogramas <- map(names(datos_categ), 
-                   ~ ggplot(datos, aes(x = .data[[.x]], 
-                                       fill = fire)) +
-                    geom_bar(position = "dodge", alpha = 0.8) +
-                    scale_fill_hue(direction = - 1) +
-                    theme_minimal() +
-                    labs(title = .x)+
-                    theme(axis.text.x = element_text(size=7)))
-
-ggarrange(plotlist = histogramas, ncol = 2, nrow = ceiling(length(histogramas)/2))
-```
-
+La eliminación de los datos faltantes no se realizó inmediatamente, previamente se llevó a cabo un estudio exhaustivo de los valores perdidos y se valoraron otras opciones. No se incluye aquí por no alargar el apéndice, aunque puede revisarse en la sección "Depuración de la Muestra" del código adjunto. 
 
 
 ## Modelos
+
+Esta sección es muy extensa, dada la cantidad de modelos que se construyen. Para evitar extender demasiado el apéndice, tan solo se mostrará aquí el código de algunos de los modelos construidos, con el objetivo de ilustrar el uso de las funciones de la librería *tidymodels* y el flujo de trabajo seguido para construir los modelos. 
+
+Se incluye la definición de dos funciones propias usadas para la evaluación de los modelos `get_metrics` y `tuning_plot`. La primera usada para obtener las métricas de rendimiento de los modelos, y la segunda para construir gráficos como la Figura \ref{fig:lr_tuningplot}.
+
 ```{r}
 # Librerías -----------------------------------------
 # Se cargan las librerías que se usarán en esta sección
@@ -1273,15 +615,29 @@ datos <- datos |>
 get_metrics <- function(pred) {
   list(
     res = tibble(
-      roc_auc = pred |> roc_auc(truth = fire, .pred_0) |> pull(.estimate),
-      accuracy = pred |> accuracy(truth = fire, .pred_class) |> pull(.estimate),
-      recall = pred |> sensitivity(truth = fire, .pred_class,event_level="second") |> pull(.estimate),
-      specificity = pred |> spec(truth = fire, .pred_class,event_level="second") |> pull(.estimate),
-      precision = pred |> precision(truth = fire, .pred_class,event_level="second") |> pull(.estimate)),
+      roc_auc = pred |> 
+        roc_auc(truth = fire, .pred_0) |> 
+        pull(.estimate),
+      accuracy = pred |> 
+        accuracy(truth = fire, .pred_class) |> 
+        pull(.estimate),
+      recall = pred |> 
+        sensitivity(truth = fire, .pred_class, 
+                    event_level="second") |> 
+        pull(.estimate),
+      specificity = pred |> 
+        spec(truth = fire, .pred_class, 
+             event_level="second") |> 
+        pull(.estimate),
+      precision = pred |> 
+        precision(truth = fire, .pred_class,
+                  event_level="second") |> 
+        pull(.estimate)),
     conf_mat = pred |> conf_mat(truth = fire, .pred_class))
 }
 
 # Función para mostrar gráficamente los resultados del tuning de un modelo con dos parámetros 
+
 tuning_plot = function(mod_res) {
   datos_metrics = mod_res %>% 
     collect_metrics()
@@ -1318,9 +674,10 @@ tuning_plot = function(mod_res) {
 }
 ```
 
-### Partición temporal entrenamiento / validación / test
+### Partición temporal entrenamiento-validación-test
+
 ```{r}
-set.seed(123)
+set.seed(123) # Se fijan semillas para que sea reproducible
 
 splits = initial_validation_time_split(datos, 
                                        prop=c(0.6,0.2))
@@ -1330,7 +687,9 @@ val_set <- validation_set(splits) %>% st_drop_geometry()
 test  <- testing(splits) %>% st_drop_geometry()
 ```
 
-### Regresión logística con penalización
+### Regresión Logística con penalización
+
+Se ilustra el flujo de trabajo seguido en casi todos los modelos con el caso de la Regresión Logística con penalización.
 
 ```{r}
 # 1º Definimos el modelo:
@@ -1341,14 +700,15 @@ lr_mod <-
 # 2º Creamos la receta
 lr_recipe <- 
   recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow","month")) %>% 
-  # step_holiday(date, holidays = holidays) %>% 
+  step_date(date,features = c("dow","month")) %>% # Se crean las variables día de la semana y mes
   step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
   step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
   step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
   step_corr() %>% # Elimina variables con correlación superior a 0.9
   step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
   step_normalize(all_predictors()) # Se normalizan todos los predictores
+# Si bien step_corr, step_lincomb y step_zv en este caso no tienen ningún efecto, se incluyen por ser una buena práctica para este modelo.
+
 
 # 3º Creamos el workflow
 lr_workflow <- 
@@ -1378,6 +738,7 @@ lr_res |>
                           ifelse(.metric == "spec","recall",
                                  .metric))) |> 
   summarise(max = max(mean),min=min(mean))   
+# Para los valores máximo y mínimo alcanzados en cada métrica
 
 
 # 7º Selección del mejor modelo
@@ -1395,125 +756,17 @@ lr_workflow %>%
   print(n=100)
 ```
 
-### Regresión logística con penalización + PCA
 
-```{r}
-# 1º Creamos el modelo
-lr_pca_mod <- 
-  logistic_reg(penalty = tune(), mixture = tune()) %>% 
-  set_engine("glmnet")
+### Bosques Aleatorios
 
+Se incluye el código usado para el Bosque Aleatorio pues tiene el interés de que el ajuste se realiza en dos etapas, a diferencia de todos los demás modelos.
 
-# 2º Creamos la receta
-lr_pca_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow","month")) %>% 
-  # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
-  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
-  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
-  step_corr() %>% # Elimina variables con correlación superior a 0.9
-  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
-  step_normalize(all_predictors()) %>% # Se normalizan todos los predictores
-  step_pca(all_numeric_predictors(),num_comp = tune())
-
-# 3º Creamos el workflow
-lr_pca_workflow <- 
-  workflow() %>% 
-  add_model(lr_pca_mod) %>% 
-  add_recipe(lr_pca_recipe)
-
-# 4º Creamos el grid para los parámetros
-lr_pca_reg_grid <- expand_grid(penalty = 10^seq(-4, -1, length.out = 10),
-                               mixture = seq(0,1,length.out=10),
-                               num_comp = c(20,25,30,35,40,45,50))
-
-# 5º Ajustamos el modelo
-lr_pca_res <- 
-  lr_pca_workflow %>% 
-  tune_grid(val_set,
-            grid = lr_pca_reg_grid,
-            control = control_grid(save_pred = TRUE),
-            metrics = metric_set(accuracy,roc_auc,recall,spec))
-
-# 6º Evalación modelos
-lr_pca_tuning = lr_pca_res |> 
-  collect_metrics() |> 
-  group_by(.metric)|> 
-  summarise(max = max(mean),min=min(mean))
-
-# 7º Selección del mejor modelo
-lr_pca_best <- 
-  lr_pca_res %>% 
-  select_best(metric="accuracy")
-lr_pca_best
-```
-
-### Árboles de decisón
-```{r}
-# 1º Creamos el modelo
-dt_mod <- 
-  decision_tree(cost_complexity = tune()) %>% 
-  set_engine("rpart") %>% 
-  set_mode("classification")  
-
-# 2º Creamos la receta
-dt_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow", "month")) %>% 
-  # step_holiday(date) %>% 
-  step_rm(date, cod_municipio, municipio) 
-
-# 3º Creamos el workflow
-dt_workflow <- 
-  workflow() %>% 
-  add_model(dt_mod) %>% 
-  add_recipe(dt_recipe)
-
-# 4º Se ajusta el modelo 
-set.seed(345)
-dt_res <- 
-  dt_workflow %>% 
-  tune_grid(val_set,
-            grid = 10,
-            control = control_grid(save_pred = TRUE),
-            metrics = metric_set(accuracy,roc_auc,recall,spec))
-
-# 5º Se evalúan los modelos obtenidos
-dt_res |> 
-  collect_metrics() |> 
-  group_by(.metric)|> 
-  mutate(.metric = ifelse(.metric == "recall","spec",
-                          ifelse(.metric == "spec","recall",
-                                 .metric))) |> 
-  summarise(max = max(mean),min=min(mean))
-
-# Gráfico del ajuste
-  dt_res %>% 
-  collect_metrics() %>%  
-  mutate(.metric = ifelse(.metric == "recall","spec",
-                          ifelse(.metric == "spec","recall",
-                                 .metric))) |> 
-  ggplot(aes(x = cost_complexity, y = mean,col=.metric)) + 
-  geom_point() + 
-  geom_line() + 
-  ylab("") +
-  scale_x_log10(labels = scales::label_number())+
-  theme_minimal()
-
-# 6º Selección del mejor modelo  
-dt_best <- dt_res |> 
-  select_best(metric = "accuracy")
-dt_best
-```
-
-### Bosques aleatorios
 ```{r}
 # Detectar el número de núcleos para trabajar en paralelo
 cores <- parallel::detectCores()
 cores
 
-# Construimos el modelo, especificando el número de núcleos a usar en la computación en paralelo de forma que la computación sea más eficiente
+# Construimos el modelo especificando el número de núcleos a usar en la computación en paralelo, de forma que la computación sea más eficiente
 
 # ETAPA 1: fijado mtry=4, se ajusta min_n
 # -----------------
@@ -1554,7 +807,6 @@ rf_tuning1 <- rf_res1 |>
   collect_metrics() |> 
   group_by(.metric)|> 
   summarise(max = max(mean),min=min(mean))
-
 rf_tuning1
 
 # plot
@@ -1577,13 +829,11 @@ rf_plot1 <-
 rf_best1 <- 
   rf_res1 %>% 
   select_best(metric = "spec")
-
 rf_best1
 
 rf_metrics1 <- rf_res1 |> 
   collect_predictions(parameters = rf_best1) |> 
   get_metrics()
-
 rf_metrics1
 
 
@@ -1616,7 +866,6 @@ rf_res2 <-
 
 
 # Resultados del tuning
-
 rf_tuning2 <- rf_res2 |> 
   collect_metrics() |> 
   group_by(.metric)|> 
@@ -1624,7 +873,7 @@ rf_tuning2 <- rf_res2 |>
 
 rf_tuning2
 
-#plot
+# plot
 rf_plot2 <- 
   rf_res2 %>% 
   collect_metrics() %>%  
@@ -1650,183 +899,15 @@ rf_metrics2 <- rf_res2 |>
 
 rf_metrics2
 
-
 # ---------
 
 # Plots
 ggarrange(rf_plot1,rf_plot2,nrow=1,common.legend = T,legend = "bottom")
 ```
 
-### k-Nearest Neighbours
-```{r}
-# 1º Definimos el modelo:
-knn_mod <- 
-  nearest_neighbor(neighbors = tune()) %>% 
-  set_engine("kknn") %>% 
-  set_mode("classification")  
 
-# 2º Creamos la receta
-knn_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow","month")) %>% 
-  # step_holiday(date, holidays = holidays) %>% 
-  step_rm(date,cod_municipio,municipio) %>% # Se eliminan variables identificadoras
-  step_dummy(all_nominal_predictors()) %>% # Se crean variables dummy para los factores
-  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
-  step_corr() %>% # Elimina variables con correlación superior a 0.9
-  step_zv(all_predictors()) %>% # Eliminar variables con varianza nula
-  step_normalize(all_predictors()) # Se normalizan todos los predictores
+### Comparativa en validación
 
-# 3º Creamos el workflow
-knn_workflow <- 
-  workflow() %>% 
-  add_model(knn_mod) %>% 
-  add_recipe(knn_recipe)
-
-# 4º Train and tune
-set.seed(345)
-knn_res <- 
-  knn_workflow %>% 
-  # fit(training)
-  tune_grid(val_set,
-            grid = expand_grid(neighbors = c(1,10,25,seq(25,400,25))),
-            control = control_grid(save_pred = TRUE),
-            metrics = metric_set(accuracy,roc_auc,recall,spec))
-
-# 5º Evaluació de los modelos
-knn_res |> 
-  collect_metrics() |> 
-  group_by(.metric)|> 
-  summarise(max = max(mean),min=min(mean))
-
-knn_res %>% 
-  collect_metrics() %>%  
-  mutate(.metric = ifelse(.metric == "recall","spec",
-                          ifelse(.metric == "spec","recall",
-                                 .metric))) %>% 
-  # filter(.metric == "accuracy") %>%
-  ggplot(aes(x = neighbors, y = mean,col=.metric)) + 
-  geom_point() + 
-  geom_line() + 
-  ylab("") +
-  theme_minimal()
-
-# 6º Selección del mejor modelo
-knn_best <- knn_res |> 
-  select_best(metric = "accuracy")
-knn_best
-
-```
-
-### SVM lineal
-
-```{r}
-# 1º Construir el modelo
-svm_mod <- 
-  svm_linear(cost = tune()) %>% 
-  set_engine("kernlab") %>% 
-  set_mode("classification")
-
-# 2º Construir la receta con el preprocesamiento
-svm_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow", "month")) %>% 
-  step_rm(date, cod_municipio, municipio) %>%
-  step_dummy(all_nominal_predictors()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
-
-# 3º Ensamblar todo con workflow
-svm_workflow <- 
-  workflow() %>% 
-  add_model(svm_mod) %>% 
-  add_recipe(svm_recipe)
-
-# 4º Train and tune
-set.seed(345)
-svm_res <- 
-  svm_workflow %>% 
-  tune_grid(val_set,
-            grid = 15,
-            control = control_grid(save_pred = TRUE),
-            metrics = metric_set(accuracy,roc_auc,recall,spec))
-
-# 5º Evaluación de resultados del tuning
-svm_res |> 
-  collect_metrics() |> 
-  group_by(.metric)|> 
-  summarise(max = max(mean),min=min(mean))
-
-svm_plot <- 
-  svm_res %>% 
-  collect_metrics() %>%  
-  mutate(.metric = ifelse(.metric == "recall","spec",
-                          ifelse(.metric == "spec","recall",
-                                 .metric))) %>% 
-  # filter(.metric == "accuracy") %>%
-  ggplot(aes(x = cost, y = mean,col=.metric)) + 
-  geom_point() + 
-  geom_line() + 
-  ylab("") +
-  theme_minimal()
-svm_plot
-
-# 6º Selección del mejor modelo
-svm_best <- 
-  svm_res %>% 
-  select_best(metric="accuracy")
-svm_best
-```
-
-### SVM radial
-```{r eval=FALSE}
-# 1º Construir el modelo
-svm_rbf_mod <- 
-  svm_rbf(cost = tune(),rbf_sigma = tune()) %>% 
-  set_engine("kernlab") %>% 
-  set_mode("classification")
-
-# 2º Construir la receta con el preprocesamiento
-svm_rbf_recipe <- 
-  recipe(fire ~ ., data = training) %>% 
-  step_date(date,features = c("dow", "month")) %>% 
-  step_rm(date, cod_municipio, municipio) %>%
-  step_dummy(all_nominal_predictors()) %>% 
-  step_lincomb() %>% # Elimina variablies con dependencia lineal exacta
-  step_corr() %>% # Elimina variables con correlación superior a 0.9
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors())
-
-# 3º Ensamblar todo con workflow
-svm_rbf_workflow <- 
-  workflow() %>% 
-  add_model(svm_rbf_mod) %>% 
-  add_recipe(svm_rbf_recipe)
-
-# 4º Train and tune
-set.seed(345)
-svm_rbf_res <- 
-  svm_rbf_workflow %>% 
-  tune_grid(val_set,
-            grid = 8,
-            control = control_grid(save_pred = TRUE),
-            metrics = metric_set(accuracy,roc_auc,recall,spec))
-
-# 5º Evaluación de resultados del tuning
-svm_rbf_res |> 
-  collect_metrics() |> 
-  group_by(.metric)|> 
-  summarise(max = max(mean),min=min(mean))
-
-# 6º Selección del mejor modelo
-svm_rbf_best <- 
-  svm_rbf_res %>% 
-  select_best(metric="accuracy")
-
-svm_rbf_best
-```
-
-### Comparación 
 ```{r eval=FALSE}
 models = tibble(model_name = c("lr","lr_pca","dt","rf","svm_linear","svm_rbf","knn"),
                 models_tune = list(lr_res, lr_pca_res, dt_res, rf_res2, svm_res, svm_rbf_res, knn_res),
@@ -1836,16 +917,20 @@ models = tibble(model_name = c("lr","lr_pca","dt","rf","svm_linear","svm_rbf","k
 
 load("salidas_intermedias/all_models.RData")
 models = models %>% 
-  mutate(best_tuning = map(models_tune,
+  mutate(best_tuning = map(models_tune, 
                            function(x) select_best(x, metric = "accuracy")),
          best_metrics = map2(models_tune,
-                             best_tuning,                                               ~ collect_predictions(.x,parameters = .y) %>%                                                  get_metrics() %>%                                                  extract2(1)), # Para extraer solo las medidas y no la matriz de confusión
+                             best_tuning,       
+                             ~ collect_predictions(.x,parameters = .y) %>%    
+                               get_metrics() %>%          
+                               extract2(1)), # Para extraer solo las medidas y no la matriz de confusión
          roc = map2(models_tune,
                     best_tuning,
-                    ~ collect_predictions(.x,parameters = .y) %>%                                         roc_curve(fire, .pred_0))
+                    ~ collect_predictions(.x,parameters = .y) %>%    
+                      roc_curve(fire, .pred_0))
 ) 
 
-# metricas
+# métricas
 metrics = models %>% 
   select(model_name,best_metrics) %>% 
   unnest(best_metrics)
@@ -1880,26 +965,33 @@ models %>% select(model_name,roc) %>% unnest(roc) %>%
   ggtitle("Curva ROC en validación")
 ```
 
-### Test
+### Comparativa en test
 
-Se unen los conjuntos training y validation para entrenar el modelo final
+Se unen los conjuntos training y validation para entrenar el modelo final.
 ```{r eval=FALSE}
 set.seed(345)
-models <- models %>% 
-  mutate(final_workflow = map2(models_workflow, best_tuning, finalize_workflow),
-         last_fit = map(final_workflow, function(x) last_fit(x,splits,add_validation_set=T)))
-
 models = models %>% 
-  mutate(test_metrics = map(last_fit,      
-                            ~collect_predictions(.x) %>%                                                  get_metrics() %>%  
+  mutate(final_workflow = map2(models_workflow, 
+                               best_tuning, 
+                               finalize_workflow),
+         last_fit = map(final_workflow, 
+                        function(x) last_fit(x,splits,add_validation_set=T)),
+         test_metrics = map(last_fit,      
+                            ~collect_predictions(.x) %>%  
+                              get_metrics() %>%  
                               extract2(1)), # Para extraer solo las medidas
          test_roc = map(last_fit,
-                        ~collect_predictions(.x) %>%                                              roc_curve(fire, .pred_0))                           ) 
+                        ~collect_predictions(.x) %>%     
+                          roc_curve(fire, .pred_0)) 
+         )
 
 # save(models, file="salidas_intermedias/all_models_test.RData")
 
 # metricas en test
-test_metrics = models %>% select(model_name, test_metrics) %>% unnest(test_metrics)
+test_metrics = models %>% 
+  select(model_name, test_metrics) %>% 
+  unnest(test_metrics)
+
 kable(test_metrics,digits=3)
 
 # plot
@@ -1917,7 +1009,9 @@ test_metrics %>%
         axis.line.y = element_line(color="black", size = 1))
   
 # roc
-models %>% select(model_name,test_roc) %>% unnest(test_roc) %>% 
+models %>% 
+  select(model_name,test_roc) %>% 
+  unnest(test_roc) %>% 
   ggplot(aes(x = 1 - specificity, y = sensitivity, col = model_name)) + 
   geom_path(lwd = 1, alpha = 0.7) +
   geom_abline(lty = 3) + 
@@ -1931,46 +1025,17 @@ models %>% select(model_name,test_roc) %>% unnest(test_roc) %>%
   ggtitle("Curva ROC en test")
 ```
 
-Para calcular la medida de importancia de las variables en bosque aleatorio. No se hace desde el principio para que la computación sea más rápida.
-
-```{r eval=FALSE}
-# Se hace el last_fit manualmente:
-cores = 8
-
-# last model
-last_rf_mod <- rand_forest(mtry = rf_best2$mtry, min_n = rf_best1$min_n, trees = 1000) %>% 
-  set_engine("ranger", num.threads = cores,importance="impurity") %>% 
-  set_mode("classification")
-  
-# last workflow
-last_rf_workflow <- 
-  rf_workflow2 %>% 
-  update_model(last_rf_mod)
-
-# last fit
-set.seed(345)
-last_rf_fit <- 
-  last_rf_workflow %>% 
-  last_fit(splits,
-           add_validation_set = T)
-# VIP
-last_rf_fit %>% 
-  extract_fit_parsnip() %>% 
-  vip(num_features = 50,aesthetics = list(fill="lightblue")) +
-  theme_minimal()
-```
-
 ## Aplicación de los modelos
+
+Solo se incluye el código del primer caso de aplicación de los modelos, ya que las técnicas usadas en el otro son similares. Puede revisarse el código completo en la sección del mismo nombre el código adjunto.
+
 ```{r eval=FALSE}
 # Librerías -------------------------------------------
 # Se cargan las librerías que se usarán en esta sección
 library(tidyverse) # Manipulación de datos 
 library(sf) # Vector data
-library(tidymodels) # Ecosistema para la construcción de modelos
 library(ggpubr) # Función ggarrange
-library(knitr) # Función kable
-library(skimr) # Función skim
-library(terra)
+library(terra) # Raster data
 
 # Carga de datos ----------------------------------------
 load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData") 
@@ -1983,25 +1048,13 @@ and <- esp_get_ccaa(ccaa = "Andalucía") %>%
 
 ### Visión general del desempeño del modelo
 
-Se construye una rejilla de puntos con una separación de 10km entre ellos (en la dirección Norte-Sur y Este-Oeste). En cada uno de los puntos se predice la probabilidad de incendio el día 15 de cada mes usando los mejores modelos construidos. Para ello, primero hay que asignar a cada punto los valores correspondientes de las variables predictoras consideradas.
+Se ilustra la construcción de la malla de puntos usada para el análisis. Para asignarle los valores de las variables predictoras se usa la función `asignar_variables`.
 
 ```{r}
 # grid de puntos 10km x 10km de andalucía
 grid = st_make_grid(and,
-                    cellsize = c(10000,10000), # 10000
+                    cellsize = c(10000,10000), 
                     what = "centers")[and]
-g = and %>% 
-  ggplot() +
-  geom_sf() +
-  theme_minimal()
- 
-g + 
-  geom_sf(data = grid,color="red",size=0.6) +
-  labs(title = "Malla de puntos con una resulción de 10km x 10km")
-```
-
-Se va a analizar cada observación el 15 de cada mes.
-```{r}
 sample = NULL
 
 for (m in 1:12) {
@@ -2014,10 +1067,6 @@ for (m in 1:12) {
                      geometry = grid))
 }
 
-```
-
-Se le asocian todas las variables correspondientes a cada observación.
-```{r}
 source("scripts/strat/fun_asignar_variables.R")
 full_grid  = asignar_variables(sample)
 ```
@@ -2031,13 +1080,21 @@ read_NDVI = function(MM,YYYY) {
   MM = str_pad(as.character(MM),2,"left",pad = "0")
   YY = substr(as.character(YYYY),3,4)
   if (as.numeric(YY)<=06) {
-    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/TERMOD_",YY,MM,"01_h17v05_medmndvi.tif")
+    ruta <- paste0("data_raw/vegetacion/",YYYY,
+                   "TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/TERMOD_",
+                   YY,MM,"01_h17v05_medmndvi.tif")
   } else if (as.numeric(YY)<=11) {
-    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIF/TERMOD_",YY,MM,"01_h17v05_medmndvi.tif")
+    ruta <- paste0("data_raw/vegetacion/",YYYY,
+                   "TERMODMEDMNDVI/InfGeografica/InfRaster/TIF/TERMOD_",
+                   YY,MM,"01_h17v05_medmndvi.tif")
   } else if (as.numeric(YY)<=21){
-    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/termod_",YY,MM,"01_h17v05_medmndvi.tif")
+    ruta <- paste0("data_raw/vegetacion/",YYYY,
+                   "TERMODMEDMNDVI/InfGeografica/InfRaster/TIFF/termod_",
+                   YY,MM,"01_h17v05_medmndvi.tif")
   }else {
-    ruta <- paste0("data_raw/vegetacion/",YYYY,"TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod_",YY,MM,"01_h17v05_medmndvi_COG.tif")
+    ruta <- paste0("data_raw/vegetacion/",YYYY,
+                   "TERMODMEDMNDVI/InfGeografica/InfRaster/COG/termod_",
+                   YY,MM,"01_h17v05_medmndvi_COG.tif")
   }
 
   if (file.exists(ruta)) {
@@ -2060,20 +1117,29 @@ year_month_missing_NDVI = c(
 
 # Para cada observación para la que no está disponible el NDVI (porque la información de ese mes no está disponible), se obtiene el correspondiente al mismo mes del año anterior, si este está disponible, si no, el del año posterior:
 
+
+
+
+
 missing_NDVI = full_grid |> 
   filter(is.na(NDVI)) |> 
   mutate(year = year(date),month = month(date)) |> 
   group_by(year,month) |> 
-  filter(paste(year,str_pad(as.character(month),2,"left",pad = "0"),sep="-") %in%   year_month_missing_NDVI) |>  # Se filtra porque también hay observaciones que tienen NA en el NDVI no porque no exista el archivo, si no lo mismo que en ocasiones anteriores, porques discrepancias entre los límites de los polígonos
+  filter(paste(year,str_pad(as.character(month),2,"left",pad = "0"),
+               sep="-") %in%   year_month_missing_NDVI) |>  # Se filtra porque también hay observaciones que tienen NA en el NDVI no porque no exista el archivo, si no lo mismo que en ocasiones anteriores, porques discrepancias entre los límites de los polígonos
   nest() |>    
   mutate(NDVI_rast = map2(month,year-1,read_NDVI), # Se lee primero el del año anterior
-         NDVI_rast = ifelse(is.na(unlist(NDVI_rast)),map2(month,year+1,read_NDVI),NDVI_rast), # Si no está disponible, se toma el del año posterior
+         NDVI_rast = ifelse(is.na(unlist(NDVI_rast)),
+                            map2(month,year+1,read_NDVI),
+                            NDVI_rast), # Si no está disponible, se toma el del año posterior
          NDVI_nuevo = map2(NDVI_rast,data,~terra::extract(.x,.y)[,2])) |> 
   select(-NDVI_rast) |> 
   unnest(c(data,NDVI_nuevo)) |> 
   mutate(NDVI = NDVI_nuevo,.keep="unused")
 
-ind_modificados = is.na(full_grid$NDVI) & (paste(year(full_grid$date),str_pad(as.character(month(full_grid$date)),2,"left",pad = "0"),sep="-") %in% year_month_missing_NDVI) # Los elementos que han sido modificados
+ind_modificados = is.na(full_grid$NDVI) & (paste(year(full_grid$date), str_pad(as.character(month(full_grid$date)),2,"left",pad = "0"),sep="-") 
+                                           %in% year_month_missing_NDVI) 
+# Los elementos que han sido modificados
 
 # Se asignan los valores imputados del NDVI:
 full_grid[ind_modificados,]$NDVI = missing_NDVI$NDVI
@@ -2082,11 +1148,11 @@ full_grid[ind_modificados,]$NDVI = missing_NDVI$NDVI
 datos %>%  st_drop_geometry %>% skim(.data_name = "datos")
 ```
 
-Se agrupan los niveles de uso de suelo
+Finalmente, se agrupan los niveles de uso de suelo
 ```{r}
 full_grid <- full_grid |> 
   mutate(uso_suelo = fct_other(uso_suelo,
-                               keep = c("21","22","23","24","31","32","33"),
+                               keep = c("21", "22", "23", "24", "31", "32", "33"),
                                other_level= "Otro"))
 
 # save(full_grid,file = full_grid_meses_2022_processed.RData"
@@ -2139,147 +1205,12 @@ ggplot(data = and) +
         axis.ticks.y=element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
-  geom_sf(data = incendios22 %>% st_centroid, color = "black", shape =24, size=1,fill = "red") + 
+  geom_sf(data = incendios22 %>% st_centroid, 
+          color = "black", shape =24, size=1,fill = "red") + 
   labs(title = "Probabilidad de incendio estimada el día 15 de cada mes de 2022",
-       subtitle = paste0("Modelo: ",model$model_name),
+       subtitle = paste0("Modelo: ", model$model_name),
        color = "Probalidad\nde incendio\nestimada")
 ```
 
-## Caso de interés
-Se va a usar el modelo para estudiar el incendio del 8 de septiembre de 2021 en Sierra Bermeja por ser de especial relevancia.
 
-```{r}
-# Se carga la información del incendio
-incendios21 <- st_read(paste0("./data_raw/incendios_2000-2022/incendios_",2021,".shp")) %>% 
-  st_transform(st_crs(datos)) %>% 
-  mutate(FECHA_INIC=ymd(FECHA_INIC))
-
-incendio_estudio <- incendios21 %>% filter(month(FECHA_INIC)==9)
-rm(incendios21)
-
-# Mapa de Andalucía y de las provincias
-and <- esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos))
-prov <- esp_get_prov() %>% filter(nuts2.name=="Andalucía") %>% st_transform(st_crs(datos))
-
-# Gráfico del incendio
-g = prov %>% 
-  ggplot() +
-  geom_sf() + 
-  geom_sf(data = incendio_estudio, color="red",fill=alpha("red",0.2))+
-  theme_minimal()+
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) 
-
-# Ampliamos la zona del incendio 
-bbox = st_buffer(incendio_estudio,dist=10000) %>% 
-  st_bbox() 
-
-g1 = prov %>% 
-  ggplot() +
-  geom_sf() + 
-  geom_sf(data = incendio_estudio, color="red",fill=alpha("red",0.2))+
-  theme_minimal() +
-  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
- 
-# Gráfico final 
-gg <- ggarrange(g,g1)
-annotate_figure(gg, 
-                top = text_grob("Caso de estudio: Incendio de Sierra Bermeja\n8 de septiembre de 2021",size = 14))
-```
-
-Se procede de forma similar a la sección anterior. Se crea una rejilla de puntos con una separación de 1km, en la zona que rodea al incendio. En cada punto se predecirá el riesgo de incendio el día de inicio del incendio, 15 y 30 días antes y 15, 30 y 45 días después.
-
-```{r}
-# Se crea el grid
-grid = st_make_grid(st_buffer(incendio_estudio,dist=10000),
-                    cellsize = c(1000,1000),
-                    what = "centers")[and]
-
-# Visualización
-g + 
-  geom_sf(data = grid,size=0.7) +
-  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax))
-
-# Se le asocian las fechas respectivas
-sample = tibble(date = rep(incendio_estudio$FECHA_INIC,length(grid)),geometry = grid) %>% # el día del incendio
-                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+15,length(grid)),geometry = grid)) %>%  # 15 días después
-                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+30,length(grid)),geometry = grid)) %>%  # el mes después
-                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC+45,length(grid)),geometry = grid)) %>% # 45 días después del incendio
-                bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-15,length(grid)), geometry = grid)) %>%  # 15 días antes
-                 bind_rows(tibble(date = rep(incendio_estudio$FECHA_INIC-30,length(grid)),geometry = grid)) %>% # el mes antes
-  st_sf() 
-```
-
-Se le asocian a cada registro todas las variables predictoras correspondientes.
-```{r}
-source("scripts/strat/fun_asignar_variables - copia.R")
-full_grid <- asignar_variables(sample)
-
-# Se elimininas las observaciones con valores perdidos:
-full_grid <- full_grid %>% drop_na()
-
-# Se agrupan los niveles de uso de suelo
-full_grid <- full_grid |> 
-  mutate(uso_suelo = fct_other(uso_suelo,
-                               keep = c("21","22","23","24","31","32","33"),
-                               other_level= "Otro"))
-
-full_grid %>% st_drop_geometry() %>% skim()
-
-# save(full_grid,file = "salidas_intermedias/full_grid_incendio_0921_processed.RData")
-```
-
-Se usará el modelo de regresión logística lasso final para estimar la probabilidad de incendio en cada punto.
-```{r}
-load("Private/all_models_test.RData")
-
-model <- models %>% filter(model_name=="lr")
-# model <- models %>% filter(model_name=="svm_rbf")
-# model <- models %>% filter(model_name=="svm_linear")
-# model <- models %>% filter(model_name=="rf")
-
-rm(models) # Es un archivo muy pesado, lo eliminamos de la memoria
-
-# Predicciones
-pred_class = model %>% 
-  pull(last_fit) %>% 
-  .[[1]] %>% 
-  extract_workflow() %>% 
-  predict(new_data = full_grid)
-pred_probs = model %>% 
-  pull(last_fit) %>% 
-  .[[1]] %>% 
-  extract_workflow() %>% 
-  predict(new_data = full_grid,type="prob")
-pred = cbind(full_grid,pred_class,pred_probs)
-```
-
-Se muestra en un gráfico
-```{r}
-g <- ggplot(data = and) + 
-  geom_sf() +
-  geom_sf(data = pred, aes(color=.pred_1, alpha = .pred_1),size = 1.5) +
-  facet_wrap(~date) + 
-  scale_color_gradientn(colours = rainbow(5,rev=T),limits=c(0,1)) +
-  # scale_color_gradient(low="blue", high="red")+
-  labs(title="Incendio de Sierra Bermeja",
-       subtitle = paste0("Model: ",model$model_name)) + 
-  guides(alpha = "none") + 
-  theme_minimal() +
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) +
-  geom_sf(data = incendio_estudio, fill="transparent",col="red") +
-  labs(color = "Probabilidad\nestimada de\nincendio") +
-  coord_sf(xlim=c(bbox$xmin,bbox$xmax),ylim=c(bbox$ymin,bbox$ymax)) 
-  
-g 
-```
 

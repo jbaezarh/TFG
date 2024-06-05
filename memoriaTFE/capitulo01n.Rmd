@@ -205,7 +205,7 @@ En el capítulo 7 se repasarán los puntos más relevantes tratados a lo largo d
 
 <!-- INFOCA -->
 
-
+\newpage
 ## Objetivos
 
 El objetivo de esta investigación es construir modelos de *Machine Learning* que permitan predecir incendios forestales en la Comunidad Autónoma de Andalucía. Para abordar dicho objetivo, se realizarán las siguientes tareas:

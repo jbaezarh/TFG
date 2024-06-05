@@ -34,12 +34,14 @@ source("cabecera_chunk_inicio.R")
 \label{fig:T2M_spat}
 \end{figure}
 
+
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/RH2M_spat.png}
 \caption[Distribución espacial de \textit{RH2M} por mes]{Distribución espacial de \textit{RH2M} por mes. \it Fuente: Elaboración propia.}
 \label{fig:RH2M_spat}
 \end{figure}
+
 
 \begin{figure}[H]
 \centering
@@ -48,12 +50,14 @@ source("cabecera_chunk_inicio.R")
 \label{fig:GWETTOP_spat}
 \end{figure}
 
+
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/WS10M_spat.png}
 \caption[Distribución espacial de \textit{WS10M} por mes]{Distribución espacial de \textit{WS10M} por mes. \it Fuente: Elaboración propia.}
 \label{fig:WS10M_spat}
 \end{figure}
+
 
 \begin{figure}[H]
 \centering
@@ -62,16 +66,13 @@ source("cabecera_chunk_inicio.R")
 \label{fig:PRECTOTCORR_spat}
 \end{figure}
 
+
 \begin{figure}[H]
 \centering
 \includegraphics[width = \textwidth]{graficos/WD10M_spat.png}
 \caption[Distribución espacial de \textit{WD10M} por mes]{Distribución espacial de \textit{WD10M} por mes. \it Fuente: Elaboración propia.}
 \label{fig:WD10M_spat}
 \end{figure}
-
-
-
-
 
 
 
@@ -101,6 +102,8 @@ source("cabecera_chunk_inicio.R")
 \caption[Distribución espacial de \textit{NDVI} por mes]{Distribución espacial de \textit{NDVI} por mes. \it Fuente: Elaboración propia.}
 \label{fig:NDVI_spat}
 \end{figure}
+
+
 
 ### Variable hidrológica
 

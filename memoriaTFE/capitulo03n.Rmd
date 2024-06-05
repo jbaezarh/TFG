@@ -196,10 +196,57 @@ Como ya se ha comentado, se considerarán observaciones positivas aquellas que s
 
 Tanto en [@stojanova2012estimating] como en otros estudios consultados se generan los casos negativos tomando fechas completamente aleatorias dentro de la franja temporal del estudio. Sin embargo, esto induce un claro sesgo en los datos, ya que las observaciones positivas no se distribuyen uniformemente entre los 12 meses, si no que se concentran marcadamente en los meses de verano, como puede observarse en la Figura \ref{fig:incendios_mes}. Generar el conjunto de datos sin tener en cuenta este hecho hace que las muestras positivas y negativas tengan características meteorológicas muy diferenciadas que no responden al verdadero proceso latente de aparición de incendios forestales sino al proceso de selección de la muestra, pudiendo provocar un marcado sesgo positivo en las medidas de evaluación de los modelos que en realidad no estarían reflejando la realidad sino los sesgos introducidos en los conjuntos de datos. Dicho de otro modo, los modelos acabarían dando la mayor parte del peso a las variables meteorológicas y acabarían limitándose a identificar el mes y no las demás causas antropológicas, que son las que verdaderamente desencadenan la gran mayoría de los incendios. Por ello, en el presente trabajo, para generar aleatoriamente los días de las muestras negativas, se seguirá una distribución de probabilidad proporcional a la cantidad de incendios observados a lo largo del periodo de estudio en cada mes (véase la Figura \ref{fig:dist_temp_fire}). Mediante este enfoque se espera obtener una muestra balanceada y estratificada por mes que permita construir modelos de clasificación capaces de captar los patrones latentes de aparición de incendios forestales.  Además, adoptar este enfoque permite centrar el esfuerzo computacional en los periodos en los que más incendios se producen. 
 
-Pueden observarse todos los detalles del procedimiento seguido para generar la muestra en el código usado para ello, que se adjunta en la primera sección del [Apéndice: Código].
+Pueden observarse todos los detalles del procedimiento seguido para generar la muestra en el código usado para ello, que se adjunta en el [Apéndice B.1](#code:generar_muestra). Sin embargo, a modo ilustrativo, se incluye a continuación el código de un fragmento del bucle usado para generar la muestra, en el que se generan las localizaciones aleatorias de las observaciones negativas, verificando las relaciones mencionadas. Se usa la función `st_sample` del paquete *sf* de *R* para generar localizaciones aleatorias dentro de un polígono (en este caso `area_monte` es el polígono de la Comunidad Autónoma de Andalucía), la función `st_is_within_distance` para comprobar la relación espacial "estar a una distancia menor o igual de 15km", la función `st_union` para realizar uniones espaciales de *simple features*, y la función `st_sf` para crear un objeto *sf* a partir de un *dataframe* y un objeto de tipo *sfc* con las geometrías. Para más detalles, puede acudirse al apéndice.
 <!-- Problemas del enfoque: puntos aleatorios, fecha inicio incendio,... -->
-
 <!-- Indicar el apéndice donde se trata el otro enfoque -->
+
+```{r eval = FALSE}
+for (day in dates_year) {
+  incendios_day = filter(incendios,
+                         fecha_inic>=day-3 & fecha_inic<=day+3)
+  if (nrow(incendios_day)==0){ 
+    # Si no ha habido incendios en una franja de 6 días en Andalucía
+    if (is.null(locations)) {
+      locations = st_sample(area_monte,size=1) 
+    } else {
+      locations = c(locations, st_sample(area_monte,size=1))
+    }
+  } else { 
+    # Si ha habido algún incendio en una franja de 6 días en Andalucía 
+    # (3 días antes a 3 días después)
+    repeat {
+      possible_location = st_sample(area_monte,size=1)
+      # Se comprueba si está a 15km o menos de un incendio registrado
+      if (!st_is_within_distance(possible_location, 
+                                 st_union(incendios_day), 
+                                 dist = 15000, sparse = FALSE)) {
+        if (is.null(locations)) {
+          locations = possible_location
+          break
+        } else {
+          locations = c(locations, possible_location)
+          break
+        }
+      }
+    }
+  }
+}
+
+# Atributos del objeto sf  
+points_out_attr <- data.frame(fire = rep(0,length(dates_year)),
+                              date = dates_year)
+  
+# Se crea el objeto sf a partir de los atributos y las geometrías
+if (is.null(points_out)) {
+  points_out <- st_sf(points_out_attr,
+                      geometry= locations)
+} else {
+  points_out <- points_out |> 
+    add_row(st_sf(points_out_attr,
+                  geometry= locations)) 
+}
+```
+
 
 ### Asignación de variables descriptivas a observaciones
 
@@ -208,11 +255,11 @@ Una vez generada una muestra balanceada de 22.170 observaciones dentro de Andalu
 
 Dado que será necesario calcular distancias,  se usa un Sistema de Referencia de Coordenadas proyectado al generar la muestra. En particular, se usa una variante del UTM30N, por ser el que traen los archivos ráster de las variables topográficas (es conveniente, siempre que sea posible, no transformar el CRS de los datos ráster, pues al hacerlo se deben interpolar los valores de los píxeles, produciendo una pérdida de información).
 
-A continuación se detalla el proceso seguido para manipular construir cada variable:
+A continuación se detalla el proceso seguido para construir cada variable:
 
 - **Variables topográficas**: Simplemente se extrae el dato del píxel correspondiente a las coordenadas del punto de cada observación para cada uno de los conjuntos de datos.
 
-- **Variables antropológicas**:
+- **Variables antropogénicas**:
 
     - Se calculan las distancias de cada observación a la red de carreteras, a la red de ferrocarril, a las poblaciones y a la línea electrica, creando así las variables *dist_carreteras*, *dist_ferrocarril*, *dist_poblaciones* y *dist_electr*, respectivamente. Las geometrías de los senderos, de las vías verdes y de los carriles bicis se unen y se calcula la distancia de cada observación a este conjunto de geometrías, generando así la variable *dist_sendero*. De la misma forma se procede con los caminos y las vías pecuarias, que dan origen a la variable *dist_camino*. Estas uniones se han llevado a cabo por considerar que sus elementos tienen características similares. Siempre se hace referencia a la distancia euclídea.
     
@@ -247,12 +294,13 @@ Superficies de agua                                         & Aguas continentale
 \end{table}    
     
 
-- Para construir la variable *poblacion*, primero se ha asignado a cada observación el código del municipio en el que está, haciendo uso de la función `st_intersects` y considerando los polígonos de los municipios proporcionados por el paquete *mapSpain*. Posteriormente, se ha hecho un *left_join* para unir el conjunto de observaciones con los datos de población extraídos del IECA, utilizando el código del municipio y el año de la observación para realizar la unión. Para la variable *dens_población* se ha procedido de la misma manera, pero se ha divido previamente el dato de población anual de cada municipio por la extensión del municipio correspondiente en $km^2$, para lo que ha debido realizarse previamente otro *left_join* para unir el conjunto de datos de población anual y el de áreas de municipios mediante el código del municipio.
+- **Variables demográficas**: Para construir la variable *poblacion*, primero se ha asignado a cada observación el código del municipio en el que está, haciendo uso de la función `st_intersects` y considerando los polígonos de los municipios proporcionados por el paquete *mapSpain*. Posteriormente, se ha hecho un *left_join* para unir el conjunto de observaciones con los datos de población extraídos del IECA, utilizando el código del municipio y el año de la observación para realizar la unión. Para la variable *dens_población* se ha procedido de la misma manera, pero se ha divido previamente el dato de población anual de cada municipio por la extensión del municipio correspondiente en $km^2$, para lo que ha debido realizarse previamente otro *left_join* para unir el conjunto de datos de población anual y el de áreas de municipios mediante el código del municipio.
 
-- La distancia a los ríos *dist_rios* se ha obtenido calculando la distancia de cada observación al conjunto de geometrías de los principales ríos de España.
+- **Variable hidrológica**: La distancia a los ríos *dist_rios* se ha obtenido calculando la distancia de cada observación al conjunto de geometrías de los principales ríos de España.
 
-- El NDVI viene en archivos *raster* mensuales (lo que supone un total de unos 240 archivos en formato *.tiff*). Para cada observación se ha extraído el valor del píxel en cuestión (en función de las coordenadas del punto) del archivo correspondiente (que depende del mes y año de la observación).
+- **Variable de vegetación**: El NDVI viene en archivos ráster mensuales (lo que supone un total de unos 240 archivos en formato *.tif*). Para cada observación se ha extraído el valor del píxel en cuestión (en función de las coordenadas del punto) del archivo correspondiente (que depende del mes y año de la observación).
 
+Para facilitar la asignación de todas las variables explicativas a una muestra de localizaciones y fechas dentro de los límites del estudio, y siguiendo todos los procedimientos detallados, se ha construido la función `asignar_variables` que automatiza este proceso y optimiza ciertos cálculos. Su definición completa comentada puede observarse en el [Apéndice B.2](#code:asignar_variables).
 
 ### Depuración de la muestra
 

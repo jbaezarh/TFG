@@ -76,6 +76,7 @@ A lo largo de la presente memoria se ha presentado una metodología completa par
 
 - El entrenamiento, ajuste y evaluación de distintos modelos, realizando una comparación del rendimiento de distintos algoritmos de clasificación binaria dentro del ML.
 
+- Todos los conjuntos de datos recopilados, así como los generados a través del procesamiento de estos y todo el código empleado, se encuentran disponibles en el repositorio \url{https://github.com/jbaezarh/TFG}.
 
 ## Trabajo futuro
 

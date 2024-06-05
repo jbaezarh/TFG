@@ -3,4 +3,5 @@ output: pdf_document
 ---
 
 
-Aquí irían los agradecimientos
+A mis tutores, Luis y Xopre, por su implicación y su profesionalidad.
+A mis padres

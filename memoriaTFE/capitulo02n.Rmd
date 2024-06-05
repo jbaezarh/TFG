@@ -465,7 +465,7 @@ $$ Recall = \frac{TP}{TP + FN}$$
 Mide el área bajo la curva ROC (*Receiver Operating Characteristic* o Característica Operativa del Receptor en castellano). Esta curva es una representación gráfica del rendimiento de un modelo de clasificación binaria para todos los umbrales de clasificación. Representa la sensibilidad frente a la proporción de falsos positivos para cada posible umbral de clasificación. El AUC está comprendido entre 0 y 1, entendiéndose que el rendimiento del es mejor cuanto mayor sea su valor. En general, se suelen considerar aceptables modelos con un valor del AUC superior a 0.75. Obsérvese por ejemplo la Figura \ref{fig:roc_validation}.
 
 
-
+\newpage
 ## Herramientas
 
 <!-- https://www.r-project.org/ -->
@@ -497,7 +497,7 @@ Como se detalló en la [Sección 2.1 sobre datos georreferenciados][Datos georre
 
 La descarga de información meteorológica satelital se ha realizado a través del paquete *nasapower* [@nasapower], que facilita el acceso a información meteorológica global de forma reproducible a través de $R$. El paquete *mapSpain*[@R-mapspain] ha facilitado el acceso a las fronteras administrativas de España a distintos niveles de desagregación (comunidad autónoma, provincia y municipio). Se basa en el *GISCO Eurostat database* (\url{https://ec.europa.eu/eurostat/web/gisco}) y en el *CartoBase SIANE* del Instituto Geográfico Nacional (\url{https://www.ign.es/}).
 
-
+Para la presentación de la memoria, se ha utilizado la plantilla proporcionada en @Luque2017.
 
 <!-- library(tidyverse) -->
 <!-- library(skimr) -->
