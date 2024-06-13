@@ -2156,6 +2156,9 @@ rm(incendios21)
 and <- esp_get_ccaa(ccaa = "Andalucía") %>% st_transform(st_crs(datos))
 prov <- esp_get_prov() %>% filter(nuts2.name=="Andalucía") %>% st_transform(st_crs(datos))
 
+bbox = st_buffer(incendio_estudio,dist=10000) %>% 
+  st_bbox() 
+
 # Gráfico del incendio
 g = prov %>% 
   ggplot() +
@@ -2167,12 +2170,10 @@ g = prov %>%
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
         panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) 
+        panel.grid.minor = element_blank()) +
+  geom_sf(data=st_as_sfc(bbox),fill="transparent",lwd=1, col="black") # Añadir el recuadro
 
-# Ampliamos la zona del incendio 
-bbox = st_buffer(incendio_estudio,dist=10000) %>% 
-  st_bbox() 
-
+# Ampliamos la zona del incendio
 g1 = prov %>% 
   ggplot() +
   geom_sf() + 

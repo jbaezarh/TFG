@@ -64,7 +64,9 @@ g_mes <- datos %>%
   scale_fill_hue(direction = -1) +
   theme_minimal() +
   xlab("Mes") +
-  ylab("Número de observaciones")
+  ylab("Número de observaciones") +
+  theme(legend.position = "top")
+
 
 g_mes
 ```
@@ -83,13 +85,13 @@ g_year <- datos %>%
   ggplot(aes(x = año,y = n,fill=fire)) +
   geom_col(position="dodge",alpha=0.8) +
   scale_x_continuous(breaks=2002:2022) +
-  geom_smooth(se=F,aes(color=fire),alpha=0.1) +
-  scale_color_manual(values=c("darkblue","darkred")) + 
+  # geom_smooth(se=F,aes(color=fire),alpha=0.1) +
+  # scale_color_manual(values=c("darkblue","darkred")) + 
   scale_fill_hue(direction = -1) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   xlab("Año") +
-  ylab("Número de observaciones")
+  ylab("Número de observaciones") 
 
 g_year
 # En 2007 no se han generado observaciones positivas
@@ -123,7 +125,9 @@ g_dia
 Podría dar la impresión de que más incendios ocurren en fin de semana
 
 ```{r}
-ggarrange(g_dia,g_mes,g_year,ncol=1,common.legend = T,legend = "bottom")
+g = ggarrange(g_dia,g_mes,g_year,ncol=1,common.legend = T,legend = "right")
+
+annotate_figure(g,top=text_grob("Distribución temporal de fire",size=18))
 ```
 
 ### Distribución espacial
@@ -135,17 +139,18 @@ prov <- esp_get_prov() %>% filter(nuts2.name=="Andalucía") %>% st_transform(st_
 g1 = ggplot(data = prov) + 
   geom_sf() +
   geom_sf(data = datos %>% filter(fire==1),size = 1, alpha = 0.4,col="red")+
-  ggtitle("Distribución espacial de casos positivos") +
+  ggtitle("Casos positivos") +
   theme_minimal()
 
 # Casos negativos
 g0 = ggplot(data = prov) + 
   geom_sf() +
   geom_sf(data = datos %>% filter(fire==0),size = 1, alpha = 0.4,col="blue") +
-  ggtitle("Distribución espacial de casos negativos") +
+  ggtitle("Casos negativos") +
   theme_minimal()
 
-ggarrange(g1,g0,nrow=2)
+g = ggarrange(g1,g0,nrow=2)
+annotate_figure(g,top=text_grob("Distribución espacial de fire",size=19))
 ```
 
 
@@ -589,7 +594,9 @@ ggplot(data = prov) +
     scale_color_gradientn(colours = rainbow(5,rev=T)) +
   guides(size="none",alpha="none") +
   ggtitle("Distribución espacial de dist_rios") +
-  theme_minimal()
+  labs(color = "Distancia a río") +
+  theme_minimal() +
+  theme(legend.position = "bottom",legend.key.width = unit(3,"line"),legend.title.position = "top")
 ```
 
 
@@ -694,6 +701,14 @@ histogramas <- map(names(datos_categ), ~ ggplot(datos, aes(x = .data[[.x]], fill
                     labs(title = .x)+theme(axis.text.x = element_text(size=7)))
 
 ggarrange(plotlist = histogramas, ncol = 2, nrow = ceiling(length(histogramas)/2))
+
+
+uso_suelo = datos |> 
+  ggplot(aes(x = uso_suelo,fill=fire)) +
+  geom_bar(position = "dodge", alpha = 0.8) +
+  scale_fill_hue(direction = - 1) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size=7))
 ```
 
 En el caso de la variable `WD10M` cabe comentar la escasez de observaciones con dirección norte. En el gráfico no está clara la relación de esta variable con la variable objetivo.
