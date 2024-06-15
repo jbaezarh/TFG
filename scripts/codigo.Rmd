@@ -1886,7 +1886,7 @@ models = models %>%
                           roc_curve(fire, .pred_0)) 
          )
 
-# save(models, file="salidas_intermedias/all_models_test.RData")
+# save(models, file="Private/all_models_test.RData")
 
 # metricas en test
 test_metrics = models %>% 
@@ -1965,7 +1965,8 @@ library(tidymodels) # Ecosistema para la construcción de modelos
 library(ggpubr) # Función ggarrange
 library(knitr) # Función kable
 library(skimr) # Función skim
-library(terra)
+library(terra) # Raster data
+library (mapSpain) # Regiones España
 
 # Carga de datos ----------------------------------------
 load("salidas_intermedias/datos_strat_depurados_geom_2024-04-27.RData") 
@@ -2084,7 +2085,8 @@ full_grid <- full_grid |>
                                keep = c("21","22","23","24","31","32","33"),
                                other_level= "Otro"))
 
-# save(full_grid,file = full_grid_meses_2022_processed.RData"
+# save(full_grid,file = "salidas_intermedias/full_grid_meses_2022_processed.RData")
+load("salidas_intermedias/full_grid_meses_2022_processed.RData")
 ```
 
 Se usará el modelo de regresión logística lasso final,
